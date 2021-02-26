@@ -15,6 +15,11 @@ class CreateYearsTable extends Migration
     {
         Schema::create('years', function (Blueprint $table) {
             $table->id();
+            $table->date('begin');
+            $table->date('end');
+            $table->tinyInteger('enabled')->default('1');
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
         });
     }

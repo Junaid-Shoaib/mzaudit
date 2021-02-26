@@ -15,6 +15,10 @@ class CreateBankBranchesTable extends Migration
     {
         Schema::create('bank_branches', function (Blueprint $table) {
             $table->id();
+            $table->string('address');
+            $table->tinyInteger('enabled')->default('1');
+            $table->unsignedBigInteger('bank_id');
+            $table->foreign('bank_id')->references('id')->on('banks');
             $table->timestamps();
         });
     }

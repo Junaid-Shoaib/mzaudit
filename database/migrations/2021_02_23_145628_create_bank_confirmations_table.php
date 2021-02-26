@@ -15,6 +15,17 @@ class CreateBankConfirmationsTable extends Migration
     {
         Schema::create('bank_confirmations', function (Blueprint $table) {
             $table->id();
+            $table->date('sent')->nullable();
+            $table->date('remind_first')->nullable();
+            $table->date('remind_second')->nullable();
+            $table->date('received')->nullable();
+            $table->tinyInteger('enabled')->default('1');
+            $table->unsignedBigInteger('branch_id');
+            $table->unsignedBigInteger('year_id');
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('branch_id')->references('id')->on('bank_branches');
+            $table->foreign('year_id')->references('id')->on('years');
+            $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
         });
     }

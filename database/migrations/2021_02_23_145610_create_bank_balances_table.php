@@ -15,6 +15,16 @@ class CreateBankBalancesTable extends Migration
     {
         Schema::create('bank_balances', function (Blueprint $table) {
             $table->id();
+            $table->decimal('ledger',14,2)->nullable();
+            $table->decimal('statement',14,2)->nullable();
+            $table->decimal('confirmation',14,2)->nullable();
+            $table->tinyInteger('enabled')->default('1');
+            $table->unsignedBigInteger('account_id');
+            $table->unsignedBigInteger('year_id');
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('account_id')->references('id')->on('bank_accounts');
+            $table->foreign('year_id')->references('id')->on('years');
+            $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
         });
     }

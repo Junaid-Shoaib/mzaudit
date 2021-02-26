@@ -15,6 +15,14 @@ class CreateBankAccountsTable extends Migration
     {
         Schema::create('bank_accounts', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->string('type')->nullable();
+            $table->string('currency')->nullable();
+            $table->tinyInteger('enabled')->default('1');
+            $table->unsignedBigInteger('branch_id');
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('branch_id')->references('id')->on('bank_branches');
+            $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
         });
     }
