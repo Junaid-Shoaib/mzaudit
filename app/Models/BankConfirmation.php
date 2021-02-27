@@ -8,4 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class BankConfirmation extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'sent','remind_first','remind_second','received','enabled','branch_id','year_id','company_id'
+    ];
+
+    public function bankBranch(){
+        return $this->belongsTo('App\Models\BankBranch', 'branch_id');
+    }
+
+    public function year(){
+        return $this->belongsTo('App\Models\Year', 'year_id');
+    }
+
+    public function company(){
+        return $this->belongsTo('App\Models\Company', 'company_id');
+    }
 }

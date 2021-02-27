@@ -8,7 +8,10 @@
         <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
             {{ $page.props.flash.success }}
         </div>
-        <button @click="create" class="border bg-indigo-300 rounded-xl px-4 py-1 m-1">Create</button>        
+        <div class="relative mt-5 ml-7">
+            <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('companies.create')">Create
+            </inertia-link>
+        </div>        
         <div class="">
             <table class="shadow-lg border mt-4 ml-8 rounded-xl">
                 <thead>
@@ -25,9 +28,9 @@
                         <td class="py-1 px-4 border">{{item.address}}</td>
                         <td class="py-1 px-4 border">{{item.fiscal}}</td>
                         <td class="py-1 px-4 border">
-                            <button class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" @click="edit(item.id)">
+                            <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('companies.edit',item.id)">
                                 <span>Edit</span>
-                            </button>        
+                            </inertia-link>        
                             <button class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" @click="destroy(item.id)">
                                 <span>Delete</span>
                             </button>        
@@ -56,14 +59,6 @@
         },
 
         methods: {
-
-            create() {
-            this.$inertia.get(route('companies.create'))
-            }, 
-
-            edit(id) {
-            this.$inertia.get(route('companies.edit', id))
-            },
 
             destroy(id) {
             this.$inertia.delete(route('companies.destroy', id))

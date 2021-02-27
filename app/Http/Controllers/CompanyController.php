@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\Company;
+use App\Models\Bank;
+use App\Models\BankBranch;
 use Inertia\Inertia;
 
 class CompanyController extends Controller
@@ -88,5 +90,18 @@ class CompanyController extends Controller
     {
         $company->delete();
         return Redirect::back()->with('success', 'Company deleted.');
+    }
+
+    public function getBanks()
+    {
+        $data = Bank::all();
+        return Inertia::render('Companies/Indexx', ['data' => $data]);
+    }
+
+    public function getBranches(Bank $bank)
+    {
+        $data = Bank::all();
+        $data2 = BankBranch::where('bank_id', $bank->id)->get();
+        return Inertia::render('Companies/Indexx', ['data' => $data,'data2' => $data2]);
     }
 }
