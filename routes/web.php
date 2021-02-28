@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\BankController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,4 +61,32 @@ Route::delete('companies/{company}', [CompanyController::class, 'destroy'])
 Route::get('get_banks', [CompanyController::class, 'getBanks']);
 Route::get('get_branches/{bank}', [CompanyController::class, 'getBranches'])
     ->name('branches')
+    ->middleware('auth');
+
+Route::get('banks', [BankController::class, 'index'])
+    ->name('banks')
+    ->middleware('auth');
+
+Route::get('banks/create', [BankController::class, 'create'])
+    ->name('banks.create')
+    ->middleware('auth');
+
+Route::get('banks/{bank}', [BankController::class, 'show'])
+    ->name('banks.show')
+    ->middleware('auth');
+
+Route::post('banks', [BankController::class, 'store'])
+    ->name('banks.store')
+    ->middleware('auth');
+
+Route::get('banks/{bank}/edit', [BankController::class, 'edit'])
+    ->name('banks.edit')
+    ->middleware('auth');
+
+Route::put('banks/{bank}', [BankController::class, 'update'])
+    ->name('banks.update')
+    ->middleware('auth');
+
+Route::delete('banks/{bank}', [BankController::class, 'destroy'])
+    ->name('banks.destroy')
     ->middleware('auth');

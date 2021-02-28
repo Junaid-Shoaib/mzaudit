@@ -7,28 +7,34 @@
         </template>
         <div class="">
             <form @submit.prevent="submit">
-                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">Name:
-                    <input type="text" v-model="form.name" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="name"/>
+                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
+                    <label class="w-28 inline-block text-right mr-4">Name:</label>
+                    <input type="text" v-model="form.name" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="name"/>
                     <div v-if="errors.name">{{ errors.name }}</div>
                 </div>
-                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">Address:
-                    <input type="text" v-model="form.address" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="address"/>
+                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
+                    <label class="w-28 inline-block text-right mr-4">Address:</label>
+                    <input type="text" v-model="form.address" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="address"/>
                     <div v-if="errors.address">{{ errors.address }}</div>
                 </div>
-                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">Email:
-                    <input type="text" v-model="form.email" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="email"/>
+                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
+                    <label class="w-28 inline-block text-right mr-4">Address:</label>
+                    <input type="text" v-model="form.email" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="email"/>
                     <div v-if="errors.email">{{ errors.email }}</div>
                 </div>
-                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">Web:
-                    <input type="text" v-model="form.web" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="web"/>
+                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
+                    <label class="w-28 inline-block text-right mr-4">Web:</label>
+                    <input type="text" v-model="form.web" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="web"/>
                     <div v-if="errors.web">{{ errors.web }}</div>
                 </div>
-                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">Phone:
-                    <input type="text" v-model="form.phone" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="phone"/>
+                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
+                    <label class="w-28 inline-block text-right mr-4">Phone:</label>
+                    <input type="text" v-model="form.phone" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="phone"/>
                     <div v-if="errors.phone">{{ errors.phone }}</div>
                 </div>
-                <div class="p-2 mr-2 mb-2 ml-6 flex flex-wrap">Year End:
-                    <select v-model="form.fiscal" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="fiscal">
+                <div class="p-2 mr-2 mb-2 ml-6 flex flex-wrap">
+                    <label class="w-28 inline-block text-right mr-4">Year End:</label>
+                    <select v-model="form.fiscal" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="fiscal">
                         <option value="March">March</option>
                         <option value="June">June</option>
                         <option value="September">September</option>
@@ -36,8 +42,9 @@
                     </select>
                     <div v-if="errors.fiscal">{{ errors.fiscal }}</div>
                 </div>
-                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">Incorporation:
-                    <input type="text" v-model="form.incorp" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="incorp"/>
+                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
+                    <label class="w-28 inline-block text-right mr-4">Incorporation:</label>
+                    <input type="text" v-model="form.incorp" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="incorp"/>
                     <div v-if="errors.incorp">{{ errors.incorp }}</div>
                 </div>
                 <div class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center">
