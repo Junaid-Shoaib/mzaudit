@@ -67,9 +67,14 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Bank $bank)
     {
-        //
+        return Inertia::render('Banks/Edit', [
+            'bank' => [
+                'id' => $bank->id,
+                'name' => $bank->name,
+            ],
+        ]);
     }
 
     /**
@@ -79,9 +84,16 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Req $request, $id)
+    public function update(Req $request, Bank $bank)
     {
-        //
+        Request::validate([
+            'name' => ['required'],
+        ]);
+
+        $bank->name = Request::input('name');
+        $bank->save();
+
+        return Redirect::route('banks')->with('success', 'Bank updated.');
     }
 
     /**
@@ -90,8 +102,9 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Bank $bank)
     {
-        //
+        $bank->delete();
+        return Redirect::back()->with('success', 'Bank deleted.');
     }
 }
