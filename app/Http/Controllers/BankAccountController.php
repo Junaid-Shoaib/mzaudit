@@ -6,22 +6,35 @@ use Illuminate\Http\Request as Req;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\BankAccount;
+use App\Models\Bank;
+use App\Models\BankBranch;
 use Inertia\Inertia;
 
 class BankAccountController extends Controller
 {
     public function index()
     {
-        $data = BankAccount::all();
-        return Inertia::render('Accounts/Index', ['data' => $data]);
+        return Inertia::render('Accounts/Index', [
+            'data' => BankAccount::all()->paginate(),
+        ]);
     }
 
     public function create()
     {
-        $branches = \App\Models\BankBranch::all()->map->only('bank_id','address');
-        $first = \App\Models\BankBranch::all('bank_id','address')->first();
-
-        return Inertia::render('Accounts/Create',['branches' => $branches, 'first' => $first]);
+        return Inertia::render('Accounts/Create',[
+ //           'filters' => Request::all('bank'),
+            'branches' => BankBranch::all()
+ //               ->filter(Request::only('bank'))
+                ->map(function ($branch){
+                    return [
+                        'id' => $branch->id,
+                        'address' => $branch->address,
+                        'bank_id' => $branch->bank_id,
+                        'name' => $branch->bank->name,
+                    ];
+                }),
+            'banks' =>  Bank::all('id','name'),
+        ]);
     }
 
     public function store(Req $request)
