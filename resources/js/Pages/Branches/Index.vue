@@ -23,7 +23,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="item in data" :key="item.id">
-                        <td class="py-1 px-4 border">{{item.bank_id}}</td>
+                        <td class="py-1 px-4 border">{{item.name}}</td>
                         <td class="py-1 px-4 border">{{item.address}}</td>
                         <td class="py-1 px-4 border">
                             <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('branches.edit',item.id)">

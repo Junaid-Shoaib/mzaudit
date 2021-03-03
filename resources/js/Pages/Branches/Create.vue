@@ -38,14 +38,15 @@
         props: {
             errors : Object,
             banks : Object,  
-            first: Object,  
+//            first: Object,  
         },
 
         data() {
             return {
                 form: this.$inertia.form({
                     address: null,
-                    bank_id: this.first.id,
+//                    bank_id: this.first.id,
+                    bank_id: this.banks[0].id,
                 }),
             }
         },

@@ -12,16 +12,24 @@ class BankBranchController extends Controller
 {
     public function index()
     {
-        $data = BankBranch::all();
-        return Inertia::render('Branches/Index', ['data' => $data]);
+        return Inertia::render('Branches/Index', [
+            'data' => BankBranch::all()
+                ->map(function ($branch){
+                    return [
+                        'id' => $branch->id,
+                        'address' => $branch->address,
+                        'bank_id' => $branch->bank_id,
+                        'name' => $branch->bank->name,
+                    ];
+                }), 
+        ]);
     }
 
     public function create()
     {
-        $banks = \App\Models\Bank::all()->map->only('id','name');
-        $first = \App\Models\Bank::all('id','name')->first();
-
-        return Inertia::render('Branches/Create',['banks' => $banks, 'first' => $first]);
+        return Inertia::render('Branches/Create',[
+            'banks' => \App\Models\Bank::all()->map->only('id','name')
+        ]);
     }
 
     public function store(Req $request)
@@ -46,15 +54,13 @@ class BankBranchController extends Controller
 
     public function edit(BankBranch $branch)
     {
-        $banks = \App\Models\Bank::all()->map->only('id','name');
-
         return Inertia::render('Branches/Edit', [
             'branch' => [
                 'id' => $branch->id,
                 'bank_id' => $branch->bank_id,
                 'address' => $branch->address,
             ],
-            'banks' => $banks,
+            'banks' => \App\Models\Bank::all()->map->only('id','name'),
         ]);
     }
 
