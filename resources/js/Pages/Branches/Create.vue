@@ -9,7 +9,9 @@
             <form @submit.prevent="submit">
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">ID:</label>
-                    <input type="text" v-model="form.bank_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="bank_id"/>
+                    <select v-model="form.bank_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="bank_id" placeholder="Enter type">
+                        <option v-for="bank in banks" :key="bank.id" :value="bank.id">{{bank.name}}</option>
+                    </select>
                     <div v-if="errors.bank_id">{{ errors.bank_id }}</div>
                 </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
@@ -35,16 +37,15 @@
 
         props: {
             errors : Object,
-//            types : Object,  
-//            first: Object,  
+            banks : Object,  
+            first: Object,  
         },
 
         data() {
             return {
                 form: this.$inertia.form({
-                    bank_id: null,
                     address: null,
- //                   type: this.first.id,
+                    bank_id: this.first.id,
                 }),
             }
         },

@@ -18,10 +18,10 @@ class BankAccountController extends Controller
 
     public function create()
     {
-        $types = \App\Models\BankBranch::all()->map->only('id','name');
-        $first = \App\Models\BankBranch::all('id','name')->first();
+        $branches = \App\Models\BankBranch::all()->map->only('bank_id','address');
+        $first = \App\Models\BankBranch::all('bank_id','address')->first();
 
-        return Inertia::render('Accounts/Create',['types' => $types, 'first' => $first]);
+        return Inertia::render('Accounts/Create',['branches' => $branches, 'first' => $first]);
     }
 
     public function store(Req $request)

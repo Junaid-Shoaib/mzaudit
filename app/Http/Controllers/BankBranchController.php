@@ -18,7 +18,10 @@ class BankBranchController extends Controller
 
     public function create()
     {
-        return Inertia::render('Branches/Create');
+        $banks = \App\Models\Bank::all()->map->only('id','name');
+        $first = \App\Models\Bank::all('id','name')->first();
+
+        return Inertia::render('Branches/Create',['banks' => $banks, 'first' => $first]);
     }
 
     public function store(Req $request)
@@ -43,12 +46,15 @@ class BankBranchController extends Controller
 
     public function edit(BankBranch $branch)
     {
+        $banks = \App\Models\Bank::all()->map->only('id','name');
+
         return Inertia::render('Branches/Edit', [
             'branch' => [
                 'id' => $branch->id,
                 'bank_id' => $branch->bank_id,
                 'address' => $branch->address,
             ],
+            'banks' => $banks,
         ]);
     }
 

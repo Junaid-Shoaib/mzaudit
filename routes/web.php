@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\BankBranchController;
+use App\Http\Controllers\BankAccountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -124,4 +125,34 @@ Route::put('branches/{branch}', [BankBranchController::class, 'update'])
 
 Route::delete('branches/{branch}', [BankBranchController::class, 'destroy'])
     ->name('branches.destroy')
+    ->middleware('auth');
+
+// Bank Accounts
+
+Route::get('accounts', [BankAccountController::class, 'index'])
+    ->name('accounts')
+    ->middleware('auth');
+
+Route::get('accounts/create', [BankAccountController::class, 'create'])
+    ->name('accounts.create')
+    ->middleware('auth');
+
+Route::get('accounts/{account}', [BankAccountController::class, 'show'])
+    ->name('accounts.show')
+    ->middleware('auth');
+
+Route::post('accounts', [BankAccountController::class, 'store'])
+    ->name('accounts.store')
+    ->middleware('auth');
+
+Route::get('accounts/{account}/edit', [BankAccountController::class, 'edit'])
+    ->name('accounts.edit')
+    ->middleware('auth');
+
+Route::put('accounts/{account}', [BankAccountController::class, 'update'])
+    ->name('accounts.update')
+    ->middleware('auth');
+
+Route::delete('accounts/{account}', [BankAccountController::class, 'destroy'])
+    ->name('accounts.destroy')
     ->middleware('auth');

@@ -2,16 +2,14 @@
     <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Banks Branches
+                Banks
             </h2>
         </template>
         <div class="">
             <form @submit.prevent="submit">
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">ID:</label>
-                    <select v-model="form.bank_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="bank_id" placeholder="Enter type">
-                        <option v-for="bank in banks" :key="bank.id" :value="bank.id">{{bank.name}}</option>
-                    </select>
+                    <input type="text" v-model="form.bank_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="bank_id"/>
                     <div v-if="errors.bank_id">{{ errors.bank_id }}</div>
                 </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
@@ -38,7 +36,7 @@
         props: {
             errors : Object,
             branch : Object,
-            banks : Object,  
+//            types : Object,  
         },
 
         data() {
