@@ -15,7 +15,7 @@ class BankAccountController extends Controller
     public function index()
     {
         return Inertia::render('Accounts/Index', [
-            'data' => BankAccount::all()->paginate(),
+            'data' => BankAccount::all(),
         ]);
     }
 
@@ -60,34 +60,41 @@ class BankAccountController extends Controller
         //
     }
 
-    public function edit(BankBranch $branch)
+    public function edit(BankAccount $account)
     {
-        return Inertia::render('Branches/Edit', [
-            'branch' => [
-                'id' => $branch->id,
-                'bank_id' => $branch->bank_id,
-                'address' => $branch->address,
+        return Inertia::render('Accounts/Edit', [
+            'account' => [
+                'id' => $account->id,
+                'name' => $account->name,
+                'type' => $account->type,
+                'currency' => $account->currency,
+                'company_id' => $account->company_id,
+                'branch_id' => $account->branch_id,
             ],
+            'branches' => BankBranch::all('id','address'),
         ]);
     }
 
-    public function update(Req $request, BankBranch $branch)
+    public function update(Req $request, BankAccount $account)
     {
         Request::validate([
             'name' => ['required'],
             'type' => ['required'],
         ]);
 
-        $branch->bank_id = Request::input('bank_id');
-        $branch->address = Request::input('address');
-        $branch->save();
+        $account->name = Request::input('name');
+        $account->type = Request::input('type');
+        $account->currency = Request::input('currency');
+        $account->branch_id = Request::input('branch_id');
+        $account->company_id = Request::input('company_id');
+        $account->save();
 
-        return Redirect::route('branches')->with('success', 'Bank Branch updated.');
+        return Redirect::route('accounts')->with('success', 'Bank Account updated.');
     }
 
-    public function destroy(BankBranch $branch)
+    public function destroy(BankAccount $account)
     {
-        $branch->delete();
-        return Redirect::back()->with('success', 'Bank Branch deleted.');
+        $account->delete();
+        return Redirect::back()->with('success', 'Bank Account deleted.');
     }
 }

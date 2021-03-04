@@ -156,3 +156,34 @@ Route::put('accounts/{account}', [BankAccountController::class, 'update'])
 Route::delete('accounts/{account}', [BankAccountController::class, 'destroy'])
     ->name('accounts.destroy')
     ->middleware('auth');
+
+// Years
+
+Route::get('years', [YearController::class, 'index'])
+    ->name('years')
+    ->middleware('auth');
+
+Route::get('years/create', [YearController::class, 'create'])
+    ->name('years.create')
+    ->middleware('auth');
+
+Route::get('years/{year}', [YearController::class, 'show'])
+    ->name('years.show')
+    ->middleware('auth');
+
+Route::post('years', [YearController::class, 'store'])
+    ->name('years.store')
+    ->middleware('auth');
+
+Route::get('years/{year}/edit', [YearController::class, 'edit'])
+    ->name('years.edit')
+    ->middleware('auth');
+
+Route::put('years/{year}', [YearController::class, 'update'])
+    ->name('years.update')
+    ->middleware('auth');
+
+Route::delete('years/{year}', [YearController::class, 'destroy'])
+    ->name('years.destroy')
+    ->middleware('auth');
+
