@@ -19,27 +19,14 @@ class YearController extends Controller
 
     public function create()
     {
-        return Inertia::render('Years/Create',[
- //           'filters' => Request::all('bank'),
-            'branches' => BankBranch::all()
- //               ->filter(Request::only('bank'))
-                ->map(function ($branch){
-                    return [
-                        'id' => $branch->id,
-                        'address' => $branch->address,
-                        'bank_id' => $branch->bank_id,
-                        'name' => $branch->bank->name,
-                    ];
-                }),
-            'banks' =>  Bank::all('id','name'),
-        ]);
+        return Inertia::render('Years/Create');
     }
 
     public function store(Req $request)
     {
         Request::validate([
-            'begin' => ['required'],
-            'end' => ['required'],
+            'begin' => ['required','date'],
+            'end' => ['required','date'],
             'company_id' => ['required'],
         ]);
 
@@ -66,7 +53,6 @@ class YearController extends Controller
                 'end' => $year->end,
                 'company_id' => $year->company_id,
             ],
-            'branches' => BankBranch::all('id','address'),
         ]);
     }
 

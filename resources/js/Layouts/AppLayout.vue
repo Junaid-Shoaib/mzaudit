@@ -21,6 +21,31 @@
                                     Dashboard
                                 </jet-nav-link>
                             </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('companies')" :active="route().current('companies')">
+                                    Companies
+                                </jet-nav-link>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('years')" :active="route().current('years')">
+                                    Years
+                                </jet-nav-link>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('banks')" :active="route().current('banks')">
+                                    Banks
+                                </jet-nav-link>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('branches')" :active="route().current('branches')">
+                                    Branches
+                                </jet-nav-link>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('accounts')" :active="route().current('accounts')">
+                                    Bank Accounts
+                                </jet-nav-link>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -142,6 +167,31 @@
                     <div class="pt-2 pb-3 space-y-1">
                         <jet-responsive-nav-link :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
+                        </jet-responsive-nav-link>
+                    </div>
+                    <div class="pt-2 pb-3 space-y-1">
+                        <jet-responsive-nav-link :href="route('companies')" :active="route().current('companies')">
+                            Companies
+                        </jet-responsive-nav-link>
+                    </div>
+                    <div class="pt-2 pb-3 space-y-1">
+                        <jet-responsive-nav-link :href="route('years')" :active="route().current('years')">
+                            Years
+                        </jet-responsive-nav-link>
+                    </div>
+                    <div class="pt-2 pb-3 space-y-1">
+                        <jet-responsive-nav-link :href="route('banks')" :active="route().current('banks')">
+                            Banks
+                        </jet-responsive-nav-link>
+                    </div>
+                    <div class="pt-2 pb-3 space-y-1">
+                        <jet-responsive-nav-link :href="route('branches')" :active="route().current('branches')">
+                            Branches
+                        </jet-responsive-nav-link>
+                    </div>
+                    <div class="pt-2 pb-3 space-y-1">
+                        <jet-responsive-nav-link :href="route('accounts')" :active="route().current('accounts')">
+                            Bank Accounts
                         </jet-responsive-nav-link>
                     </div>
 
