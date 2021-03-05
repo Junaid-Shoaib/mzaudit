@@ -39,6 +39,9 @@ class BankAccountController extends Controller
 
     public function store(Req $request)
     {
+        $hack=collect((Request::all()));
+        dd($hack);
+//        dd(Request::input('0.0.name'));
         Request::validate([
             'name' => ['required'],
             'type' => ['required'],

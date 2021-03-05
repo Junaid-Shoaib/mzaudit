@@ -15,7 +15,7 @@
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">Branch:</label>
                     <select v-model="form.branch_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="branch_id" placeholder="Enter type">
-                        <option v-for="branch in branches" :key="branch.id" :value="branch.id">{{branch.address}}</option>
+                        <option v-for="branch in branches" :key="branch.id" :value="branch.id">{{branch.name}} - {{branch.address}}</option>
                     </select>
                     <div v-if="errors.branch_id">{{ errors.branch_id }}</div>
                 </div>
@@ -39,6 +39,48 @@
                 </div>
             </form>
         </div>
+
+        <div class="panel-body"> 
+            <button class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"  @click="addRow" >Add row</button>
+            <table class="table border">
+                <thead class="">
+                    <tr>                            
+                        <th>Company</th>
+                        <th>Branch</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Currency</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for='(user, index) in users' :key="user.id">                            
+                        <td>
+                        <input  v-model="user.company_id"  type="text" />
+                        </td>
+                        <td>
+                        <select v-model="user.branch_id" >
+                            <option v-for="branch in branches" :key="branch.id" :value="branch.id">{{branch.name}} - {{branch.address}}</option>
+                        </select>
+                        </td>
+                        <td>
+                        <input v-model="user.name"  type="text"/>
+                        </td>
+                        <td>
+                        <input v-model="user.type"  type="text"/>
+                        </td>
+                        <td>
+                        <input v-model="user.currency"  type="text"/>
+                        </td>
+                        <td>
+                        <button  @click="deleteRow(index)" class="border bg-indigo-300 rounded-xl px-4 py-2 m-4" >Delete</button>
+                        </td>
+                    </tr>                        
+                </tbody>
+            </table>
+        </div>                        
+
+
     </app-layout>
 </template>
 
@@ -54,8 +96,6 @@
             errors : Object,
             branches : Object,
             banks : Object,
-//            types : Object,  
-//            first: Object,  
         },
 
         data() {
@@ -66,14 +106,36 @@
                     name: null,
                     type: null,
                     currency: null,
- //                   type: this.first.id,
                 }),
+
+                users: [{
+                    company_id: '',
+                    branch_id: this.branches[0].id,
+                    name: '',
+                    type: '',
+                    currency: '',
+                }],
             }
         },
 
         methods: {
+
             submit() {
-            this.$inertia.post(route('accounts.store'), this.form)
+            this.$inertia.post(route('accounts.store'), this.users)
+            },
+
+            addRow() {      
+                this.users.push({
+                    company_id: '',
+                    branch_id: this.branches[0].id,
+                    name: '',
+                    type: '',
+                    currency: '',
+                    })
+            },
+
+            deleteRow(index){    
+                this.users.splice(index,1);             
             },
         },
     }
