@@ -54,23 +54,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for='(user, index) in users' :key="user.id">                            
+                    <tr v-for='(account, index) in accounts' :key="account.id">                            
                         <td>
-                        <input  v-model="user.company_id"  type="text" />
+                        <input  v-model="account.company_id"  type="text" />
                         </td>
                         <td>
-                        <select v-model="user.branch_id" >
+                        <select v-model="account.branch_id" >
                             <option v-for="branch in branches" :key="branch.id" :value="branch.id">{{branch.name}} - {{branch.address}}</option>
                         </select>
                         </td>
                         <td>
-                        <input v-model="user.name"  type="text"/>
+                        <input v-model="account.name"  type="text"/>
                         </td>
                         <td>
-                        <input v-model="user.type"  type="text"/>
+                        <input v-model="account.type"  type="text"/>
                         </td>
                         <td>
-                        <input v-model="user.currency"  type="text"/>
+                        <input v-model="account.currency"  type="text"/>
                         </td>
                         <td>
                         <button  @click="deleteRow(index)" class="border bg-indigo-300 rounded-xl px-4 py-2 m-4" >Delete</button>
@@ -108,7 +108,7 @@
                     currency: null,
                 }),
 
-                users: [{
+                accounts: [{
                     company_id: '',
                     branch_id: this.branches[0].id,
                     name: '',
@@ -121,11 +121,11 @@
         methods: {
 
             submit() {
-            this.$inertia.post(route('accounts.store'), this.users)
+            this.$inertia.post(route('accounts.store'), this.accounts)
             },
 
             addRow() {      
-                this.users.push({
+                this.accounts.push({
                     company_id: '',
                     branch_id: this.branches[0].id,
                     name: '',
@@ -135,7 +135,7 @@
             },
 
             deleteRow(index){    
-                this.users.splice(index,1);             
+                this.accounts.splice(index,1);             
             },
         },
     }

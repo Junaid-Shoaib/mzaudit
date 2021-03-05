@@ -39,26 +39,36 @@ class BankAccountController extends Controller
 
     public function store(Req $request)
     {
-        $hack=collect((Request::all()));
-//        dd($hack);
-//        dd(Request::input('0.0.name'));
-        foreach($hack as $data){
-//            dd($data['name']);
+/*
+        $accounts=collect((Request::all()));
+        foreach($accounts as $account){
             BankAccount::create([
-                'name' => $data['name'],
-                'type' => $data['type'],
-                'currency' => $data['currency'],
-                'branch_id' => $data['branch_id'],
-                'company_id' => $data['company_id'],
+                'name' => $account['name'],
+                'type' => $account['type'],
+                'currency' => $account['currency'],
+                'branch_id' => $account['branch_id'],
+                'company_id' => $account['company_id'],
             ]);
         }
+*/
 
-/*
-    Request::validate([
-            'name.*' => ['required'],
-            'type.*' => ['required'],
+        Request::validate([
+            '*.name' => ['required'],
+            '*.type' => ['required'],
         ]);
 
+        $accounts = $request->all();
+        foreach($accounts as $account){
+            BankAccount::create([
+                'name' => $account['name'],
+                'type' => $account['type'],
+                'currency' => $account['currency'],
+                'branch_id' => $account['branch_id'],
+                'company_id' => $account['company_id'],
+            ]);
+        }
+/*
+        dd($accounts);
         BankAccount::create([
             'name' => Request::input('name'),
             'type' => Request::input('type'),
