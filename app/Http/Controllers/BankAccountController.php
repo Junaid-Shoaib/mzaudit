@@ -40,11 +40,23 @@ class BankAccountController extends Controller
     public function store(Req $request)
     {
         $hack=collect((Request::all()));
-        dd($hack);
+//        dd($hack);
 //        dd(Request::input('0.0.name'));
-        Request::validate([
-            'name' => ['required'],
-            'type' => ['required'],
+        foreach($hack as $data){
+//            dd($data['name']);
+            BankAccount::create([
+                'name' => $data['name'],
+                'type' => $data['type'],
+                'currency' => $data['currency'],
+                'branch_id' => $data['branch_id'],
+                'company_id' => $data['company_id'],
+            ]);
+        }
+
+/*
+    Request::validate([
+            'name.*' => ['required'],
+            'type.*' => ['required'],
         ]);
 
         BankAccount::create([
@@ -55,6 +67,7 @@ class BankAccountController extends Controller
             'company_id' => Request::input('company_id'),
         ]);
 
+*/
         return Redirect::route('accounts')->with('success', 'Bank Account created.');
     }
 
