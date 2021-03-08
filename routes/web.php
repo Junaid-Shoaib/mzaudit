@@ -9,6 +9,8 @@ use App\Http\Controllers\YearController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\BankBranchController;
 use App\Http\Controllers\BankAccountController;
+use App\Http\Controllers\BankBalanceController;
+use App\Http\Controllers\BankConfirmationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -129,6 +131,7 @@ Route::delete('branches/{branch}', [BankBranchController::class, 'destroy'])
     ->name('branches.destroy')
     ->middleware('auth');
 
+
 // Bank Accounts
 
 Route::get('accounts', [BankAccountController::class, 'index'])
@@ -157,6 +160,66 @@ Route::put('accounts/{account}', [BankAccountController::class, 'update'])
 
 Route::delete('accounts/{account}', [BankAccountController::class, 'destroy'])
     ->name('accounts.destroy')
+    ->middleware('auth');
+
+// Bank Balances
+
+Route::get('balances', [BankBalanceController::class, 'index'])
+    ->name('balances')
+    ->middleware('auth');
+
+Route::get('balances/create', [BankBalanceController::class, 'create'])
+    ->name('balances.create')
+    ->middleware('auth');
+
+Route::get('balances/{balance}', [BankBalanceController::class, 'show'])
+    ->name('balances.show')
+    ->middleware('auth');
+
+Route::post('balances', [BankBalanceController::class, 'store'])
+    ->name('balances.store')
+    ->middleware('auth');
+
+Route::get('balances/{balance}/edit', [BankBalanceController::class, 'edit'])
+    ->name('balances.edit')
+    ->middleware('auth');
+
+Route::put('balances/{balance}', [BankBalanceController::class, 'update'])
+    ->name('balances.update')
+    ->middleware('auth');
+
+Route::delete('balances/{balance}', [BankBalanceController::class, 'destroy'])
+    ->name('balances.destroy')
+    ->middleware('auth');
+
+// Bank Balances
+
+Route::get('confirmations', [BankConfirmationController::class, 'index'])
+    ->name('confirmations')
+    ->middleware('auth');
+
+Route::get('confirmations/create', [BankConfirmationController::class, 'create'])
+    ->name('confirmations.create')
+    ->middleware('auth');
+
+Route::get('confirmations/{confirmation}', [BankConfirmationController::class, 'show'])
+    ->name('confirmations.show')
+    ->middleware('auth');
+
+Route::post('confirmations', [BankConfirmationController::class, 'store'])
+    ->name('confirmations.store')
+    ->middleware('auth');
+
+Route::get('confirmations/{confirmation}/edit', [BankConfirmationController::class, 'edit'])
+    ->name('confirmations.edit')
+    ->middleware('auth');
+
+Route::put('confirmations/{confirmation}', [BankConfirmationController::class, 'update'])
+    ->name('confirmations.update')
+    ->middleware('auth');
+
+Route::delete('confirmations/{confirmation}', [BankConfirmationController::class, 'destroy'])
+    ->name('confirmations.destroy')
     ->middleware('auth');
 
 // Years

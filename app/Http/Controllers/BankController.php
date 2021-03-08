@@ -39,6 +39,7 @@ class BankController extends Controller
      */
     public function store(Req $request)
     {
+//        dd($request);
         Request::validate([
             'name' => ['required'],
         ]);

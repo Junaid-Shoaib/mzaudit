@@ -46,6 +46,16 @@
                                     Bank Accounts
                                 </jet-nav-link>
                             </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('balances')" :active="route().current('balances')">
+                                    Bank Balances
+                                </jet-nav-link>
+                            </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                                <jet-nav-link :href="route('confirmations')" :active="route().current('confirmations')">
+                                    Confirmations
+                                </jet-nav-link>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ml-6">
@@ -192,6 +202,16 @@
                     <div class="pt-2 pb-3 space-y-1">
                         <jet-responsive-nav-link :href="route('accounts')" :active="route().current('accounts')">
                             Bank Accounts
+                        </jet-responsive-nav-link>
+                    </div>
+                    <div class="pt-2 pb-3 space-y-1">
+                        <jet-responsive-nav-link :href="route('balances')" :active="route().current('balances')">
+                            Bank Balances
+                        </jet-responsive-nav-link>
+                    </div>
+                    <div class="pt-2 pb-3 space-y-1">
+                        <jet-responsive-nav-link :href="route('confirmations')" :active="route().current('confirmations')">
+                            Confirmations
                         </jet-responsive-nav-link>
                     </div>
 
