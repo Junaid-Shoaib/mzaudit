@@ -14,12 +14,12 @@
                 </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">Begin:</label>
-                    <input type="text" v-model="form.begin" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="begin"/>
+                    <datepicker v-model="form.begin" class="pr-2 pb-2 w-44 rounded-md leading-tight" label="begin"/>
                     <div v-if="errors.begin">{{ errors.begin }}</div>
                 </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">End:</label>
-                    <input type="text" v-model="form.end" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="end"/>
+                    <datepicker v-model="form.end" class="pr-2 pb-2 w-44 rounded-md leading-tight" label="end"/>
                     <div v-if="errors.end">{{ errors.end }}</div>
                 </div>
                 <div class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center">
@@ -32,10 +32,13 @@
 
 <script>
     import AppLayout from '@/Layouts/AppLayout'
+    import Datepicker from 'vue3-datepicker'
+    import format from 'date-fns/format'
 
-    export default {
+export default {
         components: {
             AppLayout,
+            Datepicker,
         },
 
         props: {
@@ -48,14 +51,15 @@
                     company_id: null,
                     begin: null,
                     end: null,
- //                   type: this.first.id,
                 }),
             }
         },
 
         methods: {
             submit() {
-            this.$inertia.post(route('years.store'), this.form)
+                this.form.begin = format(this.form.begin,'yyyy-MM-dd')
+                this.form.end = format(this.form.end,'yyyy-MM-dd')
+                this.$inertia.post(route('years.store'), this.form)
             },
         },
     }

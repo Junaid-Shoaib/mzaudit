@@ -9,22 +9,22 @@
             <form @submit.prevent="submit">
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">Sent:</label>
-                    <input type="text" v-model="form.sent" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="sent"/>
+                    <datepicker v-model="form.sent" :upper-limit="upper" :lower-limit="lower" class="pr-2 pb-2 w-44 rounded-md leading-tight" label="sent"/>
                     <div v-if="errors.sent">{{ errors.sent }}</div>
                 </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">Reminder 1:</label>
-                    <input type="text" v-model="form.remind_first" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="remind_first"/>
+                    <datepicker v-model="form.remind_first" :upper-limit="upper" :lower-limit="lower" class="pr-2 pb-2 w-44 rounded-md leading-tight" label="remind_first"/>
                     <div v-if="errors.remind_first">{{ errors.remind_first }}</div>
                 </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">Reminder 2:</label>
-                    <input type="text" v-model="form.remind_second" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="remind_second"/>
+                    <datepicker v-model="form.remind_second" :upper-limit="upper" :lower-limit="lower" class="pr-2 pb-2 w-44 rounded-md leading-tight" label="remind_second"/>
                     <div v-if="errors.remind_second">{{ errors.remind_second }}</div>
                 </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">Received:</label>
-                    <input type="text" v-model="form.received" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="received"/>
+                    <datepicker v-model="form.received" :upper-limit="upper" :lower-limit="lower" class="pr-2 pb-2 w-44 rounded-md leading-tight" label="received"/>
                     <div v-if="errors.received">{{ errors.received }}</div>
                 </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
@@ -54,36 +54,50 @@
 
 <script>
     import AppLayout from '@/Layouts/AppLayout'
+    import Datepicker from 'vue3-datepicker'
+    import format from 'date-fns/format'
 
     export default {
         components: {
             AppLayout,
+            Datepicker,
         },
 
         props: {
             errors : Object,
             confirmation : Object,
             branches : Object,  
+            year: Object,
         },
 
         data() {
             return {
                 form: {
-                    sent: this.confirmation.sent,
-                    remind_first: this.confirmation.remind_first,
-                    remind_second: this.confirmation.remind_second,
-                    received: this.confirmation.received,
+                    sent: (this.confirmation.sent == null) ? null : new Date(this.confirmation.sent),
+                    remind_first: (this.confirmation.remind_first == null) ? null : new Date(this.confirmation.remind_first),
+                    remind_second: (this.confirmation.remind_second == null) ? null : new Date(this.confirmation.remind_second),
+                    received: (this.confirmation.received == null) ? null : new Date(this.confirmation.received),
                     company_id: this.confirmation.company_id,
                     branch_id: this.confirmation.branch_id,
                     year_id: this.confirmation.year_id,
                 },
+                upper: new Date(this.year.end),
+                lower: new Date(this.year.begin),
             }
         },
 
         methods: {
             submit() {
-            this.$inertia.put(route('confirmations.update', this.confirmation.id), this.form)
+                if(this.form.sent) this.form.sent=this.doFormat(this.form.sent)
+                if(this.form.remind_first) this.form.remind_first=this.doFormat(this.form.remind_first)
+                if(this.form.remind_second) this.form.remind_second=this.doFormat(this.form.remind_second)
+                if(this.form.received) this.form.received=this.doFormat(this.form.received)
+                this.$inertia.put(route('confirmations.update', this.confirmation.id), this.form)
             }, 
+                doFormat($item) {
+                var $i = format($item,'yyyy-MM-dd')
+                return $i
+            },
         },
 
     }

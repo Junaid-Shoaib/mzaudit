@@ -6,6 +6,7 @@ use Illuminate\Http\Request as Req;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\BankBranch;
+use App\Models\Year;
 use App\Models\BankConfirmation;
 use Inertia\Inertia;
 
@@ -39,7 +40,8 @@ class BankConfirmationController extends Controller
                         'id' => $branch->id,
                         'name' => $branch->bank->name." - ".$branch->address,
                     ];
-                }), 
+                }),
+            'year' => Year::where('id',2)->first(),
         ]);
     }
 
@@ -86,6 +88,7 @@ class BankConfirmationController extends Controller
                         'name' => $branch->bank->name." - ".$branch->address,
                     ];
                 }), 
+            'year' => Year::where('id',2)->first(),
         ]);
     }
 
