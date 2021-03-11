@@ -51,7 +51,7 @@
 
         watch: {
             bank: function() {
-                this.$inertia.get(route('branches', this.bank))
+                this.$inertia.get(route('braches', this.bank))
             },
         },
 

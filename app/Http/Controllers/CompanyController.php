@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Models\Bank;
 use App\Models\BankBranch;
 use Inertia\Inertia;
+use App;
 
 class CompanyController extends Controller
 {
@@ -19,15 +20,12 @@ class CompanyController extends Controller
 
     public function create()
     {
-//        $types = \App\Models\Company::all()->map->only('id','name');
-//        $first = \App\Models\Company::all('id','name')->first();
-
-//        return Inertia::render('Companies/Create',['types' => $types, 'first' => $first]);
         return Inertia::render('Companies/Create');
     }
 
     public function store()
     {
+
         Request::validate([
             'name' => ['required'],
             'fiscal' => ['required'],
@@ -44,6 +42,7 @@ class CompanyController extends Controller
         ]);
 
         return Redirect::route('companies')->with('success', 'Company created.');
+
     }
 
     public function show(Company $company)
@@ -104,4 +103,12 @@ class CompanyController extends Controller
         $data2 = BankBranch::where('bank_id', $bank->id)->get();
         return Inertia::render('Companies/Indexx', ['data' => $data,'data2' => $data2]);
     }
+
+    public function pd()
+    {
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML('<h1>Test</h1>');
+        return $pdf->stream('v.pdf');
+    }
+
 }

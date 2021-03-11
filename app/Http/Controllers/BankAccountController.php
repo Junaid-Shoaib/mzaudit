@@ -39,18 +39,6 @@ class BankAccountController extends Controller
 
     public function store(Req $request)
     {
-/*
-        $accounts=collect((Request::all()));
-        foreach($accounts as $account){
-            BankAccount::create([
-                'name' => $account['name'],
-                'type' => $account['type'],
-                'currency' => $account['currency'],
-                'branch_id' => $account['branch_id'],
-                'company_id' => $account['company_id'],
-            ]);
-        }
-*/
 
         Request::validate([
             '*.name' => ['required'],
@@ -67,17 +55,7 @@ class BankAccountController extends Controller
                 'company_id' => $account['company_id'],
             ]);
         }
-/*
-        dd($accounts);
-        BankAccount::create([
-            'name' => Request::input('name'),
-            'type' => Request::input('type'),
-            'currency' => Request::input('currency'),
-            'branch_id' => Request::input('branch_id'),
-            'company_id' => Request::input('company_id'),
-        ]);
 
-*/
         return Redirect::route('accounts')->with('success', 'Bank Account created.');
     }
 
