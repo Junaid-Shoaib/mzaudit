@@ -18223,10 +18223,10 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default
   },
-  props: ['data', 'data2'],
+  props: ['data', 'data2', 'sbank'],
   data: function data() {
     return {
-      bank: 0,
+      bank: this.sbank,
       banks: this.data,
       branch: 0,
       branches: this.data2

@@ -94,14 +94,15 @@ class CompanyController extends Controller
     public function getBanks()
     {
         $data = Bank::all();
-        return Inertia::render('Companies/Indexx', ['data' => $data]);
+        $sbank = 0;
+        return Inertia::render('Companies/Indexx', ['data' => $data, 'sbank' => $sbank]);
     }
 
     public function getBranches(Bank $bank)
     {
         $data = Bank::all();
         $data2 = BankBranch::where('bank_id', $bank->id)->get();
-        return Inertia::render('Companies/Indexx', ['data' => $data,'data2' => $data2]);
+        return Inertia::render('Companies/Indexx', ['data' => $data,'data2' => $data2, 'sbank' => $bank->id]);
     }
 
     public function pd()

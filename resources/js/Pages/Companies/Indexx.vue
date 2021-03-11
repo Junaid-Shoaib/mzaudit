@@ -12,8 +12,8 @@
                         <div class="">
                             <label>Select Bank:</label>
                             <select class='' v-model='bank'>
-                                <option value='0' >Select Bank</option>
-                                <option v-for='data in banks' :value='data.id' :key='data.id'>{{ data.name }}</option>
+                                <option value="0">Select Bank</option>
+                                <option v-for='data in banks' :value='data.id' :key='data.id' >{{ data.name }}</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -38,11 +38,11 @@
             AppLayout,
         },
 
-        props: ['data', 'data2'],
+        props: ['data', 'data2', 'sbank'],
 
         data(){
             return {
-                bank: 0,
+                bank: this.sbank,
                 banks: this.data,
                 branch: 0,
                 branches: this.data2
