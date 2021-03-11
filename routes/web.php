@@ -73,6 +73,9 @@ Route::get('get_branches/{bank}', [CompanyController::class, 'getBranches'])
 Route::get('pd', [CompanyController::class, 'pd'])
     ->name('pd')
     ->middleware('auth');
+Route::get('ex', [CompanyController::class, 'ex'])
+    ->name('ex')
+    ->middleware('auth');
 
 // Banks
 

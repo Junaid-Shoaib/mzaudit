@@ -9,6 +9,8 @@ use App\Models\Bank;
 use App\Models\BankBranch;
 use Inertia\Inertia;
 use App;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class CompanyController extends Controller
 {
@@ -107,9 +109,20 @@ class CompanyController extends Controller
 
     public function pd()
     {
+        $a = "hello world";
         $pdf = App::make('dompdf.wrapper');
-        $pdf->loadHTML('<h1>Test</h1>');
+//        $pdf->loadHTML('<h1>Test</h1>');
+        $pdf->loadView('pdd',compact('a'));
         return $pdf->stream('v.pdf');
     }
 
+    public function ex()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'Hello World !');
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save('hello world.xlsx');
+    }
 }
