@@ -11,6 +11,8 @@ use Inertia\Inertia;
 use App;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Writer\Word2007;
 
 class CompanyController extends Controller
 {
@@ -121,7 +123,6 @@ class CompanyController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', 'Hello World !');
         $c = 'a2';
-        $sheet->setCellValue('A1', 'Hello World !');
         $sheet->setCellValue($c, 'Hello Universe !');
 
         $writer = new Xlsx($spreadsheet);
@@ -130,15 +131,21 @@ class CompanyController extends Controller
 
     public function doc()
     {
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord = new PhpWord();
 
         $section1 = $phpWord->addSection();
+        $phpWord->addParagraphStyle('p2Style', array('align'=>'both', 'spaceAfter'=>0, 'spaceBefore'=>0));
         $section1->addText(
-            '"Learn from yesterday, live for today, hope for tomorrow. '
+            '"Learn from yesterday,                                         live for today, hope for tomorrow. '
                 . 'The important thing is not to stop questioning." '
                 . '(Albert Einstein)',
-            array('name' => 'Calibre', 'size' => 12)
+            array('name' => 'Calibri', 'size' => 12),
+            'p2Style'
         );
+
+        $text ="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Some more text to test justify.";
+        $phpWord->addFontStyle('r2Style', array('bold'=>false, 'italic'=>true, 'size'=>12));
+        $section1->addText($text, 'r2Style', 'p2Style');
 
         $section2 = $phpWord->addSection();
         $section2->addText(
@@ -147,7 +154,14 @@ class CompanyController extends Controller
             array('name' => 'Book Antiqua', 'size' => 12)
         );
 
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save('hello World.docx');
+
+        $textrun = $section2->addTextRun();
+        $textrun->addText('blah-blah', 'p_bold');
+        $section2->addTextBreak(4);
+        $textrun = $section2->addTextRun();
+        $textrun->addText('blah-blah-blah in new line ', 'p');
+
+        $writer = new Word2007($phpWord);
+        $writer->save('hello World.docx');
     }
 }
