@@ -12,7 +12,6 @@
             <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('companies.create')">Create
             </inertia-link>
         </div>        
-        <div><a href="pd">heloo pdf</a></div>
         <div class="">
             <table class="shadow-lg border mt-4 ml-8 rounded-xl">
                 <thead>

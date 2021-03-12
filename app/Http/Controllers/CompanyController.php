@@ -111,7 +111,6 @@ class CompanyController extends Controller
     {
         $a = "hello world";
         $pdf = App::make('dompdf.wrapper');
-//        $pdf->loadHTML('<h1>Test</h1>');
         $pdf->loadView('pdd',compact('a'));
         return $pdf->stream('v.pdf');
     }
@@ -132,13 +131,22 @@ class CompanyController extends Controller
     public function doc()
     {
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
-        $section = $phpWord->addSection();
-        $section->addText(
+
+        $section1 = $phpWord->addSection();
+        $section1->addText(
             '"Learn from yesterday, live for today, hope for tomorrow. '
                 . 'The important thing is not to stop questioning." '
                 . '(Albert Einstein)',
-            array('name' => 'Calibre', 'size' => 20)
+            array('name' => 'Calibre', 'size' => 12)
         );
+
+        $section2 = $phpWord->addSection();
+        $section2->addText(
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+            ,
+            array('name' => 'Book Antiqua', 'size' => 12)
+        );
+
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save('hello World.docx');
     }
