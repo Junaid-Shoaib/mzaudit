@@ -76,6 +76,9 @@ Route::get('pd', [CompanyController::class, 'pd'])
 Route::get('ex', [CompanyController::class, 'ex'])
     ->name('ex')
     ->middleware('auth');
+Route::get('doc', [CompanyController::class, 'doc'])
+    ->name('doc')
+    ->middleware('auth');
 
 // Banks
 

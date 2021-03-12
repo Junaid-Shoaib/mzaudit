@@ -121,8 +121,25 @@ class CompanyController extends Controller
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', 'Hello World !');
+        $c = 'a2';
+        $sheet->setCellValue('A1', 'Hello World !');
+        $sheet->setCellValue($c, 'Hello Universe !');
 
         $writer = new Xlsx($spreadsheet);
         $writer->save('hello world.xlsx');
+    }
+
+    public function doc()
+    {
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $section = $phpWord->addSection();
+        $section->addText(
+            '"Learn from yesterday, live for today, hope for tomorrow. '
+                . 'The important thing is not to stop questioning." '
+                . '(Albert Einstein)',
+            array('name' => 'Calibre', 'size' => 20)
+        );
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save('hello World.docx');
     }
 }
