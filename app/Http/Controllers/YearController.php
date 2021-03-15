@@ -17,6 +17,13 @@ class YearController extends Controller
     {
         return Inertia::render('Years/Index', [
             'data' => Year::all(),
+            'companies' => Company::all()
+                ->map(function($company){
+                    return [
+                    'id' => $company->id,
+                    'name' => $company->name,
+                    ];
+                }), 
         ]);
     }
 
@@ -81,6 +88,13 @@ class YearController extends Controller
                 'end' => $year->end,
                 'company_id' => $year->company_id,
             ],
+            'companies' => Company::all()
+                ->map(function($company){
+                    return [
+                    'id' => $company->id,
+                    'name' => $company->name,
+                    ];
+            }), 
         ]);
     }
 

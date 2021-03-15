@@ -7,23 +7,25 @@
         </template>
         <div class="">
             <form @submit.prevent="submit">
-                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
+                <div v-if="co_editable" class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">Company:</label>
-                    <input type="text" v-model="form.company_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="company_id"/>
+                    <select v-model="form.company_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="company_id">
+                        <option v-for="company in companies" :key="company.id" :value="company.id">{{company.name}}</option>
+                    </select>
                     <div v-if="errors.company_id">{{ errors.company_id }}</div>
                 </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">Begin:</label>
-                    <input type="text" v-model="form.begin" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="begin"/>
+                    <datepicker v-model="form.begin" class="pr-2 pb-2 w-44 rounded-md leading-tight" label="begin"/>
                     <div v-if="errors.begin">{{ errors.begin }}</div>
                 </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">End:</label>
-                    <input type="text" v-model="form.end" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="end"/>
+                    <datepicker v-model="form.end" class="pr-2 pb-2 w-44 rounded-md leading-tight" label="end"/>
                     <div v-if="errors.end">{{ errors.end }}</div>
                 </div>
                 <div class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center">
-                    <button class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4" type="submit">Update Year</button>
+                    <button class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4" type="submit">Edit Year</button>
                 </div>
             </form>
         </div>
@@ -32,30 +34,37 @@
 
 <script>
     import AppLayout from '@/Layouts/AppLayout'
+    import Datepicker from 'vue3-datepicker'
+    import format from 'date-fns/format'
 
     export default {
         components: {
             AppLayout,
+            Datepicker,
         },
 
         props: {
             errors : Object,
             year : Object,
+            companies : Object,
         },
 
         data() {
             return {
                 form: {
                     company_id: this.year.company_id,
-                    begin: this.year.begin,
-                    end: this.year.end,
+                    begin: new Date(this.year.begin),
+                    end: new Date(this.year.end),
+                    co_editable: false,
                 },
             }
         },
 
         methods: {
             submit() {
-            this.$inertia.put(route('years.update', this.year.id), this.form)
+                this.form.begin=format(this.form.begin,'yyyy-MM-dd')
+                this.form.end=format(this.form.end,'yyyy-MM-dd')
+                this.$inertia.put(route('years.update', this.year.id), this.form)
             }, 
         },
 

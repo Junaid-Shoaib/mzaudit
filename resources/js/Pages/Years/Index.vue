@@ -8,9 +8,16 @@
         <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
             {{ $page.props.flash.success }}
         </div>
-        <div class="relative mt-5 ml-7">
-            <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('years.create')">Create
-            </inertia-link>
+        <div class="relative mt-5 ml-7 flex-row">
+            <div class="flex-1">
+                <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('years.create')">Create
+                </inertia-link>
+            </div>
+            <div class="flex-1">
+                <select v-model="co_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="company_id">
+                    <option v-for="company in companies" :key="company.id" :value="company.id">{{company.name}}</option>
+                </select>
+            </div>
         </div>        
         <div class="">
             <table class="shadow-lg border mt-4 ml-8 rounded-xl">
@@ -51,10 +58,14 @@
             AppLayout,
         },
 
-        props: ['data'],
+        props: {
+            data : Object,
+            companies : Object,
+        },
 
         data(){
             return {
+                co_id : this.$page.props.co_id,
             }
         },
 
