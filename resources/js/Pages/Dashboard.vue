@@ -27,5 +27,8 @@
             AppLayout,
             Welcome,
         },
+        mounted: function(){
+            console.log(this.$page.props.co_id)
+        },
     }
 </script>

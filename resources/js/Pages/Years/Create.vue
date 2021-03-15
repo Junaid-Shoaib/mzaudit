@@ -9,7 +9,9 @@
             <form @submit.prevent="submit">
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">Company:</label>
-                    <input type="text" v-model="form.company_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="company_id"/>
+                    <select v-model="form.company_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="company_id">
+                        <option v-for="company in companies" :key="company.id" :value="company.id">{{company.name}}</option>
+                    </select>
                     <div v-if="errors.company_id">{{ errors.company_id }}</div>
                 </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
@@ -43,12 +45,13 @@ export default {
 
         props: {
             errors : Object,
+            companies : Object,
         },
 
         data() {
             return {
                 form: this.$inertia.form({
-                    company_id: null,
+                    company_id: this.$page.props.co_id,
                     begin: null,
                     end: null,
                 }),

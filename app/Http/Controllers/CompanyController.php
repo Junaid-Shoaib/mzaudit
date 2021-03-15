@@ -109,6 +109,11 @@ class CompanyController extends Controller
         return Inertia::render('Companies/Indexx', ['data' => $data,'data2' => $data2, 'sbank' => $bank->id]);
     }
 
+    public function indexy()
+    {
+        return Inertia::render('Companies/Indexy');
+    }
+
     public function pd()
     {
         $a = "hello world";

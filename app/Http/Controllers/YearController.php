@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request as Req;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use App\Models\Year;
+use App\Models\Company;
+use App\Models\Setting;
 
 class YearController extends Controller
 {
@@ -19,22 +22,47 @@ class YearController extends Controller
 
     public function create()
     {
-        return Inertia::render('Years/Create');
+        return Inertia::render('Years/Create', [
+            'companies' => Company::all()
+                ->map(function($company){
+                    return [
+                    'id' => $company->id,
+                    'name' => $company->name,
+                    ];
+                }) 
+        ]);
     }
 
     public function store(Req $request)
     {
+//        dd($request->all());
         Request::validate([
             'begin' => ['required','date'],
             'end' => ['required','date'],
             'company_id' => ['required'],
         ]);
 
-        Year::create([
-            'begin' => Request::input('begin'),
-            'end' => Request::input('end'),
-            'company_id' => Request::input('company_id'),
-        ]);
+        DB::transaction(function() {
+            $year = Year::create([
+                'begin' => Request::input('begin'),
+                'end' => Request::input('end'),
+                'company_id' => Request::input('company_id'),
+            ]);
+
+            Setting::create([
+                'key' => 'active',
+                'value' => 1,
+                'company_id' => Request::input('company_id'),
+            ]);
+
+            Setting::create([
+                'key' => 'year',
+                'value' => $year->id,
+                'company_id' => Request::input('company_id'),
+            ]);
+
+            session(['company_id' => Request::input('company_id')]);
+        });
 
         return Redirect::route('years')->with('success', 'Year created.');
     }

@@ -33,4 +33,8 @@ class Company extends Model
         return $this->hasMany('App\Models\Year', 'company_id');
     }
 
+    public function settings()
+    {
+        return $this->hasMany('App\Models\Setting', 'company_id');
+    }
 }

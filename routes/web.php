@@ -66,6 +66,7 @@ Route::delete('companies/{company}', [CompanyController::class, 'destroy'])
     ->name('companies.destroy')
     ->middleware('auth');
 
+Route::get('indexy', [CompanyController::class, 'indexy']);
 Route::get('get_banks', [CompanyController::class, 'getBanks']);
 Route::get('get_branches/{bank}', [CompanyController::class, 'getBranches'])
     ->name('braches')
