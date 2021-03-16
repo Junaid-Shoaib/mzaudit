@@ -6,6 +6,7 @@ use App\Actions\Jetstream\DeleteUser;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Jetstream\Jetstream;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Company;
 
 class JetstreamServiceProvider extends ServiceProvider
 {
@@ -30,7 +31,8 @@ class JetstreamServiceProvider extends ServiceProvider
 
         Jetstream::deleteUsersUsing(DeleteUser::class);
  //       session(['company_id'=>Auth::user()->settings()->where('active_company',1)->first()->id]);
-        session(['company_id' => 1]);
+ //       session(['company_id' => Company::where('id',1)->first()->id]);
+//        session(['company_id' => Auth::user()->id]);
     }
 
     /**
