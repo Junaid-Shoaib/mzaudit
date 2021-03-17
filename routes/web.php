@@ -34,8 +34,6 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    session(['company_id'=>Auth::user()->settings()->where('key','active_company')->where('value',1)->first()->company_id]);
-//    dd(session('company_id'));
     return Inertia::render('Dashboard');
     })->name('dashboard');
 

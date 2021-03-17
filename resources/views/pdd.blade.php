@@ -12,7 +12,7 @@
 
     </head>
     <body class="font-sans antialiased">
-    <div class="border rounded-lg m-5 p-5 inline-block">
+    <div class="border rounded-lg m-5 p-5 inline-block" style="color:white;background-color:gray;">
     @for ($i = 0; $i < 10; $i++)
     This is:  {{ $a }} <br>
     @endfor
