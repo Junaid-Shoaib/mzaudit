@@ -143,32 +143,59 @@ class CompanyController extends Controller
         $phpWord->addParagraphStyle('p2Style', array('align'=>'both'));
         $phpWord->addFontStyle('f1Style', array('name' => 'Calibri', 'size'=>12));
         $phpWord->addFontStyle('f2Style', array('name' => 'Calibri','bold'=>true, 'size'=>12));
-        $year = '2021';
-        $str = "first Monday of June {$year}";
-        $carbon = new Carbon($str);
+        $company = \App\Models\Company::where('id',session('company_id'))->first();
+        $branch = $company->bankAccounts()->first()->bankBranch;
+        $period = \App\Models\Year::where('company_id',session('company_id'))->first();
+        $begin = new Carbon($period->begin);
+        $end = new Carbon($period->end);
+        $year = $end->year;
+        $str = "first Monday of July {$year}";
+        $date = new Carbon($str);
 
         for($i=0;$i<3;$i++) {
             $section = $phpWord->addSection();
 
-            $section->addText($carbon->format('F j, Y'), 'f2Style', 'p1Style');
+            $section->addText($date->format('F j, Y'), 'f2Style', 'p1Style');
 
             $textrun = $section->addTextRun();
-            $section->addTextBreak(2);
+ //           $section->addTextBreak(1);
+
+            $section->addText('The Manager,','f1Style','p1Style');
+            $section->addText($branch->bank->name.",",'f1Style','p1Style');
+            $section->addText($branch->address.".",'f1Style','p1Style');
+
             $textrun = $section->addTextRun();
+//            $section->addTextBreak(1);
+            $section->addText('Dear Sir,','f1Style','p2Style');
+
+            $textrun = $section->addTextRun('p2Style');
+            $textrun->addText('Subject: ', 'f1Style');
+            $textrun->addText('Bank Report for Audit Purpose of ', 'f2Style');
+            $textrun->addText($company->name, 'f2Style');
 
             $textrun = $section->addTextRun('p2Style');
             $textrun->addText(
                 "In accordance with your above named customer’s instructions given hereon, please send DIRECT to us at the below address, as auditors of your customer, the following information relating to their affairs at your branch as at the close of business on ",
                 'f1Style',
             );
-            $textrun->addText($carbon->format('F j, Y'), 'f2Style');
+            $textrun->addText($end->format('F j, Y'), 'f2Style');
             $textrun->addText(
                 " and, in the case of items 2, 4 and 9, during the period since ",
                 'f1Style',
             );
-            $textrun->addText($carbon->format('F j, Y'), 'f2Style');
+            $textrun->addText($begin->format('F j, Y'), 'f2Style');
 
+            $textrun = $section->addTextRun('p2Style');
+            $textrun->addText(
+                "Please state against each item any factors which may limit the completeness of your reply; if there is nothing to report, state ‘NONE’.",
+                'f1Style',
+            );
             
+            $textrun = $section->addTextRun('p2Style');
+            $textrun->addText(
+                "It is understood that any replies given are in strict confidence, for the purposes of audit.",
+                'f1Style',
+            );
         }
 
         $writer = new Word2007($phpWord);
