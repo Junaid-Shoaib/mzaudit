@@ -13,6 +13,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Writer\Word2007;
+use Carbon\Carbon;
 
 class CompanyController extends Controller
 {
@@ -128,7 +129,7 @@ class CompanyController extends Controller
         $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', 'Hello World !');
         $c = 'a2';
-        $sheet->setCellValue($c, 'Hello Universe !');
+        $sheet->setCellValue($c, 'Universes!');
 
         $writer = new Xlsx($spreadsheet);
         $writer->save('hello world.xlsx');
@@ -138,33 +139,37 @@ class CompanyController extends Controller
     {
         $phpWord = new PhpWord();
 
-        $section1 = $phpWord->addSection();
-        $phpWord->addParagraphStyle('p2Style', array('align'=>'both', 'spaceAfter'=>0, 'spaceBefore'=>0));
-        $section1->addText(
-            '"Learn from yesterday,                                         live for today, hope for tomorrow. '
-                . 'The important thing is not to stop questioning." '
-                . '(Albert Einstein)',
-            array('name' => 'Calibri', 'size' => 12),
-            'p2Style'
-        );
+        $phpWord->addParagraphStyle('p1Style', array('align'=>'both', 'spaceAfter'=>0, 'spaceBefore'=>0));
+        $phpWord->addParagraphStyle('p2Style', array('align'=>'both'));
+        $phpWord->addFontStyle('f1Style', array('name' => 'Calibri', 'size'=>12));
+        $phpWord->addFontStyle('f2Style', array('name' => 'Calibri','bold'=>true, 'size'=>12));
+        $year = '2021';
+        $str = "first Monday of June {$year}";
+        $carbon = new Carbon($str);
 
-        $text ="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. Some more text to test justify.";
-        $phpWord->addFontStyle('r2Style', array('bold'=>false, 'italic'=>true, 'size'=>12));
-        $section1->addText($text, 'r2Style', 'p2Style');
+        for($i=0;$i<3;$i++) {
+            $section = $phpWord->addSection();
 
-        $section2 = $phpWord->addSection();
-        $section2->addText(
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-            ,
-            array('name' => 'Book Antiqua', 'size' => 12)
-        );
+            $section->addText($carbon->format('F j, Y'), 'f2Style', 'p1Style');
 
+            $textrun = $section->addTextRun();
+            $section->addTextBreak(2);
+            $textrun = $section->addTextRun();
 
-        $textrun = $section2->addTextRun();
-        $textrun->addText('blah-blah', 'p_bold');
-        $section2->addTextBreak(4);
-        $textrun = $section2->addTextRun();
-        $textrun->addText('blah-blah-blah in new line ', 'p');
+            $textrun = $section->addTextRun('p2Style');
+            $textrun->addText(
+                "In accordance with your above named customer’s instructions given hereon, please send DIRECT to us at the below address, as auditors of your customer, the following information relating to their affairs at your branch as at the close of business on ",
+                'f1Style',
+            );
+            $textrun->addText($carbon->format('F j, Y'), 'f2Style');
+            $textrun->addText(
+                " and, in the case of items 2, 4 and 9, during the period since ",
+                'f1Style',
+            );
+            $textrun->addText($carbon->format('F j, Y'), 'f2Style');
+
+            
+        }
 
         $writer = new Word2007($phpWord);
         $writer->save('hello World.docx');
