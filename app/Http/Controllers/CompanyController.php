@@ -131,10 +131,30 @@ class CompanyController extends Controller
         $c = 'a2';
         $sheet->setCellValue($c, 'Universes!');
 
-        $rowArray = ['Value1', 'Value2', 'Value3', 'Value4'];
+        $rowArray = ['SR#', 'ACCOUNT#', 'ACCOUNT TYPE', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'SENT', 'REMINDER 1', 'REMINDER 2', 'RECEIVED'];
         $columnArray = array_chunk($rowArray, 1);
-        $spreadsheet->getActiveSheet()->fromArray($columnArray, NULL, 'C3');
-        $spreadsheet->getActiveSheet()->fromArray($rowArray, NULL, 'D3');
+        $spreadsheet->getActiveSheet()->fromArray($columnArray, NULL, 'C10');
+        $spreadsheet->getActiveSheet()->fromArray($rowArray, NULL, 'B3');
+  
+        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(5);
+        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(20);
+        $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(20);
+        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(25);
+        $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(15);
+        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(15);
+        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(15);
+        $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(15);
+        $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(15);
+        $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(15);
+        $spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(15);
+
+        $data = \App\Models\BankConfirmation::all()->toArray();
+        $data2 = [];
+        foreach($data as $key=>$value){
+            $data2[$key] = array_values($value);
+        }
+//        dd($data2);
+$spreadsheet->getActiveSheet()->fromArray($data2, NULL, 'B20');
 
         $writer = new Xlsx($spreadsheet);
         $writer->save('hello world.xlsx');
@@ -162,23 +182,23 @@ class CompanyController extends Controller
             $section = $phpWord->addSection();
 
             $textrun = $section->addTextRun();
-            $section->addTextBreak(5);
+            $section->addTextBreak(2);
 
             $section->addText($date->format('F j, Y'), 'f2Style', 'p1Style');
 
             $textrun = $section->addTextRun();
-            $section->addTextBreak(1);
+            $section->addTextBreak(0);
 
             $section->addText('The Manager,','f1Style','p1Style');
             $section->addText($branch->bank->name.",",'f1Style','p1Style');
             $section->addText($branch->address.".",'f1Style','p1Style');
 
             $textrun = $section->addTextRun();
-            $section->addTextBreak(1);
+            $section->addTextBreak(0);
             $section->addText('Dear Sir,','f1Style','p2Style');
 
             $textrun = $section->addTextRun();
-            $section->addTextBreak(1);
+            $section->addTextBreak(0);
 
             $textrun = $section->addTextRun('p2Style');
             $textrun->addText('Subject: ', 'f1Style');
@@ -186,7 +206,7 @@ class CompanyController extends Controller
             $textrun->addText($company->name, 'f2Style');
 
             $textrun = $section->addTextRun();
-            $section->addTextBreak(1);
+            $section->addTextBreak(0);
 
             $textrun = $section->addTextRun('p2Style');
             $textrun->addText(
@@ -201,7 +221,7 @@ class CompanyController extends Controller
             $textrun->addText($begin->format('F j, Y'), 'f2Style');
 
             $textrun = $section->addTextRun();
-            $section->addTextBreak(1);
+            $section->addTextBreak(0);
 
             $textrun = $section->addTextRun();
             $textrun->addText(
@@ -210,7 +230,7 @@ class CompanyController extends Controller
             );
             
             $textrun = $section->addTextRun();
-            $section->addTextBreak(1);
+            $section->addTextBreak(0);
 
             $textrun = $section->addTextRun();
             $textrun->addText(
@@ -219,16 +239,13 @@ class CompanyController extends Controller
             );
 
             $textrun = $section->addTextRun();
-            $section->addTextBreak(1);
+            $section->addTextBreak(0);
 
             $textrun = $section->addTextRun();
             $textrun->addText(
                 "Yours truly,",
                 'f1Style', 'p2Style'
             );
-
-            $textrun = $section->addTextRun();
-            $section->addTextBreak(1);
 
             $section->addText(
                 "Disclosure  Authorized",
@@ -241,7 +258,7 @@ class CompanyController extends Controller
             );
 
             $textrun = $section->addTextRun();
-            $section->addTextBreak(2);
+            $section->addTextBreak(1);
 
             $textrun = $section->addTextRun();
             $textrun->addText(
@@ -250,7 +267,7 @@ class CompanyController extends Controller
             );
 
             $textrun = $section->addTextRun();
-            $section->addTextBreak(2);
+            $section->addTextBreak(0);
 
             $textrun = $section->addTextRun();
             $textrun->addText(
