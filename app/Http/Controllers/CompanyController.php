@@ -131,6 +131,11 @@ class CompanyController extends Controller
         $c = 'a2';
         $sheet->setCellValue($c, 'Universes!');
 
+        $rowArray = ['Value1', 'Value2', 'Value3', 'Value4'];
+        $columnArray = array_chunk($rowArray, 1);
+        $spreadsheet->getActiveSheet()->fromArray($columnArray, NULL, 'C3');
+        $spreadsheet->getActiveSheet()->fromArray($rowArray, NULL, 'D3');
+
         $writer = new Xlsx($spreadsheet);
         $writer->save('hello world.xlsx');
     }
@@ -141,6 +146,7 @@ class CompanyController extends Controller
 
         $phpWord->addParagraphStyle('p1Style', array('align'=>'both', 'spaceAfter'=>0, 'spaceBefore'=>0));
         $phpWord->addParagraphStyle('p2Style', array('align'=>'both'));
+        $phpWord->addParagraphStyle('p3Style', array('align'=>'right', 'spaceAfter'=>0, 'spaceBefore'=>0));
         $phpWord->addFontStyle('f1Style', array('name' => 'Calibri', 'size'=>12));
         $phpWord->addFontStyle('f2Style', array('name' => 'Calibri','bold'=>true, 'size'=>12));
         $company = \App\Models\Company::where('id',session('company_id'))->first();
@@ -155,23 +161,32 @@ class CompanyController extends Controller
         for($i=0;$i<3;$i++) {
             $section = $phpWord->addSection();
 
+            $textrun = $section->addTextRun();
+            $section->addTextBreak(5);
+
             $section->addText($date->format('F j, Y'), 'f2Style', 'p1Style');
 
             $textrun = $section->addTextRun();
- //           $section->addTextBreak(1);
+            $section->addTextBreak(1);
 
             $section->addText('The Manager,','f1Style','p1Style');
             $section->addText($branch->bank->name.",",'f1Style','p1Style');
             $section->addText($branch->address.".",'f1Style','p1Style');
 
             $textrun = $section->addTextRun();
-//            $section->addTextBreak(1);
+            $section->addTextBreak(1);
             $section->addText('Dear Sir,','f1Style','p2Style');
+
+            $textrun = $section->addTextRun();
+            $section->addTextBreak(1);
 
             $textrun = $section->addTextRun('p2Style');
             $textrun->addText('Subject: ', 'f1Style');
             $textrun->addText('Bank Report for Audit Purpose of ', 'f2Style');
             $textrun->addText($company->name, 'f2Style');
+
+            $textrun = $section->addTextRun();
+            $section->addTextBreak(1);
 
             $textrun = $section->addTextRun('p2Style');
             $textrun->addText(
@@ -185,17 +200,64 @@ class CompanyController extends Controller
             );
             $textrun->addText($begin->format('F j, Y'), 'f2Style');
 
-            $textrun = $section->addTextRun('p2Style');
+            $textrun = $section->addTextRun();
+            $section->addTextBreak(1);
+
+            $textrun = $section->addTextRun();
             $textrun->addText(
                 "Please state against each item any factors which may limit the completeness of your reply; if there is nothing to report, state ‘NONE’.",
-                'f1Style',
+                'f1Style', 'p2Style'
             );
             
-            $textrun = $section->addTextRun('p2Style');
+            $textrun = $section->addTextRun();
+            $section->addTextBreak(1);
+
+            $textrun = $section->addTextRun();
             $textrun->addText(
                 "It is understood that any replies given are in strict confidence, for the purposes of audit.",
-                'f1Style',
+                'f1Style', 'p2Style'
             );
+
+            $textrun = $section->addTextRun();
+            $section->addTextBreak(1);
+
+            $textrun = $section->addTextRun();
+            $textrun->addText(
+                "Yours truly,",
+                'f1Style', 'p2Style'
+            );
+
+            $textrun = $section->addTextRun();
+            $section->addTextBreak(1);
+
+            $section->addText(
+                "Disclosure  Authorized",
+                'f2Style', 'p3Style'
+            );
+
+            $section->addText(
+                "For  and  on  behalf  of",
+                'f2Style', 'p3Style'
+            );
+
+            $textrun = $section->addTextRun();
+            $section->addTextBreak(2);
+
+            $textrun = $section->addTextRun();
+            $textrun->addText(
+                "Chartered Accountants                                                                                  ___________________",
+                'f2Style', 'p2Style'
+            );
+
+            $textrun = $section->addTextRun();
+            $section->addTextBreak(2);
+
+            $textrun = $section->addTextRun();
+            $textrun->addText(
+                "Enclosures:",
+                'f1Style', 'p2Style'
+            );
+
         }
 
         $writer = new Word2007($phpWord);
