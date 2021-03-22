@@ -38,6 +38,7 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'co_id' => session('company_id'),
+            'yr_id' => session('year_id'),
             'flash' => function () use ($request) {
                 return [
                     'success' => $request->session()->get('success'),

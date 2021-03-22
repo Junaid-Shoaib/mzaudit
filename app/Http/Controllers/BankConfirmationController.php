@@ -41,7 +41,7 @@ class BankConfirmationController extends Controller
                         'name' => $branch->bank->name." - ".$branch->address,
                     ];
                 }),
-            'year' => Year::where('id',2)->first(),
+            'year' => Year::all()->first(),
         ]);
     }
 
@@ -88,7 +88,7 @@ class BankConfirmationController extends Controller
                         'name' => $branch->bank->name." - ".$branch->address,
                     ];
                 }), 
-            'year' => Year::where('id',2)->first(),
+            'year' => Year::all()->first(),
         ]);
     }
 

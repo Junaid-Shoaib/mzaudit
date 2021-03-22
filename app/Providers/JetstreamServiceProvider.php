@@ -39,7 +39,8 @@ class JetstreamServiceProvider extends ServiceProvider
 
             if ($user &&
                 Hash::check($request->password, $user->password)) {
-                session(['company_id'=>$user->settings()->where('key','active_company')->where('value',1)->first()->company_id]);
+                session(['company_id'=>$user->settings()->where('key','active_company')->first()->value]);
+                session(['year_id'=>$user->settings()->where('key','active_year')->first()->value]);
                 return $user;
             }
         });

@@ -2,7 +2,8 @@
     <app-layout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
+                Dashboard -
+                {{this.$page.props.co_id}} - {{this.$page.props.yr_id}}
             </h2>
         </template>
 
@@ -27,8 +28,10 @@
             AppLayout,
             Welcome,
         },
+        
         mounted: function(){
             console.log(this.$page.props.co_id)
+            console.log(this.$page.props.yr_id)
         },
     }
 </script>

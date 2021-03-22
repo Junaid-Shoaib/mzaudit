@@ -25,6 +25,14 @@ class YearController extends Controller
                     'name' => $company->name,
                     ];
                 }), 
+            'years' => Year::where('company_id',session('company_id'))->get()
+                ->map(function($year){
+                    return [
+                    'id' => $year->id,
+                    'begin' => $year->begin,
+                    'end' => $year->end,
+                    ];
+                }),
         ]);
     }
 
@@ -57,20 +65,34 @@ class YearController extends Controller
                 'company_id' => Request::input('company_id'),
             ]);
 
-            Setting::create([
-                'key' => 'active_company',
-                'value' => 1,
-                'company_id' => Request::input('company_id'),
-                'user_id' => Auth::user()->id,
-            ]);
+            if(!count(Auth::user()->settings()->get())){
+                Setting::create([
+                        'key' => 'active_company',
+                        'value' => $year->company->id,
+//                        'company_id' => Request::input('company_id'),
+                        'user_id' => Auth::user()->id,
+                    ]);
 
-            Setting::create([
-                'key' => 'active_year',
-                'value' => $year->id,
-                'company_id' => Request::input('company_id'),
-            ]);
+                Setting::create([
+                        'key' => 'active_year',
+                        'value' => $year->id,
+//                        'company_id' => Request::input('company_id'),
+                        'user_id' => Auth::user()->id,
+                    ]);
+                }
+            else {
+//                $active_co = Setting::where('user_id',Auth::user()->id)->where('company_id',Request::input('company_id'))->where('key','active_company')->first();
+//                $active_yr = Setting::where('user_id',Auth::user()->id)->where('company_id',Request::input('company_id'))->where('key','active_year')->first();
+                $active_co = Setting::where('user_id',Auth::user()->id)->where('key','active_company')->first();
+                $active_yr = Setting::where('user_id',Auth::user()->id)->where('key','active_year')->first();
+                $active_co->value = Request::input('company_id');
+                $active_yr->value = $year->id;
+                $active_co->save();
+                $active_yr->save();
+            }
 
             session(['company_id' => Request::input('company_id')]);
+            session(['year_id' => $year->id]);
         });
 
         return Redirect::route('years')->with('success', 'Year created.');

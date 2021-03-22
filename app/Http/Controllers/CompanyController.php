@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\Company;
+use App\Models\Year;
+use App\Models\Setting;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Bank;
 use App\Models\BankBranch;
 use Inertia\Inertia;
@@ -115,6 +118,19 @@ class CompanyController extends Controller
         return Inertia::render('Companies/Indexy');
     }
 
+    public function coch($id)
+    {
+        $active_co = Setting::where('user_id',Auth::user()->id)->where('key','active_company')->first();
+        $active_yr = Setting::where('user_id',Auth::user()->id)->where('key','active_year')->first();
+        $active_co->value = $id;
+        $active_yr->value = Year::where('company_id',$id)->latest()->first()->id;
+        $active_co->save();
+        $active_yr->save();
+        session(['company_id'=>$id]);
+        session(['year_id'=>$active_yr->value]);
+        return redirect()->back();
+    }
+
     public function pd()
     {
         $a = "hello world";
@@ -132,8 +148,8 @@ class CompanyController extends Controller
         $sheet->setCellValue($c, 'Universes!');
 
         $rowArray = ['SR#', 'ACCOUNT#', 'ACCOUNT TYPE', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'SENT', 'REMINDER 1', 'REMINDER 2', 'RECEIVED'];
-        $columnArray = array_chunk($rowArray, 1);
-        $spreadsheet->getActiveSheet()->fromArray($columnArray, NULL, 'C10');
+//        $columnArray = array_chunk($rowArray, 1);
+//        $spreadsheet->getActiveSheet()->fromArray($columnArray, NULL, 'C10');
         $spreadsheet->getActiveSheet()->fromArray($rowArray, NULL, 'B3');
   
         $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(5);
@@ -148,13 +164,41 @@ class CompanyController extends Controller
         $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(15);
         $spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(15);
 
-        $data = \App\Models\BankConfirmation::all()->toArray();
+        $data = \App\Models\BankBalance::where('company_id',session('company_id'))->get()
+                ->map(function ($bal){
+                    return [
+                        'id' => $bal->id,
+                        'ledger' => $bal->ledger,
+                        'statement' => $bal->statement,
+                        'confirmation' => $bal->confirmation,
+                        'number' => $bal->bankAccount->name,
+                        'type' => $bal->bankAccount->type,
+                        'currency' => $bal->bankAccount->currency,
+                        'branch' => $bal->bankAccount->bankBranch->address,
+                        'bank' => $bal->bankAccount->bankBranch->bank->name,
+                        'sent' => $bal->bankAccount->bankBranch->bankConfirmations
+                                    ->filter(function ($confirmation){
+                                        if($confirmation->company_id == session('company_id'))
+                                        return true;
+//                                        return $confirmation->where('company_id',session('company_id'))->get()->first()->sent;
+                                    })->first()->sent,
+                        'remind_first' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id',session('company_id'))->get()->first()->remind_first,
+                        'remind_second' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id',session('company_id'))->get()->first()->remind_second,
+                        'received' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id',session('company_id'))->get()->first()->received,
+                    ];
+                }) 
+              ->toArray();
+$data[0]['sent'] = $data[0]['sent']? new Carbon($data[0]['sent']) : null;
+$data[0]['sent'] = $data[0]['sent']? $data[0]['sent']->format('F j, Y') : null;
+//dd($data);
+//        $abc= \App\Models\BankBranch::with(['bankAccounts.bankBalances','bankConfirmations','bank'])->get()->toArray();
+//        dd($abc);
         $data2 = [];
         foreach($data as $key=>$value){
             $data2[$key] = array_values($value);
         }
 //        dd($data2);
-$spreadsheet->getActiveSheet()->fromArray($data2, NULL, 'B20');
+        $spreadsheet->getActiveSheet()->fromArray($data2, NULL, 'B5');
 
         $writer = new Xlsx($spreadsheet);
         $writer->save('hello world.xlsx');
