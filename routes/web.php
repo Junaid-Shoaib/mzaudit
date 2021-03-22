@@ -69,6 +69,7 @@ Route::delete('companies/{company}', [CompanyController::class, 'destroy'])
 
 Route::get('indexy', [CompanyController::class, 'indexy']);
 Route::get('companies/coch/{id}', [CompanyController::class, 'coch'])->name('companies.coch');
+Route::get('companies/yrch/{id}', [CompanyController::class, 'yrch'])->name('companies.yrch');
 Route::get('get_banks', [CompanyController::class, 'getBanks']);
 Route::get('get_branches/{bank}', [CompanyController::class, 'getBranches'])
     ->name('braches')

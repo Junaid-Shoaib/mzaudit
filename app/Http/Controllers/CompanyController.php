@@ -131,6 +131,15 @@ class CompanyController extends Controller
         return redirect()->back();
     }
 
+    public function yrch($id)
+    {
+        $active_yr = Setting::where('user_id',Auth::user()->id)->where('key','active_year')->first();
+        $active_yr->value = $id;
+        $active_yr->save();
+        session(['year_id'=>$active_yr->value]);
+        return redirect()->back();
+    }
+
     public function pd()
     {
         $a = "hello world";
@@ -178,16 +187,15 @@ class CompanyController extends Controller
                         'bank' => $bal->bankAccount->bankBranch->bank->name,
                         'sent' => $bal->bankAccount->bankBranch->bankConfirmations
                                     ->filter(function ($confirmation){
-                                        if($confirmation->company_id == session('company_id'))
-                                        return true;
-//                                        return $confirmation->where('company_id',session('company_id'))->get()->first()->sent;
+                                        return ($confirmation->company_id == session('company_id') && $confirmation->year_id == session('year_id'));
                                     })->first()->sent,
-                        'remind_first' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id',session('company_id'))->get()->first()->remind_first,
-                        'remind_second' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id',session('company_id'))->get()->first()->remind_second,
-                        'received' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id',session('company_id'))->get()->first()->received,
+                        'remind_first' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id',session('company_id'))->where('year_id',session('year_id'))->get()->first()->remind_first,
+                        'remind_second' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id',session('company_id'))->where('year_id',session('year_id'))->get()->first()->remind_second,
+                        'received' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id',session('company_id'))->where('year_id',session('year_id'))->get()->first()->received,
                     ];
                 }) 
               ->toArray();
+//dd($data);
 $data[0]['sent'] = $data[0]['sent']? new Carbon($data[0]['sent']) : null;
 $data[0]['sent'] = $data[0]['sent']? $data[0]['sent']->format('F j, Y') : null;
 //dd($data);

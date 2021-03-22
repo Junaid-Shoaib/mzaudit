@@ -13,7 +13,7 @@
                     </select>
                 </div>
                 <div class="flex-1 inline-block">
-                    <select v-model="yr_id" class="w-72 rounded-md" label="yr_id">
+                    <select v-model="yr_id" class="w-72 rounded-md" label="yr_id" @change="yrch">
                         <option v-for="year in years" :key="year.id" :value="year.id">{{year.begin}} - {{year.end}}</option>
                     </select>
                 </div>
@@ -27,11 +27,6 @@
                 <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('years.create')">Create
                 </inertia-link>
             </div>
-            <div class="flex-1 inline-block">
-                <select v-model="co_id" class="w-32 rounded-md" label="company_id">
-                    <option v-for="company in companies" :key="company.id" :value="company.id">{{company.name}}</option>
-                </select>
-            </div>
         </div>        
         <div class="">
             <table class="shadow-lg border mt-4 ml-8 rounded-xl">
@@ -44,10 +39,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="item in data" :key="item.id">
+                    <tr v-for="item in years" :key="item.id">
                         <td class="py-1 px-4 border">{{item.begin}}</td>
                         <td class="py-1 px-4 border">{{item.end}}</td>
-                        <td class="py-1 px-4 border">{{item.company_id}}</td>
+                        <td class="py-1 px-4 border">{{item.id}}</td>
                         <td class="py-1 px-4 border">
                             <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('years.edit',item.id)">
                                 <span>Edit</span>
@@ -100,6 +95,10 @@
 
             coch() {
             this.$inertia.get(route('companies.coch', this.co_id))
+            },
+            
+            yrch() {
+            this.$inertia.get(route('companies.yrch', this.yr_id))
             },
         },
     }
