@@ -7,13 +7,6 @@
         </template>
         <div class="">
             <form @submit.prevent="submit">
-                <div v-if="co_editable" class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
-                    <label class="w-28 inline-block text-right mr-4">Company:</label>
-                    <select v-model="form.company_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="company_id">
-                        <option v-for="company in companies" :key="company.id" :value="company.id">{{company.name}}</option>
-                    </select>
-                    <div v-if="errors.company_id">{{ errors.company_id }}</div>
-                </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">Begin:</label>
                     <datepicker v-model="form.begin" class="pr-2 pb-2 w-44 rounded-md leading-tight" label="begin"/>
@@ -46,16 +39,13 @@
         props: {
             errors : Object,
             year : Object,
-            companies : Object,
         },
 
         data() {
             return {
                 form: {
-                    company_id: this.year.company_id,
                     begin: new Date(this.year.begin),
                     end: new Date(this.year.end),
-                    co_editable: false,
                 },
             }
         },

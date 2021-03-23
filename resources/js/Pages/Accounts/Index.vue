@@ -8,10 +8,20 @@
         <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
             {{ $page.props.flash.success }}
         </div>
-        <div class="relative mt-5 ml-7">
-            <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('accounts.create')">Create
-            </inertia-link>
+
+        <div class="relative mt-5 ml-7 flex-row">
+            <div class="flex-1 inline-block">
+                <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('accounts.create')">Create
+                </inertia-link>
+            </div>
+            <div class="flex-1 inline-block">
+                <select v-model="co_id" class="w-32 rounded-md" label="company_id" @change="coch">
+                    <option v-for="company in companies" :key="company.id" :value="company.id">{{company.name}}</option>
+                </select>
+            </div>
         </div>        
+
+
         <div class="">
             <table class="shadow-lg border mt-4 ml-8 rounded-xl">
                 <thead>
@@ -20,7 +30,6 @@
                         <th class="py-2 px-4 border">Type</th>
                         <th class="py-2 px-4 border">Currency</th>
                         <th class="py-2 px-4 border">Branch</th>
-                        <th class="py-2 px-4 border">Company</th>
                         <th class="py-2 px-4 border">Actions</th>
                     </tr>
                 </thead>
@@ -30,7 +39,6 @@
                         <td class="py-1 px-4 border">{{item.type}}</td>
                         <td class="py-1 px-4 border">{{item.currency}}</td>
                         <td class="py-1 px-4 border">{{item.branch_id}}</td>
-                        <td class="py-1 px-4 border">{{item.company_id}}</td>
                         <td class="py-1 px-4 border">
                             <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('accounts.edit',item.id)">
                                 <span>Edit</span>
@@ -55,10 +63,14 @@
             AppLayout,
         },
 
-        props: ['data'],
+        props: {
+            data : Object,
+            companies : Object,
+        },
 
         data(){
             return {
+                co_id : this.$page.props.co_id,
             }
         },
 
@@ -68,6 +80,9 @@
             this.$inertia.delete(route('accounts.destroy', id))
             },
 
+            coch() {
+            this.$inertia.get(route('companies.coch', this.co_id))
+            },
         },
     }
 </script>

@@ -8,33 +8,43 @@
         <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
             {{ $page.props.flash.success }}
         </div>
-        <div class="relative mt-5 ml-7">
-            <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('confirmations.create')">Create
-            </inertia-link>
+
+        <div class="relative mt-5 ml-7 flex-row">
+            <div class="flex-1 inline-block">
+                <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('confirmations.create')">Create
+                </inertia-link>
+            </div>
+            <div class="flex-1 inline-block">
+                <select v-model="co_id" class="w-32 rounded-md" label="company_id" @change="coch">
+                    <option v-for="company in companies" :key="company.id" :value="company.id">{{company.name}}</option>
+                </select>
+            </div>
+            <div class="flex-1 inline-block">
+                <select v-model="yr_id" class="w-72 rounded-md" label="yr_id" @change="yrch">
+                    <option v-for="year in years" :key="year.id" :value="year.id">{{year.begin}} - {{year.end}}</option>
+                </select>
+            </div>
         </div>        
+
         <div class="">
             <table class="shadow-lg border mt-4 ml-8 rounded-xl">
                 <thead>
                     <tr class="bg-indigo-100">
+                        <th class="py-2 px-4 border">Bank</th>
                         <th class="py-2 px-4 border">Sent</th>
                         <th class="py-2 px-4 border">Reminder 1</th>
                         <th class="py-2 px-4 border">Reminder 2</th>
                         <th class="py-2 px-4 border">Received</th>
-                        <th class="py-2 px-4 border">Company</th>
-                        <th class="py-2 px-4 border">Bank</th>
-                        <th class="py-2 px-4 border">Year</th>
                         <th class="py-2 px-4 border">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in data" :key="item.id">
+                        <td class="py-1 px-4 border">{{item.branch}}</td>
                         <td class="py-1 px-4 border">{{item.sent}}</td>
                         <td class="py-1 px-4 border">{{item.remind_first}}</td>
                         <td class="py-1 px-4 border">{{item.remind_second}}</td>
                         <td class="py-1 px-4 border">{{item.received}}</td>
-                        <td class="py-1 px-4 border">{{item.company}}</td>
-                        <td class="py-1 px-4 border">{{item.branch}}</td>
-                        <td class="py-1 px-4 border">{{item.year}}</td>
                         <td class="py-1 px-4 border">
                             <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('confirmations.edit',item.id)">
                                 <span>Edit</span>
@@ -59,10 +69,16 @@
             AppLayout,
         },
 
-        props: ['data'],
+        props: {
+            data : Object,
+            companies : Object,
+            years : Object,
+        },
 
         data(){
             return {
+                co_id : this.$page.props.co_id,
+                yr_id : this.$page.props.yr_id,
             }
         },
 
@@ -72,6 +88,13 @@
             this.$inertia.delete(route('confirmations.destroy', id))
             },
 
+            coch() {
+            this.$inertia.get(route('companies.coch', this.co_id))
+            },
+            
+            yrch() {
+            this.$inertia.get(route('companies.yrch', this.yr_id))
+            },
         },
     }
 </script>

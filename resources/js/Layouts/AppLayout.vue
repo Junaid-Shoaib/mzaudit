@@ -306,6 +306,14 @@
     import JetDropdownLink from '@/Jetstream/DropdownLink'
     import JetNavLink from '@/Jetstream/NavLink'
     import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
+    import { InertiaProgress } from '@inertiajs/progress' 
+
+    InertiaProgress.init({
+    delay: 50,
+    color: '#29d',
+    includeCSS: true,
+    showSpinner: false,
+    })
 
     export default {
         components: {

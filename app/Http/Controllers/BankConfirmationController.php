@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\BankBranch;
 use App\Models\Year;
+use App\Models\Company;
 use App\Models\BankConfirmation;
 use Inertia\Inertia;
 
@@ -15,7 +16,7 @@ class BankConfirmationController extends Controller
     public function index()
     {
         return Inertia::render('Confirmations/Index', [
-            'data' => BankConfirmation::all()
+            'data' => BankConfirmation::where('company_id',session('company_id'))->where('year_id',session('year_id'))->get()
                 ->map(function ($confirmation){
                     return [
                         'id' => $confirmation->id,
@@ -28,6 +29,21 @@ class BankConfirmationController extends Controller
                         'year' => $confirmation->year->begin." - ".$confirmation->year->end,
                     ];
                 }), 
+            'companies' => Company::all()
+                ->map(function($company){
+                    return [
+                    'id' => $company->id,
+                    'name' => $company->name,
+                    ];
+                }), 
+            'years' => Year::where('company_id',session('company_id'))->get()
+                ->map(function($year){
+                    return [
+                    'id' => $year->id,
+                    'begin' => $year->begin,
+                    'end' => $year->end,
+                    ];
+                }),
         ]);
     }
 
@@ -35,13 +51,19 @@ class BankConfirmationController extends Controller
     {
         return Inertia::render('Confirmations/Create',[
             'branches' => BankBranch::all()
+                ->filter(function ($branch) {
+                    foreach($branch->bankAccounts as $account){
+                        if($account->company_id == session('company_id'))
+                        return true;
+                    }
+                })
                 ->map(function ($branch){
                     return [
                         'id' => $branch->id,
                         'name' => $branch->bank->name." - ".$branch->address,
                     ];
                 }),
-            'year' => Year::all()->first(),
+            'year' => Year::where('id',session('year_id'))->first(),
         ]);
     }
 
@@ -49,14 +71,14 @@ class BankConfirmationController extends Controller
     {
         Request::validate([
             'sent' => ['required'],
-            'company_id' => ['required'],
-            'year_id' => ['required'],
+//            'company_id' => ['required'],
+//            'year_id' => ['required'],
         ]);
 
         BankConfirmation::create([
             'sent' => Request::input('sent'),
-            'company_id' => Request::input('company_id'),
-            'year_id' => Request::input('year_id'),
+            'company_id' => session('company_id'),
+            'year_id' => session('year_id'),
             'branch_id' => Request::input('branch_id'),
         ]);
 
@@ -82,13 +104,19 @@ class BankConfirmationController extends Controller
                 'year_id' => $confirmation->year_id,
             ],
             'branches' => BankBranch::all()
+                ->filter(function ($branch) {
+                    foreach($branch->bankAccounts as $account){
+                        if($account->company_id == session('company_id'))
+                        return true;
+                    }
+                })
                 ->map(function ($branch){
                     return [
                         'id' => $branch->id,
                         'name' => $branch->bank->name." - ".$branch->address,
                     ];
-                }), 
-            'year' => Year::all()->first(),
+                }),
+            'year' => Year::where('id',session('year_id'))->first(),
         ]);
     }
 
@@ -96,17 +124,17 @@ class BankConfirmationController extends Controller
     {
         Request::validate([
             'sent' => ['required'],
-            'company_id' => ['required'],
-            'year_id' => ['required'],
+//            'company_id' => ['required'],
+//            'year_id' => ['required'],
         ]);
 
         $confirmation->sent = Request::input('sent');
         $confirmation->remind_first = Request::input('remind_first');
         $confirmation->remind_second = Request::input('remind_second');
         $confirmation->received = Request::input('received');
-        $confirmation->company_id = Request::input('company_id');
+  //      $confirmation->company_id = Request::input('company_id');
         $confirmation->branch_id = Request::input('branch_id');
-        $confirmation->year_id = Request::input('year_id');
+//        $confirmation->year_id = Request::input('year_id');
         $confirmation->save();
 
         return Redirect::route('confirmations')->with('success', 'Bank Confirmation updated.');

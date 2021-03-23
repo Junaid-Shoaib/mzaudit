@@ -173,7 +173,7 @@ class CompanyController extends Controller
         $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(15);
         $spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(15);
 
-        $data = \App\Models\BankBalance::where('company_id',session('company_id'))->get()
+        $data = \App\Models\BankBalance::where('company_id',session('company_id'))->where('year_id',session('year_id'))->get()
                 ->map(function ($bal){
                     return [
                         'id' => $bal->id,
@@ -196,17 +196,25 @@ class CompanyController extends Controller
                 }) 
               ->toArray();
 //dd($data);
-$data[0]['sent'] = $data[0]['sent']? new Carbon($data[0]['sent']) : null;
-$data[0]['sent'] = $data[0]['sent']? $data[0]['sent']->format('F j, Y') : null;
+for($i=0;$i<count($data);$i++){
+    $data[$i]['sent'] = $data[$i]['sent']? new Carbon($data[$i]['sent']) : null;
+    $data[$i]['sent'] = $data[$i]['sent']? $data[$i]['sent']->format('F j, Y') : null;
+    $data[$i]['remind_first'] = $data[$i]['remind_first']? new Carbon($data[$i]['remind_first']) : null;
+    $data[$i]['remind_first'] = $data[$i]['remind_first']? $data[$i]['remind_first']->format('F j, Y') : null;
+    $data[$i]['remind_second'] = $data[$i]['remind_second']? new Carbon($data[$i]['remind_second']) : null;
+    $data[$i]['remind_second'] = $data[$i]['remind_second']? $data[$i]['remind_second']->format('F j, Y') : null;
+    $data[$i]['received'] = $data[$i]['received']? new Carbon($data[$i]['received']) : null;
+    $data[$i]['received'] = $data[$i]['received']? $data[$i]['received']->format('F j, Y') : null;
+}
 //dd($data);
 //        $abc= \App\Models\BankBranch::with(['bankAccounts.bankBalances','bankConfirmations','bank'])->get()->toArray();
 //        dd($abc);
-        $data2 = [];
-        foreach($data as $key=>$value){
-            $data2[$key] = array_values($value);
-        }
+//        $data2 = [];
+//        foreach($data as $key=>$value){
+//            $data2[$key] = array_values($value);
+//        }
 //        dd($data2);
-        $spreadsheet->getActiveSheet()->fromArray($data2, NULL, 'B5');
+        $spreadsheet->getActiveSheet()->fromArray($data, NULL, 'B5');
 
         $writer = new Xlsx($spreadsheet);
         $writer->save('hello world.xlsx');

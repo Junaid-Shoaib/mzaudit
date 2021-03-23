@@ -8,11 +8,6 @@
         <div class="">
             <form @submit.prevent="submit">
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
-                    <label class="w-28 inline-block text-right mr-4">Company:</label>
-                    <input type="text" v-model="form.company_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="company_id"/>
-                    <div v-if="errors.company_id">{{ errors.company_id }}</div>
-                </div>
-                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">Branch:</label>
                     <select v-model="form.branch_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="branch_id" placeholder="Enter type">
                         <option v-for="branch in branches" :key="branch.id" :value="branch.id">{{branch.address}}</option>
@@ -54,13 +49,14 @@
             errors : Object,
             account : Object,
             branches : Object,  
+ //           companies : Object,
         },
 
         data() {
             return {
                 form: {
                     branch_id: this.account.branch_id,
-                    company_id: this.account.company_id,
+   //                 company_id: this.account.company_id,
                     name: this.account.name,
                     type: this.account.type,
                     currency: this.account.currency,

@@ -12,13 +12,6 @@
                     </inertia-link>
                 </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
-                    <label class="w-28 inline-block text-right mr-4">Company:</label>
-                    <select v-model="form.company_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="company_id">
-                        <option v-for="company in companies" :key="company.id" :value="company.id">{{company.name}}</option>
-                    </select>
-                    <div v-if="errors.company_id">{{ errors.company_id }}</div>
-                </div>
-                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">Begin:</label>
                     <datepicker v-model="form.begin" class="pr-2 pb-2 w-44 rounded-md leading-tight" label="begin"/>
                     <div v-if="errors.begin">{{ errors.begin }}</div>
@@ -49,13 +42,11 @@ export default {
 
         props: {
             errors : Object,
-            companies : Object,
         },
 
         data() {
             return {
                 form: this.$inertia.form({
-                    company_id: this.$page.props.co_id,
                     begin: null,
                     end: null,
                 }),

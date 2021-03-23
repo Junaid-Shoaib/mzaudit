@@ -12,7 +12,6 @@
                     <table class="table border">
                         <thead class="">
                             <tr>                            
-                                <th>Company</th>
                                 <th>Branch</th>
                                 <th>Name</th>
                                 <th>Type</th>
@@ -22,9 +21,6 @@
                         </thead>
                         <tbody>
                             <tr v-for='(account, index) in form.accounts' :key="account.id">                            
-                                <td>
-                                <input  v-model="account.company_id"  type="text" class="rounded-md w-36"/>
-                                </td>
                                 <td>
                                 <select v-model="account.branch_id" class="rounded-md w-36">
                                     <option v-for="branch in branches" :key="branch.id" :value="branch.id">{{branch.name}} - {{branch.address}}</option>
@@ -68,14 +64,13 @@
         props: {
             errors : Object,
             branches : Object,
-            banks : Object,
+//            banks : Object,
         },
 
         data() {
             return {
                 form: this.$inertia.form({
                     accounts: [{
-                        company_id: '',
                         branch_id: this.branches[0].id,
                         name: '',
                         type: '',
@@ -94,7 +89,6 @@
 
             addRow() {      
                 this.form.accounts.push({
-                    company_id: '',
                     branch_id: this.branches[0].id,
                     name: '',
                     type: '',

@@ -28,21 +28,11 @@
                     <div v-if="errors.received">{{ errors.received }}</div>
                 </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
-                    <label class="w-28 inline-block text-right mr-4">Company:</label>
-                    <input type="text" v-model="form.company_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="company_id"/>
-                    <div v-if="errors.company_id">{{ errors.company_id }}</div>
-                </div>
-                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">Bank:</label>
                     <select v-model="form.branch_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="branch_id" placeholder="Enter type">
                         <option v-for="branch in branches" :key="branch.id" :value="branch.id">{{branch.name}}</option>
                     </select>
                     <div v-if="errors.branch_id">{{ errors.branch_id }}</div>
-                </div>
-                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
-                    <label class="w-28 inline-block text-right mr-4">Year:</label>
-                    <input type="text" v-model="form.year_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" label="year_id"/>
-                    <div v-if="errors.year_id">{{ errors.year_id }}</div>
                 </div>
                 <div class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center">
                     <button class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4" type="submit">Create Confirmation</button>
@@ -76,9 +66,7 @@
                     remind_first: '',
                     remind_second: '',
                     received: '',
-                    company_id: '',
                     branch_id: this.branches[0].id,
-                    year_id:'',
                 }),
                 upper: new Date(this.year.end),
                 lower: new Date(this.year.begin),
