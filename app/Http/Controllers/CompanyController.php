@@ -156,7 +156,7 @@ class CompanyController extends Controller
         $c = 'a2';
         $sheet->setCellValue($c, 'Universes!');
 
-        $rowArray = ['SR#', 'ACCOUNT#', 'ACCOUNT TYPE', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'SENT', 'REMINDER 1', 'REMINDER 2', 'RECEIVED'];
+        $rowArray = ['SR#', 'BANK', 'ACCOUNT#', 'ACCOUNT TYPE', 'CURRENCY', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'SENT', 'REMINDER 1', 'REMINDER 2', 'RECEIVED'];
 //        $columnArray = array_chunk($rowArray, 1);
 //        $spreadsheet->getActiveSheet()->fromArray($columnArray, NULL, 'C10');
         $spreadsheet->getActiveSheet()->fromArray($rowArray, NULL, 'B3');
@@ -177,14 +177,14 @@ class CompanyController extends Controller
                 ->map(function ($bal){
                     return [
                         'id' => $bal->id,
-                        'ledger' => $bal->ledger,
-                        'statement' => $bal->statement,
-                        'confirmation' => $bal->confirmation,
+                        'bank' => $bal->bankAccount->bankBranch->bank->name,
                         'number' => $bal->bankAccount->name,
                         'type' => $bal->bankAccount->type,
                         'currency' => $bal->bankAccount->currency,
                         'branch' => $bal->bankAccount->bankBranch->address,
-                        'bank' => $bal->bankAccount->bankBranch->bank->name,
+                        'ledger' => $bal->ledger,
+                        'statement' => $bal->statement,
+                        'confirmation' => $bal->confirmation,
                         'sent' => $bal->bankAccount->bankBranch->bankConfirmations
                                     ->filter(function ($confirmation){
                                         return ($confirmation->company_id == session('company_id') && $confirmation->year_id == session('year_id'));

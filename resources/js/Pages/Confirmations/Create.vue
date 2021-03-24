@@ -46,6 +46,7 @@
     import AppLayout from '@/Layouts/AppLayout'
     import Datepicker from 'vue3-datepicker'
     import format from 'date-fns/format'
+    import { ref } from 'vue'
 
     export default {
         components: {
@@ -63,7 +64,7 @@
             return {
                 form: this.$inertia.form({
                     sent: '',
-                    remind_first: '',
+                    remind_first: new Date(),
                     remind_second: '',
                     received: '',
                     branch_id: this.branches[0].id,
@@ -86,6 +87,7 @@
                 var $i = format($item,'yyyy-MM-dd')
                 return $i
             },
+
         },
     }
 </script>

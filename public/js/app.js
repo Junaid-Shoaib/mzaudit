@@ -18357,8 +18357,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var vue3_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue3-datepicker */ "./node_modules/vue3-datepicker/dist/vue3-datepicker.esm.js");
-/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! date-fns/format */ "./node_modules/date-fns/format/index.js");
-/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(date_fns_format__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns/format */ "./node_modules/date-fns/format/index.js");
+/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(date_fns_format__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
 
 
 
@@ -18376,7 +18378,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       form: this.$inertia.form({
         sent: '',
-        remind_first: '',
+        remind_first: new Date(),
         remind_second: '',
         received: '',
         branch_id: this.branches[0].id
@@ -18394,7 +18396,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$inertia.post(route('confirmations.store'), this.form);
     },
     doFormat: function doFormat($item) {
-      var $i = date_fns_format__WEBPACK_IMPORTED_MODULE_2___default()($item, 'yyyy-MM-dd');
+      var $i = date_fns_format__WEBPACK_IMPORTED_MODULE_3___default()($item, 'yyyy-MM-dd');
       return $i;
     }
   }
