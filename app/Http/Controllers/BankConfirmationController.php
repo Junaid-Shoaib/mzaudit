@@ -10,6 +10,7 @@ use App\Models\Year;
 use App\Models\Company;
 use App\Models\BankConfirmation;
 use Inertia\Inertia;
+use Carbon\Carbon;
 
 class BankConfirmationController extends Controller
 {
@@ -69,15 +70,16 @@ class BankConfirmationController extends Controller
 
     public function store(Req $request)
     {
+//        dd($request->all());
         Request::validate([
             'sent' => ['required'],
-//            'remind_first' => ['required'],
 //            'company_id' => ['required'],
 //            'year_id' => ['required'],
         ]);
 
+        $sent = new Carbon($request->sent); 
         BankConfirmation::create([
-            'sent' => Request::input('sent'),
+            'sent' => $sent->format('Y-m-d'),
             'company_id' => session('company_id'),
             'year_id' => session('year_id'),
             'branch_id' => Request::input('branch_id'),

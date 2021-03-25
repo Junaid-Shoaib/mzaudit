@@ -18357,12 +18357,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var vue3_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue3-datepicker */ "./node_modules/vue3-datepicker/dist/vue3-datepicker.esm.js");
-/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! date-fns/format */ "./node_modules/date-fns/format/index.js");
-/* harmony import */ var date_fns_format__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(date_fns_format__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-
-
+ //    import format from 'date-fns/format'
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -18376,29 +18372,39 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      form: this.$inertia.form({
-        sent: null,
-        remind_first: null,
-        remind_second: null,
-        received: null,
+      form: {
+        //                   sent: new Date(this.doFormat()),
+        sent: new Date(),
+        //                    remind_first: null,
+        //                    remind_second: null,
+        //                    received: null,
         branch_id: this.branches[0].id
-      }),
+      },
       upper: new Date(this.year.end),
-      lower: new Date(this.year.begin)
+      lower: new Date(this.year.begin),
+      isLoading: false
     };
   },
   methods: {
     submit: function submit() {
+      var _this = this;
+
       //             if(this.form.sent) this.form.sent=this.doFormat(this.form.sent)
       //             if(this.form.remind_first) this.form.remind_first=this.doFormat(this.form.remind_first)
       //             if(this.form.remind_second) this.form.remind_second=this.doFormat(this.form.remind_second)
       //             if(this.form.received) this.form.received=this.doFormat(this.form.received)
+      this.isLoading = true;
+      setTimeout(function () {
+        _this.isLoading = false;
+      }, 2000);
       this.$inertia.post(route('confirmations.store'), this.form);
-    },
-    doFormat: function doFormat($item) {
-      var $i = date_fns_format__WEBPACK_IMPORTED_MODULE_3___default()($item, 'yyyy-MM-dd');
-      return $i;
-    }
+    } //           doFormat() {
+    //                var $d = new Date()
+    //                var $i = format($d,'yyyy-MM-dd')
+    //                var $n = new Date($i)
+    //                return $i
+    //            },
+
   }
 });
 
@@ -18450,10 +18456,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit() {
-      if (this.form.sent) this.form.sent = this.doFormat(this.form.sent);
-      if (this.form.remind_first) this.form.remind_first = this.doFormat(this.form.remind_first);
-      if (this.form.remind_second) this.form.remind_second = this.doFormat(this.form.remind_second);
-      if (this.form.received) this.form.received = this.doFormat(this.form.received);
+      //                if(this.form.sent) this.form.sent=this.doFormat(this.form.sent)
+      //                if(this.form.remind_first) this.form.remind_first=this.doFormat(this.form.remind_first)
+      //                if(this.form.remind_second) this.form.remind_second=this.doFormat(this.form.remind_second)
+      //                if(this.form.received) this.form.received=this.doFormat(this.form.received)
       this.$inertia.put(route('confirmations.update', this.confirmation.id), this.form);
     },
     doFormat: function doFormat($item) {
@@ -25065,7 +25071,7 @@ var _hoisted_3 = {
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
   "class": "w-28 inline-block text-right mr-4"
-}, "Sent:", -1
+}, "Create/Sent Date:", -1
 /* HOISTED */
 );
 
@@ -25078,7 +25084,7 @@ var _hoisted_6 = {
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
   "class": "w-28 inline-block text-right mr-4"
-}, "Reminder 1:", -1
+}, "Bank:", -1
 /* HOISTED */
 );
 
@@ -25086,54 +25092,8 @@ var _hoisted_8 = {
   key: 0
 };
 var _hoisted_9 = {
-  "class": "p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap"
-};
-
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
-  "class": "w-28 inline-block text-right mr-4"
-}, "Reminder 2:", -1
-/* HOISTED */
-);
-
-var _hoisted_11 = {
-  key: 0
-};
-var _hoisted_12 = {
-  "class": "p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap"
-};
-
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
-  "class": "w-28 inline-block text-right mr-4"
-}, "Received:", -1
-/* HOISTED */
-);
-
-var _hoisted_14 = {
-  key: 0
-};
-var _hoisted_15 = {
-  "class": "p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap"
-};
-
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
-  "class": "w-28 inline-block text-right mr-4"
-}, "Bank:", -1
-/* HOISTED */
-);
-
-var _hoisted_17 = {
-  key: 0
-};
-
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-  "class": "border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4",
-  type: "submit"
-}, "Create Confirmation")], -1
-/* HOISTED */
-);
-
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_datepicker = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("datepicker");
 
@@ -25145,7 +25105,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
-        onSubmit: _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+        onSubmit: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
           return $options.submit && $options.submit.apply($options, arguments);
         }, ["prevent"]))
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_datepicker, {
@@ -25161,47 +25121,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["modelValue", "upper-limit", "lower-limit"]), $props.errors.sent ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.sent), 1
       /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_datepicker, {
-        modelValue: $data.form.remind_first,
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-          return $data.form.remind_first = $event;
-        }),
-        "upper-limit": $data.upper,
-        "lower-limit": $data.lower,
-        "class": "pr-2 pb-2 w-44 rounded-md leading-tight",
-        label: "remind_first"
-      }, null, 8
-      /* PROPS */
-      , ["modelValue", "upper-limit", "lower-limit"]), $props.errors.remind_first ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.remind_first), 1
-      /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_datepicker, {
-        modelValue: $data.form.remind_second,
-        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-          return $data.form.remind_second = $event;
-        }),
-        "upper-limit": $data.upper,
-        "lower-limit": $data.lower,
-        "class": "pr-2 pb-2 w-44 rounded-md leading-tight",
-        label: "remind_second"
-      }, null, 8
-      /* PROPS */
-      , ["modelValue", "upper-limit", "lower-limit"]), $props.errors.remind_second ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.remind_second), 1
-      /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_datepicker, {
-        modelValue: $data.form.received,
-        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
-          return $data.form.received = $event;
-        }),
-        "upper-limit": $data.upper,
-        "lower-limit": $data.lower,
-        "class": "pr-2 pb-2 w-44 rounded-md leading-tight",
-        label: "received"
-      }, null, 8
-      /* PROPS */
-      , ["modelValue", "upper-limit", "lower-limit"]), $props.errors.received ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.received), 1
-      /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
           return $data.form.branch_id = $event;
         }),
         "class": "pr-2 pb-2 w-full lg:w-1/4 rounded-md",
@@ -25218,9 +25139,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* KEYED_FRAGMENT */
       ))], 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.branch_id]]), $props.errors.branch_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.branch_id), 1
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.branch_id]]), $props.errors.branch_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.branch_id), 1
       /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), _hoisted_18], 32
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+        "class": "border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4",
+        type: "submit",
+        disabled: $data.isLoading
+      }, "Create Confirmation", 8
+      /* PROPS */
+      , ["disabled"])])], 32
       /* HYDRATE_EVENTS */
       )])];
     }),

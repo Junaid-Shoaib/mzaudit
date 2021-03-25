@@ -8,24 +8,9 @@
         <div class="">
             <form @submit.prevent="submit">
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
-                    <label class="w-28 inline-block text-right mr-4">Sent:</label>
+                    <label class="w-28 inline-block text-right mr-4">Create/Sent Date:</label>
                     <datepicker v-model="form.sent" :upper-limit="upper" :lower-limit="lower" class="pr-2 pb-2 w-44 rounded-md leading-tight" label="sent"/>
                     <div v-if="errors.sent">{{ errors.sent }}</div>
-                </div>
-                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
-                    <label class="w-28 inline-block text-right mr-4">Reminder 1:</label>
-                    <datepicker v-model="form.remind_first" :upper-limit="upper" :lower-limit="lower" class="pr-2 pb-2 w-44 rounded-md leading-tight" label="remind_first"/>
-                    <div v-if="errors.remind_first">{{ errors.remind_first }}</div>
-                </div>
-                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
-                    <label class="w-28 inline-block text-right mr-4">Reminder 2:</label>
-                    <datepicker v-model="form.remind_second" :upper-limit="upper" :lower-limit="lower" class="pr-2 pb-2 w-44 rounded-md leading-tight" label="remind_second"/>
-                    <div v-if="errors.remind_second">{{ errors.remind_second }}</div>
-                </div>
-                <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
-                    <label class="w-28 inline-block text-right mr-4">Received:</label>
-                    <datepicker v-model="form.received" :upper-limit="upper" :lower-limit="lower" class="pr-2 pb-2 w-44 rounded-md leading-tight" label="received"/>
-                    <div v-if="errors.received">{{ errors.received }}</div>
                 </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">Bank:</label>
@@ -35,7 +20,7 @@
                     <div v-if="errors.branch_id">{{ errors.branch_id }}</div>
                 </div>
                 <div class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center">
-                    <button class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4" type="submit">Create Confirmation</button>
+                    <button class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4" type="submit" :disabled="isLoading">Create Confirmation</button>
                 </div>
             </form>
         </div>
@@ -45,8 +30,7 @@
 <script>
     import AppLayout from '@/Layouts/AppLayout'
     import Datepicker from 'vue3-datepicker'
-    import format from 'date-fns/format'
-    import { ref } from 'vue'
+//    import format from 'date-fns/format'
 
     export default {
         components: {
@@ -62,15 +46,17 @@
 
         data() {
             return {
-                form: this.$inertia.form({
-                    sent: null,
-                    remind_first: null,
-                    remind_second: null,
-                    received: null,
+                form : {
+ //                   sent: new Date(this.doFormat()),
+                    sent: new Date(),
+//                    remind_first: null,
+//                    remind_second: null,
+//                    received: null,
                     branch_id: this.branches[0].id,
-                }),
+                },
                 upper: new Date(this.year.end),
                 lower: new Date(this.year.begin),
+                isLoading: false,
             }
         },
 
@@ -80,13 +66,17 @@
    //             if(this.form.remind_first) this.form.remind_first=this.doFormat(this.form.remind_first)
    //             if(this.form.remind_second) this.form.remind_second=this.doFormat(this.form.remind_second)
    //             if(this.form.received) this.form.received=this.doFormat(this.form.received)
+                this.isLoading = true
+                setTimeout(() => {this.isLoading = false}, 2000)
                 this.$inertia.post(route('confirmations.store'), this.form)
             },
 
-            doFormat($item) {
-                var $i = format($item,'yyyy-MM-dd')
-                return $i
-            },
+ //           doFormat() {
+//                var $d = new Date()
+//                var $i = format($d,'yyyy-MM-dd')
+//                var $n = new Date($i)
+//                return $i
+//            },
 
         },
     }

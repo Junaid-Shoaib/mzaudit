@@ -151,12 +151,12 @@ class CompanyController extends Controller
     public function ex()
     {
         $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-        $sheet->setCellValue('A1', 'Hello World !');
-        $c = 'a2';
-        $sheet->setCellValue($c, 'Universes!');
+//        $sheet = $spreadsheet->getActiveSheet();
+//        $sheet->setCellValue('A1', 'Hello World !');
+//        $c = 'a2';
+ //       $sheet->setCellValue($c, 'Universes!');
 
-        $rowArray = ['SR#', 'BANK', 'ACCOUNT#', 'ACCOUNT TYPE', 'CURRENCY', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'SENT', 'REMINDER 1', 'REMINDER 2', 'RECEIVED'];
+        $rowArray = ['SR#', 'BANK', 'ACCOUNT#', 'ACCOUNT TYPE', 'CURRENCY', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'PREPARED', 'DISPATCH', 'REMINDER 1', 'RECEIVED'];
 //        $columnArray = array_chunk($rowArray, 1);
 //        $spreadsheet->getActiveSheet()->fromArray($columnArray, NULL, 'C10');
         $spreadsheet->getActiveSheet()->fromArray($rowArray, NULL, 'B3');
@@ -164,14 +164,16 @@ class CompanyController extends Controller
         $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(5);
         $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(20);
         $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(20);
-        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(25);
+        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(20);
         $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(15);
-        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(15);
-        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(15);
-        $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(15);
-        $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(15);
-        $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(15);
-        $spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(15);
+        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(25);
+        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(25);
+        $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(25);
+        $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(25);
+        $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(20);
+        $spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(20);
+        $spreadsheet->getActiveSheet()->getColumnDimension('M')->setWidth(20);
+        $spreadsheet->getActiveSheet()->getColumnDimension('N')->setWidth(20);
 
         $data = \App\Models\BankBalance::where('company_id',session('company_id'))->where('year_id',session('year_id'))->get()
                 ->map(function ($bal){
