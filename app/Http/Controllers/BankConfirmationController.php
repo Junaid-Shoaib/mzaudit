@@ -71,6 +71,7 @@ class BankConfirmationController extends Controller
     {
         Request::validate([
             'sent' => ['required'],
+//            'remind_first' => ['required'],
 //            'company_id' => ['required'],
 //            'year_id' => ['required'],
         ]);

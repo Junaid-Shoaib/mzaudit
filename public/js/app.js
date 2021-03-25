@@ -18377,10 +18377,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       form: this.$inertia.form({
-        sent: '',
-        remind_first: new Date(),
-        remind_second: '',
-        received: '',
+        sent: null,
+        remind_first: null,
+        remind_second: null,
+        received: null,
         branch_id: this.branches[0].id
       }),
       upper: new Date(this.year.end),
@@ -18389,10 +18389,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit() {
-      if (this.form.sent) this.form.sent = this.doFormat(this.form.sent);
-      if (this.form.remind_first) this.form.remind_first = this.doFormat(this.form.remind_first);
-      if (this.form.remind_second) this.form.remind_second = this.doFormat(this.form.remind_second);
-      if (this.form.received) this.form.received = this.doFormat(this.form.received);
+      //             if(this.form.sent) this.form.sent=this.doFormat(this.form.sent)
+      //             if(this.form.remind_first) this.form.remind_first=this.doFormat(this.form.remind_first)
+      //             if(this.form.remind_second) this.form.remind_second=this.doFormat(this.form.remind_second)
+      //             if(this.form.received) this.form.received=this.doFormat(this.form.received)
       this.$inertia.post(route('confirmations.store'), this.form);
     },
     doFormat: function doFormat($item) {
