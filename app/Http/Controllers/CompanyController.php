@@ -151,12 +151,19 @@ class CompanyController extends Controller
     public function ex()
     {
         $spreadsheet = new Spreadsheet();
-//        $sheet = $spreadsheet->getActiveSheet();
-//        $sheet->setCellValue('A1', 'Hello World !');
-//        $c = 'a2';
+        $spreadsheet->getActiveSheet()->getCell('A1')
+            ->setValueExplicit(
+                '25000',
+                \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_NUMERIC
+        );
+
+        $spreadsheet->getActiveSheet()->getStyle('A1')->getNumberFormat()
+        ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+
+    //        $c = 'a2';
  //       $sheet->setCellValue($c, 'Universes!');
 
-        $rowArray = ['SR#', 'BANK', 'ACCOUNT#', 'ACCOUNT TYPE', 'CURRENCY', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'PREPARED', 'DISPATCH', 'REMINDER 1', 'RECEIVED'];
+        $rowArray = ['SR#', 'BANK', 'ACCOUNT#', 'ACCOUNT TYPE', 'CURRENCY', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'PREPARED', 'DISPATCH', 'REMINDER', 'RECEIVED'];
 //        $columnArray = array_chunk($rowArray, 1);
 //        $spreadsheet->getActiveSheet()->fromArray($columnArray, NULL, 'C10');
         $spreadsheet->getActiveSheet()->fromArray($rowArray, NULL, 'B3');
@@ -167,13 +174,19 @@ class CompanyController extends Controller
         $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(20);
         $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(15);
         $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(25);
-        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(25);
-        $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(25);
-        $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(25);
+        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(20);
+        $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(20);
+        $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(20);
         $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(20);
         $spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(20);
         $spreadsheet->getActiveSheet()->getColumnDimension('M')->setWidth(20);
         $spreadsheet->getActiveSheet()->getColumnDimension('N')->setWidth(20);
+
+        $spreadsheet->getActiveSheet()->getStyle('I3')
+        ->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+    
+        $spreadsheet->getActiveSheet()->getStyle('I3')
+        ->getAlignment()->setWrapText(true);
 
         $data = \App\Models\BankBalance::where('company_id',session('company_id'))->where('year_id',session('year_id'))->get()
                 ->map(function ($bal){
