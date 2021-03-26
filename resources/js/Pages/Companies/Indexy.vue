@@ -30,6 +30,17 @@
                             <button  @click.prevent="deleteRow(index)" class="border bg-indigo-300 rounded-xl px-4 py-2 m-4" >Delete</button>
                             </td>
                         </tr>
+                        <tr>
+                            <td>
+                            <input v-model="outsiders.dr" type="text" class="rounded-md w-36"/>
+                            </td>
+                            <td>
+                            <input v-model="outsiders.cr" type="text" class="rounded-md w-36"/>
+                            </td>
+                            <td>
+                                ---
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -53,7 +64,6 @@
             AppLayout,
         },
 
-        props: {},
 
         data() {
             return {
@@ -62,12 +72,23 @@
                         dr: '',
                         cr: '',
                     }],
+                    dtotal : 0,
+                    ctotal : 0,
                 }),
+                outsiders: [{
+                    dr: '',
+                    cr: '',
+                }],
             }
         },
 
-        watch: {
-
+        watch : {
+            form : {
+                deep: true,
+                handler(){
+                console.log('hello')
+                }
+            }
         },
 
         methods: {

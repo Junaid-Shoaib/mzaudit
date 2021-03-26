@@ -17,6 +17,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Writer\Word2007;
 use Carbon\Carbon;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class CompanyController extends Controller
 {
@@ -151,42 +152,70 @@ class CompanyController extends Controller
     public function ex()
     {
         $spreadsheet = new Spreadsheet();
-        $spreadsheet->getActiveSheet()->getCell('A1')
-            ->setValueExplicit(
-                '25000',
-                \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_NUMERIC
-        );
 
-        $spreadsheet->getActiveSheet()->getStyle('A1')->getNumberFormat()
-        ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+        $colArray = ['H:H','I:I','J:J'];
+        foreach ($colArray as $key=>$col) {
+            $spreadsheet->getActiveSheet()->getStyle($col)->getNumberFormat()
+            ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+        }
 
-    //        $c = 'a2';
+        // $spreadsheet->getActiveSheet()->getStyle('H:H')->getNumberFormat()
+        // ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+        // $spreadsheet->getActiveSheet()->getStyle('I:I')->getNumberFormat()
+        // ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+        // $spreadsheet->getActiveSheet()->getStyle('J:J')->getNumberFormat()
+        // ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+
+        $spreadsheet->getActiveSheet()->getStyle('B3:N3')->applyFromArray(
+            array(
+               'fill' => array(
+                   'fillType' => Fill::FILL_SOLID,
+                   'color' => array('rgb' => '484848' )
+               ),
+               'font'  => array(
+                   'bold'  =>  true,
+                   'color' => array('rgb' => 'FFFFFF')
+               ),
+               'alignment' => array(
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                    'wrapText' => true,
+               ),
+            )
+          );
+
+        //        $c = 'a2';
  //       $sheet->setCellValue($c, 'Universes!');
 
-        $rowArray = ['SR#', 'BANK', 'ACCOUNT#', 'ACCOUNT TYPE', 'CURRENCY', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'PREPARED', 'DISPATCH', 'REMINDER', 'RECEIVED'];
+        $rowArray = ['SR#', 'BANK', 'ACCOUNT#', 'ACCOUNT TYPE', 'CURRENCY', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'PREPARED', 'DISPATCHED', 'REMINDER', 'RECEIVED'];
 //        $columnArray = array_chunk($rowArray, 1);
 //        $spreadsheet->getActiveSheet()->fromArray($columnArray, NULL, 'C10');
         $spreadsheet->getActiveSheet()->fromArray($rowArray, NULL, 'B3');
-  
-        $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(5);
-        $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(20);
-        $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(20);
-        $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(20);
-        $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(15);
-        $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(25);
-        $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(20);
-        $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(20);
-        $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(20);
-        $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(20);
-        $spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(20);
-        $spreadsheet->getActiveSheet()->getColumnDimension('M')->setWidth(20);
-        $spreadsheet->getActiveSheet()->getColumnDimension('N')->setWidth(20);
+        
+        $widthArray = ['10','5','20','20','20','15','25','17','17','17','20','20','20','20'];
+        foreach (range('A','N') as $key=>$col) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth($widthArray[$key]);  
+        }
+        // $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20);
+        // $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(5);
+        // $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(20);
+        // $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(20);
+        // $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(20);
+        // $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(15);
+        // $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(25);
+        // $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(20);
+        // $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(20);
+        // $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(20);
+        // $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(20);
+        // $spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(20);
+        // $spreadsheet->getActiveSheet()->getColumnDimension('M')->setWidth(20);
+        // $spreadsheet->getActiveSheet()->getColumnDimension('N')->setWidth(20);
 
-        $spreadsheet->getActiveSheet()->getStyle('I3')
-        ->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+        // $spreadsheet->getActiveSheet()->getStyle('I3')
+        // ->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
     
-        $spreadsheet->getActiveSheet()->getStyle('I3')
-        ->getAlignment()->setWrapText(true);
+        // $spreadsheet->getActiveSheet()->getStyle('I3')
+        // ->getAlignment()->setWrapText(true);
 
         $data = \App\Models\BankBalance::where('company_id',session('company_id'))->where('year_id',session('year_id'))->get()
                 ->map(function ($bal){
