@@ -240,7 +240,8 @@ class CompanyController extends Controller
                 }) 
               ->toArray();
 //dd($data);
-for($i=0;$i<count($data);$i++){
+$cnt=count($data);
+for($i=0;$i<$cnt;$i++){
     $data[$i]['sent'] = $data[$i]['sent']? new Carbon($data[$i]['sent']) : null;
     $data[$i]['sent'] = $data[$i]['sent']? $data[$i]['sent']->format('F j, Y') : null;
     $data[$i]['remind_first'] = $data[$i]['remind_first']? new Carbon($data[$i]['remind_first']) : null;
@@ -260,6 +261,25 @@ for($i=0;$i<count($data);$i++){
 //        dd($data2);
         $spreadsheet->getActiveSheet()->fromArray($data, NULL, 'B5');
 
+        $total = 0;
+        for($i=0;$i<$cnt;$i++){
+            $total = $total + $data[$i]['ledger'];
+        }
+
+        $tstr= $cnt+5;
+        $tcell= "H".strval($tstr);
+        $spreadsheet->getActiveSheet()->setCellValue($tcell, $total);
+
+        $styleArray = [
+            'borders' => [
+                'outline' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
+                    'color' => ['rgb' => '484848'],
+                ],
+            ],
+        ];
+        $spreadsheet->getActiveSheet()->getStyle($tcell)->applyFromArray($styleArray);
+        
         $writer = new Xlsx($spreadsheet);
         $writer->save('hello world.xlsx');
     }
@@ -282,11 +302,26 @@ for($i=0;$i<count($data);$i++){
         $str = "first Monday of July {$year}";
         $date = new Carbon($str);
 
+        $name = str_replace(["(",")"],"",$company->name);
+        $words = preg_split("/[\s,_-]+/", $name);
+        $acronym = "";
+        $count = 1;
+
+        foreach ($words as $w) {
+            $acronym .= $w[0];
+        }
+        
         for($i=0;$i<3;$i++) {
             $section = $phpWord->addSection();
 
             $textrun = $section->addTextRun();
             $section->addTextBreak(2);
+
+            $ref = "MZ-BCONF/".$acronym."/".$year."/".$count++;
+            $section->addText($ref, 'f2Style', 'p1Style');
+            
+            $textrun = $section->addTextRun();
+            $section->addTextBreak(1);
 
             $section->addText($date->format('F j, Y'), 'f2Style', 'p1Style');
 

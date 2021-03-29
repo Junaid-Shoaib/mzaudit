@@ -7,6 +7,10 @@
         </template>
         <div class="">
             <form @submit.prevent="submit">
+                <div class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center">
+                    <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('accounts')">Back
+                    </inertia-link>
+                </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
                     <label class="w-28 inline-block text-right mr-4">Branch:</label>
                     <select v-model="form.branch_id" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="branch_id" placeholder="Enter type">

@@ -17,7 +17,7 @@
                 <thead>
                     <tr class="bg-indigo-100">
                         <th class="py-2 px-4 border">Bank Name</th>
-                        <th class="py-2 px-4 border">Branch</th>
+                        <th class="py-2 px-4 border">Branch Name & Address</th>
                         <th class="py-2 px-4 border">Actions</th>
                     </tr>
                 </thead>

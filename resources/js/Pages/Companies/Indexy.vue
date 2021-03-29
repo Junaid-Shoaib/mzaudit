@@ -96,7 +96,7 @@
             submit() {
                 var i;
                 for(i=0;i<3;i++){
-                    console.log(this.$refs.eldr_0.value)
+                    console.log("Hello world")
                 }
             },
 

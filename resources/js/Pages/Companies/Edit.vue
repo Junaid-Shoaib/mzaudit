@@ -7,6 +7,10 @@
         </template>
         <div class="">
             <form @submit.prevent="submit">
+                <div class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center">
+                    <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('companies')">Back
+                    </inertia-link>
+                </div>
                 <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">Name:
                     <input type="text" v-model="form.name" class="pr-2 pb-2 w-full lg:w-1/4 rounded-md" label="name"/>
                     <div v-if="errors.name">{{ errors.name }}</div>

@@ -9,6 +9,10 @@
     <div class="">
         <form @submit.prevent="submit">
         <div class="panel-body"> 
+                <div class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center">
+                    <inertia-link class="border bg-indigo-300 rounded-xl px-4 py-1 m-1" :href="route('balances')">Back
+                    </inertia-link>
+                </div>
             <button class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"  @click.prevent="addRow" >Add row</button>
             <div v-if="isError">{{ firstError }}</div>
             <table class="table border">
