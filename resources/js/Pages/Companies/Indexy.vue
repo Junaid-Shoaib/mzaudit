@@ -21,10 +21,12 @@
                     <tbody>
                         <tr v-for='(balance, index) in form.balances' :key="balance.id">
                             <td>
-                            <input v-model="balance.dr" type="text" @change="dchange(index)" class="rounded-md w-36"/>
+                            <!-- <input v-model="balance.dr" type="text" @change="dchange(index)" class="rounded-md w-36"/> -->
+                            <input v-model="balance.dr" type="text" class="rounded-md w-36"/>
                             </td>
                             <td>
-                            <input v-model="balance.cr" type="text" @change="cchange(index)" class="rounded-md w-36"/>
+                            <!-- <input v-model="balance.cr" type="text" @change="cchange(index)" class="rounded-md w-36"/> -->
+                            <input v-model="balance.cr" type="text" class="rounded-md w-36"/>
                             </td>
                             <td>
                             <button  @click.prevent="deleteRow(index)" class="border bg-indigo-300 rounded-xl px-4 py-2 m-4" >Delete</button>
@@ -83,10 +85,16 @@
         },
 
         watch : {
-            form : {
+            form :  {
                 deep: true,
-                handler(){
-                console.log('hello')
+                handler(val, oldVal){
+                    var i;
+                    for(i=0;i<val.balances.length;i++){
+                        console.log(val.balances[i]);
+                        console.log(oldVal.balances[i]);
+                    }
+                    // const index = values.balances.findIndex(function (v, i) { return v !== oldValues.balances[i] })
+                    // console.log(values.balances[index], index)
                 }
             }
         },
