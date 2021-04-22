@@ -17,15 +17,19 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Writer\Word2007;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App as FacadesApp;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class CompanyController extends Controller
 {
+    // Company Index
     public function index()
     {
         $data = Company::all();
         return Inertia::render('Companies/Index', ['data' => $data]);
     }
+
+    // Company Create
 
     public function create()
     {
@@ -40,7 +44,7 @@ class CompanyController extends Controller
             'fiscal' => ['required'],
         ]);
 
-        Company::create([
+        $company = Company::create([
             'name' => Request::input('name'),
             'address' => Request::input('address'),
             'email' => Request::input('email'),
@@ -48,19 +52,28 @@ class CompanyController extends Controller
             'phone' => Request::input('phone'),
             'fiscal' => Request::input('fiscal'),
             'incorp' => Request::input('incorp'),
+
         ]);
 
-        return Redirect::route('companies')->with('success', 'Company created.');
+        Setting::create([
+            'key' => 'active_company',
+            'value' => $company->id,
+            'user_id' => Auth::user()->id,
+        ]);
 
+        session(['company_id' => $company->id]);
+
+        return Redirect::route('years.create')->with('success', 'Company created. First Create a Company Year');
     }
 
+    // Company Show
     public function show(Company $company)
     {
     }
 
+    // Company Edit
     public function edit(Company $company)
     {
-//        $types = \App\Models\Company::all()->map->only('id','name');
         return Inertia::render('Companies/Edit', [
             'company' => [
                 'id' => $company->id,
@@ -74,7 +87,7 @@ class CompanyController extends Controller
             ],
         ]);
     }
-
+    // Company Update
     public function update(Company $company)
     {
         Request::validate([
@@ -94,12 +107,14 @@ class CompanyController extends Controller
         return Redirect::route('companies')->with('success', 'Company updated.');
     }
 
+    // Company Delete
     public function destroy(Company $company)
     {
         $company->delete();
         return Redirect::back()->with('success', 'Company deleted.');
     }
 
+    // Extra Function bind to getBank
     public function getBanks()
     {
         $data = Bank::all();
@@ -107,56 +122,74 @@ class CompanyController extends Controller
         return Inertia::render('Companies/Indexx', ['data' => $data, 'sbank' => $sbank]);
     }
 
+    // Extra Function bind to getbranch
     public function getBranches(Bank $bank)
     {
+
         $data = Bank::all();
         $data2 = BankBranch::where('bank_id', $bank->id)->get();
-        return Inertia::render('Companies/Indexx', ['data' => $data,'data2' => $data2, 'sbank' => $bank->id]);
+        return Inertia::render('Companies/Indexx', ['data' => $data, 'data2' => $data2, 'sbank' => $bank->id]);
     }
 
+    // Extra Function bind to indexy(debit & credit)
     public function indexy()
     {
         return Inertia::render('Companies/Indexy');
     }
 
+
     public function coch($id)
     {
-        $active_co = Setting::where('user_id',Auth::user()->id)->where('key','active_company')->first();
-        $active_yr = Setting::where('user_id',Auth::user()->id)->where('key','active_year')->first();
+
+
+        $active_co = Setting::where('user_id', Auth::user()->id)->where('key', 'active_company')->first();
+        // dd($active_co);
+        $active_yr = Setting::where('user_id', Auth::user()->id)->where('key', 'active_year')->first();
+        // dd($active_yr);
         $active_co->value = $id;
-        $active_yr->value = Year::where('company_id',$id)->latest()->first()->id;
-        $active_co->save();
-        $active_yr->save();
-        session(['company_id'=>$id]);
-        session(['year_id'=>$active_yr->value]);
+        session(['company_id' => $id]);
+
+        if (Year::where('company_id', $id)->latest()->first()) {
+
+            $active_yr->value = Year::where('company_id', $id)->latest()->first()->id;
+            $active_co->save();
+            $active_yr->save();
+            session(['year_id' => $active_yr->value]);
+        } else {
+            return Redirect::route('years')->with('success', 'First Create Year.');
+        }
         return redirect()->back();
+
+        // return redirect()->back();
     }
 
+    // year Change Function
     public function yrch($id)
     {
-        $active_yr = Setting::where('user_id',Auth::user()->id)->where('key','active_year')->first();
+        $active_yr = Setting::where('user_id', Auth::user()->id)->where('key', 'active_year')->first();
         $active_yr->value = $id;
         $active_yr->save();
-        session(['year_id'=>$active_yr->value]);
+        session(['year_id' => $active_yr->value]);
         return redirect()->back();
     }
 
-    public function pd()
-    {
-        $a = "hello world";
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadView('pdd',compact('a'));
-        return $pdf->stream('v.pdf');
-    }
+    // public function pd()
+    // {
+    //     $a = "hello world";
+    //     $pdf = App::make('dompdf.wrapper');
+    //     $pdf->loadView('pdd', compact('a'));
+    //     return $pdf->stream('v.pdf');
+    // }
 
+    // excel file Generator
     public function ex()
     {
         $spreadsheet = new Spreadsheet();
 
-        $colArray = ['H:H','I:I','J:J'];
-        foreach ($colArray as $key=>$col) {
+        $colArray = ['H:H', 'I:I', 'J:J'];
+        foreach ($colArray as $key => $col) {
             $spreadsheet->getActiveSheet()->getStyle($col)->getNumberFormat()
-            ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+                ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
         }
 
         // $spreadsheet->getActiveSheet()->getStyle('H:H')->getNumberFormat()
@@ -168,33 +201,33 @@ class CompanyController extends Controller
 
         $spreadsheet->getActiveSheet()->getStyle('B3:N3')->applyFromArray(
             array(
-               'fill' => array(
-                   'fillType' => Fill::FILL_SOLID,
-                   'color' => array('rgb' => '484848' )
-               ),
-               'font'  => array(
-                   'bold'  =>  true,
-                   'color' => array('rgb' => 'FFFFFF')
-               ),
-               'alignment' => array(
+                'fill' => array(
+                    'fillType' => Fill::FILL_SOLID,
+                    'color' => array('rgb' => '484848')
+                ),
+                'font'  => array(
+                    'bold'  =>  true,
+                    'color' => array('rgb' => 'FFFFFF')
+                ),
+                'alignment' => array(
                     'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
                     'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
                     'wrapText' => true,
-               ),
+                ),
             )
-          );
+        );
 
         //        $c = 'a2';
- //       $sheet->setCellValue($c, 'Universes!');
+        //       $sheet->setCellValue($c, 'Universes!');
 
         $rowArray = ['SR#', 'BANK', 'ACCOUNT#', 'ACCOUNT TYPE', 'CURRENCY', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'PREPARED', 'DISPATCHED', 'REMINDER', 'RECEIVED'];
-//        $columnArray = array_chunk($rowArray, 1);
-//        $spreadsheet->getActiveSheet()->fromArray($columnArray, NULL, 'C10');
+        //        $columnArray = array_chunk($rowArray, 1);
+        //        $spreadsheet->getActiveSheet()->fromArray($columnArray, NULL, 'C10');
         $spreadsheet->getActiveSheet()->fromArray($rowArray, NULL, 'B3');
-        
-        $widthArray = ['10','5','20','20','20','15','25','17','17','17','20','20','20','20'];
-        foreach (range('A','N') as $key=>$col) {
-            $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth($widthArray[$key]);  
+
+        $widthArray = ['10', '5', '20', '20', '20', '15', '25', '17', '17', '17', '20', '20', '20', '20'];
+        foreach (range('A', 'N') as $key => $col) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth($widthArray[$key]);
         }
         // $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20);
         // $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(5);
@@ -213,12 +246,13 @@ class CompanyController extends Controller
 
         // $spreadsheet->getActiveSheet()->getStyle('I3')
         // ->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-    
+
         // $spreadsheet->getActiveSheet()->getStyle('I3')
         // ->getAlignment()->setWrapText(true);
 
-        $data = \App\Models\BankBalance::where('company_id',session('company_id'))->where('year_id',session('year_id'))->get()
-                ->map(function ($bal){
+        $data = \App\Models\BankBalance::where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()
+            ->map(
+                function ($bal) {
                     return [
                         'id' => $bal->id,
                         'bank' => $bal->bankAccount->bankBranch->bank->name,
@@ -230,44 +264,47 @@ class CompanyController extends Controller
                         'statement' => $bal->statement,
                         'confirmation' => $bal->confirmation,
                         'sent' => $bal->bankAccount->bankBranch->bankConfirmations
-                                    ->filter(function ($confirmation){
-                                        return ($confirmation->company_id == session('company_id') && $confirmation->year_id == session('year_id'));
-                                    })->first()->sent,
-                        'remind_first' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id',session('company_id'))->where('year_id',session('year_id'))->get()->first()->remind_first,
-                        'remind_second' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id',session('company_id'))->where('year_id',session('year_id'))->get()->first()->remind_second,
-                        'received' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id',session('company_id'))->where('year_id',session('year_id'))->get()->first()->received,
+                            // dd($bal),
+                            ->filter(function ($confirmation) {
+                                // dd($confirmation);
+                                return ($confirmation->company_id == session('company_id') && $confirmation->year_id == session('year_id'));
+                            })->first()->sent,
+                        'remind_first' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()->first()->reminder,
+                        'remind_second' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()->first()->confirm_create,
+                        'received' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()->first()->received,
                     ];
-                }) 
-              ->toArray();
-//dd($data);
-$cnt=count($data);
-for($i=0;$i<$cnt;$i++){
-    $data[$i]['sent'] = $data[$i]['sent']? new Carbon($data[$i]['sent']) : null;
-    $data[$i]['sent'] = $data[$i]['sent']? $data[$i]['sent']->format('F j, Y') : null;
-    $data[$i]['remind_first'] = $data[$i]['remind_first']? new Carbon($data[$i]['remind_first']) : null;
-    $data[$i]['remind_first'] = $data[$i]['remind_first']? $data[$i]['remind_first']->format('F j, Y') : null;
-    $data[$i]['remind_second'] = $data[$i]['remind_second']? new Carbon($data[$i]['remind_second']) : null;
-    $data[$i]['remind_second'] = $data[$i]['remind_second']? $data[$i]['remind_second']->format('F j, Y') : null;
-    $data[$i]['received'] = $data[$i]['received']? new Carbon($data[$i]['received']) : null;
-    $data[$i]['received'] = $data[$i]['received']? $data[$i]['received']->format('F j, Y') : null;
-}
-//dd($data);
-//        $abc= \App\Models\BankBranch::with(['bankAccounts.bankBalances','bankConfirmations','bank'])->get()->toArray();
-//        dd($abc);
-//        $data2 = [];
-//        foreach($data as $key=>$value){
-//            $data2[$key] = array_values($value);
-//        }
-//        dd($data2);
+                }
+            )
+            ->toArray();
+        // dd($data);
+        $cnt = count($data);
+        for ($i = 0; $i < $cnt; $i++) {
+            $data[$i]['sent'] = $data[$i]['sent'] ? new Carbon($data[$i]['sent']) : null;
+            $data[$i]['sent'] = $data[$i]['sent'] ? $data[$i]['sent']->format('F j, Y') : null;
+            $data[$i]['remind_first'] = $data[$i]['remind_first'] ? new Carbon($data[$i]['remind_first']) : null;
+            $data[$i]['remind_first'] = $data[$i]['remind_first'] ? $data[$i]['remind_first']->format('F j, Y') : null;
+            $data[$i]['remind_second'] = $data[$i]['remind_second'] ? new Carbon($data[$i]['remind_second']) : null;
+            $data[$i]['remind_second'] = $data[$i]['remind_second'] ? $data[$i]['remind_second']->format('F j, Y') : null;
+            $data[$i]['received'] = $data[$i]['received'] ? new Carbon($data[$i]['received']) : null;
+            $data[$i]['received'] = $data[$i]['received'] ? $data[$i]['received']->format('F j, Y') : null;
+        }
+        // dd($data);
+        //        $abc= \App\Models\BankBranch::with(['bankAccounts.bankBalances','bankConfirmations','bank'])->get()->toArray();
+        //        dd($abc);
+        //        $data2 = [];
+        //        foreach($data as $key=>$value){
+        //            $data2[$key] = array_values($value);
+        //        }
+        //        dd($data2);
         $spreadsheet->getActiveSheet()->fromArray($data, NULL, 'B5');
 
         $total = 0;
-        for($i=0;$i<$cnt;$i++){
+        for ($i = 0; $i < $cnt; $i++) {
             $total = $total + $data[$i]['ledger'];
         }
 
-        $tstr= $cnt+5;
-        $tcell= "H".strval($tstr);
+        $tstr = $cnt + 5;
+        $tcell = "H" . strval($tstr);
         $spreadsheet->getActiveSheet()->setCellValue($tcell, $total);
 
         $styleArray = [
@@ -279,30 +316,33 @@ for($i=0;$i<$cnt;$i++){
             ],
         ];
         $spreadsheet->getActiveSheet()->getStyle($tcell)->applyFromArray($styleArray);
-        
+
         $writer = new Xlsx($spreadsheet);
         $writer->save('hello world.xlsx');
+        return response()->download(public_path('hello World.xlsx'));
     }
 
+    //word file Generator
     public function doc()
     {
+
         $phpWord = new PhpWord();
 
-        $phpWord->addParagraphStyle('p1Style', array('align'=>'both', 'spaceAfter'=>0, 'spaceBefore'=>0));
-        $phpWord->addParagraphStyle('p2Style', array('align'=>'both'));
-        $phpWord->addParagraphStyle('p3Style', array('align'=>'right', 'spaceAfter'=>0, 'spaceBefore'=>0));
-        $phpWord->addFontStyle('f1Style', array('name' => 'Calibri', 'size'=>12));
-        $phpWord->addFontStyle('f2Style', array('name' => 'Calibri','bold'=>true, 'size'=>12));
-        $company = \App\Models\Company::where('id',session('company_id'))->first();
+        $phpWord->addParagraphStyle('p1Style', array('align' => 'both', 'spaceAfter' => 0, 'spaceBefore' => 0));
+        $phpWord->addParagraphStyle('p2Style', array('align' => 'both'));
+        $phpWord->addParagraphStyle('p3Style', array('align' => 'right', 'spaceAfter' => 0, 'spaceBefore' => 0));
+        $phpWord->addFontStyle('f1Style', array('name' => 'Calibri', 'size' => 12));
+        $phpWord->addFontStyle('f2Style', array('name' => 'Calibri', 'bold' => true, 'size' => 12));
+        $company = \App\Models\Company::where('id', session('company_id'))->first();
         $branch = $company->bankAccounts()->first()->bankBranch;
-        $period = \App\Models\Year::where('company_id',session('company_id'))->first();
+        $period = \App\Models\Year::where('company_id', session('company_id'))->first();
         $begin = new Carbon($period->begin);
         $end = new Carbon($period->end);
         $year = $end->year;
         $str = "first Monday of July {$year}";
         $date = new Carbon($str);
 
-        $name = str_replace(["(",")"],"",$company->name);
+        $name = str_replace(["(", ")"], "", $company->name);
         $words = preg_split("/[\s,_-]+/", $name);
         $acronym = "";
         $count = 1;
@@ -310,16 +350,16 @@ for($i=0;$i<$cnt;$i++){
         foreach ($words as $w) {
             $acronym .= $w[0];
         }
-        
-        for($i=0;$i<3;$i++) {
+
+        for ($i = 0; $i < 3; $i++) {
             $section = $phpWord->addSection();
 
             $textrun = $section->addTextRun();
             $section->addTextBreak(2);
 
-            $ref = "MZ-BCONF/".$acronym."/".$year."/".$count++;
+            $ref = "MZ-BCONF/" . $acronym . "/" . $year . "/" . $count++;
             $section->addText($ref, 'f2Style', 'p1Style');
-            
+
             $textrun = $section->addTextRun();
             $section->addTextBreak(1);
 
@@ -328,13 +368,13 @@ for($i=0;$i<$cnt;$i++){
             $textrun = $section->addTextRun();
             $section->addTextBreak(0);
 
-            $section->addText('The Manager,','f1Style','p1Style');
-            $section->addText($branch->bank->name.",",'f1Style','p1Style');
-            $section->addText($branch->address.".",'f1Style','p1Style');
+            $section->addText('The Manager,', 'f1Style', 'p1Style');
+            $section->addText($branch->bank->name . ",", 'f1Style', 'p1Style');
+            $section->addText($branch->address . ".", 'f1Style', 'p1Style');
 
             $textrun = $section->addTextRun();
             $section->addTextBreak(0);
-            $section->addText('Dear Sir,','f1Style','p2Style');
+            $section->addText('Dear Sir,', 'f1Style', 'p2Style');
 
             $textrun = $section->addTextRun();
             $section->addTextBreak(0);
@@ -365,16 +405,18 @@ for($i=0;$i<$cnt;$i++){
             $textrun = $section->addTextRun();
             $textrun->addText(
                 "Please state against each item any factors which may limit the completeness of your reply; if there is nothing to report, state ‘NONE’.",
-                'f1Style', 'p2Style'
+                'f1Style',
+                'p2Style'
             );
-            
+
             $textrun = $section->addTextRun();
             $section->addTextBreak(0);
 
             $textrun = $section->addTextRun();
             $textrun->addText(
                 "It is understood that any replies given are in strict confidence, for the purposes of audit.",
-                'f1Style', 'p2Style'
+                'f1Style',
+                'p2Style'
             );
 
             $textrun = $section->addTextRun();
@@ -383,17 +425,20 @@ for($i=0;$i<$cnt;$i++){
             $textrun = $section->addTextRun();
             $textrun->addText(
                 "Yours truly,",
-                'f1Style', 'p2Style'
+                'f1Style',
+                'p2Style'
             );
 
             $section->addText(
                 "Disclosure  Authorized",
-                'f2Style', 'p3Style'
+                'f2Style',
+                'p3Style'
             );
 
             $section->addText(
                 "For  and  on  behalf  of",
-                'f2Style', 'p3Style'
+                'f2Style',
+                'p3Style'
             );
 
             $textrun = $section->addTextRun();
@@ -402,7 +447,8 @@ for($i=0;$i<$cnt;$i++){
             $textrun = $section->addTextRun();
             $textrun->addText(
                 "Chartered Accountants                                                                                  ___________________",
-                'f2Style', 'p2Style'
+                'f2Style',
+                'p2Style'
             );
 
             $textrun = $section->addTextRun();
@@ -411,12 +457,13 @@ for($i=0;$i<$cnt;$i++){
             $textrun = $section->addTextRun();
             $textrun->addText(
                 "Enclosures:",
-                'f1Style', 'p2Style'
+                'f1Style',
+                'p2Style'
             );
-
         }
 
         $writer = new Word2007($phpWord);
         $writer->save('hello World.docx');
+        return response()->download(public_path('hello World.docx'));
     }
 }

@@ -10,19 +10,21 @@ class BankBalance extends Model
     use HasFactory;
 
     protected $fillable = [
-        'ledger','statement','confirmation','enabled','account_id','year_id','company_id'
+        'ledger', 'statement', 'confirmation', 'enabled', 'account_id', 'year_id', 'company_id'
     ];
 
-    public function bankAccount(){
+    public function bankAccount()
+    {
         return $this->belongsTo('App\Models\BankAccount', 'account_id');
     }
 
-    public function year(){
+    public function year()
+    {
         return $this->belongsTo('App\Models\Year', 'year_id');
     }
 
-    public function company(){
+    public function company()
+    {
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
-
 }

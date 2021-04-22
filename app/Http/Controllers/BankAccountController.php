@@ -16,23 +16,34 @@ class BankAccountController extends Controller
     public function index()
     {
         return Inertia::render('Accounts/Index', [
-            'data' => BankAccount::where('company_id',session('company_id'))->get(),
+            'data' => BankAccount::where('company_id',session('company_id'))->get()
+            ->map(function ($branch){
+                return [
+                  'id' => $branch->id,
+                'name' => $branch->name,
+                'type' => $branch->type,
+                'currency' => $branch->currency,
+                'branches' => $branch->bankBranch->address,
+
+                ];                
+            }),
             'companies' => Company::all()
-                ->map(function($company){
-                    return [
+            ->map(function($company){
+                return [
                     'id' => $company->id,
                     'name' => $company->name,
-                    ];
-                }), 
-        ]);
+                ];
+            }), 
+        ],
+       
+    );
     }
 
     public function create()
     {
         return Inertia::render('Accounts/Create',[
- //           'filters' => Request::all('bank'),
+        //    'filters' => Request::all('bank'),
             'branches' => BankBranch::all()
- //               ->filter(Request::only('bank'))
                 ->map(function ($branch){
                     return [
                         'id' => $branch->id,
@@ -41,7 +52,7 @@ class BankAccountController extends Controller
                         'name' => $branch->bank->name,
                     ];
                 }),
-//            'banks' =>  Bank::all('id','name'),
+        //    'banks' =>  Bank::all('id','name'),
         ]);
     }
 
@@ -49,8 +60,10 @@ class BankAccountController extends Controller
     {
 
         Request::validate([
-            '*.name' => ['required'],
-//            '*.type' => ['required'],
+            '*.name' => 'required|unique:App\Models\BankAccount,name',
+           '*.type' => ['required'],
+           '*.currency' => ['required'],
+
         ]);
 
         $accounts = $request->all();
@@ -91,7 +104,9 @@ class BankAccountController extends Controller
     public function update(Req $request, BankAccount $account)
     {
         Request::validate([
-            'name' => ['required'],
+            'name' => 'required|unique:App\Models\BankAccount,name',
+            'type' => ['required'],
+            'currency' => ['required'],
    //         'type' => ['required'],
         ]);
 

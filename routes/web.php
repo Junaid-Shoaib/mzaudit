@@ -205,7 +205,7 @@ Route::delete('balances/{balance}', [BankBalanceController::class, 'destroy'])
     ->name('balances.destroy')
     ->middleware('auth');
 
-// Bank Balances
+// Bank confirmations
 
 Route::get('confirmations', [BankConfirmationController::class, 'index'])
     ->name('confirmations')

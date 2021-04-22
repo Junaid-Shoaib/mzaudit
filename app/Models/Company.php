@@ -10,7 +10,7 @@ class Company extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','address','email','web','phone','fiscal','incorp','enabled'
+        'name', 'address', 'email', 'web', 'phone', 'fiscal', 'incorp', 'enabled'
     ];
 
     public function bankAccounts()
