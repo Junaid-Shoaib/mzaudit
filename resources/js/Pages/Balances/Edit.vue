@@ -134,9 +134,13 @@ export default {
         balances: this.balances,
       });
     },
+    // doFormat($item) {
+    //   var $i = format($item, "yyyy-MM-dd");
+    //   return $i;
+    // },
 
     addRow() {
-      this.form.balances.push({
+      this.balances.push({
         ledger: "",
         statement: "",
         confirmation: "",
@@ -145,7 +149,7 @@ export default {
     },
 
     deleteRow(index) {
-      this.form.balances.splice(index, 1);
+      this.balances.splice(index, 1);
     },
   },
 };

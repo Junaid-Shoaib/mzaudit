@@ -76,9 +76,13 @@ export default {
 
   methods: {
     submit() {
-      this.form.begin = format(this.form.begin, "yyyy-MM-dd");
-      this.form.end = format(this.form.end, "yyyy-MM-dd");
-      this.$inertia.post(route("years.store"), this.form);
+      if (this.form.begin && this.form.end) {
+        this.form.begin = format(this.form.begin, "yyyy-MM-dd");
+        this.form.end = format(this.form.end, "yyyy-MM-dd");
+        this.$inertia.post(route("years.store"), this.form);
+      } else {
+        alert("Insert Your Begin/End Date");
+      }
     },
   },
 };

@@ -11,6 +11,7 @@ use App\Http\Controllers\BankBranchController;
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\BankBalanceController;
 use App\Http\Controllers\BankConfirmationController;
+use App\Models\BankBalance;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -35,7 +36,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return Inertia::render('Dashboard');
-    })->name('dashboard');
+})->name('dashboard');
 
 // Companies
 
@@ -68,8 +69,12 @@ Route::delete('companies/{company}', [CompanyController::class, 'destroy'])
     ->middleware('auth');
 
 Route::get('indexy', [CompanyController::class, 'indexy']);
-Route::get('companies/coch/{id}', [CompanyController::class, 'coch'])->name('companies.coch');
-Route::get('companies/yrch/{id}', [CompanyController::class, 'yrch'])->name('companies.yrch');
+Route::get('companies/coch/{id}', [CompanyController::class, 'coch'])
+    ->name('companies.coch');
+
+Route::get('companies/yrch/{id}', [CompanyController::class, 'yrch'])
+    ->name('companies.yrch');
+
 Route::get('get_banks', [CompanyController::class, 'getBanks']);
 Route::get('get_branches/{bank}', [CompanyController::class, 'getBranches'])
     ->name('braches')
@@ -193,8 +198,11 @@ Route::post('balances', [BankBalanceController::class, 'store'])
     ->name('balances.store')
     ->middleware('auth');
 
-Route::get('balances/{balance}/edit', [BankBalanceController::class, 'edit'])
-    ->name('balances.edit')
+// Route::get('balances/{balance}/edit', [BankBalanceController::class, 'edit'])
+// ->name('balances.edit')
+// ->middleware('auth');
+Route::get('bal/edit', [BankBalanceController::class, 'edity'])
+    ->name('bal.edit')
     ->middleware('auth');
 
 Route::put('balances/{balance}', [BankBalanceController::class, 'update'])
@@ -223,17 +231,26 @@ Route::post('confirmations', [BankConfirmationController::class, 'store'])
     ->name('confirmations.store')
     ->middleware('auth');
 
-Route::get('confirmations/{confirmation}/edit', [BankConfirmationController::class, 'edit'])
+// Route::get('bal/edit', [BankBalanceController::class, 'edity'])
+//     ->name('bal.edit')
+//     ->middleware('auth');
+
+Route::get('confirmation/edit', [BankConfirmationController::class, 'edit'])
     ->name('confirmations.edit')
     ->middleware('auth');
 
-Route::put('confirmations/{confirmation}', [BankConfirmationController::class, 'update'])
+// Route::put('balances/{balance}', [BankBalanceController::class, 'update'])
+// ->name('balances.update')
+// ->middleware('auth');
+
+Route::put('confirmations/{balance}', [BankConfirmationController::class, 'update'])
     ->name('confirmations.update')
     ->middleware('auth');
 
 Route::delete('confirmations/{confirmation}', [BankConfirmationController::class, 'destroy'])
     ->name('confirmations.destroy')
     ->middleware('auth');
+
 
 // Years
 
@@ -264,4 +281,3 @@ Route::put('years/{year}', [YearController::class, 'update'])
 Route::delete('years/{year}', [YearController::class, 'destroy'])
     ->name('years.destroy')
     ->middleware('auth');
-

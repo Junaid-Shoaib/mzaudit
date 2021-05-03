@@ -47,10 +47,10 @@ class YearController extends Controller
 
     public function store(Req $request)
     {
-        //        dd($request->all());
+        // dd($request->begin);
         Request::validate([
-            'begin' => ['required', 'date'],
-            'end' => ['required', 'date'],
+            'begin' => ['required'],
+            'end' => ['required'],
             //           'company_id' => ['required'],
         ]);
 

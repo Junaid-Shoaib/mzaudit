@@ -16,7 +16,25 @@
           :href="route('balances.create')"
           >Create
         </inertia-link>
+        <!-- <inertia-link
+          v-for="items in data"
+          :key="items.id"
+          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+          :href="route('balances.edit', items.id)"
+          >Edit
+        </inertia-link> -->
+
+        <!-- :v-if="items > 2" -->
+        <!-- v-for="items in data"
+          :key="items.id" -->
+
+        <inertia-link
+          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+          :href="route('bal.edit')"
+          >Edit
+        </inertia-link>
       </div>
+
       <div class="flex-1 inline-block">
         <select
           v-model="co_id"
@@ -78,12 +96,12 @@
             <td class="py-1 px-4 border">{{ item.statement }}</td>
             <td class="py-1 px-4 border">{{ item.confirmation }}</td>
             <td class="py-1 px-4 border">
-              <inertia-link
+              <!-- <inertia-link
                 class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
                 :href="route('balances.edit', item.id)"
               >
                 <span>Edit</span>
-              </inertia-link>
+              </inertia-link> -->
               <button
                 class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
                 @click="destroy(item.id)"
@@ -100,9 +118,6 @@
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
-// import Datepicker from "vue3-datepicker";
-// // import format from "date-fns/format";
-// import moment from "moment";
 
 export default {
   components: {
@@ -121,6 +136,7 @@ export default {
     return {
       co_id: this.$page.props.co_id,
       yr_id: this.$page.props.yr_id,
+
       // account_id: this.account[0].id,
     };
   },

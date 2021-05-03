@@ -183,8 +183,12 @@ class BankBalanceController extends Controller
         //
     }
 
-    public function edit(BankBalance $balance)
+    // public function edit(BankBalance $balance)
+    public function edity()
+
     {
+        // dd($balance->id);
+        // dd($balance);
         return Inertia::render('Balances/Edit', [
             'accounts' => BankAccount::all()
                 ->map(function ($account) {
@@ -204,23 +208,26 @@ class BankBalanceController extends Controller
 
     public function update(Req $request, BankBalance $balance)
     {
-        //    dd($request->balances);
+        // dd($request->balances);
+        // dd($balance);
 
         Request::validate([
             //            'balances.*.company_id' => ['required'],
-            // 'balances.*.account_id' => ['required'],
+            //            'balances.*.account_id' => ['required'],
             //            'balances.*.year_id' => ['required'],
         ]);
 
         foreach ($request->balances as $balance) {
             $bal = BankBalance::find($balance['id']);
+            // dd($bal);
             $bal->update([
+
                 'ledger' => $balance['ledger'],
                 'statement' => $balance['statement'],
                 'confirmation' => $balance['confirmation'],
-                //                'company_id' => $balance['company_id'],
+                //'company_id' => $balance['company_id'],
                 'account_id' => $balance['account_id'],
-                //                'year_id' => $balance['year_id'],
+                //'year_id' => $balance['year_id'],
             ]);
         }
 

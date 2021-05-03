@@ -66,7 +66,7 @@
 <script>
 import AppLayout from "@/Layouts/AppLayout";
 import Datepicker from "vue3-datepicker";
-//    import format from 'date-fns/format'
+import format from "date-fns/format";
 
 export default {
   components: {
@@ -83,12 +83,8 @@ export default {
   data() {
     return {
       form: {
-        //                   sent: new Date(this.doFormat()),
+        // sent: new Date(this.doFormat()),
         sent: new Date(),
-        //                    remind_first: null,
-        //                    remind_second: null,
-        //                    received: null,
-        // branch_id: this.branches[0].id,
         branch_id: this.branches[0].id,
         // branch_id: this.branches.id,
       },
