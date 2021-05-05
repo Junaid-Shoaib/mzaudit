@@ -38,7 +38,7 @@
               <td>
                 <input
                   v-model="confirm.sent"
-                  type="text"
+                  type="date"
                   :upper-limit="upper"
                   :lower-limit="lower"
                   class="pr-2 pb-2 w-44 rounded-md leading-tight"
@@ -48,7 +48,6 @@
                   :upper-limit="upper"
                   :lower-limit="lower"
                   class="pr-2 pb-2 w-44 rounded-md leading-tight"
-                  label="sent"
                 /> -->
               </td>
               <!-- <td>
@@ -59,11 +58,11 @@
                 />
               </td> -->
               <td>
+                <!-- :upper-limit="upper"
+                  :lower-limit="lower" -->
                 <input
                   v-model="confirm.confirm_create"
-                  type="text"
-                  :upper-limit="upper"
-                  :lower-limit="lower"
+                  type="date"
                   class="pr-2 pb-2 w-44 rounded-md leading-tight"
                 />
                 <!-- <datepicker
@@ -71,13 +70,12 @@
                   :upper-limit="upper"
                   :lower-limit="lower"
                   class="pr-2 pb-2 w-44 rounded-md leading-tight"
-                  label="confirm_create"
                 /> -->
               </td>
               <td>
                 <input
                   v-model="confirm.reminder"
-                  type="text"
+                  type="date"
                   :upper-limit="upper"
                   :lower-limit="lower"
                   class="pr-2 pb-2 w-44 rounded-md leading-tight"
@@ -87,27 +85,26 @@
                   :upper-limit="upper"
                   :lower-limit="lower"
                   class="pr-2 pb-2 w-44 rounded-md leading-tight"
-                  label="reminder"
                 /> -->
               </td>
               <td>
                 <input
                   v-model="confirm.received"
-                  type="text"
+                  type="date"
                   :upper-limit="upper"
                   :lower-limit="lower"
                   class="pr-2 pb-2 w-44 rounded-md leading-tight"
                 />
               </td>
-              <td>
-                <!-- <datepicker
+              <!-- <td>
+                <datepicker
                   v-model="confirm.received"
                   :upper-limit="upper"
                   :lower-limit="lower"
                   class="pr-2 pb-2 w-44 rounded-md leading-tight"
                   label="received"
-                /> -->
-              </td>
+                />
+              </td> -->
               <td>
                 <button
                   @click.prevent="deleteRow(index)"
@@ -137,14 +134,11 @@
 <script>
 import AppLayout from "@/Layouts/AppLayout";
 import Datepicker from "vue3-datepicker";
-import format from "date-fns/format";
-import Input from "../../Jetstream/Input.vue";
 
 export default {
   components: {
     AppLayout,
-    // Datepicker,
-    // Input,
+    Datepicker,
   },
 
   props: {
@@ -157,24 +151,20 @@ export default {
   data() {
     return {
       balances: this.data,
-      // form: {
-      //       sent: this.data[0].sent == null ? null : new Date(this.data[0].sent),
-      //       reminder:
-      //           this.data[0].reminder == null
-      //           ? null
-      //           : new Date(this.data[0].reminder),
-      //       confirm_create:
-      //         this.data[0].confirm_create == null
-      //           ? null
-      //           : new Date(this.data[0].confirm_create),
-      //       received:
-      //         this.data[0].received == null
-      //           ? null
-      //           : new Date(this.data[0].received),
-      //       company_id: this.data[0].company_id,
-      //       branch_id: this.data[0].branch_id,
-      //       year_id: this.data[0].year_id,
-      //     },
+      // balances: {
+      // sent: this.data[0].sent == null ? null : new Date(this.data[0].sent),
+      // reminder:
+      //   this.data[0].reminder == null ? null : new Date(this.data[0].reminder),
+      // confirm_create:
+      //   this.data[0].confirm_create == null
+      //     ? null
+      //     : new Date(this.data[0].confirm_create),
+      // received:
+      //   this.data[0].received == null ? null : new Date(this.data[0].received),
+      // company_id: this.data[0].company_id,
+      // branch_id: this.data[0].branch_id,
+      // year_id: this.data[0].year_id,
+      // },
       upper: new Date(this.year.end),
       lower: new Date(this.year.begin),
     };

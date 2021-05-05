@@ -25,6 +25,16 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+
+// use Illuminate\Http\Request;
+
+// Route::get('/user/invoice/{invoice}', function (Request $request, $invoiceId) {
+//     return $request->user()->downloadInvoice($invoiceId, [
+//         'vendor' => 'Your Company',
+//         'product' => 'Your Product',
+//     ]);
+// });
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -231,17 +241,11 @@ Route::post('confirmations', [BankConfirmationController::class, 'store'])
     ->name('confirmations.store')
     ->middleware('auth');
 
-// Route::get('bal/edit', [BankBalanceController::class, 'edity'])
-//     ->name('bal.edit')
-//     ->middleware('auth');
 
 Route::get('confirmation/edit', [BankConfirmationController::class, 'edit'])
     ->name('confirmations.edit')
     ->middleware('auth');
 
-// Route::put('balances/{balance}', [BankBalanceController::class, 'update'])
-// ->name('balances.update')
-// ->middleware('auth');
 
 Route::put('confirmations/{balance}', [BankConfirmationController::class, 'update'])
     ->name('confirmations.update')

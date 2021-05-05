@@ -173,13 +173,19 @@ class CompanyController extends Controller
         return redirect()->back();
     }
 
-    // public function pd()
-    // {
-    //     $a = "hello world";
-    //     $pdf = App::make('dompdf.wrapper');
-    //     $pdf->loadView('pdd', compact('a'));
-    //     return $pdf->stream('v.pdf');
-    // }
+
+    public function pd()
+    {
+        // $a = "hello world";
+        // $pdf = App::make('dompdf.wrapper');
+        // $pdf->loadView('pdd', compact('a'));
+        // return $pdf->stream('v.pdf');
+
+        $a = "Hellow World";
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadView('pdd', compact('a'));
+        return $pdf->stream('v.pdf');
+    }
 
     // excel file Generator
     public function ex()

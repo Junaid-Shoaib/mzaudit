@@ -23,6 +23,16 @@ class BankConfirmationController extends Controller
                 ->map(function ($confirmation) {
                     return [
 
+                        // 'sent' => $sent->format("M d Y"),
+                        // 'reminder' => $reminder->format("M d Y"),
+                        // 'confirm_create' => $confirm_create->format("M d Y"),
+                        // 'received' => $received->format("M d Y"),
+
+                        // $sent = new Carbon($confirmation->sent),
+                        // $reminder = new Carbon($confirmation->reminder),
+                        // $confirm_create = new Carbon($confirmation->confirm_create),
+                        // $received = new Carbon($confirmation->received),
+
 
                         'id' => $confirmation->id,
                         'sent' => $confirmation->sent,
@@ -83,33 +93,77 @@ class BankConfirmationController extends Controller
             )
 
             ->map(function ($branch) {
-                return [
-                    'id' => $branch->id,
-                    'name' => $branch->bank->name . " - " . $branch->address,
-                    // 
-                    // $branch->bankAccounts->first()->name . " - " .
-                ];
+                // return [
+                //     'id' => $branch->id,
+                //     'name' => $branch->bank->name . " - " . $branch->address,
+                //     // 
+                //     // $branch->bankAccounts->first()->name . " - " .
+                // ];
+
+
+                $sent = Carbon::now();
+                // dd($sent);
+                BankConfirmation::create([
+                    // dd($branch),
+                    'sent' => $sent->format('Y-m-d'),
+                    // 'confirm_create' => $balance['confirm_create'],
+                    // 'reminder' =>  $balance['reminder'],
+                    // 'sent' => $sent->format('Y-m-d'),
+                    'company_id' => session('company_id'),
+                    'year_id' => session('year_id'),
+                    'branch_id' => $branch->id,
+
+                ]);
             });
 
+        // $branche = null;
+        // $i = 0;
+        // foreach ($branches as $branch) {
+        //     if ($branch) {
 
-        $i = 0;
-        foreach ($branches as $branch) {
-            if ($branch) {
+        //         $branche[$i] = $branch;
+        //         $i++;
+        //     }
+        // };
 
-                $branche[$i] = $branch;
-                $i++;
-            }
-            // dd($branche);    
-        };
+        // dd($branche[0]->id);
+
+        // $sent = new Carbon(2021 - 05 - 29);
+        // BankConfirmation::create([
+        //     'sent' => $sent->format('Y-m-d'),
+        //     'company_id' => session('company_id'),
+        //     'year_id' => session('year_id'),
+        //     'branch_id' => $branche['id'],
+        // ]);
+        // foreach ($branche as $branch) {
+        //     dd($branch->name);
+
+        //     BankConfirmation::create([
+        //         // dd($branch),
+        //         'sent' => '2021-06-06',
+        //         // 'confirm_create' => $balance['confirm_create'],
+        //         // 'reminder' =>  $balance['reminder'],
+        //         // 'sent' => $sent->format('Y-m-d'),
+        //         'company_id' => session('company_id'),
+        //         'year_id' => session('year_id'),
+        //         'branch_id' => $branch->id,
+
+        //     ]);
+        // }
 
 
 
 
-        return Inertia::render('Confirmations/Create', [
-            // 'branches' => BankBranch::all()
-            'branches' => $branche,
-            'year' => Year::where('id', session('year_id'))->first(),
-        ]);
+
+
+
+
+        return redirect()->back();
+        // return Inertia::render('Confirmations/Create', [
+        //     // 'branches' => BankBranch::all()
+        //     'branches' => $branche,
+        //     'year' => Year::where('id', session('year_id'))->first(),
+        // ]);
     }
 
 
@@ -193,32 +247,21 @@ class BankConfirmationController extends Controller
             //            'year_id' => ['required'],
         ]);
 
-        // $sent = new Carbon($balance['sent']),
-        // $reminder = new Carbon($balance['sent']),
-        // $confirm_create = new Carbon($balance->confirm_create),
-        // $received = new Carbon($balance->received),
-
         foreach ($request->balances as $balance) {
             $bal = BankConfirmation::find($balance['id']);
+            // dd($balance);
 
-            $sent = new Carbon($balance['sent']);
-            $confirm_create = new Carbon($balance['confirm_create']);
-            $reminder = new Carbon($balance['reminder']);
-            $received = new Carbon($balance['received']);
-
-
+            // $sent = new Carbon($balance['sent']);
+            // $confirm_create = new Carbon($balance['confirm_create']);
+            // $reminder = new Carbon($balance['reminder']);
+            // $received = new Carbon($balance['received']);
             $bal->update([
 
-                // dd($balance),
+                'sent' => $balance['sent'],
+                'confirm_create' => $balance['confirm_create'],
+                'reminder' =>  $balance['reminder'],
+                'received' => $balance['received'],
 
-
-
-                'sent' => $sent->format('Y-m-d'),
-                'confirm_create' => $confirm_create->format('Y-m-d'),
-                'reminder' => $ad = $reminder->format('Y-m-d'),
-                dd($ad),
-                'received' => $as = $received->format('Y-m-d'),
-                dd($as),
 
             ]);
         }

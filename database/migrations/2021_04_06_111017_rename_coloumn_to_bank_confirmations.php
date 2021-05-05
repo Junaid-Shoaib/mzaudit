@@ -15,8 +15,8 @@ class RenameColoumnToBankConfirmations extends Migration
     {
         Schema::table('bank_confirmations', function (Blueprint $table) {
             //
-        $table->renameColumn('remind_first', 'reminder');
-        $table->renameColumn('remind_second', 'confirm_create');
+            $table->renameColumn('remind_first', 'reminder');
+            $table->renameColumn('remind_second', 'confirm_create');
         });
     }
 

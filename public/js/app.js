@@ -18465,16 +18465,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var vue3_datepicker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue3-datepicker */ "./node_modules/vue3-datepicker/dist/vue3-datepicker.esm.js");
-/* harmony import */ var _Jetstream_Input_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Jetstream/Input.vue */ "./resources/js/Jetstream/Input.vue");
-
-
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default // Datepicker,
-    // Input,
-
+    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
+    Datepicker: vue3_datepicker__WEBPACK_IMPORTED_MODULE_1__.default
   },
   props: {
     errors: Object,
@@ -18485,24 +18481,20 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       balances: this.data,
-      // form: {
-      //       sent: this.data[0].sent == null ? null : new Date(this.data[0].sent),
-      //       reminder:
-      //           this.data[0].reminder == null
-      //           ? null
-      //           : new Date(this.data[0].reminder),
-      //       confirm_create:
-      //         this.data[0].confirm_create == null
-      //           ? null
-      //           : new Date(this.data[0].confirm_create),
-      //       received:
-      //         this.data[0].received == null
-      //           ? null
-      //           : new Date(this.data[0].received),
-      //       company_id: this.data[0].company_id,
-      //       branch_id: this.data[0].branch_id,
-      //       year_id: this.data[0].year_id,
-      //     },
+      // balances: {
+      // sent: this.data[0].sent == null ? null : new Date(this.data[0].sent),
+      // reminder:
+      //   this.data[0].reminder == null ? null : new Date(this.data[0].reminder),
+      // confirm_create:
+      //   this.data[0].confirm_create == null
+      //     ? null
+      //     : new Date(this.data[0].confirm_create),
+      // received:
+      //   this.data[0].received == null ? null : new Date(this.data[0].received),
+      // company_id: this.data[0].company_id,
+      // branch_id: this.data[0].branch_id,
+      // year_id: this.data[0].year_id,
+      // },
       upper: new Date(this.year.end),
       lower: new Date(this.year.begin)
     };
@@ -25468,11 +25460,7 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 /* HOISTED */
 );
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <datepicker\n                  v-model=\"confirm.received\"\n                  :upper-limit=\"upper\"\n                  :lower-limit=\"lower\"\n                  class=\"pr-2 pb-2 w-44 rounded-md leading-tight\"\n                  label=\"received\"\n                /> ")], -1
-/* HOISTED */
-);
-
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
   "class": "border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4",
@@ -25521,43 +25509,41 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "onUpdate:modelValue": function onUpdateModelValue($event) {
             return confirm.sent = $event;
           },
-          type: "text",
+          type: "date",
           "upper-limit": $data.upper,
           "lower-limit": $data.lower,
           "class": "pr-2 pb-2 w-44 rounded-md leading-tight"
         }, null, 8
         /* PROPS */
-        , ["onUpdate:modelValue", "upper-limit", "lower-limit"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, confirm.sent]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <datepicker\n                  v-model=\"confirm.sent\"\n                  :upper-limit=\"upper\"\n                  :lower-limit=\"lower\"\n                  class=\"pr-2 pb-2 w-44 rounded-md leading-tight\"\n                  label=\"sent\"\n                /> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <td>\n                <input\n                  v-model=\"confirm.sent\"\n                  class=\"pr-2 pb-2 w-44 rounded-md leading-tight\"\n                  type=\"text\"\n                />\n              </td> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+        , ["onUpdate:modelValue", "upper-limit", "lower-limit"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, confirm.sent]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <datepicker\n                  v-model=\"confirm.sent\"\n                  :upper-limit=\"upper\"\n                  :lower-limit=\"lower\"\n                  class=\"pr-2 pb-2 w-44 rounded-md leading-tight\"\n                /> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <td>\n                <input\n                  v-model=\"confirm.sent\"\n                  class=\"pr-2 pb-2 w-44 rounded-md leading-tight\"\n                  type=\"text\"\n                />\n              </td> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" :upper-limit=\"upper\"\n                  :lower-limit=\"lower\" "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
           "onUpdate:modelValue": function onUpdateModelValue($event) {
             return confirm.confirm_create = $event;
           },
-          type: "text",
-          "upper-limit": $data.upper,
-          "lower-limit": $data.lower,
+          type: "date",
           "class": "pr-2 pb-2 w-44 rounded-md leading-tight"
         }, null, 8
         /* PROPS */
-        , ["onUpdate:modelValue", "upper-limit", "lower-limit"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, confirm.confirm_create]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <datepicker\n                  v-model=\"confirm.confirm_create\"\n                  :upper-limit=\"upper\"\n                  :lower-limit=\"lower\"\n                  class=\"pr-2 pb-2 w-44 rounded-md leading-tight\"\n                  label=\"confirm_create\"\n                /> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+        , ["onUpdate:modelValue"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, confirm.confirm_create]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <datepicker\n                  v-model=\"confirm.confirm_create\"\n                  :upper-limit=\"upper\"\n                  :lower-limit=\"lower\"\n                  class=\"pr-2 pb-2 w-44 rounded-md leading-tight\"\n                /> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
           "onUpdate:modelValue": function onUpdateModelValue($event) {
             return confirm.reminder = $event;
           },
-          type: "text",
+          type: "date",
           "upper-limit": $data.upper,
           "lower-limit": $data.lower,
           "class": "pr-2 pb-2 w-44 rounded-md leading-tight"
         }, null, 8
         /* PROPS */
-        , ["onUpdate:modelValue", "upper-limit", "lower-limit"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, confirm.reminder]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <datepicker\n                  v-model=\"confirm.reminder\"\n                  :upper-limit=\"upper\"\n                  :lower-limit=\"lower\"\n                  class=\"pr-2 pb-2 w-44 rounded-md leading-tight\"\n                  label=\"reminder\"\n                /> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+        , ["onUpdate:modelValue", "upper-limit", "lower-limit"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, confirm.reminder]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <datepicker\n                  v-model=\"confirm.reminder\"\n                  :upper-limit=\"upper\"\n                  :lower-limit=\"lower\"\n                  class=\"pr-2 pb-2 w-44 rounded-md leading-tight\"\n                /> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
           "onUpdate:modelValue": function onUpdateModelValue($event) {
             return confirm.received = $event;
           },
-          type: "text",
+          type: "date",
           "upper-limit": $data.upper,
           "lower-limit": $data.lower,
           "class": "pr-2 pb-2 w-44 rounded-md leading-tight"
         }, null, 8
         /* PROPS */
-        , ["onUpdate:modelValue", "upper-limit", "lower-limit"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, confirm.received]])]), _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+        , ["onUpdate:modelValue", "upper-limit", "lower-limit"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, confirm.received]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <td>\n                <datepicker\n                  v-model=\"confirm.received\"\n                  :upper-limit=\"upper\"\n                  :lower-limit=\"lower\"\n                  class=\"pr-2 pb-2 w-44 rounded-md leading-tight\"\n                  label=\"received\"\n                />\n              </td> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
           onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
             return $options.deleteRow(index);
           }, ["prevent"]),
@@ -25567,7 +25553,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         , ["onClick"])])]);
       }), 128
       /* KEYED_FRAGMENT */
-      ))])]), _hoisted_9], 32
+      ))])]), _hoisted_8], 32
       /* HYDRATE_EVENTS */
       )])];
     }),
@@ -25699,7 +25685,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }, 8
       /* PROPS */
-      , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\n      <div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
+      , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
         "class": "border bg-indigo-300 rounded-xl px-4 py-1 m-1",
         href: _ctx.route('confirmations.edit')
       }, {
@@ -25809,7 +25795,11 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
   "class": "max-w-7xl mx-auto sm:px-6 lg:px-8"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "bg-white overflow-hidden shadow-xl sm:rounded-lg p-2"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div\n            class=\"border rounded-lg shadow-md p-2 m-2 inline-block hover:bg-gray-600 hover:text-white\"\n          >\n            <a href=\"pd\">Generate pdf file</a>\n          </div> "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "border rounded-lg shadow-md p-2 m-2 inline-block hover:bg-gray-600 hover:text-white"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+  href: "pd"
+}, "Generate pdf file")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "border rounded-lg shadow-md p-2 m-2 inline-block hover:bg-gray-600 hover:text-white"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
   href: "ex"
