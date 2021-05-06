@@ -39,17 +39,13 @@ class BankConfirmationController extends Controller
 
 
 
+
+
+                        'id' => $confirmation->id,
                         'sent' => $sent ? $sent->format("M d Y") : null,
                         'reminder' => $reminder ? $reminder->format("M d Y") : null,
                         'confirm_create' => $confirm_create ?  $confirm_create->format("M d Y") : null,
                         'received' => $received ? $received->format("M d Y") : null,
-
-
-                        'id' => $confirmation->id,
-                        // 'sent' => $confirmation->sent,
-                        // 'reminder' => $confirmation->reminder,
-                        // 'confirm_create' => $confirmation->confirm_create,
-                        // 'received' => $confirmation->received,
                         'branch' => $confirmation->bankBranch->bank->name . " - " . $confirmation->bankBranch->address,
                         'company' => $confirmation->company->name,
                         'year' => $confirmation->year->begin . " - " . $confirmation->year->end,
@@ -117,9 +113,6 @@ class BankConfirmationController extends Controller
                 BankConfirmation::create([
                     // dd($branch),
                     'sent' => $sent->format('Y-m-d'),
-                    // 'confirm_create' => $balance['confirm_create'],
-                    // 'reminder' =>  $balance['reminder'],
-                    // 'sent' => $sent->format('Y-m-d'),
                     'company_id' => session('company_id'),
                     'year_id' => session('year_id'),
                     'branch_id' => $branch->id,
@@ -179,25 +172,25 @@ class BankConfirmationController extends Controller
 
 
 
-    public function store(Req $request)
-    {
-        // dd($request->all());
-        Request::validate([
-            'sent' => ['required'],
+    // public function store(Req $request)
+    // {
+    //     // dd($request->all());
+    //     Request::validate([
+    //         'sent' => ['required'],
 
-            // 'received' => ['required']
-        ]);
+    //         // 'received' => ['required']
+    //     ]);
 
-        $sent = new Carbon($request->sent);
-        BankConfirmation::create([
-            'sent' => $sent->format('Y-m-d'),
-            'company_id' => session('company_id'),
-            'year_id' => session('year_id'),
-            'branch_id' => Request::input('branch_id'),
-        ]);
+    //     $sent = new Carbon($request->sent);
+    //     BankConfirmation::create([
+    //         'sent' => $sent->format('Y-m-d'),
+    //         'company_id' => session('company_id'),
+    //         'year_id' => session('year_id'),
+    //         'branch_id' => Request::input('branch_id'),
+    //     ]);
 
-        return Redirect::route('confirmations')->with('success', 'Bank Confirmation created.');
-    }
+    //     return Redirect::route('confirmations')->with('success', 'Bank Confirmation created.');
+    // }
 
     public function show($id)
     {

@@ -2,11 +2,26 @@
   <app-layout>
     <template #header>
       <div class="flex-row">
-        <div class="flex-1 inline-block">
-          <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Years
-          </h2>
-        </div>
+        <!-- <div class="flex-1 inline-block"> -->
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+          Years
+          <div class="flex-1 inline-block float-right">
+            <select
+              v-model="co_id"
+              class="max-w-md rounded-md"
+              label="company_id"
+              @change="coch"
+            >
+              <option
+                v-for="company in companies"
+                :key="company.id"
+                :value="company.id"
+              >
+                {{ company.name }}
+              </option>
+            </select>
+          </div>
+        </h2>
       </div>
     </template>
     <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
@@ -19,22 +34,6 @@
           :href="route('years.create')"
           >Create
         </inertia-link>
-      </div>
-      <div class="flex-1 inline-block">
-        <select
-          v-model="co_id"
-          class="max-w-md rounded-md"
-          label="company_id"
-          @change="coch"
-        >
-          <option
-            v-for="company in companies"
-            :key="company.id"
-            :value="company.id"
-          >
-            {{ company.name }}
-          </option>
-        </select>
       </div>
     </div>
     <div class="">

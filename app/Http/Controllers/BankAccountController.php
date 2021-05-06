@@ -6,45 +6,58 @@ use Illuminate\Http\Request as Req;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\BankAccount;
-use App\Models\Bank;
+use App\Models\Year;
 use App\Models\BankBranch;
 use App\Models\Company;
 use Inertia\Inertia;
+use Carbon\Carbon;
 
 class BankAccountController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Accounts/Index', [
-            'data' => BankAccount::where('company_id',session('company_id'))->get()
-            ->map(function ($branch){
-                return [
-                  'id' => $branch->id,
-                'name' => $branch->name,
-                'type' => $branch->type,
-                'currency' => $branch->currency,
-                'branches' => $branch->bankBranch->address,
+        return Inertia::render(
+            'Accounts/Index',
+            [
+                'data' => BankAccount::where('company_id', session('company_id'))->get()
+                    ->map(function ($branch) {
+                        return [
+                            'id' => $branch->id,
+                            'name' => $branch->name,
+                            'type' => $branch->type,
+                            'currency' => $branch->currency,
+                            'branches' => $branch->bankBranch->address,
 
-                ];                
-            }),
-            'companies' => Company::all()
-            ->map(function($company){
-                return [
-                    'id' => $company->id,
-                    'name' => $company->name,
-                ];
-            }), 
-        ],
-       
-    );
+                        ];
+                    }),
+                'companies' => Company::all()
+                    ->map(function ($company) {
+                        return [
+                            'id' => $company->id,
+                            'name' => $company->name,
+                        ];
+                    }),
+                'years' => Year::where('company_id', session('company_id'))->get()
+                    ->map(function ($year) {
+                        $end = new Carbon($year->end);
+                        $begin = new Carbon($year->begin);
+                        return [
+                            'id' => $year->id,
+                            'begin' => $begin->format("F j Y"),
+                            'end' => $end->format("F j Y"),
+                        ];
+                    }),
+            ],
+
+        );
     }
 
     public function create()
     {
-        return Inertia::render('Accounts/Create',[
-        //    'filters' => Request::all('bank'),
+        return Inertia::render('Accounts/Create', [
+            //    'filters' => Request::all('bank'),
             'branches' => BankBranch::all()
-                ->map(function ($branch){
+                ->map(function ($branch) {
                     return [
                         'id' => $branch->id,
                         'address' => $branch->address,
@@ -52,7 +65,7 @@ class BankAccountController extends Controller
                         'name' => $branch->bank->name,
                     ];
                 }),
-        //    'banks' =>  Bank::all('id','name'),
+            //    'banks' =>  Bank::all('id','name'),
         ]);
     }
 
@@ -61,13 +74,13 @@ class BankAccountController extends Controller
 
         Request::validate([
             '*.name' => 'required|unique:App\Models\BankAccount,name',
-           '*.type' => ['required'],
-           '*.currency' => ['required'],
+            '*.type' => ['required'],
+            '*.currency' => ['required'],
 
         ]);
 
         $accounts = $request->all();
-        foreach($accounts as $account){
+        foreach ($accounts as $account) {
             BankAccount::create([
                 'name' => $account['name'],
                 'type' => $account['type'],
@@ -96,8 +109,8 @@ class BankAccountController extends Controller
                 'company_id' => $account->company_id,
                 'branch_id' => $account->branch_id,
             ],
-            'branches' => BankBranch::all('id','address'),
- //           'companies' => Company::all('id','name'),
+            'branches' => BankBranch::all('id', 'address'),
+            //           'companies' => Company::all('id','name'),
         ]);
     }
 
@@ -107,14 +120,14 @@ class BankAccountController extends Controller
             'name' => 'required|unique:App\Models\BankAccount,name',
             'type' => ['required'],
             'currency' => ['required'],
-   //         'type' => ['required'],
+            //         'type' => ['required'],
         ]);
 
         $account->name = Request::input('name');
         $account->type = Request::input('type');
         $account->currency = Request::input('currency');
         $account->branch_id = Request::input('branch_id');
-//        $account->company_id = Request::input('company_id');
+        //        $account->company_id = Request::input('company_id');
         $account->save();
 
         return Redirect::route('accounts')->with('success', 'Bank Account updated.');

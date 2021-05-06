@@ -3,6 +3,32 @@
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         Bank Accounts
+        <div class="flex-1 inline-block float-right">
+          <select
+            v-model="co_id"
+            class="max-w-md rounded-md"
+            label="company_id"
+            @change="coch"
+          >
+            <option
+              v-for="company in companies"
+              :key="company.id"
+              :value="company.id"
+            >
+              {{ company.name }}
+            </option>
+          </select>
+          <select
+            class="max-w-md rounded-md"
+            v-model="yr_id"
+            @change="yrch"
+            label="yr_id"
+          >
+            <option v-for="year in years" :key="year.id" :value="year.id">
+              {{ year.end }}
+            </option>
+          </select>
+        </div>
       </h2>
     </template>
     <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
@@ -17,7 +43,7 @@
           >Create
         </inertia-link>
       </div>
-      <div class="flex-1 inline-block">
+      <!-- <div class="flex-1 inline-block">
         <select
           v-model="co_id"
           class="max-w-md rounded-md"
@@ -32,7 +58,7 @@
             {{ company.name }}
           </option>
         </select>
-      </div>
+      </div> -->
     </div>
 
     <div class="">
@@ -84,11 +110,13 @@ export default {
   props: {
     data: Object,
     companies: Object,
+    years: Object,
   },
 
   data() {
     return {
       co_id: this.$page.props.co_id,
+      yr_id: this.$page.props.yr_id,
     };
   },
 

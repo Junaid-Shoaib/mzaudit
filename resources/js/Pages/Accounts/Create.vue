@@ -58,18 +58,29 @@
                 />
               </td>
               <td>
-                <input
+                <!-- <input
                   v-model="account.type"
                   type="text"
                   class="rounded-md w-36"
-                />
+                /> -->
+                <select v-model="account.type" class="rounded-md w-36">
+                  <option>CURRENT</option>
+                  <option>SAVING</option>
+                  <option>ASAAN</option>
+                </select>
               </td>
               <td>
-                <input
+                <!-- <input
                   v-model="account.currency"
                   type="text"
                   class="rounded-md w-36"
-                />
+                /> -->
+                <select v-model="account.currency" class="rounded-md w-36">
+                  <option>USD</option>
+                  <option>$</option>
+                  <option>PKR</option>
+                  <option>EUR</option>
+                </select>
               </td>
               <td>
                 <button
