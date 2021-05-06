@@ -208,9 +208,6 @@ Route::post('balances', [BankBalanceController::class, 'store'])
     ->name('balances.store')
     ->middleware('auth');
 
-// Route::get('balances/{balance}/edit', [BankBalanceController::class, 'edit'])
-// ->name('balances.edit')
-// ->middleware('auth');
 Route::get('bal/edit', [BankBalanceController::class, 'edity'])
     ->name('bal.edit')
     ->middleware('auth');

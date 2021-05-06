@@ -5,6 +5,9 @@
         Bank Accounts
       </h2>
     </template>
+    <div v-if="$page.props.flash.success" class="bg-yellow-400 text-white">
+      {{ $page.props.flash.success }}
+    </div>
     <div class="">
       <form @submit.prevent="submit">
         <div

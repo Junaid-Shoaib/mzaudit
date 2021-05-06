@@ -97,6 +97,9 @@ class BankBalanceController extends Controller
                     ];
                 }
             );
+
+        $account = null;
+
         $i = 0;
         foreach ($accounts as $acc) {
             if ($acc) {
@@ -105,52 +108,52 @@ class BankBalanceController extends Controller
             }
         }
 
-        // if ($accounts) {
-        // } else {
-        //     $account = $accounts;
-        // }
+        if ($account) {
 
-        return Inertia::render('Balances/Create', [
+            return Inertia::render('Balances/Create', [
 
-            'accounts' => $account,
-            // 'accounts' => BankAccount::where('company_id', session('company_id'))->get()
-            //     //     // dd($accounts);
-            //     ->filter(
-            //         function ($account) {
-            //             // $as =  $account->bankBalances()
-            //             //     ->where('year_id', session('year_id'))->first()->ledger  > 0  ?  false : true;
-            //             // // dd($as);
-            //             // return true;
+                'accounts' => $account,
+                // 'accounts' => BankAccount::where('company_id', session('company_id'))->get()
+                //     //     // dd($accounts);
+                //     ->filter(
+                //         function ($account) {
+                //             // $as =  $account->bankBalances()
+                //             //     ->where('year_id', session('year_id'))->first()->ledger  > 0  ?  false : true;
+                //             // // dd($as);
+                //             // return true;
 
-            //             // $i = 0;
+                //             // $i = 0;
 
-            //             if ($account->bankBalances()
-            //                 ->where('year_id', session('year_id'))->first('ledger')
-            //             ) {
-            //                 return false;
-            //             } else {
-            //                 return true;
-            //             }
-            //         }
-            //     )
+                //             if ($account->bankBalances()
+                //                 ->where('year_id', session('year_id'))->first('ledger')
+                //             ) {
+                //                 return false;
+                //             } else {
+                //                 return true;
+                //             }
+                //         }
+                //     )
 
-            //     ->map(
-            //         function ($bal) {
-            //             //             // dd($account);
-            //             return [
-            //                 'id' => $bal->id,
-            //                 'name' => $bal->name,
-            //                 'type' => $bal->type,
-            //                 'currency' => $bal->currency,
-            //                 // dd($bal),
-            //                 'branch' => $bal->name . " - " . $bal->bankBranch->bank->name . " - " . $bal->bankBranch->address,
-            //             ];
-            //         }
-            //     ),
+                //     ->map(
+                //         function ($bal) {
+                //             //             // dd($account);
+                //             return [
+                //                 'id' => $bal->id,
+                //                 'name' => $bal->name,
+                //                 'type' => $bal->type,
+                //                 'currency' => $bal->currency,
+                //                 // dd($bal),
+                //                 'branch' => $bal->name . " - " . $bal->bankBranch->bank->name . " - " . $bal->bankBranch->address,
+                //             ];
+                //         }
+                //     ),
 
 
 
-        ]);
+            ]);
+        } else {
+            return Redirect::route('accounts.create')->with('success', 'Create Account first.');
+        }
     }
 
 

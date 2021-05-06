@@ -5,6 +5,7 @@
         Bank Balances
       </h2>
     </template>
+
     <div class="">
       <form @submit.prevent="submit">
         <div class="panel-body">
