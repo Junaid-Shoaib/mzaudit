@@ -10,8 +10,10 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Bank;
 use App\Models\BankBranch;
+use App\Models\BankAccount;
 use Inertia\Inertia;
 use App;
+
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpWord\PhpWord;
@@ -25,10 +27,32 @@ class CompanyController extends Controller
     // Company Index
     public function index()
     {
-        $data = Company::all();
-        return Inertia::render('Companies/Index', ['data' => $data]);
-    }
+        // $data = Company::all();
+        // return Inertia::render('Companies/Index', ['data' => $data]);
+        return Inertia::render(
+            'Companies/Index',
+            [
+                'data' => Company::all()
+                    ->map(function ($company) {
+                        return [
+                            // $delete  =  year::where('company_id', $company->id) ? true : false,
+                            // dd($delete),
+                            'id' => $company->id,
+                            'name' => $company->name,
+                            'address' => $company->address,
+                            'email' => $company->email,
+                            'web' => $company->web,
+                            'phone' => $company->phone,
+                            'fiscal' => $company->fiscal,
+                            'incorp' => $company->incorp,
+                            'delete' => Year::where('company_id', $company->id)->first() ? false : true,
 
+
+                        ];
+                    })
+            ],
+        );
+    }
     // Company Create
 
     public function create()

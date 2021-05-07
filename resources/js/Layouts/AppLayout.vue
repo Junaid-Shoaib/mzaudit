@@ -16,15 +16,90 @@
               </div>
 
               <!-- Navigation Links -->
-              <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+
+              <div class="ml-3 relative mt-4">
+                <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"> -->
+                <jet-dropdown>
+                  <template #trigger>
+                    <span class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                      <button
+                        type="button"
+                        class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                      >
+                        Menu
+
+                        <svg
+                          class="ml-2 -mr-0.5 h-4 w-4"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                      </button>
+                    </span>
+                  </template>
+
+                  <template #content>
+                    <!-- dropdown -->
+                    <div class="block px-4 py-2 text-xs text-gray-400">
+                      Create Activity
+                    </div>
+                    <jet-dropdown-link
+                      :href="route('companies')"
+                      :active="route().current('companies')"
+                    >
+                      Companies
+                    </jet-dropdown-link>
+
+                    <jet-dropdown-link
+                      :href="route('years')"
+                      :active="route().current('years')"
+                    >
+                      Years
+                    </jet-dropdown-link>
+
+                    <div class="block px-4 py-2 text-xs text-gray-400">
+                      Bank Detail
+                    </div>
+
+                    <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"> -->
+                    <jet-dropdown-link
+                      :href="route('banks')"
+                      :active="route().current('banks')"
+                    >
+                      Banks
+                    </jet-dropdown-link>
+                    <!-- </div> -->
+                    <jet-dropdown-link
+                      :href="route('branches')"
+                      :active="route().current('branches')"
+                    >
+                      Branches
+                    </jet-dropdown-link>
+                    <jet-dropdown-link
+                      :href="route('accounts')"
+                      :active="route().current('accounts')"
+                    >
+                      Bank Accounts
+                    </jet-dropdown-link>
+                  </template>
+                </jet-dropdown>
+              </div>
+              <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <jet-nav-link
                   :href="route('dashboard')"
                   :active="route().current('dashboard')"
                 >
                   Dashboard
                 </jet-nav-link>
-              </div>
-              <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+              </div> -->
+
+              <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <jet-nav-link
                   :href="route('companies')"
                   :active="route().current('companies')"
@@ -39,8 +114,9 @@
                 >
                   Years
                 </jet-nav-link>
-              </div>
-              <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+              </div> -->
+
+              <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <jet-nav-link
                   :href="route('banks')"
                   :active="route().current('banks')"
@@ -63,7 +139,8 @@
                 >
                   Bank Accounts
                 </jet-nav-link>
-              </div>
+              </div> -->
+
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <jet-nav-link
                   :href="route('balances')"
@@ -293,14 +370,14 @@
           }"
           class="sm:hidden"
         >
-          <!-- <div class="pt-2 pb-3 space-y-1">
+          <div class="pt-2 pb-3 space-y-1">
             <jet-responsive-nav-link
               :href="route('dashboard')"
               :active="route().current('dashboard')"
             >
               Dashboard
             </jet-responsive-nav-link>
-          </div> -->
+          </div>
           <div class="pt-2 pb-3 space-y-1">
             <jet-responsive-nav-link
               :href="route('companies')"
