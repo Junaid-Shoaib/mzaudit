@@ -43,22 +43,6 @@
           >Create
         </inertia-link>
       </div>
-      <!-- <div class="flex-1 inline-block">
-        <select
-          v-model="co_id"
-          class="max-w-md rounded-md"
-          label="company_id"
-          @change="coch"
-        >
-          <option
-            v-for="company in companies"
-            :key="company.id"
-            :value="company.id"
-          >
-            {{ company.name }}
-          </option>
-        </select>
-      </div> -->
     </div>
 
     <div class="">
@@ -86,8 +70,9 @@
                 <span>Edit</span>
               </inertia-link>
               <button
-                class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+                class="border bg-red-500 rounded-xl px-4 py-1 m-1"
                 @click="destroy(item.id)"
+                v-if="item.delete"
               >
                 <span>Delete</span>
               </button>

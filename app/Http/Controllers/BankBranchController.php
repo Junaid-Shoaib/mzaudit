@@ -6,6 +6,7 @@ use Illuminate\Http\Request as Req;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\BankBranch;
+use App\Models\BankAccount;
 use Inertia\Inertia;
 
 class BankBranchController extends Controller
@@ -14,21 +15,24 @@ class BankBranchController extends Controller
     {
         return Inertia::render('Branches/Index', [
             'data' => BankBranch::all()
-                ->map(function ($branch){
+                ->map(function ($branch) {
                     return [
                         'id' => $branch->id,
                         'address' => $branch->address,
                         'bank_id' => $branch->bank_id,
                         'name' => $branch->bank->name,
+                        'delete' => BankAccount::where('branch_id', $branch->id)->first() ? false : true,
+
                     ];
-                }), 
+                }),
         ]);
     }
 
+    //Create Branches
     public function create()
     {
-        return Inertia::render('Branches/Create',[
-            'banks' => \App\Models\Bank::all()->map->only('id','name')
+        return Inertia::render('Branches/Create', [
+            'banks' => \App\Models\Bank::all()->map->only('id', 'name')
         ]);
     }
 
@@ -47,11 +51,13 @@ class BankBranchController extends Controller
         return Redirect::route('branches')->with('success', 'Bank Branch created.');
     }
 
+    //Branches show
     public function show($id)
     {
         //
     }
 
+    //Branches Edit
     public function edit(BankBranch $branch)
     {
         return Inertia::render('Branches/Edit', [
@@ -60,10 +66,11 @@ class BankBranchController extends Controller
                 'bank_id' => $branch->bank_id,
                 'address' => $branch->address,
             ],
-            'banks' => \App\Models\Bank::all()->map->only('id','name'),
+            'banks' => \App\Models\Bank::all()->map->only('id', 'name'),
         ]);
     }
 
+    //Branches Update
     public function update(Req $request, BankBranch $branch)
     {
         Request::validate([
@@ -77,7 +84,7 @@ class BankBranchController extends Controller
 
         return Redirect::route('branches')->with('success', 'Bank Branch updated.');
     }
-
+    //Branches Delete
     public function destroy(BankBranch $branch)
     {
         $branch->delete();

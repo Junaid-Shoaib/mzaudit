@@ -56,12 +56,12 @@
               >
                 <span>Edit</span>
               </inertia-link>
-              <button
+              <!-- <button
                 class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
                 @click="destroy(item.id)"
               >
                 <span>Delete</span>
-              </button>
+              </button> -->
             </td>
           </tr>
         </tbody>

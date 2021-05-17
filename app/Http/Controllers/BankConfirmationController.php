@@ -16,8 +16,10 @@ class BankConfirmationController extends Controller
 {
 
 
+
     public function index()
     {
+
         return Inertia::render('Confirmations/Index', [
             'data' => BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()
                 ->map(function ($confirmation) {

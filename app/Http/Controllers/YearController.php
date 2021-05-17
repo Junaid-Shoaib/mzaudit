@@ -42,7 +42,21 @@ class YearController extends Controller
 
     public function create()
     {
-        return Inertia::render('Years/Create');
+        $year = Year::where('company_id', session('company_id'))->latest()->first();
+        $begin = explode('-', $year->begin);
+        $begin[0]++;
+        $end = explode('-', $year->end);
+        $end[0]++;
+        $newBegin = implode('-', $begin);
+        $newEnd = implode('-', $end);
+
+        Year::create([
+            'begin' => $newBegin,
+            'end' => $newEnd,
+            'company_id' => session('company_id'),
+        ]);
+
+        return Redirect::back();
     }
 
     public function store(Req $request)
@@ -53,6 +67,8 @@ class YearController extends Controller
             'end' => ['required'],
             //           'company_id' => ['required'],
         ]);
+
+
 
         DB::transaction(function () {
             $year = Year::create([
@@ -132,6 +148,12 @@ class YearController extends Controller
     public function destroy(Year $year)
     {
         $year->delete();
-        return Redirect::back()->with('success', 'Year deleted.');
+        // dd($year)
+        if (Year::where('company_id', session('company_id'))->first()) {
+            return Redirect::back()->with('success', 'Year deleted.');
+        } else {
+            session(['year_id' => null]);
+            return Redirect::route('years.create')->with('success', 'YEAR NOT FOUND. Please create an Year for selected Company.');
+        }
     }
 }

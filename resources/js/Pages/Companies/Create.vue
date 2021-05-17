@@ -37,7 +37,7 @@
           <div v-if="errors.address">{{ errors.address }}</div>
         </div>
         <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
-          <label class="w-28 inline-block text-right mr-4">Address:</label>
+          <label class="w-28 inline-block text-right mr-4">Email:</label>
           <input
             type="text"
             v-model="form.email"
@@ -118,8 +118,6 @@ export default {
 
   props: {
     errors: Object,
-    //            types : Object,
-    //            first: Object,
   },
 
   data() {
@@ -132,7 +130,6 @@ export default {
         phone: null,
         fiscal: "June",
         incorp: null,
-        //                   type: this.first.id,
       }),
       isLoading: false,
     };

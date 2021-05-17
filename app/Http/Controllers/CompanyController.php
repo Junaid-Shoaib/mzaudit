@@ -10,16 +10,14 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Bank;
 use App\Models\BankBranch;
-use App\Models\BankAccount;
 use Inertia\Inertia;
 use App;
-
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Writer\Word2007;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\App as FacadesApp;
+use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class CompanyController extends Controller
@@ -27,16 +25,12 @@ class CompanyController extends Controller
     // Company Index
     public function index()
     {
-        // $data = Company::all();
-        // return Inertia::render('Companies/Index', ['data' => $data]);
         return Inertia::render(
             'Companies/Index',
             [
                 'data' => Company::all()
                     ->map(function ($company) {
                         return [
-                            // $delete  =  year::where('company_id', $company->id) ? true : false,
-                            // dd($delete),
                             'id' => $company->id,
                             'name' => $company->name,
                             'address' => $company->address,
@@ -46,15 +40,13 @@ class CompanyController extends Controller
                             'fiscal' => $company->fiscal,
                             'incorp' => $company->incorp,
                             'delete' => Year::where('company_id', $company->id)->first() ? false : true,
-
-
                         ];
                     })
             ],
         );
     }
-    // Company Create
 
+    // Company Create
     public function create()
     {
         return Inertia::render('Companies/Create');
@@ -62,32 +54,64 @@ class CompanyController extends Controller
 
     public function store()
     {
-
         Request::validate([
             'name' => ['required'],
             'fiscal' => ['required'],
         ]);
+        DB::transaction(function () {
+            $company = Company::create([
+                'name' => Request::input('name'),
+                'address' => Request::input('address'),
+                'email' => Request::input('email'),
+                'web' => Request::input('web'),
+                'phone' => Request::input('phone'),
+                'fiscal' => Request::input('fiscal'),
+                'incorp' => Request::input('incorp'),
+            ]);
 
-        $company = Company::create([
-            'name' => Request::input('name'),
-            'address' => Request::input('address'),
-            'email' => Request::input('email'),
-            'web' => Request::input('web'),
-            'phone' => Request::input('phone'),
-            'fiscal' => Request::input('fiscal'),
-            'incorp' => Request::input('incorp'),
+            //Start Month & End Month
+            $startMonth = Carbon::parse($company->fiscal)->month + 1;
+            $endMonth = Carbon::parse($company->fiscal)->month;
+            if ($startMonth == 13) {
+                $startMonth = 1;
+            }
 
-        ]);
+            //Start Month Day & End Month Day
+            $startMonthDays = 1;
+            $endMonthDays = Carbon::create()->month($endMonth)->daysInMonth;
 
-        Setting::create([
-            'key' => 'active_company',
-            'value' => $company->id,
-            'user_id' => Auth::user()->id,
-        ]);
+            // Year Get 
+            $today = Carbon::today();
+            $startYear = 0;
+            $endYear = 0;
+            if ($startMonth == 1) {
+                $startYear = $today->year;
+                $endYear = $today->year;
+            } else {
+                $endYear = ($today->month >= $startMonth) ? $today->year + 1 : $today->year;
+                $startYear = $endYear - 1;
+            }
 
-        session(['company_id' => $company->id]);
 
-        return Redirect::route('years.create')->with('success', 'Company created. First Create a Company Year');
+            $startDate = $startYear . '-' . $startMonth . '-' . $startMonthDays;
+            $endDate = $endYear . '-' . $endMonth . '-' . $endMonthDays;
+
+
+            $year = Year::create([
+                'begin' => $startDate,
+                'end' => $endDate,
+                'company_id' => $company->id,
+            ]);
+            Setting::create([
+                'key' => 'active_company',
+                'value' => $company->id,
+                'user_id' => Auth::user()->id,
+            ]);
+
+            session(['company_id' => $company->id]);
+            session(['year_id' => $year->id]);
+        });
+        return Redirect::route('companies')->with('success', 'Company created');
     }
 
     // Company Show
@@ -161,15 +185,11 @@ class CompanyController extends Controller
         return Inertia::render('Companies/Indexy');
     }
 
-
+    //Company Change function
     public function coch($id)
     {
-
-
         $active_co = Setting::where('user_id', Auth::user()->id)->where('key', 'active_company')->first();
-        // dd($active_co);
         $active_yr = Setting::where('user_id', Auth::user()->id)->where('key', 'active_year')->first();
-        // dd($active_yr);
         $active_co->value = $id;
         session(['company_id' => $id]);
 
@@ -180,11 +200,10 @@ class CompanyController extends Controller
             $active_yr->save();
             session(['year_id' => $active_yr->value]);
         } else {
-            return Redirect::route('years')->with('success', 'First Create Year.');
+            session(['year_id' => null]);
+            return Redirect::route('years.create')->with('success', 'First Create Year.');
         }
         return redirect()->back();
-
-        // return redirect()->back();
     }
 
     // year Change Function
@@ -197,15 +216,9 @@ class CompanyController extends Controller
         return redirect()->back();
     }
 
-
     public function pd()
     {
-        // $a = "hello world";
-        // $pdf = App::make('dompdf.wrapper');
-        // $pdf->loadView('pdd', compact('a'));
-        // return $pdf->stream('v.pdf');
-
-        $a = "Hellow World";
+        $a = "hello world";
         $pdf = App::make('dompdf.wrapper');
         $pdf->loadView('pdd', compact('a'));
         return $pdf->stream('v.pdf');

@@ -6,6 +6,7 @@ use Illuminate\Http\Request as Req;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\Bank;
+use App\Models\BankBranch;
 use Inertia\Inertia;
 
 class BankController extends Controller
@@ -17,8 +18,18 @@ class BankController extends Controller
      */
     public function index()
     {
-        $data = Bank::all();
-        return Inertia::render('Banks/Index', ['data' => $data]);
+        return Inertia::render('Banks/Index', [
+            'data' => Bank::all()
+                ->map(function ($bank) {
+                    return [
+                        'id' => $bank->id,
+                        'name' => $bank->name,
+                        'delete' => BankBranch::where('bank_id', $bank->id)->first() ? false : true,
+
+                    ];
+                })
+
+        ]);
     }
 
     /**
@@ -26,6 +37,8 @@ class BankController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    // Bank Create
     public function create()
     {
         return Inertia::render('Banks/Create');
@@ -39,7 +52,6 @@ class BankController extends Controller
      */
     public function store(Req $request)
     {
-//        dd($request);
         Request::validate([
             'name' => ['required'],
         ]);
@@ -57,6 +69,8 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Bank Show
     public function show($id)
     {
         //
@@ -68,6 +82,7 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    //Bank Edit
     public function edit(Bank $bank)
     {
         return Inertia::render('Banks/Edit', [
@@ -85,6 +100,7 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    //Bank Update
     public function update(Req $request, Bank $bank)
     {
         Request::validate([
@@ -103,6 +119,7 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    //Bank Delete
     public function destroy(Bank $bank)
     {
         $bank->delete();

@@ -50,8 +50,6 @@ export default {
 
   props: {
     errors: Object,
-    //            types : Object,
-    //            first: Object,
   },
 
   data() {

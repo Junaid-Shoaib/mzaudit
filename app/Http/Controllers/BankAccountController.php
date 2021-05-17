@@ -6,6 +6,7 @@ use Illuminate\Http\Request as Req;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\BankAccount;
+use App\Models\BankBalance;
 use App\Models\Year;
 use App\Models\BankBranch;
 use App\Models\Company;
@@ -27,7 +28,7 @@ class BankAccountController extends Controller
                             'type' => $branch->type,
                             'currency' => $branch->currency,
                             'branches' => $branch->bankBranch->address,
-
+                            'delete' => BankBalance::where('account_id', $branch->id)->first() ? false : true,
                         ];
                     }),
                 'companies' => Company::all()
@@ -52,10 +53,10 @@ class BankAccountController extends Controller
         );
     }
 
+    //BankAccount Create
     public function create()
     {
         return Inertia::render('Accounts/Create', [
-            //    'filters' => Request::all('bank'),
             'branches' => BankBranch::all()
                 ->map(function ($branch) {
                     return [
@@ -65,7 +66,6 @@ class BankAccountController extends Controller
                         'name' => $branch->bank->name,
                     ];
                 }),
-            //    'banks' =>  Bank::all('id','name'),
         ]);
     }
 
@@ -89,15 +89,16 @@ class BankAccountController extends Controller
                 'company_id' => session('company_id'),
             ]);
         }
-
         return Redirect::route('accounts')->with('success', 'Bank Account created.');
     }
 
+    //BankAccount Show
     public function show($id)
     {
         //
     }
 
+    //BankAccount Edit
     public function edit(BankAccount $account)
     {
         return Inertia::render('Accounts/Edit', [
@@ -110,29 +111,27 @@ class BankAccountController extends Controller
                 'branch_id' => $account->branch_id,
             ],
             'branches' => BankBranch::all('id', 'address'),
-            //           'companies' => Company::all('id','name'),
         ]);
     }
 
+    //BankAccount Update
     public function update(Req $request, BankAccount $account)
     {
         Request::validate([
             'name' => 'required|unique:App\Models\BankAccount,name',
             'type' => ['required'],
             'currency' => ['required'],
-            //         'type' => ['required'],
         ]);
 
         $account->name = Request::input('name');
         $account->type = Request::input('type');
         $account->currency = Request::input('currency');
         $account->branch_id = Request::input('branch_id');
-        //        $account->company_id = Request::input('company_id');
         $account->save();
-
         return Redirect::route('accounts')->with('success', 'Bank Account updated.');
     }
 
+    //BanKAccount Delete
     public function destroy(BankAccount $account)
     {
         $account->delete();
