@@ -6,6 +6,7 @@ use Illuminate\Http\Request as Req;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\BankBranch;
+use App\Models\Bank;
 use App\Models\BankAccount;
 use Inertia\Inertia;
 
@@ -31,9 +32,14 @@ class BankBranchController extends Controller
     //Create Branches
     public function create()
     {
-        return Inertia::render('Branches/Create', [
-            'banks' => \App\Models\Bank::all()->map->only('id', 'name')
-        ]);
+
+        if (BankBranch::where('bank_id')) {
+            return Inertia::render('Branches/Create', [
+                'banks' => \App\Models\Bank::all()->map->only('id', 'name')
+            ]);
+        } else {
+            return Redirect::route('banks.create')->with('success', 'Create Bank first.');
+        }
     }
 
     public function store(Req $request)

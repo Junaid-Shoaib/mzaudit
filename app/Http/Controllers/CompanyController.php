@@ -108,6 +108,12 @@ class CompanyController extends Controller
                 'user_id' => Auth::user()->id,
             ]);
 
+            Setting::create([
+                'key' => 'active_year',
+                'value' => $year->id,
+                'user_id' => Auth::user()->id,
+            ]);
+
             session(['company_id' => $company->id]);
             session(['year_id' => $year->id]);
         });
@@ -188,21 +194,16 @@ class CompanyController extends Controller
     //Company Change function
     public function coch($id)
     {
+
         $active_co = Setting::where('user_id', Auth::user()->id)->where('key', 'active_company')->first();
-        $active_yr = Setting::where('user_id', Auth::user()->id)->where('key', 'active_year')->first();
         $active_co->value = $id;
+        $active_co->save();
         session(['company_id' => $id]);
 
-        if (Year::where('company_id', $id)->latest()->first()) {
-
-            $active_yr->value = Year::where('company_id', $id)->latest()->first()->id;
-            $active_co->save();
-            $active_yr->save();
-            session(['year_id' => $active_yr->value]);
-        } else {
-            session(['year_id' => null]);
-            return Redirect::route('years.create')->with('success', 'First Create Year.');
-        }
+        $active_yr = Setting::where('user_id', Auth::user()->id)->where('key', 'active_year')->first();
+        $active_yr->value = Year::where('company_id', $id)->latest()->first()->id;
+        $active_yr->save();
+        session(['year_id' => $active_yr->value]);
         return redirect()->back();
     }
 
@@ -377,7 +378,9 @@ class CompanyController extends Controller
         $phpWord->addFontStyle('f1Style', array('name' => 'Calibri', 'size' => 12));
         $phpWord->addFontStyle('f2Style', array('name' => 'Calibri', 'bold' => true, 'size' => 12));
         $company = \App\Models\Company::where('id', session('company_id'))->first();
-        $branch = $company->bankAccounts()->first()->bankBranch;
+        // dd($company);
+        $branch = $company->bankAccounts()->get()->bankBranch;
+        // dd($branch);
         $period = \App\Models\Year::where('company_id', session('company_id'))->first();
         $begin = new Carbon($period->begin);
         $end = new Carbon($period->end);
@@ -394,7 +397,7 @@ class CompanyController extends Controller
             $acronym .= $w[0];
         }
 
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < $branch->count(); $i++) {
             $section = $phpWord->addSection();
 
             $textrun = $section->addTextRun();
@@ -414,6 +417,8 @@ class CompanyController extends Controller
             $section->addText('The Manager,', 'f1Style', 'p1Style');
             $section->addText($branch->bank->name . ",", 'f1Style', 'p1Style');
             $section->addText($branch->address . ".", 'f1Style', 'p1Style');
+
+
 
             $textrun = $section->addTextRun();
             $section->addTextBreak(0);

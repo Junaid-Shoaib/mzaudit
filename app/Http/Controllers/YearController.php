@@ -5,12 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request as Req;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Year;
 use App\Models\Company;
-use App\Models\Setting;
 use Carbon\Carbon;
 
 class YearController extends Controller
@@ -26,7 +23,7 @@ class YearController extends Controller
                         'id' => $year->id,
                         'begin' => $begin->format("F j Y"),
                         'end'  => $end->format("F j Y"),
-
+                        'delete' => $year->id == Year::where('company_id', session('company_id'))->first()->id  ? false : true,
                     ];
                 }),
 
@@ -56,62 +53,9 @@ class YearController extends Controller
             'company_id' => session('company_id'),
         ]);
 
-        return Redirect::back();
+        return Redirect::back()->with('success', 'Year created.');
     }
 
-    public function store(Req $request)
-    {
-        // dd($request->begin);
-        Request::validate([
-            'begin' => ['required'],
-            'end' => ['required'],
-            //           'company_id' => ['required'],
-        ]);
-
-
-
-        DB::transaction(function () {
-            $year = Year::create([
-
-                'begin' => Request::input('begin'),
-                'end' => Request::input('end'),
-                'company_id' => session('company_id'),
-            ]);
-            // dd($year);
-
-            // if(!count(Auth::user()->settings()->get())){
-            //                 Setting::create([
-            //                         'key' => 'active_company',
-            //                         'value' => session('company_id'),
-            // //                        'company_id' => Request::input('company_id'),
-            //                         'user_id' => Auth::user()->id,
-            //                     ]);
-
-            Setting::create([
-                'key' => 'active_year',
-                'value' => $year->id,
-                //                        'company_id' => Request::input('company_id'),
-                'user_id' => Auth::user()->id,
-            ]);
-            // dd($year);
-            // }
-            //             else {
-            // //                $active_co = Setting::where('user_id',Auth::user()->id)->where('company_id',Request::input('company_id'))->where('key','active_company')->first();
-            // //                $active_yr = Setting::where('user_id',Auth::user()->id)->where('company_id',Request::input('company_id'))->where('key','active_year')->first();
-            //                 // $active_co = Setting::where('user_id',Auth::user()->id)->where('key','active_company')->first();
-            //                 $active_yr = Setting::where('user_id',Auth::user()->id)->where('key','active_year')->first();
-            //                 // $active_co->value = session('company_id');
-            //                 $active_yr->value = $year->id;
-            //                 // $active_co->save();
-            //                 $active_yr->save();
-            //             }
-
-            //            session(['company_id' => Request::input('company_id')]);
-            session(['year_id' => $year->id]);
-        });
-
-        return Redirect::route('years')->with('success', 'Year created.');
-    }
 
     public function show($id)
     {
@@ -135,7 +79,6 @@ class YearController extends Controller
         Request::validate([
             'begin' => ['required'],
             'end' => ['required'],
-            //            'company_id' => ['required'],
         ]);
 
         $year->begin = Request::input('begin');
@@ -148,12 +91,6 @@ class YearController extends Controller
     public function destroy(Year $year)
     {
         $year->delete();
-        // dd($year)
-        if (Year::where('company_id', session('company_id'))->first()) {
-            return Redirect::back()->with('success', 'Year deleted.');
-        } else {
-            session(['year_id' => null]);
-            return Redirect::route('years.create')->with('success', 'YEAR NOT FOUND. Please create an Year for selected Company.');
-        }
+        return Redirect::back()->with('success', 'Year deleted.');
     }
 }

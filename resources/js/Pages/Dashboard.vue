@@ -11,7 +11,7 @@
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-2">
           <p class="text-center text-6xl italic text-white bg-gray-400">
-            "Welcome To Audit Software"
+            "Welcome To Management System"
           </p>
         </div>
       </div>

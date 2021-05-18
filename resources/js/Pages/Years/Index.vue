@@ -32,7 +32,7 @@
         <inertia-link
           class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
           :href="route('years.create')"
-          >Create
+          >Add Year
         </inertia-link>
       </div>
     </div>
@@ -40,6 +40,7 @@
       <table class="shadow-lg border mt-4 ml-8 rounded-xl">
         <thead>
           <tr class="bg-indigo-100">
+            <th class="py-2 px-4 border">ID</th>
             <th class="py-2 px-4 border">Begin</th>
             <th class="py-2 px-4 border">End</th>
             <th class="py-2 px-4 border">Actions</th>
@@ -47,6 +48,7 @@
         </thead>
         <tbody>
           <tr v-for="item in data" :key="item.id">
+            <td class="py-1 px-4 border">{{ item.id }}</td>
             <td class="py-1 px-4 border">{{ item.begin }}</td>
             <td class="py-1 px-4 border">{{ item.end }}</td>
             <td class="py-1 px-4 border">
@@ -56,12 +58,13 @@
               >
                 <span>Edit</span>
               </inertia-link>
-              <!-- <button
+              <button
                 class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
                 @click="destroy(item.id)"
+                v-if="item.delete"
               >
                 <span>Delete</span>
-              </button> -->
+              </button>
             </td>
           </tr>
         </tbody>

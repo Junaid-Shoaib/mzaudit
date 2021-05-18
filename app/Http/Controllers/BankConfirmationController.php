@@ -83,8 +83,10 @@ class BankConfirmationController extends Controller
         $branches = BankBranch::all()
             ->filter(
                 function ($branch) {
-                    // dd($branch);
+
+                    // if ($branch->bankAccounts()->first()) {
                     foreach ($branch->bankAccounts as $account) {
+
                         if ($account->company_id == session('company_id')) {
 
                             if ($account->bankBranch->bankConfirmations()
@@ -92,7 +94,6 @@ class BankConfirmationController extends Controller
                             ) {
                                 return false;
                             } else {
-
                                 return true;
                             }
                             // return true;
@@ -102,14 +103,6 @@ class BankConfirmationController extends Controller
             )
 
             ->map(function ($branch) {
-                // return [
-                //     'id' => $branch->id,
-                //     'name' => $branch->bank->name . " - " . $branch->address,
-                //     // 
-                //     // $branch->bankAccounts->first()->name . " - " .
-                // ];
-
-
                 $sent = Carbon::now();
                 // dd($sent);
                 BankConfirmation::create([
@@ -122,77 +115,8 @@ class BankConfirmationController extends Controller
                 ]);
             });
 
-        // $branche = null;
-        // $i = 0;
-        // foreach ($branches as $branch) {
-        //     if ($branch) {
-
-        //         $branche[$i] = $branch;
-        //         $i++;
-        //     }
-        // };
-
-        // dd($branche[0]->id);
-
-        // $sent = new Carbon(2021 - 05 - 29);
-        // BankConfirmation::create([
-        //     'sent' => $sent->format('Y-m-d'),
-        //     'company_id' => session('company_id'),
-        //     'year_id' => session('year_id'),
-        //     'branch_id' => $branche['id'],
-        // ]);
-        // foreach ($branche as $branch) {
-        //     dd($branch->name);
-
-        //     BankConfirmation::create([
-        //         // dd($branch),
-        //         'sent' => '2021-06-06',
-        //         // 'confirm_create' => $balance['confirm_create'],
-        //         // 'reminder' =>  $balance['reminder'],
-        //         // 'sent' => $sent->format('Y-m-d'),
-        //         'company_id' => session('company_id'),
-        //         'year_id' => session('year_id'),
-        //         'branch_id' => $branch->id,
-
-        //     ]);
-        // }
-
-
-
-
-
-
-
-
-        return redirect()->back();
-        // return Inertia::render('Confirmations/Create', [
-        //     // 'branches' => BankBranch::all()
-        //     'branches' => $branche,
-        //     'year' => Year::where('id', session('year_id'))->first(),
-        // ]);
+        return Redirect()->back();
     }
-
-
-
-    // public function store(Req $request)
-    // {
-    //     // dd($request->all());
-    //     Request::validate([
-    //         'sent' => ['required'],
-
-    //         // 'received' => ['required']
-    //     ]);
-
-    //     $sent = new Carbon($request->sent);
-    //     BankConfirmation::create([
-    //         'sent' => $sent->format('Y-m-d'),
-    //         'company_id' => session('company_id'),
-    //         'year_id' => session('year_id'),
-    //         'branch_id' => Request::input('branch_id'),
-    //     ]);
-
-    //     return Redirect::route('confirmations')->with('success', 'Bank Confirmation created.');
-    // }
 
     public function show($id)
     {

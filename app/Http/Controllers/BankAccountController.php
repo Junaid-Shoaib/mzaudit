@@ -56,17 +56,21 @@ class BankAccountController extends Controller
     //BankAccount Create
     public function create()
     {
-        return Inertia::render('Accounts/Create', [
-            'branches' => BankBranch::all()
-                ->map(function ($branch) {
-                    return [
-                        'id' => $branch->id,
-                        'address' => $branch->address,
-                        'bank_id' => $branch->bank_id,
-                        'name' => $branch->bank->name,
-                    ];
-                }),
-        ]);
+        if (BankAccount::where('branch_id')) {
+            return Inertia::render('Accounts/Create', [
+                'branches' => BankBranch::all()
+                    ->map(function ($branch) {
+                        return [
+                            'id' => $branch->id,
+                            'address' => $branch->address,
+                            'bank_id' => $branch->bank_id,
+                            'name' => $branch->bank->name,
+                        ];
+                    }),
+            ]);
+        } else {
+            return Redirect::route('branches.create')->with('success', 'Create Branch First');
+        }
     }
 
     public function store(Req $request)

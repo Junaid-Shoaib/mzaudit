@@ -68,10 +68,6 @@ class BankBalanceController extends Controller
             ->filter(
                 function ($account) {
 
-                    // $acc_name  = BankBalance::where('account_id', session('company_id'))->get();
-                    // $account->bankBalances()
-                    // ->where('year_id', session('year_id'))->first('ledger') ?  false : true;
-                    // $i = 0;
                     if ($account->bankBalances()
                         ->where('year_id', session('year_id'))->first('ledger')
                     ) {
@@ -113,43 +109,6 @@ class BankBalanceController extends Controller
             return Inertia::render('Balances/Create', [
 
                 'accounts' => $account,
-                // 'accounts' => BankAccount::where('company_id', session('company_id'))->get()
-                //     //     // dd($accounts);
-                //     ->filter(
-                //         function ($account) {
-                //             // $as =  $account->bankBalances()
-                //             //     ->where('year_id', session('year_id'))->first()->ledger  > 0  ?  false : true;
-                //             // // dd($as);
-                //             // return true;
-
-                //             // $i = 0;
-
-                //             if ($account->bankBalances()
-                //                 ->where('year_id', session('year_id'))->first('ledger')
-                //             ) {
-                //                 return false;
-                //             } else {
-                //                 return true;
-                //             }
-                //         }
-                //     )
-
-                //     ->map(
-                //         function ($bal) {
-                //             //             // dd($account);
-                //             return [
-                //                 'id' => $bal->id,
-                //                 'name' => $bal->name,
-                //                 'type' => $bal->type,
-                //                 'currency' => $bal->currency,
-                //                 // dd($bal),
-                //                 'branch' => $bal->name . " - " . $bal->bankBranch->bank->name . " - " . $bal->bankBranch->address,
-                //             ];
-                //         }
-                //     ),
-
-
-
             ]);
         } else {
             return Redirect::route('accounts.create')->with('success', 'Create Account first.');
