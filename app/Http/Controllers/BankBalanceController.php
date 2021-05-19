@@ -18,7 +18,8 @@ class BankBalanceController extends Controller
 {
     public function index()
     {
-
+        // $data = BankBalance::where('company_id', session('company_id'));
+        // $difference = 
         return Inertia::render(
             'Balances/Index',
             [
@@ -88,7 +89,6 @@ class BankBalanceController extends Controller
                         'name' => $bal->name,
                         'type' => $bal->type,
                         'currency' => $bal->currency,
-                        // dd($bal),
                         'branch' => $bal->name . " - " . $bal->bankBranch->bank->name . " - " . $bal->bankBranch->address,
                     ];
                 }

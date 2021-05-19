@@ -10,6 +10,7 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Bank;
 use App\Models\BankBranch;
+use App\Models\BankConfirmation;
 use Inertia\Inertia;
 use App;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -230,7 +231,7 @@ class CompanyController extends Controller
     {
         $spreadsheet = new Spreadsheet();
 
-        $colArray = ['H:H', 'I:I', 'J:J'];
+        $colArray = ['H:H', 'I:I', 'J:J', 'K:K'];
         foreach ($colArray as $key => $col) {
             $spreadsheet->getActiveSheet()->getStyle($col)->getNumberFormat()
                 ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
@@ -243,7 +244,7 @@ class CompanyController extends Controller
         // $spreadsheet->getActiveSheet()->getStyle('J:J')->getNumberFormat()
         // ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
 
-        $spreadsheet->getActiveSheet()->getStyle('B3:N3')->applyFromArray(
+        $spreadsheet->getActiveSheet()->getStyle('B3:O3')->applyFromArray(
             array(
                 'fill' => array(
                     'fillType' => Fill::FILL_SOLID,
@@ -264,13 +265,13 @@ class CompanyController extends Controller
         //        $c = 'a2';
         //       $sheet->setCellValue($c, 'Universes!');
 
-        $rowArray = ['SR#', 'BANK', 'ACCOUNT#', 'ACCOUNT TYPE', 'CURRENCY', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'PREPARED', 'DISPATCHED', 'REMINDER', 'RECEIVED'];
-        //        $columnArray = array_chunk($rowArray, 1);
-        //        $spreadsheet->getActiveSheet()->fromArray($columnArray, NULL, 'C10');
-        $spreadsheet->getActiveSheet()->fromArray($rowArray, NULL, 'B3');
+        $rowArray = ['SR#', 'BANK', 'ACCOUNT#', 'ACCOUNT TYPE', 'CURRENCY', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'DIFFERENCE', 'PREPARED', 'DISPATCHED', 'REMINDER', 'RECEIVED'];
 
-        $widthArray = ['10', '5', '20', '20', '20', '15', '25', '17', '17', '17', '20', '20', '20', '20'];
-        foreach (range('A', 'N') as $key => $col) {
+        $spreadsheet->getActiveSheet()->fromArray($rowArray, NULL, 'B3');
+        // dd($spreadsheet);
+        $widthArray = ['10', '5', '20', '20', '20', '15', '25', '17', '17', '17', '20', '20', '20', '20', '20'];
+        // dd($widthArray);
+        foreach (range('A', 'O') as $key => $col) {
             $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth($widthArray[$key]);
         }
         // $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20);
@@ -307,10 +308,9 @@ class CompanyController extends Controller
                         'ledger' => $bal->ledger,
                         'statement' => $bal->statement,
                         'confirmation' => $bal->confirmation,
+                        'difference' => $bal->statement - $bal->confirmation ? $bal->statement - $bal->confirmation : '0',
                         'sent' => $bal->bankAccount->bankBranch->bankConfirmations
-                            // dd($bal),
                             ->filter(function ($confirmation) {
-                                // dd($confirmation);
                                 return ($confirmation->company_id == session('company_id') && $confirmation->year_id == session('year_id'));
                             })->first()->sent,
                         'remind_first' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()->first()->reminder,
@@ -332,14 +332,7 @@ class CompanyController extends Controller
             $data[$i]['received'] = $data[$i]['received'] ? new Carbon($data[$i]['received']) : null;
             $data[$i]['received'] = $data[$i]['received'] ? $data[$i]['received']->format('F j, Y') : null;
         }
-        // dd($data);
-        //        $abc= \App\Models\BankBranch::with(['bankAccounts.bankBalances','bankConfirmations','bank'])->get()->toArray();
-        //        dd($abc);
-        //        $data2 = [];
-        //        foreach($data as $key=>$value){
-        //            $data2[$key] = array_values($value);
-        //        }
-        //        dd($data2);
+
         $spreadsheet->getActiveSheet()->fromArray($data, NULL, 'B5');
 
         $total = 0;
@@ -371,7 +364,7 @@ class CompanyController extends Controller
     {
 
         $phpWord = new PhpWord();
-
+        $i = 0;
         $phpWord->addParagraphStyle('p1Style', array('align' => 'both', 'spaceAfter' => 0, 'spaceBefore' => 0));
         $phpWord->addParagraphStyle('p2Style', array('align' => 'both'));
         $phpWord->addParagraphStyle('p3Style', array('align' => 'right', 'spaceAfter' => 0, 'spaceBefore' => 0));
@@ -379,9 +372,12 @@ class CompanyController extends Controller
         $phpWord->addFontStyle('f2Style', array('name' => 'Calibri', 'bold' => true, 'size' => 12));
         $company = \App\Models\Company::where('id', session('company_id'))->first();
         // dd($company);
-        $branch = $company->bankAccounts()->get()->bankBranch;
-        // dd($branch);
-        $period = \App\Models\Year::where('company_id', session('company_id'))->first();
+        $branch = $company->bankAccounts()->get();
+        foreach ($branch as $b) {
+            $branches[$i] = $b->bankBranch;
+            $i++;
+        }
+        $period = Year::where('id', session('year_id'))->first();
         $begin = new Carbon($period->begin);
         $end = new Carbon($period->end);
         $year = $end->year;
@@ -391,13 +387,17 @@ class CompanyController extends Controller
         $name = str_replace(["(", ")"], "", $company->name);
         $words = preg_split("/[\s,_-]+/", $name);
         $acronym = "";
+        $i = 0;
         $count = 1;
+
 
         foreach ($words as $w) {
             $acronym .= $w[0];
         }
 
-        for ($i = 0; $i < $branch->count(); $i++) {
+
+
+        foreach ($branches  as $branch) {
             $section = $phpWord->addSection();
 
             $textrun = $section->addTextRun();
@@ -414,9 +414,11 @@ class CompanyController extends Controller
             $textrun = $section->addTextRun();
             $section->addTextBreak(0);
 
+
             $section->addText('The Manager,', 'f1Style', 'p1Style');
             $section->addText($branch->bank->name . ",", 'f1Style', 'p1Style');
             $section->addText($branch->address . ".", 'f1Style', 'p1Style');
+
 
 
 
