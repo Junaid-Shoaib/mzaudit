@@ -18,6 +18,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Writer\Word2007;
 use Carbon\Carbon;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
@@ -218,13 +219,13 @@ class CompanyController extends Controller
         return redirect()->back();
     }
 
-    public function pd()
-    {
-        $a = "hello world";
-        $pdf = App::make('dompdf.wrapper');
-        $pdf->loadView('pdd', compact('a'));
-        return $pdf->stream('v.pdf');
-    }
+    // public function pd()
+    // {
+    //     $a = "hello world";
+    //     $pdf = App::make('dompdf.wrapper');
+    //     $pdf->loadView('pdd', compact('a'));
+    //     return $pdf->stream('v.pdf');
+    // }
 
     // excel file Generator
     public function ex()
@@ -237,6 +238,116 @@ class CompanyController extends Controller
                 ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
         }
 
+        $spreadsheet->getActiveSheet()->fromArray(['CLIENT:'], NULL, 'C3');
+        $spreadsheet->getActiveSheet()->fromArray(['PERIOD:'], NULL, 'C4');
+        $spreadsheet->getActiveSheet()->fromArray(['SUBJECT:'], NULL, 'C5');
+        $data1 = \App\Models\BankBalance::where('company_id', session('company_id'))->first(); //    
+        $spreadsheet->getActiveSheet()->fromArray([$data1->company->name], NULL, 'D3');
+        $spreadsheet->getActiveSheet()->fromArray([$data1->year->end], NULL, 'D4');
+        $spreadsheet->getActiveSheet()->fromArray(['Bank Confirmation Control Sheet'], NULL, 'D5');
+
+        $spreadsheet->getActiveSheet()->fromArray(['Prepared By:'], NULL, 'K3');
+        $spreadsheet->getActiveSheet()->fromArray(['Reviewed By:'], NULL, 'K4');
+        $spreadsheet->getActiveSheet()->fromArray(['Date:'], NULL, 'N3');
+        $spreadsheet->getActiveSheet()->fromArray(['Date:'], NULL, 'N4');
+
+        // dd($rowArray);
+
+
+
+        //testing
+        // $colArray1 = ['Client', 'Period', 'Subject'];
+        // $spreadsheet->getActiveSheet()->fromArray($colArray1, NULL, 'C3');
+        // $heightArray1 = ['20', '20', '20'];
+        // // foreach (range('C3', 'C5') as   $col) {
+        // foreach (range('C3', 'C5') as $key => $col) {
+        //     // $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth($widthArray1[$key]);
+        //     $spreadsheet->getActiveSheet()->getRowDimension($col)->setRowHeight($heightArray1[$key]);
+        // }
+        // dd($spreadsheet);
+
+        //Checking
+        // $spreadsheet->getActiveSheet()->getStyle('C3:E3')->applyFromArray(
+        //     array(
+        //         'fill' => array(
+        //             'fillType' => Fill::FILL_SOLID,
+        //             'color' => array('rgb' => '484848')
+        //         ),
+        //         'font'  => array(
+        //             'bold'  =>  true,
+        //             'color' => array('rgb' => 'FFFFFF')
+        //         ),
+        //         'alignment' => array(
+        //             'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+        //             'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+        //             'wrapText' => true,
+        //             'Comma' => true,
+        //         ),
+        //     )
+        // );
+
+        // $rowArray1 = ['Client', 'Period', 'Subject'];
+        // // dd($rowArray);
+        // $spreadsheet->getActiveSheet()->fromArray($rowArray1, NULL, 'C3');
+        // // dd($spreadsheet);
+        //   $widthArray1 = ['20', '20', '20'];
+        // // dd($widthArray);
+        // foreach (range('C', 'E') as $key => $col) {
+
+        //     $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth($widthArray1[$key]);
+        // }
+
+        // $dataaa =  \App\Models\Year::where('year_id', session('year_id'))->first()
+        //     ->map(
+        //         function ($yr){
+        //             return [
+        //                 'name' => $yr->id,
+        //             ];
+        //         }
+        //     )
+        // $data1 = \App\Models\Year::where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()
+        //     ->map(
+        //         function ($bal) {
+        //             return [
+
+        //                 'name' => $bal->company->name,
+        //                 'year' => $bal->end,
+
+        //             ];
+        //         }
+        //     )
+        //     // ;
+        //     ->toArray();
+
+        // dd($data1);
+
+        // 
+        // $spreadsheet->getActiveSheet()->fromArray($data1, NULL, 'B15');
+
+        // $spreadsheet->getActiveSheet()->fromArray($data1, NULL, 'D3');
+
+
+        //Checking End
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         // $spreadsheet->getActiveSheet()->getStyle('H:H')->getNumberFormat()
         // ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
         // $spreadsheet->getActiveSheet()->getStyle('I:I')->getNumberFormat()
@@ -244,7 +355,7 @@ class CompanyController extends Controller
         // $spreadsheet->getActiveSheet()->getStyle('J:J')->getNumberFormat()
         // ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
 
-        $spreadsheet->getActiveSheet()->getStyle('B3:O3')->applyFromArray(
+        $spreadsheet->getActiveSheet()->getStyle('B7:O7')->applyFromArray(
             array(
                 'fill' => array(
                     'fillType' => Fill::FILL_SOLID,
@@ -266,14 +377,16 @@ class CompanyController extends Controller
         //       $sheet->setCellValue($c, 'Universes!');
 
         $rowArray = ['SR#', 'BANK', 'ACCOUNT#', 'ACCOUNT TYPE', 'CURRENCY', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'DIFFERENCE', 'PREPARED', 'DISPATCHED', 'REMINDER', 'RECEIVED'];
-
-        $spreadsheet->getActiveSheet()->fromArray($rowArray, NULL, 'B3');
+        // dd($rowArray);
+        $spreadsheet->getActiveSheet()->fromArray($rowArray, NULL, 'B7');
         // dd($spreadsheet);
         $widthArray = ['10', '5', '20', '20', '20', '15', '25', '17', '17', '17', '20', '20', '20', '20', '20'];
         // dd($widthArray);
         foreach (range('A', 'O') as $key => $col) {
             $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth($widthArray[$key]);
         }
+
+
         // $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20);
         // $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(5);
         // $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(20);
@@ -320,7 +433,9 @@ class CompanyController extends Controller
                 }
             )
             ->toArray();
+
         // dd($data);
+
         $cnt = count($data);
         for ($i = 0; $i < $cnt; $i++) {
             $data[$i]['sent'] = $data[$i]['sent'] ? new Carbon($data[$i]['sent']) : null;
@@ -333,14 +448,16 @@ class CompanyController extends Controller
             $data[$i]['received'] = $data[$i]['received'] ? $data[$i]['received']->format('F j, Y') : null;
         }
 
-        $spreadsheet->getActiveSheet()->fromArray($data, NULL, 'B5');
+        // dd($cnt);
+
+        $spreadsheet->getActiveSheet()->fromArray($data, NULL, 'B9');
 
         $total = 0;
         for ($i = 0; $i < $cnt; $i++) {
             $total = $total + $data[$i]['ledger'];
         }
 
-        $tstr = $cnt + 5;
+        $tstr = $cnt + 9;
         $tcell = "H" . strval($tstr);
         $spreadsheet->getActiveSheet()->setCellValue($tcell, $total);
 
@@ -348,7 +465,11 @@ class CompanyController extends Controller
             'borders' => [
                 'outline' => [
                     'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-                    'color' => ['rgb' => '484848'],
+                    'color' => [
+                        'rgb' => '484848',
+                    ],
+
+
                 ],
             ],
         ];
