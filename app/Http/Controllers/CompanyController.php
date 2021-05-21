@@ -20,6 +20,7 @@ use PhpOffice\PhpWord\Writer\Word2007;
 use Carbon\Carbon;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
 class CompanyController extends Controller
@@ -234,16 +235,60 @@ class CompanyController extends Controller
 
         $colArray = ['H:H', 'I:I', 'J:J', 'K:K'];
         foreach ($colArray as $key => $col) {
-            $spreadsheet->getActiveSheet()->getStyle($col)->getNumberFormat()
-                ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
+
+            $FORMAT_ACCOUNTING = '_(* #,##0.00_);_(* \(#,##0.00\);_(* "-"??_);_(@_)';
+            $spreadsheet->getActiveSheet()->getStyle($col)->getNumberFormat()->setFormatCode($FORMAT_ACCOUNTING);
         }
+
+
+        $spreadsheet->getActiveSheet()->getstyle('D3')
+            ->getBorders()->getbottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $spreadsheet->getActiveSheet()->getstyle('D4')
+            ->getBorders()->getbottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $spreadsheet->getActiveSheet()->getstyle('D5:E5')
+            ->getBorders()->getbottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+
+        $spreadsheet->getActiveSheet()->getstyle('L3')
+            ->getBorders()->getbottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $spreadsheet->getActiveSheet()->getstyle('L4')
+            ->getBorders()->getbottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+
+        $spreadsheet->getActiveSheet()->getstyle('O3')
+            ->getBorders()->getbottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+        $spreadsheet->getActiveSheet()->getstyle('O4')
+            ->getBorders()->getbottom()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+
+        $spreadsheet->getActiveSheet()->setMergeCells(['D5:E5']);
+        $spreadsheet->getActiveSheet()->getStyle('C3:C5')->applyFromArray(
+            array(
+                'font'  => array(
+                    'bold'  =>  true,
+                ),
+                'alignment' => array(
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                    'wrapText' => true,
+                ),
+            )
+        );
+
+        $spreadsheet->getActiveSheet()->getStyle('D3:D5')->applyFromArray(
+            array(
+                'alignment' => array(
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+                    'wrapText' => true,
+                ),
+            )
+        );
 
         $spreadsheet->getActiveSheet()->fromArray(['CLIENT:'], NULL, 'C3');
         $spreadsheet->getActiveSheet()->fromArray(['PERIOD:'], NULL, 'C4');
         $spreadsheet->getActiveSheet()->fromArray(['SUBJECT:'], NULL, 'C5');
-        $data1 = \App\Models\BankBalance::where('company_id', session('company_id'))->first(); //    
-        $spreadsheet->getActiveSheet()->fromArray([$data1->company->name], NULL, 'D3');
-        $spreadsheet->getActiveSheet()->fromArray([$data1->year->end], NULL, 'D4');
+        $company = \App\Models\BankBalance::where('company_id', session('company_id'))->first(); //    
+        $spreadsheet->getActiveSheet()->fromArray([$company->company->name], NULL, 'D3');
+        $end = $company->year->end ? new Carbon($company->year->end) : null;
+        $spreadsheet->getActiveSheet()->fromArray([$end ? $end->format("M d Y") : null], NULL, 'D4');
         $spreadsheet->getActiveSheet()->fromArray(['Bank Confirmation Control Sheet'], NULL, 'D5');
 
         $spreadsheet->getActiveSheet()->fromArray(['Prepared By:'], NULL, 'K3');
@@ -251,109 +296,7 @@ class CompanyController extends Controller
         $spreadsheet->getActiveSheet()->fromArray(['Date:'], NULL, 'N3');
         $spreadsheet->getActiveSheet()->fromArray(['Date:'], NULL, 'N4');
 
-        // dd($rowArray);
 
-
-
-        //testing
-        // $colArray1 = ['Client', 'Period', 'Subject'];
-        // $spreadsheet->getActiveSheet()->fromArray($colArray1, NULL, 'C3');
-        // $heightArray1 = ['20', '20', '20'];
-        // // foreach (range('C3', 'C5') as   $col) {
-        // foreach (range('C3', 'C5') as $key => $col) {
-        //     // $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth($widthArray1[$key]);
-        //     $spreadsheet->getActiveSheet()->getRowDimension($col)->setRowHeight($heightArray1[$key]);
-        // }
-        // dd($spreadsheet);
-
-        //Checking
-        // $spreadsheet->getActiveSheet()->getStyle('C3:E3')->applyFromArray(
-        //     array(
-        //         'fill' => array(
-        //             'fillType' => Fill::FILL_SOLID,
-        //             'color' => array('rgb' => '484848')
-        //         ),
-        //         'font'  => array(
-        //             'bold'  =>  true,
-        //             'color' => array('rgb' => 'FFFFFF')
-        //         ),
-        //         'alignment' => array(
-        //             'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-        //             'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
-        //             'wrapText' => true,
-        //             'Comma' => true,
-        //         ),
-        //     )
-        // );
-
-        // $rowArray1 = ['Client', 'Period', 'Subject'];
-        // // dd($rowArray);
-        // $spreadsheet->getActiveSheet()->fromArray($rowArray1, NULL, 'C3');
-        // // dd($spreadsheet);
-        //   $widthArray1 = ['20', '20', '20'];
-        // // dd($widthArray);
-        // foreach (range('C', 'E') as $key => $col) {
-
-        //     $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth($widthArray1[$key]);
-        // }
-
-        // $dataaa =  \App\Models\Year::where('year_id', session('year_id'))->first()
-        //     ->map(
-        //         function ($yr){
-        //             return [
-        //                 'name' => $yr->id,
-        //             ];
-        //         }
-        //     )
-        // $data1 = \App\Models\Year::where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()
-        //     ->map(
-        //         function ($bal) {
-        //             return [
-
-        //                 'name' => $bal->company->name,
-        //                 'year' => $bal->end,
-
-        //             ];
-        //         }
-        //     )
-        //     // ;
-        //     ->toArray();
-
-        // dd($data1);
-
-        // 
-        // $spreadsheet->getActiveSheet()->fromArray($data1, NULL, 'B15');
-
-        // $spreadsheet->getActiveSheet()->fromArray($data1, NULL, 'D3');
-
-
-        //Checking End
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // $spreadsheet->getActiveSheet()->getStyle('H:H')->getNumberFormat()
-        // ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
-        // $spreadsheet->getActiveSheet()->getStyle('I:I')->getNumberFormat()
-        // ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
-        // $spreadsheet->getActiveSheet()->getStyle('J:J')->getNumberFormat()
-        // ->setFormatCode(\PhpOffice\PhpSpreadsheet\Style\NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1);
 
         $spreadsheet->getActiveSheet()->getStyle('B7:O7')->applyFromArray(
             array(
@@ -373,15 +316,9 @@ class CompanyController extends Controller
             )
         );
 
-        //        $c = 'a2';
-        //       $sheet->setCellValue($c, 'Universes!');
-
         $rowArray = ['SR#', 'BANK', 'ACCOUNT#', 'ACCOUNT TYPE', 'CURRENCY', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'DIFFERENCE', 'PREPARED', 'DISPATCHED', 'REMINDER', 'RECEIVED'];
-        // dd($rowArray);
         $spreadsheet->getActiveSheet()->fromArray($rowArray, NULL, 'B7');
-        // dd($spreadsheet);
         $widthArray = ['10', '5', '20', '20', '20', '15', '25', '17', '17', '17', '20', '20', '20', '20', '20'];
-        // dd($widthArray);
         foreach (range('A', 'O') as $key => $col) {
             $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth($widthArray[$key]);
         }
@@ -449,8 +386,10 @@ class CompanyController extends Controller
         }
 
         // dd($cnt);
-
         $spreadsheet->getActiveSheet()->fromArray($data, NULL, 'B9');
+
+
+
 
         $total = 0;
         for ($i = 0; $i < $cnt; $i++) {
