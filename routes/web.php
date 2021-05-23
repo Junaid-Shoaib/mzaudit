@@ -99,6 +99,11 @@ Route::get('doc', [CompanyController::class, 'doc'])
     ->name('doc')
     ->middleware('auth');
 
+Route::get('word', [CompanyController::class, 'word'])
+    ->name('word')
+    ->middleware('auth');
+
+
 // Banks
 
 Route::get('banks', [BankController::class, 'index'])

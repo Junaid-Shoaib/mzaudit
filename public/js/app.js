@@ -25739,16 +25739,16 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 /* HOISTED */
 );
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"border inline-block hover:bg-gray-600 hover:text-white shadow-md rounded-xl px-4 py-1 m-1\"><!-- class=&quot;border rounded-lg shadow-md p-2 m-2 inline-block hover:bg-gray-600 hover:text-white&quot; --><a href=\"pd\">Generate pdf file</a></div><div class=\"border inline-block hover:bg-gray-600 hover:text-white shadow-md rounded-xl px-4 py-1 m-1\"><!-- class=&quot;border rounded-lg shadow-md p-2 m-2 inline-block hover:bg-gray-600 hover:text-white&quot; --><a href=\"doc\">Generate MS-Word file</a></div><div class=\"border inline-block hover:bg-gray-600 hover:text-white shadow-md rounded-xl px-4 py-1 m-1\"><!-- class=&quot;border rounded-lg shadow-md p-2 m-2 inline-block hover:bg-gray-600 hover:text-white&quot; --><a href=\"ex\">Generate MS-Excel file</a></div>", 3);
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"border inline-block hover:bg-gray-600 hover:text-white shadow-md rounded-xl px-4 py-1 m-1\"><!-- class=&quot;border rounded-lg shadow-md p-2 m-2 inline-block hover:bg-gray-600 hover:text-white&quot; --><a href=\"pd\">Generate pdf file</a></div><div class=\"border inline-block hover:bg-gray-600 hover:text-white shadow-md rounded-xl px-4 py-1 m-1\"><!-- class=&quot;border rounded-lg shadow-md p-2 m-2 inline-block hover:bg-gray-600 hover:text-white&quot; --><a href=\"doc\">Generate MS-Word file</a></div><div class=\"border inline-block hover:bg-gray-600 hover:text-white shadow-md rounded-xl px-4 py-1 m-1\"><!-- class=&quot;border rounded-lg shadow-md p-2 m-2 inline-block hover:bg-gray-600 hover:text-white&quot; --><a href=\"ex\">Generate MS-Excel file</a></div><div class=\"border inline-block hover:bg-gray-600 hover:text-white shadow-md rounded-xl px-4 py-1 m-1\"><!-- class=&quot;border rounded-lg shadow-md p-2 m-2 inline-block hover:bg-gray-600 hover:text-white&quot; --><a href=\"word\">Generate Bank-Report</a></div>", 4);
 
-var _hoisted_12 = {
+var _hoisted_13 = {
   "class": ""
 };
-var _hoisted_13 = {
+var _hoisted_14 = {
   "class": "shadow-lg border mt-4 ml-8 rounded-xl"
 };
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", {
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", {
   "class": "bg-indigo-100"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", {
   "class": "py-2 px-4 border"
@@ -25768,9 +25768,6 @@ var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_15 = {
-  "class": "py-1 px-4 border"
-};
 var _hoisted_16 = {
   "class": "py-1 px-4 border"
 };
@@ -25789,8 +25786,11 @@ var _hoisted_20 = {
 var _hoisted_21 = {
   "class": "py-1 px-4 border"
 };
+var _hoisted_22 = {
+  "class": "py-1 px-4 border"
+};
 
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, "Delete", -1
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, "Delete", -1
 /* HOISTED */
 );
 
@@ -25870,27 +25870,27 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }, 8
       /* PROPS */
-      , ["href"])]), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"flex-1 inline-block\">\n        <select\n          v-model=\"co_id\"\n          class=\"max-w-md rounded-md\"\n          label=\"company_id\"\n          @change=\"coch\"\n        >\n          <option\n            v-for=\"company in companies\"\n            :key=\"company.id\"\n            :value=\"company.id\"\n          >\n            {{ company.name }}\n          </option>\n        </select>\n      </div>\n      <div class=\"flex-1 inline-block\">\n        <select\n          v-model=\"yr_id\"\n          class=\"max-w-md rounded-md\"\n          label=\"yr_id\"\n          @change=\"yrch\"\n        >\n          <option v-for=\"year in years\" :key=\"year.id\" :value=\"year.id\">\n            {{ year.end }}\n          </option>\n        </select>\n      </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.data, function (item) {
+      , ["href"])]), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"flex-1 inline-block\">\n        <select\n          v-model=\"co_id\"\n          class=\"max-w-md rounded-md\"\n          label=\"company_id\"\n          @change=\"coch\"\n        >\n          <option\n            v-for=\"company in companies\"\n            :key=\"company.id\"\n            :value=\"company.id\"\n          >\n            {{ company.name }}\n          </option>\n        </select>\n      </div>\n      <div class=\"flex-1 inline-block\">\n        <select\n          v-model=\"yr_id\"\n          class=\"max-w-md rounded-md\"\n          label=\"yr_id\"\n          @change=\"yrch\"\n        >\n          <option v-for=\"year in years\" :key=\"year.id\" :value=\"year.id\">\n            {{ year.end }}\n          </option>\n        </select>\n      </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.data, function (item) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
           key: item.id
-        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.id), 1
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.id), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.branch), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.branch), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.sent), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.sent), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.confirm_create), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.confirm_create), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.reminder), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.reminder), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.received), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.received), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <inertia-link\n                class=\"border bg-indigo-300 rounded-xl px-4 py-1 m-1\"\n                :href=\"route('confirmations.edit', item.id)\"\n              >\n                <span>Edit</span>\n              </inertia-link> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <inertia-link\n                class=\"border bg-indigo-300 rounded-xl px-4 py-1 m-1\"\n                :href=\"route('confirmations.edit', item.id)\"\n              >\n                <span>Edit</span>\n              </inertia-link> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
           "class": "border bg-indigo-300 rounded-xl px-4 py-1 m-1",
           onClick: function onClick($event) {
             return $options.destroy(item.id);
           }
-        }, [_hoisted_22], 8
+        }, [_hoisted_23], 8
         /* PROPS */
         , ["onClick"])])]);
       }), 128

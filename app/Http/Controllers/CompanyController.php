@@ -10,7 +10,7 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Bank;
 use App\Models\BankBranch;
-use App\Models\BankConfirmation;
+
 use Inertia\Inertia;
 use App;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -323,28 +323,6 @@ class CompanyController extends Controller
             $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth($widthArray[$key]);
         }
 
-
-        // $spreadsheet->getActiveSheet()->getColumnDimension('A')->setWidth(20);
-        // $spreadsheet->getActiveSheet()->getColumnDimension('B')->setWidth(5);
-        // $spreadsheet->getActiveSheet()->getColumnDimension('C')->setWidth(20);
-        // $spreadsheet->getActiveSheet()->getColumnDimension('D')->setWidth(20);
-        // $spreadsheet->getActiveSheet()->getColumnDimension('E')->setWidth(20);
-        // $spreadsheet->getActiveSheet()->getColumnDimension('F')->setWidth(15);
-        // $spreadsheet->getActiveSheet()->getColumnDimension('G')->setWidth(25);
-        // $spreadsheet->getActiveSheet()->getColumnDimension('H')->setWidth(20);
-        // $spreadsheet->getActiveSheet()->getColumnDimension('I')->setWidth(20);
-        // $spreadsheet->getActiveSheet()->getColumnDimension('J')->setWidth(20);
-        // $spreadsheet->getActiveSheet()->getColumnDimension('K')->setWidth(20);
-        // $spreadsheet->getActiveSheet()->getColumnDimension('L')->setWidth(20);
-        // $spreadsheet->getActiveSheet()->getColumnDimension('M')->setWidth(20);
-        // $spreadsheet->getActiveSheet()->getColumnDimension('N')->setWidth(20);
-
-        // $spreadsheet->getActiveSheet()->getStyle('I3')
-        // ->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-
-        // $spreadsheet->getActiveSheet()->getStyle('I3')
-        // ->getAlignment()->setWrapText(true);
-
         $data = \App\Models\BankBalance::where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()
             ->map(
                 function ($bal) {
@@ -575,5 +553,28 @@ class CompanyController extends Controller
         $writer = new Word2007($phpWord);
         $writer->save('hello World.docx');
         return response()->download(public_path('hello World.docx'));
+    }
+
+    // /**c
+    //  * Handle the incoming request.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @return \Illuminate\Http\Response
+    //  */
+    public function word()
+    {
+        $company = \App\Models\BankBalance::where('company_id', session('company_id'))->first();
+        if ($company) {
+            $end = $company->year->end ? new Carbon($company->year->end) : null;
+        } else {
+            return Redirect::route('accounts.create')->with('success', 'Create Account first.');
+        }
+
+
+        $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('templatebr.docx');
+        $templateProcessor->setValue('client', $company->company->name);
+        $templateProcessor->setValue('end', $end->format("F j Y"));
+        $templateProcessor->saveAs('bankconfigure.docx');
+        return response()->download(public_path('bankconfigure.docx'));
     }
 }
