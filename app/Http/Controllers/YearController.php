@@ -9,6 +9,7 @@ use Inertia\Inertia;
 use App\Models\Year;
 use App\Models\Company;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class YearController extends Controller
 {
@@ -47,11 +48,17 @@ class YearController extends Controller
         $newBegin = implode('-', $begin);
         $newEnd = implode('-', $end);
 
+        //Meri Changes
+        //yahan tak
         Year::create([
             'begin' => $newBegin,
             'end' => $newEnd,
             'company_id' => session('company_id'),
         ]);
+
+        $year = Year::where('company_id', session('company_id'))->latest()->first();
+        Storage::makedirectory('/public/' . $year->company->name . '/' . $newEnd);
+
 
         return Redirect::back()->with('success', 'Year created.');
     }

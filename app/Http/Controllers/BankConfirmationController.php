@@ -11,6 +11,7 @@ use App\Models\Company;
 use App\Models\BankConfirmation;
 use Inertia\Inertia;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class BankConfirmationController extends Controller
 {
@@ -79,7 +80,6 @@ class BankConfirmationController extends Controller
 
     public function create()
     {
-
         $branches = BankBranch::all()
             ->filter(
                 function ($branch) {
@@ -115,8 +115,14 @@ class BankConfirmationController extends Controller
                 ]);
             });
 
+
+
         return Redirect()->back();
+        // }
     }
+
+
+
 
     public function show($id)
     {

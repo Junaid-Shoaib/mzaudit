@@ -120,12 +120,14 @@ class BankBalanceController extends Controller
 
     public function store(Req $request)
     {
+
         Request::validate([
             'balances.*.account_id' => ['required'],
             'balances.*.ledger' => ['required'],
             // 'balances.*.statement' => ['required'],
             // 'balances.*.confirmation' => ['required'],
         ]);
+
         foreach ($request->balances as $balance) {
             BankBalance::create([
                 'ledger' => $balance['ledger'],

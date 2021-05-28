@@ -10,7 +10,7 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Bank;
 use App\Models\BankBranch;
-
+use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
 use App;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -20,6 +20,7 @@ use PhpOffice\PhpWord\Writer\Word2007;
 use Carbon\Carbon;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 
@@ -72,6 +73,8 @@ class CompanyController extends Controller
                 'incorp' => Request::input('incorp'),
             ]);
 
+
+
             //Start Month & End Month
             $startMonth = Carbon::parse($company->fiscal)->month + 1;
             $endMonth = Carbon::parse($company->fiscal)->month;
@@ -95,9 +98,8 @@ class CompanyController extends Controller
                 $startYear = $endYear - 1;
             }
 
-
-            $startDate = $startYear . '-' . $startMonth . '-' . $startMonthDays;
-            $endDate = $endYear . '-' . $endMonth . '-' . $endMonthDays;
+            $startDate = $startYear . '-' . '0' . $startMonth . '-' . $startMonthDays;
+            $endDate = $endYear . '-' . '0' . $endMonth . '-' . $endMonthDays;
 
 
             $year = Year::create([
@@ -119,6 +121,9 @@ class CompanyController extends Controller
 
             session(['company_id' => $company->id]);
             session(['year_id' => $year->id]);
+
+            Storage::makeDirectory('/public/' . $company->name);
+            Storage::makeDirectory('/public/' . $company->name . '/' . $year->end);
         });
         return Redirect::route('companies')->with('success', 'Company created');
     }
@@ -285,7 +290,8 @@ class CompanyController extends Controller
         $spreadsheet->getActiveSheet()->fromArray(['CLIENT:'], NULL, 'C3');
         $spreadsheet->getActiveSheet()->fromArray(['PERIOD:'], NULL, 'C4');
         $spreadsheet->getActiveSheet()->fromArray(['SUBJECT:'], NULL, 'C5');
-        $company = \App\Models\BankBalance::where('company_id', session('company_id'))->first(); //    
+        $company = \App\Models\BankBalance::where('company_id', session('company_id'))
+            ->where('year_id', session('year_id'))->first();
         $spreadsheet->getActiveSheet()->fromArray([$company->company->name], NULL, 'D3');
         $end = $company->year->end ? new Carbon($company->year->end) : null;
         $spreadsheet->getActiveSheet()->fromArray([$end ? $end->format("M d Y") : null], NULL, 'D4');
@@ -399,8 +405,8 @@ class CompanyController extends Controller
 
     //word file Generator
     public function doc()
-    {
 
+    {
         $phpWord = new PhpWord();
         $i = 0;
         $phpWord->addParagraphStyle('p1Style', array('align' => 'both', 'spaceAfter' => 0, 'spaceBefore' => 0));
@@ -416,6 +422,7 @@ class CompanyController extends Controller
             $i++;
         }
         $period = Year::where('id', session('year_id'))->first();
+
         $begin = new Carbon($period->begin);
         $end = new Carbon($period->end);
         $year = $end->year;
@@ -550,24 +557,25 @@ class CompanyController extends Controller
             );
         }
 
+        // dd($company->name)
         $writer = new Word2007($phpWord);
-        $writer->save('hello World.docx');
-        return response()->download(public_path('hello World.docx'));
+        $writer->save(storage_path('app/public/' . $company->name . '/' . $period->end . '/' .  'helloJd.docx'));
+
+
+        // return response()->download(public_path('hello World.docx'));
     }
 
-    // /**c
-    //  * Handle the incoming request.
-    //  *
-    //  * @param  \Illuminate\Http\Request  $request
-    //  * @return \Illuminate\Http\Response
-    //  */
+
     public function word()
     {
-        $company = \App\Models\BankBalance::where('company_id', session('company_id'))->first();
+        $company = \App\Models\BankBalance::where('company_id', session('company_id'))
+            ->where('year_id', session('year_id'))->first();
+        // dd($company);
         if ($company) {
             $end = $company->year->end ? new Carbon($company->year->end) : null;
+            // dd($end);
         } else {
-            return Redirect::route('accounts.create')->with('success', 'Create Account first.');
+            return Redirect::route('balances.create')->with('success', 'Create Account first.');
         }
 
 
