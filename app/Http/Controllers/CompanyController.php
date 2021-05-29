@@ -18,11 +18,13 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Writer\Word2007;
 use Carbon\Carbon;
+use DatePeriod;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class CompanyController extends Controller
 {
@@ -212,7 +214,9 @@ class CompanyController extends Controller
         $active_yr->value = Year::where('company_id', $id)->latest()->first()->id;
         $active_yr->save();
         session(['year_id' => $active_yr->value]);
-        return redirect()->back();
+
+        // return redirect()->back();
+        return back()->withInput();
     }
 
     // year Change Function
@@ -222,7 +226,9 @@ class CompanyController extends Controller
         $active_yr->value = $id;
         $active_yr->save();
         session(['year_id' => $active_yr->value]);
-        return redirect()->back();
+
+        return back()->withInput();
+        // return redirect()->back();
     }
 
     // public function pd()
@@ -286,14 +292,17 @@ class CompanyController extends Controller
                 ),
             )
         );
-
+        $company = \App\Models\BankBalance::where('company_id', session('company_id'))
+            ->where('year_id', session('year_id'))->first();
+        if ($company) {
+            $end = $company->year->end ? new Carbon($company->year->end) : null;
+        } else {
+            return Redirect::route('balances.create')->with('success', 'Create Account first.');
+        }
         $spreadsheet->getActiveSheet()->fromArray(['CLIENT:'], NULL, 'C3');
         $spreadsheet->getActiveSheet()->fromArray(['PERIOD:'], NULL, 'C4');
         $spreadsheet->getActiveSheet()->fromArray(['SUBJECT:'], NULL, 'C5');
-        $company = \App\Models\BankBalance::where('company_id', session('company_id'))
-            ->where('year_id', session('year_id'))->first();
         $spreadsheet->getActiveSheet()->fromArray([$company->company->name], NULL, 'D3');
-        $end = $company->year->end ? new Carbon($company->year->end) : null;
         $spreadsheet->getActiveSheet()->fromArray([$end ? $end->format("M d Y") : null], NULL, 'D4');
         $spreadsheet->getActiveSheet()->fromArray(['Bank Confirmation Control Sheet'], NULL, 'D5');
 
@@ -399,14 +408,16 @@ class CompanyController extends Controller
         $spreadsheet->getActiveSheet()->getStyle($tcell)->applyFromArray($styleArray);
 
         $writer = new Xlsx($spreadsheet);
-        $writer->save('hello world.xlsx');
-        return response()->download(public_path('hello World.xlsx'));
+        $writer->save(storage_path('app/public/' . $company->company->name . '/' . $company->year->end . '/' .  'Control Sheet.xlsx'));
+
+        return response()->download(storage_path('app/public/' . $company->company->name . '/' . $company->year->end . '/' .  'Control Sheet.xlsx'));
     }
 
     //word file Generator
-    public function doc()
+    public function word()
 
     {
+        // dd('Junaid');
         $phpWord = new PhpWord();
         $i = 0;
         $phpWord->addParagraphStyle('p1Style', array('align' => 'both', 'spaceAfter' => 0, 'spaceBefore' => 0));
@@ -422,13 +433,12 @@ class CompanyController extends Controller
             $i++;
         }
         $period = Year::where('id', session('year_id'))->first();
-
+        // dd($period);
         $begin = new Carbon($period->begin);
         $end = new Carbon($period->end);
         $year = $end->year;
         $str = "first Monday of July {$year}";
         $date = new Carbon($str);
-
         $name = str_replace(["(", ")"], "", $company->name);
         $words = preg_split("/[\s,_-]+/", $name);
         $acronym = "";
@@ -443,19 +453,15 @@ class CompanyController extends Controller
 
 
         foreach ($branches  as $branch) {
+            // dd($branch);
             $section = $phpWord->addSection();
-
             $textrun = $section->addTextRun();
             $section->addTextBreak(2);
-
             $ref = "MZ-BCONF/" . $acronym . "/" . $year . "/" . $count++;
             $section->addText($ref, 'f2Style', 'p1Style');
-
             $textrun = $section->addTextRun();
             $section->addTextBreak(1);
-
             $section->addText($date->format('F j, Y'), 'f2Style', 'p1Style');
-
             $textrun = $section->addTextRun();
             $section->addTextBreak(0);
 
@@ -557,32 +563,10 @@ class CompanyController extends Controller
             );
         }
 
-        // dd($company->name)
+        // dd($company->name);
         $writer = new Word2007($phpWord);
-        $writer->save(storage_path('app/public/' . $company->name . '/' . $period->end . '/' .  'helloJd.docx'));
 
-
-        // return response()->download(public_path('hello World.docx'));
-    }
-
-
-    public function word()
-    {
-        $company = \App\Models\BankBalance::where('company_id', session('company_id'))
-            ->where('year_id', session('year_id'))->first();
-        // dd($company);
-        if ($company) {
-            $end = $company->year->end ? new Carbon($company->year->end) : null;
-            // dd($end);
-        } else {
-            return Redirect::route('balances.create')->with('success', 'Create Account first.');
-        }
-
-
-        $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('templatebr.docx');
-        $templateProcessor->setValue('client', $company->company->name);
-        $templateProcessor->setValue('end', $end->format("F j Y"));
-        $templateProcessor->saveAs('bankconfigure.docx');
-        return response()->download(public_path('bankconfigure.docx'));
+        $writer->save(storage_path('app/public/' . $company->name . '/' . $period->end . '/' .  'Bank Letter.docx'));
+        return response()->download(storage_path('app/public/' . $company->name . '/' . $period->end . '/' .  'Bank Letter.docx'));
     }
 }

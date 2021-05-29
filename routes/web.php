@@ -96,12 +96,12 @@ Route::get('ex', [CompanyController::class, 'ex'])
     ->name('ex')
     ->middleware('auth');
 
-Route::get('doc', [CompanyController::class, 'doc'])
-    ->name('doc')
-    ->middleware('auth');
-
 Route::get('word', [CompanyController::class, 'word'])
     ->name('word')
+    ->middleware('auth');
+
+Route::get('bankConfig', [BankConfirmationController::class, 'bankConfig'])
+    ->name('bankConfig')
     ->middleware('auth');
 
 

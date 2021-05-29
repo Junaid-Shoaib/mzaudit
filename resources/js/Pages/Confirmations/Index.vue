@@ -83,19 +83,19 @@
         class="border inline-block hover:bg-gray-600 hover:text-white shadow-md rounded-xl px-4 py-1 m-1"
       >
         <!-- class="border rounded-lg shadow-md p-2 m-2 inline-block hover:bg-gray-600 hover:text-white" -->
-        <a href="doc">Generate MS-Word file</a>
+        <a href="word">Generate Bank Letter</a>
       </div>
       <div
         class="border inline-block hover:bg-gray-600 hover:text-white shadow-md rounded-xl px-4 py-1 m-1"
       >
         <!-- class="border rounded-lg shadow-md p-2 m-2 inline-block hover:bg-gray-600 hover:text-white" -->
-        <a href="ex">Generate MS-Excel file</a>
+        <a href="ex">Generate Control Sheet</a>
       </div>
       <div
         class="border inline-block hover:bg-gray-600 hover:text-white shadow-md rounded-xl px-4 py-1 m-1"
       >
         <!-- class="border rounded-lg shadow-md p-2 m-2 inline-block hover:bg-gray-600 hover:text-white" -->
-        <a href="word">Generate Bank-Report</a>
+        <a href="bankConfig">Generate Bank-Report</a>
       </div>
 
       <!-- <div class="flex-1 inline-block">

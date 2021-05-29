@@ -78,7 +78,7 @@ class BankConfirmationController extends Controller
 
 
 
-    public function create()
+    public  function create()
     {
         $branches = BankBranch::all()
             ->filter(
@@ -117,7 +117,7 @@ class BankConfirmationController extends Controller
 
 
 
-        return Redirect()->back();
+        return back()->withInput();
         // }
     }
 
@@ -220,5 +220,21 @@ class BankConfirmationController extends Controller
     {
         $confirmation->delete();
         return Redirect::back()->with('success', 'Bank Confirmation deleted.');
+    }
+
+    public function bankConfig()
+    {
+        $company = \App\Models\BankBalance::where('company_id', session('company_id'))
+            ->where('year_id', session('year_id'))->first();
+        if ($company) {
+            $end = $company->year->end ? new Carbon($company->year->end) : null;
+            $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('templatebr.docx');
+            $templateProcessor->setValue('client', $company->company->name);
+            $templateProcessor->setValue('end', $end->format("F j Y"));
+            $templateProcessor->saveAs(storage_path('app/public/' . $company->company->name . '/' . $company->year->end . '/' .  'bankconfigure.docx'));
+            return response()->download(storage_path('app/public/' . $company->company->name . '/' . $company->year->end . '/' .  'bankconfigure.docx'));
+        } else {
+            return Redirect::route('balances.create')->with('success', 'Create Account first.');
+        }
     }
 }
