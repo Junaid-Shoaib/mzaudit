@@ -48,8 +48,7 @@ class YearController extends Controller
         $newBegin = implode('-', $begin);
         $newEnd = implode('-', $end);
 
-        //Meri Changes
-        //yahan tak
+
         Year::create([
             'begin' => $newBegin,
             'end' => $newEnd,

@@ -10,21 +10,24 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Bank;
 use App\Models\BankBranch;
-use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
-use App;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Writer\Word2007;
 use Carbon\Carbon;
-use DatePeriod;
-use Illuminate\Contracts\Session\Session;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use PhpOffice\PhpSpreadsheet\Style\Border;
+use Illuminate\Support\Facades\DB;
+// use Illuminate\Queue\Jobs\RedisJob;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
-use Symfony\Component\Console\Question\ConfirmationQuestion;
+// use PhpParser\Node\Stmt\Else_;
+
+// use Illuminate\Support\Facades\File;
+// use App;
+// use DatePeriod;
+// use Illuminate\Contracts\Session\Session;
+// use PhpOffice\PhpSpreadsheet\Style\Border;
+// use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class CompanyController extends Controller
 {
@@ -34,6 +37,7 @@ class CompanyController extends Controller
         return Inertia::render(
             'Companies/Index',
             [
+
                 'data' => Company::all()
                     ->map(function ($company) {
                         return [
@@ -76,7 +80,6 @@ class CompanyController extends Controller
             ]);
 
 
-
             //Start Month & End Month
             $startMonth = Carbon::parse($company->fiscal)->month + 1;
             $endMonth = Carbon::parse($company->fiscal)->month;
@@ -99,6 +102,7 @@ class CompanyController extends Controller
                 $endYear = ($today->month >= $startMonth) ? $today->year + 1 : $today->year;
                 $startYear = $endYear - 1;
             }
+
 
             $startDate = $startYear . '-' . '0' . $startMonth . '-' . $startMonthDays;
             $endDate = $endYear . '-' . '0' . $endMonth . '-' . $endMonthDays;
@@ -123,6 +127,7 @@ class CompanyController extends Controller
 
             session(['company_id' => $company->id]);
             session(['year_id' => $year->id]);
+
 
             Storage::makeDirectory('/public/' . $company->name);
             Storage::makeDirectory('/public/' . $company->name . '/' . $year->end);
@@ -204,16 +209,27 @@ class CompanyController extends Controller
     //Company Change function
     public function coch($id)
     {
-
+        // dd($id);
         $active_co = Setting::where('user_id', Auth::user()->id)->where('key', 'active_company')->first();
-        $active_co->value = $id;
-        $active_co->save();
+        if ($active_co) {
+            $active_co->value = $id;
+            $active_co->save();
+        } else {
+            $active_co = $id;
+        }
+
         session(['company_id' => $id]);
 
         $active_yr = Setting::where('user_id', Auth::user()->id)->where('key', 'active_year')->first();
-        $active_yr->value = Year::where('company_id', $id)->latest()->first()->id;
-        $active_yr->save();
-        session(['year_id' => $active_yr->value]);
+        // dd($active_yr);
+        if ($active_yr) {
+            $active_yr->value = Year::where('company_id', $id)->latest()->first()->id;
+            $active_yr->save();
+            session(['year_id' => $active_yr->value]);
+        } else {
+            $active_yr = Year::where('company_id', $id)->latest()->first()->id;
+            session(['year_id' => $active_yr]);
+        }
 
         // return redirect()->back();
         return back()->withInput();
@@ -242,6 +258,7 @@ class CompanyController extends Controller
     // excel file Generator
     public function ex()
     {
+        $s = '';
         $spreadsheet = new Spreadsheet();
 
         $colArray = ['H:H', 'I:I', 'J:J', 'K:K'];
@@ -338,36 +355,40 @@ class CompanyController extends Controller
             $spreadsheet->getActiveSheet()->getColumnDimension($col)->setWidth($widthArray[$key]);
         }
 
-        $data = \App\Models\BankBalance::where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()
-            ->map(
-                function ($bal) {
-                    return [
-                        'id' => $bal->id,
-                        'bank' => $bal->bankAccount->bankBranch->bank->name,
-                        'number' => $bal->bankAccount->name,
-                        'type' => $bal->bankAccount->type,
-                        'currency' => $bal->bankAccount->currency,
-                        'branch' => $bal->bankAccount->bankBranch->address,
-                        'ledger' => $bal->ledger,
-                        'statement' => $bal->statement,
-                        'confirmation' => $bal->confirmation,
-                        'difference' => $bal->statement - $bal->confirmation ? $bal->statement - $bal->confirmation : '0',
-                        'sent' => $bal->bankAccount->bankBranch->bankConfirmations
-                            ->filter(function ($confirmation) {
-                                return ($confirmation->company_id == session('company_id') && $confirmation->year_id == session('year_id'));
-                            })->first()->sent,
-                        'remind_first' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()->first()->reminder,
-                        'remind_second' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()->first()->confirm_create,
-                        'received' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()->first()->received,
-                    ];
-                }
-            )
-            ->toArray();
-
-        // dd($data);
+        $dataa = \App\Models\BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))->first();
+        if ($dataa) {
+            $data = \App\Models\BankBalance::where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()
+                ->map(
+                    function ($bal) {
+                        return [
+                            'id' => $bal->id,
+                            'bank' => $bal->bankAccount->bankBranch->bank->name,
+                            'number' => $bal->bankAccount->name,
+                            'type' => $bal->bankAccount->type,
+                            'currency' => $bal->bankAccount->currency,
+                            'branch' => $bal->bankAccount->bankBranch->address,
+                            'ledger' => $bal->ledger,
+                            'statement' => $bal->statement,
+                            'confirmation' => $bal->confirmation,
+                            'difference' => $bal->statement - $bal->confirmation ? $bal->statement - $bal->confirmation : '0',
+                            'sent' => $bal->bankAccount->bankBranch->bankConfirmations
+                                ->filter(function ($confirmation) {
+                                    return ($confirmation->company_id == session('company_id') && $confirmation->year_id == session('year_id'));
+                                })->first()->sent,
+                            'remind_first' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()->first()->reminder,
+                            'remind_second' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()->first()->confirm_create,
+                            'received' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()->first()->received,
+                        ];
+                    }
+                )
+                ->toArray();
+        } else {
+            return Redirect::route('confirmations')->with('success', 'Please Create Confirmation.');
+        }
 
         $cnt = count($data);
         for ($i = 0; $i < $cnt; $i++) {
+            // dd($data[$i]);
             $data[$i]['sent'] = $data[$i]['sent'] ? new Carbon($data[$i]['sent']) : null;
             $data[$i]['sent'] = $data[$i]['sent'] ? $data[$i]['sent']->format('F j, Y') : null;
             $data[$i]['remind_first'] = $data[$i]['remind_first'] ? new Carbon($data[$i]['remind_first']) : null;
@@ -408,8 +429,7 @@ class CompanyController extends Controller
         $spreadsheet->getActiveSheet()->getStyle($tcell)->applyFromArray($styleArray);
 
         $writer = new Xlsx($spreadsheet);
-        $writer->save(storage_path('app/public/' . $company->company->name . '/' . $company->year->end . '/' .  'Control Sheet.xlsx'));
-
+        $writer->save(storage_path('app/public/' . $company->company->name  . '/' . $company->year->end . '/' .  'Control Sheet.xlsx'));
         return response()->download(storage_path('app/public/' . $company->company->name . '/' . $company->year->end . '/' .  'Control Sheet.xlsx'));
     }
 
@@ -427,13 +447,26 @@ class CompanyController extends Controller
         $phpWord->addFontStyle('f2Style', array('name' => 'Calibri', 'bold' => true, 'size' => 12));
         $company = \App\Models\Company::where('id', session('company_id'))->first();
         // dd($company);
-        $branch = $company->bankAccounts()->get();
-        foreach ($branch as $b) {
-            $branches[$i] = $b->bankBranch;
-            $i++;
+
+        if ($company->bankAccounts()->first()) {
+            $branch = $company->bankAccounts()->get();
+            foreach ($branch as $b) {
+                $branches[$i] = $b->bankBranch;
+                $i++;
+            }
+        } else {
+            return Redirect::route('accounts')->with('success', 'Create Account First');
         }
+
+
+
+        // $branch = $company->bankAccounts()->get();
+        // foreach ($branch as $b) {
+        //     $branches[$i] = $b->bankBranch;
+        //     $i++;
+        // }
+
         $period = Year::where('id', session('year_id'))->first();
-        // dd($period);
         $begin = new Carbon($period->begin);
         $end = new Carbon($period->end);
         $year = $end->year;
@@ -444,7 +477,6 @@ class CompanyController extends Controller
         $acronym = "";
         $i = 0;
         $count = 1;
-
 
         foreach ($words as $w) {
             $acronym .= $w[0];

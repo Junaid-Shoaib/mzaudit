@@ -11,29 +11,28 @@ use App\Models\Year;
 use App\Models\Company;
 use Inertia\Inertia;
 use Carbon\Carbon;
-// use Illuminate\Database\Eloquent\Model;
 
 class BankBalanceController extends Controller
 {
     public function index()
     {
-        // $data = BankBalance::where('company_id', session('company_id'));
-        // $difference = 
         return Inertia::render(
             'Balances/Index',
             [
-                'data' => BankBalance::where('company_id', session('company_id'))
-                    ->where('year_id', session('year_id'))->get()
-                    ->map(function ($bal) {
-                        return [
+                'balances' => BankBalance::where('company_id', session('company_id'))
+                    ->where('year_id', session('year_id'))->paginate(10)->withQueryString()
+                    ->through(
+                        fn ($bal) =>
+                        [
 
                             'id' => $bal->id,
                             'number' => $bal->bankAccount->name,
                             'ledger' => $bal->ledger,
                             'statement' => $bal->statement,
                             'confirmation' => $bal->confirmation,
-                        ];
-                    }),
+                        ]
+                    ),
+
 
                 'companies' => Company::all()
                     ->map(function ($company) {
@@ -58,8 +57,6 @@ class BankBalanceController extends Controller
 
 
 
-
-    //START
 
     public function create()
     {

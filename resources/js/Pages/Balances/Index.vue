@@ -74,7 +74,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in data" :key="item.id">
+          <tr v-for="item in balances.data" :key="item.id">
             <td class="py-1 px-4 border">{{ item.number }}</td>
             <td class="py-1 px-4 border">{{ item.ledger }}</td>
             <td class="py-1 px-4 border">{{ item.statement }}</td>
@@ -84,7 +84,7 @@
                 class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
                 :href="route('balances.edit', item.id)"
               >
-                <span>Edit</span>
+                <spa  n>Edit</span>
               </inertia-link> -->
               <button
                 class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
@@ -94,25 +94,47 @@
               </button>
             </td>
           </tr>
+
+          <!-- Null Balance -->
+          <tr v-if="balances.data.length === 0">
+            <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
+          </tr>
         </tbody>
       </table>
     </div>
+
+    <!-- Pagination Next & Back -->
+    <div class="p-5 flex justify-end">
+      <inertia-link class="px-2" :href="balances.prev_page_url"
+        >Previous</inertia-link
+      >
+
+      <pagination class="mt-6" :links="balances.links" />
+
+      <inertia-link class="px-2" :href="balances.next_page_url"
+        >Next</inertia-link
+      >
+    </div>
+    <!-- <pagination class="mt-6" :links="balances.data.links" /> -->
   </app-layout>
 </template>
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
-
+// import Pagination from "@/Components/Pagination";
+import Pagination from "@/Layouts/Pagination";
+// import Pagination from "@/Layouts/Pagination";
 export default {
   components: {
     AppLayout,
+    Pagination,
   },
 
   props: {
-    data: Object,
+    // data: Object,
     companies: Object,
     years: Object,
-
+    balances: Object,
     // account: Object,
   },
 
