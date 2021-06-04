@@ -19,8 +19,9 @@ class BankBalanceController extends Controller
         return Inertia::render(
             'Balances/Index',
             [
+                // $balances['participants'] = BankBalance::where('company_id', session('company_id'))
                 'balances' => BankBalance::where('company_id', session('company_id'))
-                    ->where('year_id', session('year_id'))->paginate(10)->withQueryString()
+                    ->where('year_id', session('year_id'))->paginate(6)->withQueryString()
                     ->through(
                         fn ($bal) =>
                         [
@@ -33,7 +34,7 @@ class BankBalanceController extends Controller
                         ]
                     ),
 
-
+                // dd($balances['participants']->links()),
                 'companies' => Company::all()
                     ->map(function ($company) {
                         return [
