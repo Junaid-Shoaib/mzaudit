@@ -8,7 +8,21 @@
     <div class="flex justify-between flex-1 sm:hidden">
       <span
         v-if="onFirstPage"
-        class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-500 bg-gray-100 border border-gray-300 cursor-default leading-5 rounded-md"
+        class="
+          relative
+          inline-flex
+          items-center
+          px-4
+          py-2
+          text-sm
+          font-medium
+          text-gray-500
+          bg-gray-100
+          border border-gray-300
+          cursor-default
+          leading-5
+          rounded-md
+        "
       >
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path
@@ -21,7 +35,30 @@
       <inertia-link
         v-else
         :href="previousPageUrl"
-        class="relative inline-flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
+        class="
+          relative
+          inline-flex
+          items-center
+          px-4
+          py-2
+          text-sm
+          font-medium
+          text-gray-700
+          bg-white
+          border border-gray-300
+          leading-5
+          rounded-md
+          hover:text-gray-500
+          focus:outline-none
+          focus:ring
+          ring-gray-300
+          focus:border-blue-300
+          active:bg-gray-100
+          active:text-gray-700
+          transition
+          ease-in-out
+          duration-150
+        "
       >
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path
@@ -35,7 +72,31 @@
       <inertia-link
         v-if="hasMorePages"
         :href="nextPageUrl"
-        class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 rounded-md hover:text-gray-500 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
+        class="
+          relative
+          inline-flex
+          items-center
+          px-4
+          py-2
+          ml-3
+          text-sm
+          font-medium
+          text-gray-700
+          bg-white
+          border border-gray-300
+          leading-5
+          rounded-md
+          hover:text-gray-500
+          focus:outline-none
+          focus:ring
+          ring-gray-300
+          focus:border-blue-300
+          active:bg-gray-100
+          active:text-gray-700
+          transition
+          ease-in-out
+          duration-150
+        "
       >
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path
@@ -47,7 +108,22 @@
       </inertia-link>
       <span
         v-else
-        class="relative inline-flex items-center px-4 py-2 ml-3 text-sm font-medium text-gray-500 bg-gray-100 border border-gray-300 cursor-default leading-5 rounded-md"
+        class="
+          relative
+          inline-flex
+          items-center
+          px-4
+          py-2
+          ml-3
+          text-sm
+          font-medium
+          text-gray-500
+          bg-gray-100
+          border border-gray-300
+          cursor-default
+          leading-5
+          rounded-md
+        "
       >
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path
@@ -80,7 +156,21 @@
             v-if="onFirstPage"
             aria-disabled="true"
             aria-hidden="true"
-            class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-gray-100 border border-gray-300 cursor-default rounded-l-md leading-5"
+            class="
+              relative
+              inline-flex
+              items-center
+              px-2
+              py-2
+              text-sm
+              font-medium
+              text-gray-500
+              bg-gray-100
+              border border-gray-300
+              cursor-default
+              rounded-l-md
+              leading-5
+            "
           >
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path
@@ -93,7 +183,31 @@
           <inertia-link
             v-else
             :href="previousPageUrl"
-            class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-l-md leading-5 hover:text-gray-400 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
+            class="
+              relative
+              inline-flex
+              items-center
+              px-2
+              py-2
+              text-sm
+              font-medium
+              text-gray-500
+              bg-white
+              border border-gray-300
+              rounded-l-md
+              leading-5
+              hover:text-gray-400
+              focus:z-10
+              focus:outline-none
+              focus:ring
+              ring-gray-300
+              focus:border-blue-300
+              active:bg-gray-100
+              active:text-gray-500
+              transition
+              ease-in-out
+              duration-150
+            "
             rel="prev"
           >
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -113,14 +227,52 @@
                 "
                 :class="{ 'bg-blue-200': link.active === true }"
                 :href="link.url"
-                class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 leading-5 hover:text-gray-500 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-700 transition ease-in-out duration-150"
+                class="
+                  relative
+                  inline-flex
+                  items-center
+                  px-4
+                  py-2
+                  -ml-px
+                  text-sm
+                  font-medium
+                  text-gray-700
+                  bg-white
+                  border border-gray-300
+                  leading-5
+                  hover:text-gray-500
+                  focus:z-10
+                  focus:outline-none
+                  focus:ring
+                  ring-gray-300
+                  focus:border-blue-300
+                  active:bg-gray-100
+                  active:text-gray-700
+                  transition
+                  ease-in-out
+                  duration-150
+                "
               >
                 {{ link.label }}
               </inertia-link>
               <span
                 v-else-if="link.label === '...'"
                 aria-disabled="true"
-                class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-medium text-gray-700 bg-white border border-gray-300 cursor-default leading-5"
+                class="
+                  relative
+                  inline-flex
+                  items-center
+                  px-4
+                  py-2
+                  -ml-px
+                  text-sm
+                  font-medium
+                  text-gray-700
+                  bg-white
+                  border border-gray-300
+                  cursor-default
+                  leading-5
+                "
               >
                 {{ link.label }}
               </span>
@@ -129,7 +281,32 @@
           <inertia-link
             v-if="hasMorePages"
             :href="nextPageUrl"
-            class="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-r-md leading-5 hover:text-gray-400 focus:z-10 focus:outline-none focus:ring ring-gray-300 focus:border-blue-300 active:bg-gray-100 active:text-gray-500 transition ease-in-out duration-150"
+            class="
+              relative
+              inline-flex
+              items-center
+              px-2
+              py-2
+              -ml-px
+              text-sm
+              font-medium
+              text-gray-500
+              bg-white
+              border border-gray-300
+              rounded-r-md
+              leading-5
+              hover:text-gray-400
+              focus:z-10
+              focus:outline-none
+              focus:ring
+              ring-gray-300
+              focus:border-blue-300
+              active:bg-gray-100
+              active:text-gray-500
+              transition
+              ease-in-out
+              duration-150
+            "
           >
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path
@@ -143,7 +320,22 @@
             v-else
             aria-disabled="true"
             aria-hidden="true"
-            class="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-500 bg-gray-100 border border-gray-300 cursor-default rounded-r-md leading-5"
+            class="
+              relative
+              inline-flex
+              items-center
+              px-2
+              py-2
+              -ml-px
+              text-sm
+              font-medium
+              text-gray-500
+              bg-gray-100
+              border border-gray-300
+              cursor-default
+              rounded-r-md
+              leading-5
+            "
           >
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
               <path

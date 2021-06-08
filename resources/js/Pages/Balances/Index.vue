@@ -42,17 +42,6 @@
           :href="route('balances.create')"
           >Create
         </inertia-link>
-        <!-- <inertia-link
-          v-for="items in data"
-          :key="items.id"
-          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
-          :href="route('balances.edit', items.id)"
-          >Edit
-        </inertia-link> -->
-
-        <!-- :v-if="items > 2" -->
-        <!-- v-for="items in data"
-          :key="items.id" -->
 
         <inertia-link
           class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
@@ -63,8 +52,6 @@
     </div>
 
     <div class="">
-      <!-- <div class=""> -->
-      <!-- <table class="shadow-lg border rounded-xl mt-4 ml-12 rounded-xl w-11/12"> -->
       <table class="shadow-lg border mt-4 ml-12 rounded-xl w-11/12">
         <thead>
           <tr class="bg-indigo-100 text-centre font-bold">
@@ -77,18 +64,13 @@
         </thead>
         <tbody>
           <tr v-for="item in balances.data" :key="item.id">
-            <!-- class="bg-indigo-100 text-center font-bold" -->
-            <td class="py-1 px-4 border text-left">{{ item.number }}</td>
-            <td class="border text-center">{{ item.ledger }}</td>
-            <td class="border text-center">{{ item.statement }}</td>
-            <td class="border text-center">{{ item.confirmation }}</td>
+            <td class="py-3 px-4 border text-left">{{ item.number }}</td>
+            <td class="py-3 px-4 border text-center">{{ item.ledger }}</td>
+            <td class="py-3 px-4 border text-center">{{ item.statement }}</td>
+            <td class="py-3 px-4 border text-center">
+              {{ item.confirmation }}
+            </td>
             <td class="border text-center">
-              <!-- <inertia-link
-                class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
-                :href="route('balances.edit', item.id)"
-              >
-                <spa  n>Edit</span>
-              </inertia-link> -->
               <button
                 class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
                 @click="destroy(item.id)"
@@ -102,38 +84,16 @@
           <tr v-if="balances.data.length === 0">
             <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
           </tr>
-          <!-- <tr> -->
-          <!-- Pagination Next & Back -->
-          <!-- <div class="p-5 flex">
-              <inertia-link
-                class="border bg-gray-300 rounded-xl px-4 py-1 m-1"
-                :href="balances.prev_page_url"
-                >Previous</inertia-link
-              >
-
-
-              <inertia-link
-                class="border bg-gray-300 rounded-xl px-4 py-1 m-1"
-                :href="balances.next_page_url"
-                >Next</inertia-link
-              >
-            </div> -->
-          <!-- <pagination class="mt-6" :links="balances.links" /> -->
-          <!-- </tr> -->
         </tbody>
       </table>
       <paginator class="mt-6" :balances="balances" />
     </div>
-
-    <!-- <pagination class="mt-6" :links="balances.data.links" /> -->
   </app-layout>
 </template>
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
-// import Pagination from "@/Components/Pagination";
 import Paginator from "@/Layouts/Paginator";
-// import Pagination from "@/Layouts/Pagination";
 export default {
   components: {
     AppLayout,
@@ -141,20 +101,15 @@ export default {
   },
 
   props: {
-    // data: Object,
     companies: Object,
     years: Object,
-    // balances: Object,
     balances: Object,
-    // account: Object,
   },
 
   data() {
     return {
       co_id: this.$page.props.co_id,
       yr_id: this.$page.props.yr_id,
-
-      // account_id: this.account[0].id,
     };
   },
 

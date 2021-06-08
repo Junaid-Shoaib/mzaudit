@@ -19,15 +19,16 @@ class BankController extends Controller
     public function index()
     {
         return Inertia::render('Banks/Index', [
-            'data' => Bank::all()
-                ->map(function ($bank) {
-                    return [
+            'balances' => Bank::paginate(6)
+                ->through(
+                    fn ($bank) =>
+                    [
                         'id' => $bank->id,
                         'name' => $bank->name,
                         'delete' => BankBranch::where('bank_id', $bank->id)->first() ? false : true,
 
-                    ];
-                })
+                    ]
+                ),
 
         ]);
     }

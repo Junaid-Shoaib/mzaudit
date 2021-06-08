@@ -21,27 +21,37 @@ class BankConfirmationController extends Controller
     public function index()
     {
 
+        // $balances = BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()
+        //     ->map(function ($confirmation) {
+        //         return [
+        //             $sent = $confirmation->sent ? new Carbon($confirmation->sent) : null,
+        //             $reminder = $confirmation->reminder ? new Carbon($confirmation->reminder) : null,
+        //             $confirm_create = $confirmation->confirm_create ? new Carbon($confirmation->confirm_create) : null,
+        //             $confirm_create = $confirmation->confirm_create ? new Carbon($confirmation->confirm_create) : null,
+        //             $received = $confirmation->received ? new Carbon($confirmation->received) : null,
+
+
+        //             'id' => $confirmation->id,
+        //             'sent' => $sent ? $sent->format("M d Y") : null,
+        //             'reminder' => $reminder ? $reminder->format("M d Y") : null,
+        //             'confirm_create' => $confirm_create ?  $confirm_create->format("M d Y") : null,
+        //             'received' => $received ? $received->format("M d Y") : null,
+        //             'branch' => $confirmation->bankBranch->bank->name . " - " . $confirmation->bankBranch->address,
+        //             'company' => $confirmation->company->name,
+        //             'year' => $confirmation->year->begin . " - " . $confirmation->year->end,
+        //         ];
+        //     });
+        // dd($balances);
         return Inertia::render('Confirmations/Index', [
-            'data' => BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()
-                ->map(function ($confirmation) {
-
-                    // if ($confirmation->reminder) {
-                    //     $reminder = new Carbon($confirmation->reminder);
-                    //     $reminder = $reminder->format("M d Y");
-                    // } else {
-                    //     $reminder = null;
-                    // }
-                    return [
-
-
+            'balances' => BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))->paginate(5)->withQueryString()
+                ->through(
+                    fn ($confirmation) =>
+                    [
                         $sent = $confirmation->sent ? new Carbon($confirmation->sent) : null,
                         $reminder = $confirmation->reminder ? new Carbon($confirmation->reminder) : null,
                         $confirm_create = $confirmation->confirm_create ? new Carbon($confirmation->confirm_create) : null,
                         $confirm_create = $confirmation->confirm_create ? new Carbon($confirmation->confirm_create) : null,
                         $received = $confirmation->received ? new Carbon($confirmation->received) : null,
-
-
-
 
 
                         'id' => $confirmation->id,
@@ -52,8 +62,9 @@ class BankConfirmationController extends Controller
                         'branch' => $confirmation->bankBranch->bank->name . " - " . $confirmation->bankBranch->address,
                         'company' => $confirmation->company->name,
                         'year' => $confirmation->year->begin . " - " . $confirmation->year->end,
-                    ];
-                }),
+                    ]
+                ),
+
             'companies' => Company::all()
                 ->map(function ($company) {
                     return [
@@ -84,7 +95,6 @@ class BankConfirmationController extends Controller
             ->filter(
                 function ($branch) {
 
-                    // if ($branch->bankAccounts()->first()) {
                     foreach ($branch->bankAccounts as $account) {
 
                         if ($account->company_id == session('company_id')) {
@@ -104,9 +114,8 @@ class BankConfirmationController extends Controller
 
             ->map(function ($branch) {
                 $sent = Carbon::now();
-                // dd($sent);
+
                 BankConfirmation::create([
-                    // dd($branch),
                     'sent' => $sent->format('Y-m-d'),
                     'company_id' => session('company_id'),
                     'year_id' => session('year_id'),
@@ -118,6 +127,7 @@ class BankConfirmationController extends Controller
 
 
         return back()->withInput();
+
         // }
     }
 
@@ -133,23 +143,9 @@ class BankConfirmationController extends Controller
     public function edit()
     {
         return Inertia::render('Confirmations/Edit', [
-            // return Inertia::render('Balances/Edit', [
-            //         'accounts' => BankAccount::all()
-            //             ->map(function ($account) {
-            //                 return [
-            // 'confirmation' => $data,
+
             'data' => BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))->get(),
 
-            // return[
-            //     'id' => $confirmation->id,
-            //     'sent' => $confirmation->sent,
-            //     'reminder' => $confirmation->reminder,
-            //     'confirm_create' => $confirmation->confirm_create,
-            //     'received' => $confirmation->received,
-            //     'company_id' => $confirmation->company_id,
-            //     'branch_id' => $confirmation->branch_id,
-            //     'year_id' => $confirmation->year_id,
-            // ],
             'branches' => BankBranch::all()
                 ->filter(function ($branch) {
                     foreach ($branch->bankAccounts as $account) {
@@ -175,7 +171,7 @@ class BankConfirmationController extends Controller
         // dd($request->balances);
 
         Request::validate([
-            // 'sent' => ['required'],
+            'sent' => ['required'],
             // 'reminder' => ['required'],
             // 'confirm_create' => ['required'],
             // 'received' => ['required'],
@@ -203,16 +199,6 @@ class BankConfirmationController extends Controller
         }
 
 
-        // $confirmation->sent = $sent->format('Y-m-d');
-        // $confirmation->reminder = $reminder->format('Y-m-d');
-
-        // $confirmation->confirm_create = $confirm_create->format('Y-m-d');
-        // $confirmation->received = $received->format('Y-m-d');
-        // //      $confirmation->company_id = Request::input('company_id');
-        // $confirmation->branch_id = Request::input('branch_id');
-        // //        $confirmation->year_id = Request::input('year_id');
-        // $confirmation->save();
-
         return Redirect::route('confirmations')->with('success', 'Bank Confirmation updated.');
     }
 
@@ -224,15 +210,39 @@ class BankConfirmationController extends Controller
 
     public function bankConfig()
     {
-        $company = \App\Models\BankBalance::where('company_id', session('company_id'))
-            ->where('year_id', session('year_id'))->first();
-        if ($company) {
-            $end = $company->year->end ? new Carbon($company->year->end) : null;
+        // Storage::disk('public')->exists($image)
+
+        // dd($year->id);
+        // $path = 'public/' . $year->company->id . '/' . $year->id . '/';
+        // $path = 'public/' . $year->company->id . '/' . $year->id . '/';
+        // dd($path);
+        // C:\Users\Public\Documents
+        // // if (Storage::disk('Documents')->exists('bankconfigure.docx')) {
+        // if (Storage::disk($path)->exists('te.txt')) {
+        //     dd('Hello');
+        // } else {
+        //     dd('khali  hai');
+        // }
+
+
+
+
+
+
+
+
+
+        $account = \App\Models\BankAccount::where('company_id', session('company_id'))->first();
+        if ($account) {
+            $year = Year::where('company_id', session('company_id'))
+                ->where('id', session('year_id'))->first();
+            $end = $year->end ? new Carbon($year->end) : null;
+            // dd($end);
             $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('templatebr.docx');
-            $templateProcessor->setValue('client', $company->company->name);
+            $templateProcessor->setValue('client', $year->company->name);
             $templateProcessor->setValue('end', $end->format("F j Y"));
-            $templateProcessor->saveAs(storage_path('app/public/' . $company->company->name . '/' . $company->year->end . '/' .  'bankconfigure.docx'));
-            return response()->download(storage_path('app/public/' . $company->company->name . '/' . $company->year->end . '/' .  'bankconfigure.docx'));
+            $templateProcessor->saveAs(storage_path('app/public/' . $year->company->id . '/' . $year->id . '/' .  'bankconfigure.docx'));
+            return response()->download(storage_path('app/public/' . $year->company->id . '/' . $year->id . '/' .  'bankconfigure.docx'));
         } else {
             return Redirect::route('balances.create')->with('success', 'Create Account first.');
         }

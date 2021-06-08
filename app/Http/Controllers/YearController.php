@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BankAccount;
+use App\Models\BankBalance;
 use Illuminate\Http\Request as Req;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
@@ -15,18 +17,23 @@ class YearController extends Controller
 {
     public function index()
     {
+
         return Inertia::render('Years/Index', [
-            'data' => Year::where('company_id', session('company_id'))->get()
-                ->map(function ($year) {
-                    $begin = new Carbon($year->begin);
-                    $end = new Carbon($year->end);
-                    return [
+
+            'balances' => Year::where('company_id', session('company_id'))->paginate(6)->withQueryString()
+                ->through(
+                    fn ($year) =>
+                    [
+                        $end = new Carbon($year->end),
+                        $begin = new Carbon($year->begin),
                         'id' => $year->id,
                         'begin' => $begin->format("F j Y"),
                         'end'  => $end->format("F j Y"),
                         'delete' => $year->id == Year::where('company_id', session('company_id'))->first()->id  ? false : true,
-                    ];
-                }),
+                    ]
+
+                    // 'delete' => BankBalance::where('year_id', $branch->id)->first() ? false : true,
+                ),
 
             'companies' => Company::all()
                 ->map(function ($company) {
@@ -49,14 +56,16 @@ class YearController extends Controller
         $newEnd = implode('-', $end);
 
 
+        // dd($newBegin);
         Year::create([
             'begin' => $newBegin,
             'end' => $newEnd,
             'company_id' => session('company_id'),
+
         ]);
 
         $year = Year::where('company_id', session('company_id'))->latest()->first();
-        Storage::makedirectory('/public/' . $year->company->name . '/' . $newEnd);
+        Storage::makedirectory('/public/' . $year->company->id . '/' . $year->id);
 
 
         return Redirect::back()->with('success', 'Year created.');

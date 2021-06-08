@@ -20,17 +20,19 @@ class BankAccountController extends Controller
         return Inertia::render(
             'Accounts/Index',
             [
-                'data' => BankAccount::where('company_id', session('company_id'))->get()
-                    ->map(function ($branch) {
-                        return [
+                'balances' => BankAccount::where('company_id', session('company_id'))->paginate(6)
+                    ->through(
+                        fn ($branch) =>
+                        [
                             'id' => $branch->id,
                             'name' => $branch->name,
                             'type' => $branch->type,
                             'currency' => $branch->currency,
                             'branches' => $branch->bankBranch->address,
                             'delete' => BankBalance::where('account_id', $branch->id)->first() ? false : true,
-                        ];
-                    }),
+                        ]
+                        // }
+                    ),
                 'companies' => Company::all()
                     ->map(function ($company) {
                         return [
@@ -38,6 +40,7 @@ class BankAccountController extends Controller
                             'name' => $company->name,
                         ];
                     }),
+
                 'years' => Year::where('company_id', session('company_id'))->get()
                     ->map(function ($year) {
                         $end = new Carbon($year->end);

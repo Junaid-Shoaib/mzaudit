@@ -8,7 +8,15 @@
     <div class="">
       <form @submit.prevent="submit">
         <div
-          class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+          class="
+            px-4
+            py-2
+            bg-gray-100
+            border-t border-gray-200
+            flex
+            justify-start
+            items-center
+          "
         >
           <inertia-link
             class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
@@ -117,7 +125,15 @@
           </tbody>
         </table>
         <div
-          class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+          class="
+            px-4
+            py-2
+            bg-gray-100
+            border-t border-gray-200
+            flex
+            justify-start
+            items-center
+          "
         >
           <button
             class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
@@ -176,11 +192,7 @@ export default {
         balances: this.balances,
       });
     },
-    // doFormat($item) {
-    //   var $i = format($item, "yyyy-MM-dd");
-    //   return $i;
-    // },
-    // },
+
     addRow() {
       this.balances.push({
         sent: null,

@@ -18,29 +18,23 @@ use PhpOffice\PhpWord\Writer\Word2007;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
-// use Illuminate\Queue\Jobs\RedisJob;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
-// use PhpParser\Node\Stmt\Else_;
-
-// use Illuminate\Support\Facades\File;
-// use App;
-// use DatePeriod;
-// use Illuminate\Contracts\Session\Session;
-// use PhpOffice\PhpSpreadsheet\Style\Border;
-// use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class CompanyController extends Controller
 {
     // Company Index
     public function index()
     {
+
         return Inertia::render(
             'Companies/Index',
             [
+                'data' => Company::all(),
 
-                'data' => Company::all()
-                    ->map(function ($company) {
-                        return [
+                'balances' => Company::paginate(6)->withQueryString()
+                    ->through(
+                        fn ($company) =>
+                        [
                             'id' => $company->id,
                             'name' => $company->name,
                             'address' => $company->address,
@@ -50,8 +44,8 @@ class CompanyController extends Controller
                             'fiscal' => $company->fiscal,
                             'incorp' => $company->incorp,
                             'delete' => Year::where('company_id', $company->id)->first() ? false : true,
-                        ];
-                    })
+                        ]
+                    ),
             ],
         );
     }
@@ -129,8 +123,8 @@ class CompanyController extends Controller
             session(['year_id' => $year->id]);
 
 
-            Storage::makeDirectory('/public/' . $company->name);
-            Storage::makeDirectory('/public/' . $company->name . '/' . $year->end);
+            Storage::makeDirectory('/public/' . $company->id);
+            Storage::makeDirectory('/public/' . $company->id . '/' . $year->id);
         });
         return Redirect::route('companies')->with('success', 'Company created');
     }
@@ -429,8 +423,8 @@ class CompanyController extends Controller
         $spreadsheet->getActiveSheet()->getStyle($tcell)->applyFromArray($styleArray);
 
         $writer = new Xlsx($spreadsheet);
-        $writer->save(storage_path('app/public/' . $company->company->name  . '/' . $company->year->end . '/' .  'Control Sheet.xlsx'));
-        return response()->download(storage_path('app/public/' . $company->company->name . '/' . $company->year->end . '/' .  'Control Sheet.xlsx'));
+        $writer->save(storage_path('app/public/' . $company->company->id  . '/' . $company->year->id . '/' .  'Control Sheet.xlsx'));
+        return response()->download(storage_path('app/public/' . $company->company->id . '/' . $company->year->id . '/' .  'Control Sheet.xlsx'));
     }
 
     //word file Generator
@@ -594,11 +588,17 @@ class CompanyController extends Controller
                 'p2Style'
             );
         }
-
-        // dd($company->name);
         $writer = new Word2007($phpWord);
+        $writer->save(storage_path('app/public/' . $company->id . '/' . $period->id . '/' .  'Bank Letter.docx'));
 
-        $writer->save(storage_path('app/public/' . $company->name . '/' . $period->end . '/' .  'Bank Letter.docx'));
-        return response()->download(storage_path('app/public/' . $company->name . '/' . $period->end . '/' .  'Bank Letter.docx'));
+        //Template FIle Generated.
+        $end = $period->end ? new Carbon($period->end) : null;
+        $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('templatebr.docx');
+        $templateProcessor->setValue('client', $company->name);
+        $templateProcessor->setValue('end', $end->format("F j Y"));
+        $templateProcessor->saveAs(storage_path('app/public/' . $company->id . '/' . $period->id . '/' .  'bankconfigure.docx'));
+
+        // return response()->download(storage_path('app/public/' . $company->id . '/' . $period->id . '/' .  'bankconfigure.docx'));
+        return response()->download(storage_path('app/public/' . $company->id . '/' . $period->id . '/' .  'Bank Letter.docx'));
     }
 }

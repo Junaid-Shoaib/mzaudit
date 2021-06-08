@@ -8,7 +8,15 @@
     <div class="">
       <form @submit.prevent="submit">
         <div
-          class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+          class="
+            px-4
+            py-2
+            bg-gray-100
+            border-t border-gray-200
+            flex
+            justify-start
+            items-center
+          "
         >
           <inertia-link
             class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
@@ -86,7 +94,7 @@
             >Incorporation:</label
           >
           <input
-            type="text"
+            type="date"
             v-model="form.incorp"
             class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight"
             label="incorp"
@@ -94,7 +102,15 @@
           <div v-if="errors.incorp">{{ errors.incorp }}</div>
         </div>
         <div
-          class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+          class="
+            px-4
+            py-2
+            bg-gray-100
+            border-t border-gray-200
+            flex
+            justify-start
+            items-center
+          "
         >
           <button
             class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"

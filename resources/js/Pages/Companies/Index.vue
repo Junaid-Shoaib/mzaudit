@@ -32,21 +32,22 @@
       </inertia-link>
     </div>
     <div class="">
-      <table class="shadow-lg border mt-4 ml-8 rounded-xl">
+      <table class="shadow-lg border mt-4 ml-12 rounded-xl w-11/12">
         <thead>
           <tr class="bg-indigo-100">
-            <th class="py-2 px-4 border">Name</th>
-            <th class="py-2 px-4 border">Address</th>
-            <th class="py-2 px-4 border">Year End</th>
-            <th class="py-2 px-4 border">Actions</th>
+            <th class="px-4 pt-4 pb-4 border">Name</th>
+            <th class="px-4 pt-4 pb-4 border">Address</th>
+            <th class="px-4 pt-4 pb-4 border">Year End</th>
+            <th class="px-4 pt-4 pb-4 border">Actions</th>
           </tr>
+          <!-- Null Balance -->
         </thead>
         <tbody>
-          <tr v-for="item in data" :key="item.id">
-            <td class="py-1 px-4 border">{{ item.name }}</td>
-            <td class="py-1 px-4 border">{{ item.address }}</td>
-            <td class="py-1 px-4 border">{{ item.fiscal }}</td>
-            <td class="py-1 px-4 border">
+          <tr v-for="item in balances.data" :key="item.id">
+            <td class="py-3 px-4 border text-left">{{ item.name }}</td>
+            <td class="py-3 px-4 border text-center">{{ item.address }}</td>
+            <td class="py-3 px-4 border text-center">{{ item.fiscal }}</td>
+            <td class="py-3 px-4 border text-center">
               <inertia-link
                 class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
                 :href="route('companies.edit', item.id)"
@@ -62,21 +63,30 @@
               </button>
             </td>
           </tr>
+          <tr v-if="balances.data.length === 0">
+            <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
+          </tr>
         </tbody>
       </table>
+      <paginator class="mt-6" :balances="balances" />
     </div>
   </app-layout>
 </template>
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
+import Paginator from "@/Layouts/Paginator";
 
 export default {
   components: {
     AppLayout,
+    Paginator,
   },
 
-  props: ["data"],
+  props: {
+    data: Object,
+    balances: Object,
+  },
 
   data() {
     return { co_id: this.$page.props.co_id };

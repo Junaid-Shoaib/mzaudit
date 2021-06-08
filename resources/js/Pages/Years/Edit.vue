@@ -6,7 +6,15 @@
     <div class="">
       <form @submit.prevent="submit">
         <div
-          class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+          class="
+            px-4
+            py-2
+            bg-gray-100
+            border-t border-gray-200
+            flex
+            justify-start
+            items-center
+          "
         >
           <inertia-link
             class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
@@ -16,24 +24,46 @@
         </div>
         <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
           <label class="w-28 inline-block text-right mr-4">Begin:</label>
-          <datepicker
+          <input
+            v-model="form.begin"
+            type="date"
+            :upper-limit="upper"
+            :lower-limit="lower"
+            class="pr-2 pb-2 w-44 rounded-md leading-tight"
+          />
+          <!-- <datepicker
             v-model="form.begin"
             class="pr-2 pb-2 w-44 rounded-md leading-tight"
             label="begin"
-          />
+          /> -->
           <div v-if="errors.begin">{{ errors.begin }}</div>
         </div>
         <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
           <label class="w-28 inline-block text-right mr-4">End:</label>
-          <datepicker
+          <input
+            v-model="form.end"
+            type="date"
+            :upper-limit="upper"
+            :lower-limit="lower"
+            class="pr-2 pb-2 w-44 rounded-md leading-tight"
+          />
+          <!-- <datepicker
             v-model="form.end"
             class="pr-2 pb-2 w-44 rounded-md leading-tight"
             label="end"
-          />
+          /> -->
           <div v-if="errors.end">{{ errors.end }}</div>
         </div>
         <div
-          class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+          class="
+            px-4
+            py-2
+            bg-gray-100
+            border-t border-gray-200
+            flex
+            justify-start
+            items-center
+          "
         >
           <button
             class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
@@ -66,16 +96,19 @@ export default {
   data() {
     return {
       form: {
-        begin: new Date(this.year.begin),
-        end: new Date(this.year.end),
+        begin: this.year.begin,
+        end: this.year.end,
+
+        upper: new Date(this.year.end),
+        lower: new Date(this.year.begin),
       },
     };
   },
 
   methods: {
     submit() {
-      this.form.begin = format(this.form.begin, "yyyy-MM-dd");
-      this.form.end = format(this.form.end, "yyyy-MM-dd");
+      this.form.begin;
+      this.form.end;
       this.$inertia.put(route("years.update", this.year.id), this.form);
     },
   },
