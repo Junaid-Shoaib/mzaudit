@@ -11,7 +11,15 @@
     <div class="">
       <form @submit.prevent="submit">
         <div
-          class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+          class="
+            px-4
+            py-2
+            bg-gray-100
+            border-t border-gray-200
+            flex
+            justify-start
+            items-center
+          "
         >
           <inertia-link
             class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
@@ -37,17 +45,35 @@
           <label class="w-28 inline-block text-right mr-4"
             >Branch name and address:</label
           >
+
           <textarea
             v-model="form.address"
             rows="4"
             cols="100"
-            class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight"
+            class="
+              pr-2
+              pb-2
+              w-full
+              lg:w-1/4
+              rounded-md
+              leading-tight
+              text-transform:
+              capitalize
+            "
             label="address"
           ></textarea>
           <div v-if="errors.address">{{ errors.address }}</div>
         </div>
         <div
-          class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+          class="
+            px-4
+            py-2
+            bg-gray-100
+            border-t border-gray-200
+            flex
+            justify-start
+            items-center
+          "
         >
           <button
             class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
@@ -73,6 +99,7 @@ export default {
   props: {
     errors: Object,
     banks: Object,
+    accounts: Object,
   },
 
   data() {
@@ -80,6 +107,7 @@ export default {
       form: this.$inertia.form({
         address: null,
         bank_id: this.banks[0].id,
+        accounts: this.accounts,
       }),
       isLoading: false,
     };

@@ -40,9 +40,10 @@ class BankController extends Controller
      */
 
     // Bank Create
-    public function create()
+    public function create($accounts)
     {
-        return Inertia::render('Banks/Create');
+        // dd($bankcreate);
+        return Inertia::render('Banks/Create', ["accounts" => $accounts]);
     }
 
     /**
@@ -53,6 +54,7 @@ class BankController extends Controller
      */
     public function store(Req $request)
     {
+        // dd($request->bankcreate);
         Request::validate([
             'name' => ['required'],
         ]);
@@ -61,7 +63,11 @@ class BankController extends Controller
             'name' => Request::input('name'),
         ]);
 
-        return Redirect::route('banks')->with('success', 'Bank created.');
+        if ($request->accounts == 'accounts') {
+            return Redirect::route('branches.create', ['accounts' => $request->accounts])->with('success', 'Bank created.');
+        } else {
+            return Redirect::route('banks')->with('success', 'Bank created.');
+        }
     }
 
     /**

@@ -44,7 +44,9 @@
         </thead>
         <tbody>
           <tr v-for="item in balances.data" :key="item.id">
-            <td class="py-3 px-4 border text-left">{{ item.name }}</td>
+            <td class="py-3 px-4 border text-left text-transform: uppercase">
+              {{ item.name }}
+            </td>
             <td class="py-3 px-4 border text-center">{{ item.address }}</td>
             <td class="py-3 px-4 border text-center">{{ item.fiscal }}</td>
             <td class="py-3 px-4 border text-center">

@@ -10,7 +10,15 @@
     <div class="">
       <form @submit.prevent="submit">
         <div
-          class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+          class="
+            px-4
+            py-2
+            bg-gray-100
+            border-t border-gray-200
+            flex
+            justify-start
+            items-center
+          "
         >
           <inertia-link
             class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
@@ -23,13 +31,30 @@
           <input
             type="text"
             v-model="form.name"
-            class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight"
+            class="
+              pr-2
+              pb-2
+              w-full
+              lg:w-1/4
+              rounded-md
+              leading-tight
+              text-transform:
+              uppercase
+            "
             label="name"
           />
           <div v-if="errors.name">{{ errors.name }}</div>
         </div>
         <div
-          class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+          class="
+            px-4
+            py-2
+            bg-gray-100
+            border-t border-gray-200
+            flex
+            justify-start
+            items-center
+          "
         >
           <button
             class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
@@ -54,12 +79,14 @@ export default {
 
   props: {
     errors: Object,
+    accounts: Object,
   },
 
   data() {
     return {
       form: this.$inertia.form({
         name: null,
+        accounts: this.accounts,
       }),
       isLoading: false,
     };

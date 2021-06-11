@@ -111,7 +111,11 @@ Route::get('banks', [BankController::class, 'index'])
     ->name('banks')
     ->middleware('auth');
 
-Route::get('banks/create', [BankController::class, 'create'])
+// Route::get('banks/create', [BankController::class, 'create'])
+//     ->name('banks.create')
+//     ->middleware('auth');
+
+Route::get('banks/{accounts}/create', [BankController::class, 'create'])
     ->name('banks.create')
     ->middleware('auth');
 
@@ -141,7 +145,7 @@ Route::get('branches', [BankBranchController::class, 'index'])
     ->name('branches')
     ->middleware('auth');
 
-Route::get('branches/create', [BankBranchController::class, 'create'])
+Route::get('branches/{accounts}create', [BankBranchController::class, 'create'])
     ->name('branches.create')
     ->middleware('auth');
 

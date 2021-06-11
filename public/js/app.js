@@ -18028,12 +18028,14 @@ __webpack_require__.r(__webpack_exports__);
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default
   },
   props: {
-    errors: Object
+    errors: Object,
+    accounts: Object
   },
   data: function data() {
     return {
       form: this.$inertia.form({
-        name: null
+        name: null,
+        accounts: this.accounts
       }),
       isLoading: false
     };
@@ -18144,13 +18146,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   props: {
     errors: Object,
-    banks: Object
+    banks: Object,
+    accounts: Object
   },
   data: function data() {
     return {
       form: this.$inertia.form({
         address: null,
-        bank_id: this.banks[0].id
+        bank_id: this.banks[0].id,
+        accounts: this.accounts
       }),
       isLoading: false
     };
@@ -22311,7 +22315,7 @@ var _hoisted_3 = {
   "class": ""
 };
 var _hoisted_4 = {
-  "class": "px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+  "class": "\n            px-4\n            py-2\n            bg-gray-100\n            border-t border-gray-200\n            flex\n            justify-start\n            items-center\n          "
 };
 
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Back ");
@@ -22319,46 +22323,51 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 var _hoisted_6 = {
   key: 0
 };
-var _hoisted_7 = {
+
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Create Bank ");
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Create Branch ");
+
+var _hoisted_9 = {
   "class": "table border"
 };
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", {
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", {
   "class": ""
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", null, "Branch"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", null, "A/c Number"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", null, "Type"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", null, "Currency"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", null, "Action")])], -1
 /* HOISTED */
 );
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "CURRENT", -1
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "CURRENT", -1
 /* HOISTED */
 );
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "SAVING", -1
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "SAVING", -1
 /* HOISTED */
 );
 
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "ASAAN", -1
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "ASAAN", -1
 /* HOISTED */
 );
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "USD", -1
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "USD", -1
 /* HOISTED */
 );
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "$", -1
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "$", -1
 /* HOISTED */
 );
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "PKR", -1
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "PKR", -1
 /* HOISTED */
 );
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "EUR", -1
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", null, "EUR", -1
 /* HOISTED */
 );
 
-var _hoisted_16 = {
-  "class": "px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+var _hoisted_18 = {
+  "class": "\n            px-4\n            py-2\n            bg-gray-100\n            border-t border-gray-200\n            flex\n            justify-start\n            items-center\n          "
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
@@ -22395,7 +22404,31 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }, ["prevent"]))
       }, " Add row "), _ctx.isError ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.firstError), 1
       /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.form.accounts, function (account, index) {
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
+        "class": "border bg-indigo-300 rounded-xl px-4 py-1 m-1",
+        href: _ctx.route('banks.create', 'accounts')
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_7];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
+        "class": "border bg-indigo-300 rounded-xl px-4 py-1 m-1",
+        href: _ctx.route('branches.create', 'accounts')
+      }, {
+        "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+          return [_hoisted_8];
+        }),
+        _: 1
+        /* STABLE */
+
+      }, 8
+      /* PROPS */
+      , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.form.accounts, function (account, index) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
           key: account.id
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
@@ -22427,14 +22460,14 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             return account.type = $event;
           },
           "class": "rounded-md w-36"
-        }, [_hoisted_9, _hoisted_10, _hoisted_11], 8
+        }, [_hoisted_11, _hoisted_12, _hoisted_13], 8
         /* PROPS */
         , ["onUpdate:modelValue"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, account.type]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
           "onUpdate:modelValue": function onUpdateModelValue($event) {
             return account.currency = $event;
           },
           "class": "rounded-md w-36"
-        }, [_hoisted_12, _hoisted_13, _hoisted_14, _hoisted_15], 8
+        }, [_hoisted_14, _hoisted_15, _hoisted_16, _hoisted_17], 8
         /* PROPS */
         , ["onUpdate:modelValue"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, account.currency]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
           onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
@@ -22446,7 +22479,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         , ["onClick"])])]);
       }), 128
       /* KEYED_FRAGMENT */
-      ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+      ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
         "class": "border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4",
         type: "submit",
         disabled: $data.isLoading
@@ -24215,7 +24248,7 @@ var _hoisted_3 = {
   "class": ""
 };
 var _hoisted_4 = {
-  "class": "px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+  "class": "\n            px-4\n            py-2\n            bg-gray-100\n            border-t border-gray-200\n            flex\n            justify-start\n            items-center\n          "
 };
 
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Back ");
@@ -24234,7 +24267,7 @@ var _hoisted_8 = {
   key: 0
 };
 var _hoisted_9 = {
-  "class": "px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+  "class": "\n            px-4\n            py-2\n            bg-gray-100\n            border-t border-gray-200\n            flex\n            justify-start\n            items-center\n          "
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
@@ -24269,7 +24302,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
           return $data.form.name = $event;
         }),
-        "class": "pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight",
+        "class": "\n              pr-2\n              pb-2\n              w-full\n              lg:w-1/4\n              rounded-md\n              leading-tight\n              text-transform:\n              uppercase\n            ",
         label: "name"
       }, null, 512
       /* NEED_PATCH */
@@ -24442,7 +24475,7 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 );
 
 var _hoisted_8 = {
-  "class": "py-3 px-4 border text-left"
+  "class": "py-3 px-4 border text-left text-transform: uppercase"
 };
 var _hoisted_9 = {
   "class": "py-3 px-4 border text-center"
@@ -24483,7 +24516,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
         "class": "border bg-indigo-300 rounded-xl px-4 py-1 m-1",
-        href: _ctx.route('banks.create')
+        href: _ctx.route('banks.create', 'create')
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [_hoisted_4];
@@ -24564,7 +24597,7 @@ var _hoisted_3 = {
   "class": ""
 };
 var _hoisted_4 = {
-  "class": "px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+  "class": "\n            px-4\n            py-2\n            bg-gray-100\n            border-t border-gray-200\n            flex\n            justify-start\n            items-center\n          "
 };
 
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Back ");
@@ -24596,7 +24629,7 @@ var _hoisted_11 = {
   key: 0
 };
 var _hoisted_12 = {
-  "class": "px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+  "class": "\n            px-4\n            py-2\n            bg-gray-100\n            border-t border-gray-200\n            flex\n            justify-start\n            items-center\n          "
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
@@ -24652,7 +24685,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }),
         rows: "4",
         cols: "100",
-        "class": "pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight",
+        "class": "\n              pr-2\n              pb-2\n              w-full\n              lg:w-1/4\n              rounded-md\n              leading-tight\n              text-transform:\n              capitalize\n            ",
         label: "address"
       }, null, 512
       /* NEED_PATCH */
@@ -24863,7 +24896,7 @@ var _hoisted_8 = {
   "class": "py-3 px-4 border text-left"
 };
 var _hoisted_9 = {
-  "class": "py-3 px-4 border text-center"
+  "class": "py-3 px-4 border text-center text-transform: capitalize"
 };
 var _hoisted_10 = {
   "class": "py-3 px-4 border text-center"
@@ -24904,7 +24937,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
         "class": "border bg-indigo-300 rounded-xl px-4 py-1 m-1",
-        href: _ctx.route('branches.create')
+        href: _ctx.route('branches.create', 'create')
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
           return [_hoisted_4];
@@ -25137,7 +25170,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
           return $data.form.name = $event;
         }),
-        "class": "pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight",
+        "class": "\n              pr-2\n              pb-2\n              w-full\n              lg:w-1/4\n              rounded-md\n              leading-tight\n              text-transform:\n              uppercase\n            ",
         label: "name"
       }, null, 512
       /* NEED_PATCH */
@@ -25548,7 +25581,7 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 );
 
 var _hoisted_10 = {
-  "class": "py-3 px-4 border text-left"
+  "class": "py-3 px-4 border text-left text-transform: uppercase"
 };
 var _hoisted_11 = {
   "class": "py-3 px-4 border text-center"
@@ -26229,16 +26262,16 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 /* HOISTED */
 );
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"\n          border\n          inline-block\n          hover:bg-gray-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"pd\">Generate pdf file</a></div><div class=\"\n          border\n          inline-block\n          hover:bg-gray-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"word\">Generate Bank Letter</a></div><div class=\"\n          border\n          inline-block\n          hover:bg-gray-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"ex\">Generate Control Sheet</a></div><div class=\"\n          border\n          inline-block\n          hover:bg-gray-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"bankConfig\">Generate Bank-Report</a></div>", 4);
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"\n          border\n          inline-block\n          hover:bg-gray-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"word\">Generate Bank Letters</a></div><div class=\"\n          border\n          inline-block\n          hover:bg-gray-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"bankConfig\">Generate Remaining Pages</a></div><div class=\"\n          border\n          inline-block\n          hover:bg-gray-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"ex\">Generate Control Sheet</a></div>", 3);
 
-var _hoisted_13 = {
+var _hoisted_12 = {
   "class": ""
 };
-var _hoisted_14 = {
+var _hoisted_13 = {
   "class": "shadow-lg border mt-4 ml-12 rounded-xl w-11/12"
 };
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", {
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", {
   "class": "bg-indigo-100 text-centre font-bold"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", {
   "class": "px-4 pt-4 pb-4 border"
@@ -26256,8 +26289,11 @@ var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_16 = {
+var _hoisted_15 = {
   "class": "py-2 px-4 border text-left"
+};
+var _hoisted_16 = {
+  "class": "py-2 px-4 border text-center"
 };
 var _hoisted_17 = {
   "class": "py-2 px-4 border text-center"
@@ -26271,19 +26307,16 @@ var _hoisted_19 = {
 var _hoisted_20 = {
   "class": "py-2 px-4 border text-center"
 };
-var _hoisted_21 = {
-  "class": "py-2 px-4 border text-center"
-};
 
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, "Delete", -1
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, "Delete", -1
 /* HOISTED */
 );
 
-var _hoisted_23 = {
+var _hoisted_22 = {
   key: 0
 };
 
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
   "class": "border-t px-6 py-4",
   colspan: "4"
 }, "No Record found.", -1
@@ -26368,30 +26401,30 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }, 8
       /* PROPS */
-      , ["href"])]), _hoisted_9]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.balances.data, function (item) {
+      , ["href"])]), _hoisted_9]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.balances.data, function (item) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
           key: item.id
-        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.branch), 1
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.branch), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.sent), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.sent), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.confirm_create), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.confirm_create), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.reminder), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.reminder), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.received), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.received), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
           "class": "border bg-indigo-300 rounded-xl px-4 py-1 m-1",
           onClick: function onClick($event) {
             return $options.destroy(item.id);
           }
-        }, [_hoisted_22], 8
+        }, [_hoisted_21], 8
         /* PROPS */
         , ["onClick"])])]);
       }), 128
       /* KEYED_FRAGMENT */
-      )), $props.balances.data.length === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_23, [_hoisted_24])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_paginator, {
+      )), $props.balances.data.length === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_22, [_hoisted_23])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_paginator, {
         "class": "mt-6",
         balances: $props.balances
       }, null, 8

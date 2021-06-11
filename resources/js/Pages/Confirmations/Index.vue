@@ -51,6 +51,7 @@
           <span>Edit</span>
         </inertia-link>
       </div>
+
       <div
         class="
           border
@@ -64,7 +65,7 @@
           m-1
         "
       >
-        <a href="pd">Generate pdf file</a>
+        <a href="word">Generate Bank Letters</a>
       </div>
       <div
         class="
@@ -79,7 +80,7 @@
           m-1
         "
       >
-        <a href="word">Generate Bank Letter</a>
+        <a href="bankConfig">Generate Remaining Pages</a>
       </div>
       <div
         class="
@@ -95,21 +96,6 @@
         "
       >
         <a href="ex">Generate Control Sheet</a>
-      </div>
-      <div
-        class="
-          border
-          inline-block
-          hover:bg-gray-600
-          hover:text-white
-          shadow-md
-          rounded-xl
-          px-4
-          py-1
-          m-1
-        "
-      >
-        <a href="bankConfig">Generate Bank-Report</a>
       </div>
     </div>
 

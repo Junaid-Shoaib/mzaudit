@@ -59,7 +59,8 @@ class BankAccountController extends Controller
     //BankAccount Create
     public function create()
     {
-        if (BankAccount::where('branch_id')) {
+        $data  = BankBranch::all()->map->only('bank_id')->first();
+        if ($data) {
             return Inertia::render('Accounts/Create', [
                 'branches' => BankBranch::all()
                     ->map(function ($branch) {

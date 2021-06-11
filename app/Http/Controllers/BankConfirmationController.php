@@ -102,15 +102,17 @@ class BankConfirmationController extends Controller
                             if ($account->bankBranch->bankConfirmations()
                                 ->where('year_id', session('year_id'))->first('sent')
                             ) {
+
                                 return false;
                             } else {
+
                                 return true;
                             }
-                            // return true;
                         }
                     }
                 }
             )
+
 
             ->map(function ($branch) {
                 $sent = Carbon::now();
@@ -124,9 +126,8 @@ class BankConfirmationController extends Controller
                 ]);
             });
 
-
-
         return back()->withInput();
+
 
         // }
     }
@@ -172,21 +173,11 @@ class BankConfirmationController extends Controller
 
         Request::validate([
             'sent' => ['required'],
-            // 'reminder' => ['required'],
-            // 'confirm_create' => ['required'],
-            // 'received' => ['required'],
-            //            'company_id' => ['required'],
-            //            'year_id' => ['required'],
         ]);
 
         foreach ($request->balances as $balance) {
             $bal = BankConfirmation::find($balance['id']);
-            // dd($balance);
 
-            // $sent = new Carbon($balance['sent']);
-            // $confirm_create = new Carbon($balance['confirm_create']);
-            // $reminder = new Carbon($balance['reminder']);
-            // $received = new Carbon($balance['received']);
             $bal->update([
 
                 'sent' => $balance['sent'],
@@ -210,27 +201,6 @@ class BankConfirmationController extends Controller
 
     public function bankConfig()
     {
-        // Storage::disk('public')->exists($image)
-
-        // dd($year->id);
-        // $path = 'public/' . $year->company->id . '/' . $year->id . '/';
-        // $path = 'public/' . $year->company->id . '/' . $year->id . '/';
-        // dd($path);
-        // C:\Users\Public\Documents
-        // // if (Storage::disk('Documents')->exists('bankconfigure.docx')) {
-        // if (Storage::disk($path)->exists('te.txt')) {
-        //     dd('Hello');
-        // } else {
-        //     dd('khali  hai');
-        // }
-
-
-
-
-
-
-
-
 
         $account = \App\Models\BankAccount::where('company_id', session('company_id'))->first();
         if ($account) {
@@ -241,8 +211,8 @@ class BankConfirmationController extends Controller
             $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('templatebr.docx');
             $templateProcessor->setValue('client', $year->company->name);
             $templateProcessor->setValue('end', $end->format("F j Y"));
-            $templateProcessor->saveAs(storage_path('app/public/' . $year->company->id . '/' . $year->id . '/' .  'bankconfigure.docx'));
-            return response()->download(storage_path('app/public/' . $year->company->id . '/' . $year->id . '/' .  'bankconfigure.docx'));
+            $templateProcessor->saveAs(storage_path('app/public/' . $year->company->id . '/' . $year->id . '/' .  'Remaining_pages.docx'));
+            return response()->download(storage_path('app/public/' . $year->company->id . '/' . $year->id . '/' .  'Remaining_pages.docx'));
         } else {
             return Redirect::route('balances.create')->with('success', 'Create Account first.');
         }

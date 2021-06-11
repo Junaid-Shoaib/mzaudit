@@ -11,7 +11,7 @@
     <div class="relative mt-5 ml-7">
       <inertia-link
         class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
-        :href="route('branches.create')"
+        :href="route('branches.create', 'create')"
         >Create
       </inertia-link>
     </div>
@@ -27,7 +27,9 @@
         <tbody>
           <tr v-for="item in balances.data" :key="item.id">
             <td class="py-3 px-4 border text-left">{{ item.name }}</td>
-            <td class="py-3 px-4 border text-center">{{ item.address }}</td>
+            <td class="py-3 px-4 border text-center text-transform: capitalize">
+              {{ item.address }}
+            </td>
             <td class="py-3 px-4 border text-center">
               <inertia-link
                 class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"

@@ -449,16 +449,8 @@ class CompanyController extends Controller
                 $i++;
             }
         } else {
-            return Redirect::route('accounts')->with('success', 'Create Account First');
+            return Redirect::route('accounts.create')->with('success', 'Create Account First');
         }
-
-
-
-        // $branch = $company->bankAccounts()->get();
-        // foreach ($branch as $b) {
-        //     $branches[$i] = $b->bankBranch;
-        //     $i++;
-        // }
 
         $period = Year::where('id', session('year_id'))->first();
         $begin = new Carbon($period->begin);
@@ -494,17 +486,18 @@ class CompanyController extends Controller
 
             $section->addText('The Manager,', 'f1Style', 'p1Style');
             $section->addText($branch->bank->name . ",", 'f1Style', 'p1Style');
-            $section->addText($branch->address . ".", 'f1Style', 'p1Style');
+            $branch = explode("\n", $branch->address);
 
-
-
+            foreach ($branch as $branchadd) {
+                $section->addText($branchadd . ",", 'f1Style', 'p1Style');
+                $branchadd++;
+            }
 
             $textrun = $section->addTextRun();
             $section->addTextBreak(0);
             $section->addText('Dear Sir,', 'f1Style', 'p2Style');
 
             $textrun = $section->addTextRun();
-            $section->addTextBreak(0);
 
             $textrun = $section->addTextRun('p2Style');
             $textrun->addText('Subject: ', 'f1Style');
@@ -512,6 +505,7 @@ class CompanyController extends Controller
             $textrun->addText($company->name, 'f2Style');
 
             $textrun = $section->addTextRun();
+            $section->addTextBreak(0);
             $section->addTextBreak(0);
 
             $textrun = $section->addTextRun('p2Style');
@@ -589,16 +583,14 @@ class CompanyController extends Controller
             );
         }
         $writer = new Word2007($phpWord);
-        $writer->save(storage_path('app/public/' . $company->id . '/' . $period->id . '/' .  'Bank Letter.docx'));
+        $writer->save(storage_path('app/public/' . $company->id . '/' . $period->id . '/' .  'Bank Letters.docx'));
 
         //Template FIle Generated.
         $end = $period->end ? new Carbon($period->end) : null;
         $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('templatebr.docx');
         $templateProcessor->setValue('client', $company->name);
         $templateProcessor->setValue('end', $end->format("F j Y"));
-        $templateProcessor->saveAs(storage_path('app/public/' . $company->id . '/' . $period->id . '/' .  'bankconfigure.docx'));
-
-        // return response()->download(storage_path('app/public/' . $company->id . '/' . $period->id . '/' .  'bankconfigure.docx'));
-        return response()->download(storage_path('app/public/' . $company->id . '/' . $period->id . '/' .  'Bank Letter.docx'));
+        $templateProcessor->saveAs(storage_path('app/public/' . $company->id . '/' . $period->id . '/' .  'Remaining_pages.docx'));
+        return response()->download(storage_path('app/public/' . $company->id . '/' . $period->id . '/' .  'Bank Letters.docx'));
     }
 }

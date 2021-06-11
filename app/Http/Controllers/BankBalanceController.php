@@ -119,8 +119,6 @@ class BankBalanceController extends Controller
         Request::validate([
             'balances.*.account_id' => ['required'],
             'balances.*.ledger' => ['required'],
-            // 'balances.*.statement' => ['required'],
-            // 'balances.*.confirmation' => ['required'],
         ]);
 
         foreach ($request->balances as $balance) {
@@ -142,7 +140,6 @@ class BankBalanceController extends Controller
         //
     }
 
-    // public function edit(BankBalance $balance)
     public function edity()
 
     {
@@ -165,9 +162,7 @@ class BankBalanceController extends Controller
     public function update(Req $request, BankBalance $balance)
     {
         Request::validate([
-            //            'balances.*.company_id' => ['required'],
-            //            'balances.*.account_id' => ['required'],
-            //            'balances.*.year_id' => ['required'],
+            'balances.*.company_id' => ['required'],
         ]);
 
         foreach ($request->balances as $balance) {
@@ -186,47 +181,6 @@ class BankBalanceController extends Controller
 
         return Redirect::route('balances')->with('success', 'Bank Balance updated.');
     }
-
-
-
-
-    // public function edit(BankBalance $balance)
-    // {
-
-    //     return Inertia::render('Balances/Edit', [
-
-    //         'accounts' => BankAccount::all()
-    //             ->map(function ($account) {
-    //                 return [
-    //                     'id' => $account->id,
-    //                     'name' => $account->name,
-    //                     'type' => $account->type,
-    //                     'currency' => $account->currency,
-    //                     'branch' => $account->name . " - " . $account->bankBranch->bank->name . " - " . $account->bankBranch->address,
-    //                     'company_id' => $account->company_id,
-    //                 ];
-    //             }),
-    //         'data' => BankBalance::where('company_id', session('company_id'))->where('year_id', session('year_id'))->where('id', $balance->id)->first(),
-    //     ]);
-    // }
-    // public function update(Req $request, BankBalance $balance)
-    // {
-
-    //     Request::validate([
-
-    //         // 'account_id' => ['required'],
-    //         'ledger' => ['required'],
-    //         'statement' => ['required'],
-    //         'confirmation' => ['required'],
-    //     ]);
-
-    //     $balance->ledger = Request::input('ledger');
-    //     $balance->statement = Request::input('statement');
-    //     $balance->confirmation = Request::input('confirmation');
-    //     $balance->save();
-
-    //     return Redirect::route('balances')->with('success', 'Bank Balance updated.');
-    // }
 
     public function destroy(BankBalance $balance)
     {
