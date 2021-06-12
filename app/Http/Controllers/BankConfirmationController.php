@@ -21,27 +21,6 @@ class BankConfirmationController extends Controller
     public function index()
     {
 
-        // $balances = BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()
-        //     ->map(function ($confirmation) {
-        //         return [
-        //             $sent = $confirmation->sent ? new Carbon($confirmation->sent) : null,
-        //             $reminder = $confirmation->reminder ? new Carbon($confirmation->reminder) : null,
-        //             $confirm_create = $confirmation->confirm_create ? new Carbon($confirmation->confirm_create) : null,
-        //             $confirm_create = $confirmation->confirm_create ? new Carbon($confirmation->confirm_create) : null,
-        //             $received = $confirmation->received ? new Carbon($confirmation->received) : null,
-
-
-        //             'id' => $confirmation->id,
-        //             'sent' => $sent ? $sent->format("M d Y") : null,
-        //             'reminder' => $reminder ? $reminder->format("M d Y") : null,
-        //             'confirm_create' => $confirm_create ?  $confirm_create->format("M d Y") : null,
-        //             'received' => $received ? $received->format("M d Y") : null,
-        //             'branch' => $confirmation->bankBranch->bank->name . " - " . $confirmation->bankBranch->address,
-        //             'company' => $confirmation->company->name,
-        //             'year' => $confirmation->year->begin . " - " . $confirmation->year->end,
-        //         ];
-        //     });
-        // dd($balances);
         return Inertia::render('Confirmations/Index', [
             'balances' => BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))->paginate(5)->withQueryString()
                 ->through(
@@ -169,7 +148,6 @@ class BankConfirmationController extends Controller
     {
 
 
-        // dd($request->balances);
 
         Request::validate([
             'sent' => ['required'],

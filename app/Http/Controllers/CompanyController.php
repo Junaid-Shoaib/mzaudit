@@ -238,7 +238,6 @@ class CompanyController extends Controller
         session(['year_id' => $active_yr->value]);
 
         return back()->withInput();
-        // return redirect()->back();
     }
 
     // public function pd()
