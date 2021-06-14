@@ -60,7 +60,7 @@ class BankController extends Controller
         ]);
 
         Bank::create([
-            'name' => Request::input('name'),
+            'name' => strtoupper(Request::input('name')),
         ]);
 
         if ($request->accounts == 'accounts') {
@@ -114,7 +114,7 @@ class BankController extends Controller
             'name' => ['required'],
         ]);
 
-        $bank->name = Request::input('name');
+        $bank->name = strtoupper(Request::input('name'));
         $bank->save();
 
         return Redirect::route('banks')->with('success', 'Bank updated.');

@@ -64,7 +64,7 @@ class CompanyController extends Controller
         ]);
         DB::transaction(function () {
             $company = Company::create([
-                'name' => Request::input('name'),
+                'name' => strtoupper(Request::input('name')),
                 'address' => Request::input('address'),
                 'email' => Request::input('email'),
                 'web' => Request::input('web'),
@@ -159,7 +159,7 @@ class CompanyController extends Controller
         ]);
 
         $company->name = Request::input('name');
-        $company->address = Request::input('address');
+        $company->address = strtoupper(Request::input('address'));
         $company->email = Request::input('email');
         $company->web = Request::input('web');
         $company->phone = Request::input('phone');

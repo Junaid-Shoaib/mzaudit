@@ -60,7 +60,7 @@ class BankBranchController extends Controller
 
         BankBranch::create([
             'bank_id' => Request::input('bank_id'),
-            'address' => Request::input('address'),
+            'address' => ucwords(Request::input('address')),
         ]);
         if ($request->accounts == 'accounts') {
             return Redirect::route('accounts.create')->with('success', 'Bank Branch created.');
@@ -99,7 +99,7 @@ class BankBranchController extends Controller
         ]);
 
         $branch->bank_id = Request::input('bank_id');
-        $branch->address = Request::input('address');
+        $branch->address = ucwords(Request::input('address'));
         $branch->save();
 
         return Redirect::route('branches')->with('success', 'Bank Branch updated.');
