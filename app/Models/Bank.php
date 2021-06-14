@@ -10,12 +10,11 @@ class Bank extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','enabled'
+        'name', 'enabled'
     ];
 
     public function bankBranches()
     {
         return $this->hasMany('App\Models\BankBranch', 'bank_id');
     }
-
 }

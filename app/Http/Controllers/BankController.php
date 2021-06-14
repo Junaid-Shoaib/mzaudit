@@ -6,6 +6,7 @@ use Illuminate\Http\Request as Req;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\Bank;
+use App\Models\BankBranch;
 use Inertia\Inertia;
 
 class BankController extends Controller
@@ -17,8 +18,19 @@ class BankController extends Controller
      */
     public function index()
     {
-        $data = Bank::all();
-        return Inertia::render('Banks/Index', ['data' => $data]);
+        return Inertia::render('Banks/Index', [
+            'balances' => Bank::paginate(6)
+                ->through(
+                    fn ($bank) =>
+                    [
+                        'id' => $bank->id,
+                        'name' => $bank->name,
+                        'delete' => BankBranch::where('bank_id', $bank->id)->first() ? false : true,
+
+                    ]
+                ),
+
+        ]);
     }
 
     /**
@@ -26,9 +38,12 @@ class BankController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+
+    // Bank Create
+    public function create($accounts)
     {
-        return Inertia::render('Banks/Create');
+        // dd($bankcreate);
+        return Inertia::render('Banks/Create', ["accounts" => $accounts]);
     }
 
     /**
@@ -39,16 +54,20 @@ class BankController extends Controller
      */
     public function store(Req $request)
     {
-//        dd($request);
+        // dd($request->bankcreate);
         Request::validate([
             'name' => ['required'],
         ]);
 
         Bank::create([
-            'name' => Request::input('name'),
+            'name' => strtoupper(Request::input('name')),
         ]);
 
-        return Redirect::route('banks')->with('success', 'Bank created.');
+        if ($request->accounts == 'accounts') {
+            return Redirect::route('branches.create', ['accounts' => $request->accounts])->with('success', 'Bank created.');
+        } else {
+            return Redirect::route('banks')->with('success', 'Bank created.');
+        }
     }
 
     /**
@@ -57,6 +76,8 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    //Bank Show
     public function show($id)
     {
         //
@@ -68,6 +89,7 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    //Bank Edit
     public function edit(Bank $bank)
     {
         return Inertia::render('Banks/Edit', [
@@ -85,13 +107,14 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    //Bank Update
     public function update(Req $request, Bank $bank)
     {
         Request::validate([
             'name' => ['required'],
         ]);
 
-        $bank->name = Request::input('name');
+        $bank->name = strtoupper(Request::input('name'));
         $bank->save();
 
         return Redirect::route('banks')->with('success', 'Bank updated.');
@@ -103,6 +126,7 @@ class BankController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    //Bank Delete
     public function destroy(Bank $bank)
     {
         $bank->delete();

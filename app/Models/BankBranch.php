@@ -10,10 +10,11 @@ class BankBranch extends Model
     use HasFactory;
 
     protected $fillable = [
-        'address','enabled','bank_id'
+        'address', 'enabled', 'bank_id'
     ];
 
-    public function bank(){
+    public function bank()
+    {
         return $this->belongsTo('App\Models\Bank', 'bank_id');
     }
 
@@ -26,5 +27,4 @@ class BankBranch extends Model
     {
         return $this->hasMany('App\Models\BankConfirmation', 'branch_id');
     }
-
 }

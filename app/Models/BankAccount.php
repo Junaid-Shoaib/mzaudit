@@ -10,14 +10,16 @@ class BankAccount extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','type','currency','enabled','branch_id','company_id'
+        'name', 'type', 'currency', 'enabled', 'branch_id', 'company_id'
     ];
 
-    public function bankBranch(){
+    public function bankBranch()
+    {
         return $this->belongsTo('App\Models\BankBranch', 'branch_id');
     }
 
-    public function company(){
+    public function company()
+    {
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
 

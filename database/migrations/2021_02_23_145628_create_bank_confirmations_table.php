@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+    use Illuminate\Database\Schema\Blueprint;
+    use Illuminate\Support\Facades\Schema;
+    use Illuminate\Database\DBAL;
 
 class CreateBankConfirmationsTable extends Migration
 {
@@ -28,7 +29,20 @@ class CreateBankConfirmationsTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
         });
+        
+
     }
+    
+    
+    // Schema::table('bank_confirmations', function (Blueprint $table) {
+    //     $table->renameColumn('remind_first', 'remind');
+    //     $table->renameColumn('remind_second', 'conf_create');
+        
+    // });
+
+        
+        
+   
 
     /**
      * Reverse the migrations.
@@ -37,6 +51,8 @@ class CreateBankConfirmationsTable extends Migration
      */
     public function down()
     {
+
+
         Schema::dropIfExists('bank_confirmations');
     }
 }

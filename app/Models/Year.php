@@ -10,10 +10,11 @@ class Year extends Model
     use HasFactory;
 
     protected $fillable = [
-        'begin','end','enabled','company_id'
+        'begin', 'end', 'enabled', 'company_id'
     ];
 
-    public function company(){
+    public function company()
+    {
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
 
@@ -26,5 +27,4 @@ class Year extends Model
     {
         return $this->hasMany('App\Models\BankConfirmation', 'year_id');
     }
-
 }

@@ -10,63 +10,124 @@ use App\Models\BankBalance;
 use App\Models\Year;
 use App\Models\Company;
 use Inertia\Inertia;
+use Carbon\Carbon;
 
 class BankBalanceController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Balances/Index', [
-            'data' => BankBalance::where('company_id',session('company_id'))->where('year_id',session('year_id'))->get(),
-            'companies' => Company::all()
-                ->map(function($company){
-                    return [
-                    'id' => $company->id,
-                    'name' => $company->name,
-                    ];
-                }), 
-            'years' => Year::where('company_id',session('company_id'))->get()
-                ->map(function($year){
-                    return [
-                    'id' => $year->id,
-                    'begin' => $year->begin,
-                    'end' => $year->end,
-                    ];
-                }),
-        ]);
+        return Inertia::render(
+            'Balances/Index',
+            [
+                'balances' => BankBalance::where('company_id', session('company_id'))
+                    ->where('year_id', session('year_id'))->paginate(6)->withQueryString()
+                    ->through(
+                        fn ($bal) =>
+                        [
+                            'id' => $bal->id,
+                            'number' => $bal->bankAccount->name,
+                            'ledger' => $bal->ledger,
+                            'statement' => $bal->statement,
+                            'confirmation' => $bal->confirmation,
+                        ]
+                    ),
+
+                // dd($balances['participants']->links()),
+                'companies' => Company::all()
+                    ->map(function ($company) {
+                        return [
+                            'id' => $company->id,
+                            'name' => $company->name,
+                        ];
+                    }),
+                'years' => Year::where('company_id', session('company_id'))->get()
+                    ->map(function ($year) {
+                        $end = new Carbon($year->end);
+                        return [
+                            'id' => $year->id,
+                            'begin' => $year->begin,
+                            'end' => $end->format('F j Y'),
+                        ];
+                    }),
+
+            ],
+        );
     }
+
+
+
 
     public function create()
     {
-        return Inertia::render('Balances/Create',[
-            'accounts' => BankAccount::where('company_id',session('company_id'))->get()
-                ->map(function ($account){
+        $accounts = BankAccount::where('company_id', session('company_id'))->get()
+            // dd($accounts);
+            ->filter(
+                function ($account) {
+
+                    if ($account->bankBalances()
+                        ->where('year_id', session('year_id'))->first('ledger')
+                    ) {
+                        return false;
+                    } else {
+
+                        return true;
+                    }
+                }
+
+            )
+
+            ->map(
+                function ($bal) {
+                    // dd($account);
                     return [
-                        'id' => $account->id,
-                        'name' => $account->name,
-                        'type' => $account->type,
-                        'currency' => $account->currency,
-                        'branch' => $account->bankBranch->bank->name." - ".$account->bankBranch->address,
-//                        'company_id' => $account->company_id,
+                        'id' => $bal->id,
+                        'name' => $bal->name,
+                        'type' => $bal->type,
+                        'currency' => $bal->currency,
+                        'branch' => $bal->name . " - " . $bal->bankBranch->bank->name . " - " . $bal->bankBranch->address,
                     ];
-                }),
-        ]);
+                }
+            );
+
+        $account = null;
+
+        $i = 0;
+        foreach ($accounts as $acc) {
+            if ($acc) {
+                $account[$i] = $acc;
+                $i++;
+            }
+        }
+
+        if ($account) {
+
+            return Inertia::render('Balances/Create', [
+
+                'accounts' => $account,
+            ]);
+        } else {
+            return Redirect::route('accounts.create')->with('success', 'Create Account first.');
+        }
     }
+
+
+
 
     public function store(Req $request)
     {
-//dd($request);
+
         Request::validate([
-//            'balances.*.company_id' => ['required'],
             'balances.*.account_id' => ['required'],
-//            'balances.*.year_id' => ['required'],
+            'balances.*.ledger' => ['required'],
         ]);
-        foreach($request->balances as $balance){
+
+        foreach ($request->balances as $balance) {
             BankBalance::create([
                 'ledger' => $balance['ledger'],
                 'statement' => $balance['statement'],
                 'confirmation' => $balance['confirmation'],
-                'company_id' => session('company_id'),
                 'account_id' => $balance['account_id'],
+                'company_id' => session('company_id'),
                 'year_id' => session('year_id'),
             ]);
         }
@@ -79,43 +140,42 @@ class BankBalanceController extends Controller
         //
     }
 
-    public function edit(BankBalance $balance)
+    public function edity()
+
     {
         return Inertia::render('Balances/Edit', [
             'accounts' => BankAccount::all()
-                ->map(function ($account){
+                ->map(function ($account) {
                     return [
                         'id' => $account->id,
                         'name' => $account->name,
                         'type' => $account->type,
                         'currency' => $account->currency,
-                        'branch' => $account->bankBranch->bank->name." - ".$account->bankBranch->address,
+                        'branch' => $account->bankBranch->bank->name . " - " . $account->bankBranch->address,
                         'company_id' => $account->company_id,
                     ];
                 }),
-            'data' => BankBalance::where('company_id',session('company_id'))->where('year_id',session('year_id'))->get(),
+            'data' => BankBalance::where('company_id', session('company_id'))->where('year_id', session('year_id'))->get(),
         ]);
     }
 
     public function update(Req $request, BankBalance $balance)
     {
-//    dd($request->balances);
-
         Request::validate([
-//            'balances.*.company_id' => ['required'],
-            'balances.*.account_id' => ['required'],
-//            'balances.*.year_id' => ['required'],
+            'balances.*.company_id' => ['required'],
         ]);
 
-    foreach($request->balances as $balance){
+        foreach ($request->balances as $balance) {
             $bal = BankBalance::find($balance['id']);
+            // dd($bal);
             $bal->update([
+
                 'ledger' => $balance['ledger'],
                 'statement' => $balance['statement'],
                 'confirmation' => $balance['confirmation'],
-//                'company_id' => $balance['company_id'],
+                //'company_id' => $balance['company_id'],
                 'account_id' => $balance['account_id'],
-//                'year_id' => $balance['year_id'],
+                //'year_id' => $balance['year_id'],
             ]);
         }
 
