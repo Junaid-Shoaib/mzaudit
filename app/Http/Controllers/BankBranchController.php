@@ -47,7 +47,7 @@ class BankBranchController extends Controller
                 'banks' => \App\Models\Bank::all()->map->only('id', 'name')
             ]);
         } else {
-            return Redirect::route('banks.create')->with('success', 'Create Bank first.');
+            return Redirect::route('banks.create', 'accounts')->with('success', 'Create Bank first.');
         }
     }
 

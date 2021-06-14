@@ -73,7 +73,7 @@ class BankAccountController extends Controller
                     }),
             ]);
         } else {
-            return Redirect::route('branches.create')->with('success', 'Create Branch First');
+            return Redirect::route('branches.create', 'accounts')->with('success', 'Create Branch First');
         }
     }
 
