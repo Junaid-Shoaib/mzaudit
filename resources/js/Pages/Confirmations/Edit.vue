@@ -167,20 +167,6 @@ export default {
   data() {
     return {
       balances: this.data,
-      // balances: {
-      // sent: this.data[0].sent == null ? null : new Date(this.data[0].sent),
-      // reminder:
-      //   this.data[0].reminder == null ? null : new Date(this.data[0].reminder),
-      // confirm_create:
-      //   this.data[0].confirm_create == null
-      //     ? null
-      //     : new Date(this.data[0].confirm_create),
-      // received:
-      //   this.data[0].received == null ? null : new Date(this.data[0].received),
-      // company_id: this.data[0].company_id,
-      // branch_id: this.data[0].branch_id,
-      // year_id: this.data[0].year_id,
-      // },
       upper: new Date(this.year.end),
       lower: new Date(this.year.begin),
     };
