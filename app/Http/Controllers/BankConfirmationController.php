@@ -146,18 +146,20 @@ class BankConfirmationController extends Controller
 
     public function update(Req $request, BankConfirmation $balance)
     {
+        // dd($request);
 
 
 
         Request::validate([
-            'sent' => ['required'],
+            'balances.*.sent' => ['required'],
         ]);
-
+        // dd($request);
         foreach ($request->balances as $balance) {
+            // dd($balance);
             $bal = BankConfirmation::find($balance['id']);
 
             $bal->update([
-
+                // dd($bal),
                 'sent' => $balance['sent'],
                 'confirm_create' => $balance['confirm_create'],
                 'reminder' =>  $balance['reminder'],
@@ -166,8 +168,6 @@ class BankConfirmationController extends Controller
 
             ]);
         }
-
-
         return Redirect::route('confirmations')->with('success', 'Bank Confirmation updated.');
     }
 
