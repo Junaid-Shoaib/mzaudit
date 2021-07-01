@@ -79,21 +79,21 @@ class BankAccountController extends Controller
 
     public function store(Req $request)
     {
-
+        // dd($request);
         Request::validate([
-            '*.name' => 'required|unique:App\Models\BankAccount,name',
-            '*.type' => ['required'],
-            '*.currency' => ['required'],
+            'accounts.*.name' => 'required|unique:App\Models\BankAccount,name',
+            'accounts.*.type' => ['required'],
+            'accounts.*.currency' => ['required'],
 
         ]);
 
-        $accounts = $request->all();
-        foreach ($accounts as $account) {
+        $accounts = $request->accounts;
+        foreach ($accounts as $acc) {
             BankAccount::create([
-                'name' => $account['name'],
-                'type' => $account['type'],
-                'currency' => $account['currency'],
-                'branch_id' => $account['branch_id'],
+                'name' => $acc['name'],
+                'type' => $acc['type'],
+                'currency' => $acc['currency'],
+                'branch_id' => $acc['branch_id'],
                 'company_id' => session('company_id'),
             ]);
         }

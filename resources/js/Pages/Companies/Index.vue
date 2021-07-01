@@ -31,6 +31,7 @@
         >Create
       </inertia-link>
     </div>
+
     <div class="">
       <table class="shadow-lg border mt-4 ml-12 rounded-xl w-11/12">
         <thead>

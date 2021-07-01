@@ -27,7 +27,7 @@
           <inertia-link
             v-if="$page.props.user"
             href="/dashboard"
-            class="text-sm text-gray-700 underline"
+            class="text-sm text-white underline"
           >
             Dashboard
           </inertia-link>

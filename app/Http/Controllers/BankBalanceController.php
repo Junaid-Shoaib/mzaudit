@@ -122,6 +122,7 @@ class BankBalanceController extends Controller
         ]);
 
         foreach ($request->balances as $balance) {
+
             BankBalance::create([
                 'ledger' => $balance['ledger'],
                 'statement' => $balance['statement'],

@@ -6,7 +6,7 @@
       </h2>
     </template>
     <div class="">
-      <form @submit.prevent="submit">
+      <form @submit.prevent="form.post(route('companies.store'))">
         <div
           class="
             px-4
@@ -123,7 +123,7 @@
           <button
             class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
             type="submit"
-            :disabled="isLoading"
+            :disabled="form.processing"
           >
             Create Company
           </button>
@@ -135,6 +135,7 @@
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
+import { useForm } from "@inertiajs/inertia-vue3";
 
 export default {
   components: {
@@ -145,30 +146,17 @@ export default {
     errors: Object,
   },
 
-  data() {
-    return {
-      form: this.$inertia.form({
-        name: null,
-        address: null,
-        email: null,
-        web: null,
-        phone: null,
-        fiscal: "June",
-        incorp: null,
-      }),
-      isLoading: false,
-    };
-  },
-
-  methods: {
-    submit() {
-      this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 2000);
-
-      this.$inertia.post(route("companies.store"), this.form);
-    },
+  setup(props) {
+    const form = useForm({
+      name: null,
+      address: null,
+      email: null,
+      web: null,
+      phone: null,
+      fiscal: "June",
+      incorp: null,
+    });
+    return { form };
   },
 };
 </script>
