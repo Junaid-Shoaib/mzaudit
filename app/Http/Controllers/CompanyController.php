@@ -25,27 +25,56 @@ class CompanyController extends Controller
     // Company Index
     public function index()
     {
+        request()->validate([
+            'direction' => ['in:asc,desc'],
+            'field' => ['in:name,address'],
+        ]);
+
+        $query = Company::query();
+
+        if (request('search')) {
+            $query->where('name', 'LIKE', '%' . request('search') . '%');
+        }
+
+        if (request()->has(['field', 'direction'])) {
+            $query->orderBy(request('field'), request('direction'));
+        }
+
+        // $can = auth()->user()->can('edit articles');
+        // dd($can);
+        //
 
         return Inertia::render(
             'Companies/Index',
             [
                 'data' => Company::all(),
-
-                'balances' => Company::paginate(6)->withQueryString()
-                    ->through(
-                        fn ($company) =>
-                        [
-                            'id' => $company->id,
-                            'name' => $company->name,
-                            'address' => $company->address,
-                            'email' => $company->email,
-                            'web' => $company->web,
-                            'phone' => $company->phone,
-                            'fiscal' => $company->fiscal,
-                            'incorp' => $company->incorp,
-                            'delete' => Year::where('company_id', $company->id)->first() ? false : true,
-                        ]
-                    ),
+                'filters' => request()->all(['search', 'field', 'direction']),
+                'can' => [
+                    'publish' => auth()->user()->can('publish articles'),
+                    'unpublish' => auth()->user()->can('unpublish articles'),
+                    'edit' => auth()->user()->can('edit articles'),
+                    'delete' => auth()->user()->can('delete articles'),
+                ],
+                'balances' => $query->paginate(6)
+                // 'balances' => Company::paginate(6)
+                // ->withQueryString()
+                // ->through(
+                //     fn ($company) =>
+                //     [
+                //         'id' => $company->id,
+                //         'name' => $company->name,
+                //         'address' => $company->address,
+                //         'email' => $company->email,
+                //         'web' => $company->web,
+                //         'phone' => $company->phone,
+                //         'fiscal' => $company->fiscal,
+                //         'incorp' => $company->incorp,
+                //         'can' => [
+                //             'edit_articles' => $company->can('edit articles'),
+                //         ],
+                //         'delete' => Year::where('company_id', $company->id)->first() ? false : true,
+                //     ],
+                // ),
             ],
         );
     }
@@ -85,7 +114,7 @@ class CompanyController extends Controller
             $startMonthDays = 1;
             $endMonthDays = Carbon::create()->month($endMonth)->daysInMonth;
 
-            // Year Get 
+            // Year Get
             $today = Carbon::today();
             $startYear = 0;
             $endYear = 0;

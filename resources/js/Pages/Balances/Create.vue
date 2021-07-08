@@ -7,10 +7,18 @@
     </template>
 
     <div class="">
-      <form @submit.prevent="submit">
+      <form @submit.prevent="form.post(route('balances.store'))">
         <div class="panel-body">
           <div
-            class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+            class="
+              px-4
+              py-2
+              bg-gray-100
+              border-t border-gray-200
+              flex
+              justify-start
+              items-center
+            "
           >
             <inertia-link
               class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
@@ -29,8 +37,6 @@
             <thead class="">
               <tr>
                 <th>Ledger</th>
-                <!-- <th>Statement</th>
-                <th>Confirmation</th> -->
                 <th>Account</th>
                 <th>Action</th>
               </tr>
@@ -85,12 +91,20 @@
           </table>
         </div>
         <div
-          class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+          class="
+            px-4
+            py-2
+            bg-gray-100
+            border-t border-gray-200
+            flex
+            justify-start
+            items-center
+          "
         >
           <button
             class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
             type="submit"
-            :disabled="isLoading"
+            :disabled="form.processing"
           >
             Create Balance
           </button>
@@ -102,6 +116,7 @@
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
+import { useForm } from "@inertiajs/inertia-vue3";
 
 export default {
   components: {
@@ -113,23 +128,37 @@ export default {
     accounts: Object,
   },
 
-  data() {
-    return {
-      form: this.$inertia.form({
-        balances: [
-          {
-            ledger: "",
-            statement: "",
-            confirmation: "",
-            account_id: this.accounts[0].id,
-          },
-        ],
-      }),
-      isError: false,
-      isLoading: false,
-      firstError: "",
-    };
+  setup(props) {
+    const form = useForm({
+      balances: [
+        {
+          ledger: "",
+          statement: "",
+          confirmation: "",
+          account_id: props.accounts[0].id,
+        },
+      ],
+    });
+    return { form };
   },
+
+  // data() {
+  //     return {
+  //       form: this.$inertia.form({
+  //         balances: [
+  //           {
+  //             ledger: "",
+  //             statement: "",
+  //             confirmation: "",
+  //             account_id: this.accounts[0].id,
+  //           },
+  //         ],
+  //       }),
+  //       isError: false,
+  //       isLoading: false,
+  //       firstError: "",
+  //     };
+  //   },
 
   watch: {
     errors: function () {
@@ -141,14 +170,14 @@ export default {
   },
 
   methods: {
-    submit() {
-      this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 4000);
+    // submit() {
+    //   this.isLoading = true;
+    //   setTimeout(() => {
+    //     this.isLoading = false;
+    //   }, 4000);
 
-      this.$inertia.post(route("balances.store"), this.form);
-    },
+    //   this.$inertia.post(route("balances.store"), this.form);
+    // },
 
     addRow() {
       this.form.balances.push({

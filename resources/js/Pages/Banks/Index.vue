@@ -23,10 +23,10 @@
         </thead>
         <tbody>
           <tr v-for="item in balances.data" :key="item.id">
-            <td class="py-3 px-4 border text-left text-transform: uppercase">
+            <td class="py-2 px-2 border text-left text-transform: uppercase">
               {{ item.name }}
             </td>
-            <td class="py-3 px-4 border text-center">
+            <td class="py-2 px-2 border text-center">
               <inertia-link
                 class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
                 :href="route('banks.edit', item.id)"

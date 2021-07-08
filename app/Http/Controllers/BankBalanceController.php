@@ -167,15 +167,12 @@ class BankBalanceController extends Controller
         ]);
         foreach ($request->balances as $balance) {
             $bal = BankBalance::find($balance['id']);
-            // dd($bal);
             $bal->update([
 
                 'ledger' => $balance['ledger'],
                 'statement' => $balance['statement'],
                 'confirmation' => $balance['confirmation'],
-                //'company_id' => $balance['company_id'],
                 'account_id' => $balance['account_id'],
-                //'year_id' => $balance['year_id'],
             ]);
         }
 

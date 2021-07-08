@@ -8,7 +8,15 @@
     <div class="">
       <form @submit.prevent="submit">
         <div
-          class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+          class="
+            px-4
+            py-2
+            bg-gray-100
+            border-t border-gray-200
+            flex
+            justify-start
+            items-center
+          "
         >
           <inertia-link
             class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
@@ -48,12 +56,19 @@
           <div v-if="errors.branch_id">{{ errors.branch_id }}</div>
         </div>
         <div
-          class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+          class="
+            px-4
+            py-2
+            bg-gray-100
+            border-t border-gray-200
+            flex
+            justify-start
+            items-center
+          "
         >
           <button
             class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
             type="submit"
-            :disabled="isLoading"
           >
             Create Confirmation
           </button>
