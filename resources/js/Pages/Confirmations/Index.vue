@@ -104,20 +104,22 @@
         <thead>
           <tr class="bg-indigo-100 text-centre font-bold">
             <th class="px-4 pt-4 pb-4 border">Bank</th>
-            <th class="px-4 pt-4 pb-4 border">Sent</th>
-            <th class="px-4 pt-4 pb-4 border">Create Confirmation/Date</th>
-            <th class="px-4 pt-4 pb-4 border">Reminder</th>
-            <th class="px-4 pt-4 pb-4 border">Received</th>
+            <th class="px-4 pt-4 pb-4 border">Create Date</th>
+            <th class="px-4 pt-4 pb-4 border">Sent Date</th>
+            <th class="px-4 pt-4 pb-4 border">Reminder Date</th>
+            <th class="px-4 pt-4 pb-4 border">Received Date</th>
             <th class="px-4 pt-4 pb-4 border">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in balances.data" :key="item.id">
-            <td class="py-2 px-4 border text-left">{{ item.branch }}</td>
-            <td class="py-2 px-4 border text-center">{{ item.sent }}</td>
+            <td class="py-2 px-4 border text-left capitalize">
+              {{ item.branch }}
+            </td>
             <td class="py-2 px-4 border text-center">
               {{ item.confirm_create }}
             </td>
+            <td class="py-2 px-4 border text-center">{{ item.sent }}</td>
             <td class="py-2 px-4 border text-center">{{ item.reminder }}</td>
             <td class="py-2 px-4 border text-center">{{ item.received }}</td>
             <td class="py-2 px-4 border text-center">

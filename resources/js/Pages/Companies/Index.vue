@@ -226,16 +226,17 @@
             <td class="py-3 px-4 border text-center">
               <inertia-link
                 class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
-                v-if="can.edit"
                 :href="route('companies.edit', item.id)"
               >
+                <!-- v-if="can.edit" -->
                 <span>Edit</span>
               </inertia-link>
               <button
                 class="border bg-red-500 rounded-xl px-4 py-1 m-1"
                 @click="destroy(item.id)"
-                v-if="can.delete"
+                v-if="!item.years[0]"
               >
+                <!-- v-if="can.delete" -->
                 <span>Delete</span>
               </button>
             </td>
@@ -265,7 +266,7 @@ export default {
     data: Object,
     balances: Object,
     filters: Object,
-    can: Object,
+    // can: Object,
   },
 
   data() {

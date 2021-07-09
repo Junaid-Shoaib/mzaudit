@@ -37,7 +37,7 @@ class BankAccountController extends Controller
             'Accounts/Index',
             [
                 'filters' => request()->all(['search', 'field', 'direction']),
-                'balances' =>  $query->paginate(6),
+                'balances' =>  $query->with('bankBalances')->paginate(6),
                 // 'balances' => BankAccount::where('company_id', session('company_id'))->paginate(6)
                 //     ->through(
                 //         fn ($branch) =>

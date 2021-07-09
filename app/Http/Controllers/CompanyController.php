@@ -40,22 +40,18 @@ class CompanyController extends Controller
             $query->orderBy(request('field'), request('direction'));
         }
 
-        // $can = auth()->user()->can('edit articles');
-        // dd($can);
-        //
-
         return Inertia::render(
             'Companies/Index',
             [
                 'data' => Company::all(),
                 'filters' => request()->all(['search', 'field', 'direction']),
-                'can' => [
-                    'publish' => auth()->user()->can('publish articles'),
-                    'unpublish' => auth()->user()->can('unpublish articles'),
-                    'edit' => auth()->user()->can('edit articles'),
-                    'delete' => auth()->user()->can('delete articles'),
-                ],
-                'balances' => $query->paginate(6)
+                // 'can' => [
+                //     'publish' => auth()->user()->can('publish articles'),
+                //     'unpublish' => auth()->user()->can('unpublish articles'),
+                //     'edit' => auth()->user()->can('edit articles'),
+                //     'delete' => auth()->user()->can('delete articles'),
+                // ],
+                'balances' => $query->with('years')->paginate(6)
                 // 'balances' => Company::paginate(6)
                 // ->withQueryString()
                 // ->through(

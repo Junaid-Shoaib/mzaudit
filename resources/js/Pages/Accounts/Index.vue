@@ -168,6 +168,7 @@
                 @click="destroy(item.id)"
                 v-if="item.delete"
               >
+                <!-- v-if="!item.bankBalances[0]" -->
                 <span>Delete</span>
               </button>
             </td>
