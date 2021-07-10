@@ -29,11 +29,11 @@
     </div>
 
     <div class="">
-      <form @submit.prevent="submit">
+      <form @submit.prevent="form.get(route('years.create'))">
         <button
           class="border bg-indigo-300 rounded-xl px-4 py-1 m-1 ml-8 mt-4"
           type="submit"
-          :disabled="isLoading"
+          :disabled="form.processing"
         >
           Add Year
         </button>
@@ -80,6 +80,7 @@
 <script>
 import AppLayout from "@/Layouts/AppLayout";
 import Paginator from "@/Layouts/Paginator";
+import { useForm } from "@inertiajs/inertia-vue3";
 
 export default {
   components: {
@@ -91,23 +92,18 @@ export default {
     balances: Object,
     companies: Object,
   },
+  setup(props) {
+    const form = useForm({});
+    return { form };
+  },
 
   data() {
     return {
       co_id: this.$page.props.co_id,
-      isLoading: false,
     };
   },
 
   methods: {
-    submit() {
-      this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 4000);
-      this.$inertia.get(route("years.create"), this.form);
-    },
-
     destroy(id) {
       this.$inertia.delete(route("years.destroy", id));
     },

@@ -20,20 +20,27 @@ class BankBranchController extends Controller
 
     public function index()
     {
-        return Inertia::render('Branches/Index', [
-            'balances' => BankBranch::paginate(6)
-                ->through(
-                    fn ($branch) =>
-                    [
-                        'id' => $branch->id,
-                        'address' => $branch->address,
-                        'bank_id' => $branch->bank_id,
-                        'name' => $branch->bank->name,
 
-                        'delete' => BankAccount::where('branch_id', $branch->id)->first() ? false : true,
-                    ]
-                ),
-        ]);
+
+
+        return Inertia::render(
+            'Branches/Index',
+            [
+                'balances' =>  $bal = BankBranch::paginate(6)
+                    ->through(
+                        fn ($branch) =>
+                        [
+                            'id' => $branch->id,
+                            'address' => $branch->address,
+                            'bank_id' => $branch->bank_id,
+                            'name' => $branch->bank->name,
+                            'delete' => BankAccount::where('branch_id', $branch->id)->first() ? false : true,
+
+                        ]
+                    ),
+            ]
+
+        );
     }
 
     //Create Branches

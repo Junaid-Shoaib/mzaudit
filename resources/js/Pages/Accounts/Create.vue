@@ -9,7 +9,7 @@
       {{ $page.props.flash.success }}
     </div>
     <div class="">
-      <form @submit.prevent="submit">
+      <form @submit.prevent="form.post(route('accounts.store'))">
         <div
           class="
             px-4
@@ -34,7 +34,6 @@
         >
           Add row
         </button>
-        <div v-if="isError">{{ firstError }}</div>
         <inertia-link
           class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
           :href="route('banks.create', 'accounts')"
@@ -45,6 +44,7 @@
           :href="route('branches.create', 'accounts')"
           >Create Branch
         </inertia-link>
+        <div v-if="isError">{{ firstError }}</div>
         <table class="table border">
           <thead class="">
             <tr>
@@ -115,7 +115,7 @@
           <button
             class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
             type="submit"
-            :disabled="isLoading"
+            :disabled="form.processing"
           >
             Create Accounts
           </button>
@@ -127,6 +127,7 @@
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
+import { useForm } from "@inertiajs/inertia-vue3";
 
 export default {
   components: {
@@ -138,21 +139,34 @@ export default {
     branches: Object,
   },
 
-  data() {
-    return {
-      form: this.$inertia.form({
-        accounts: [
-          {
-            branch_id: this.branches[0].id,
-            name: "",
-            type: "",
-            currency: "",
-          },
-        ],
-      }),
-      isLoading: false,
-    };
+  setup(props) {
+    const form = useForm({
+      accounts: [
+        {
+          branch_id: props.branches[0].id,
+          name: "",
+          type: "",
+          currency: "",
+        },
+      ],
+    });
+    return { form };
   },
+  // data() {
+  //   return {
+  //     form: this.$inertia.form({
+  //       accounts: [
+  //         {
+  //           branch_id: this.branches[0].id,
+  //           name: "",
+  //           type: "",
+  //           currency: "",
+  //         },
+  //       ],
+  //     }),
+  //     isLoading: false,
+  //   };
+  // },
 
   watch: {
     errors: function () {
@@ -164,13 +178,13 @@ export default {
   },
 
   methods: {
-    submit() {
-      this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 4000);
-      this.$inertia.post(route("accounts.store"), this.form.accounts);
-    },
+    // submit() {
+    //   this.isLoading = true;
+    //   setTimeout(() => {
+    //     this.isLoading = false;
+    //   }, 4000);
+    //   this.$inertia.post(route("accounts.store"), this.form.accounts);
+    // },
 
     addRow() {
       this.form.accounts.push({

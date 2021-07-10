@@ -9,7 +9,7 @@
       {{ $page.props.flash.success }}
     </div>
     <div class="">
-      <form @submit.prevent="submit">
+      <form @submit.prevent="form.post(route('branches.store'))">
         <div
           class="
             px-4
@@ -78,7 +78,7 @@
           <button
             class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
             type="submit"
-            :disabled="isLoading"
+            :disabled="form.processing"
           >
             Create Branch
           </button>
@@ -90,6 +90,7 @@
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
+import { useForm } from "@inertiajs/inertia-vue3";
 
 export default {
   components: {
@@ -101,26 +102,13 @@ export default {
     banks: Object,
     accounts: Object,
   },
-
-  data() {
-    return {
-      form: this.$inertia.form({
-        address: null,
-        bank_id: this.banks[0].id,
-        accounts: this.accounts,
-      }),
-      isLoading: false,
-    };
-  },
-
-  methods: {
-    submit() {
-      this.isLoading = true;
-      setTimeout(() => {
-        this.isLoading = false;
-      }, 4000);
-      this.$inertia.post(route("branches.store"), this.form);
-    },
+  setup(props) {
+    const form = useForm({
+      address: null,
+      accounts: props.accounts,
+      bank_id: props.banks[0].id,
+    });
+    return { form };
   },
 };
 </script>

@@ -34,51 +34,38 @@
         <table class="table border">
           <thead class="">
             <tr>
-              <th>Sent</th>
-              <th>Create Conformation/Date</th>
-              <th>Reminder</th>
-              <th>Received</th>
+              <th>Bank</th>
+              <th>Create Date</th>
+              <th>Sent Date</th>
+              <th>Reminder Date</th>
+              <th>Received Date</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(confirm, index) in data" :key="confirm.id">
-              <!-- v-for="(confirm, index) in data" :key="confirm.id" -->
               <td>
                 <input
-                  v-model="confirm.sent"
-                  type="date"
-                  :upper-limit="upper"
-                  :lower-limit="lower"
-                  class="pr-2 pb-2 w-44 rounded-md leading-tight"
-                />
-                <!-- <datepicker
-                  v-model="confirm.sent"
-                  :upper-limit="upper"
-                  :lower-limit="lower"
-                  class="pr-2 pb-2 w-44 rounded-md leading-tight"
-                /> -->
-              </td>
-              <!-- <td>
-                <input
-                  v-model="confirm.sent"
-                  class="pr-2 pb-2 w-44 rounded-md leading-tight"
+                  v-model="confirm.name"
                   type="text"
+                  class="pr-2 pb-2 w-60 rounded-md leading-tight"
+                  readonly
                 />
-              </td> -->
+              </td>
               <td>
-                <!-- :upper-limit="upper"
-                  :lower-limit="lower" -->
                 <input
                   v-model="confirm.confirm_create"
                   type="date"
                   class="pr-2 pb-2 w-44 rounded-md leading-tight"
                 />
-                <!-- <datepicker
-                  v-model="confirm.confirm_create"
+              </td>
+              <td>
+                <input
+                  v-model="confirm.sent"
+                  type="date"
                   :upper-limit="upper"
                   :lower-limit="lower"
                   class="pr-2 pb-2 w-44 rounded-md leading-tight"
-                /> -->
+                />
               </td>
               <td>
                 <input
@@ -88,12 +75,6 @@
                   :lower-limit="lower"
                   class="pr-2 pb-2 w-44 rounded-md leading-tight"
                 />
-                <!-- <datepicker
-                  v-model="confirm.reminder"
-                  :upper-limit="upper"
-                  :lower-limit="lower"
-                  class="pr-2 pb-2 w-44 rounded-md leading-tight"
-                /> -->
               </td>
               <td>
                 <input
@@ -104,15 +85,6 @@
                   class="pr-2 pb-2 w-44 rounded-md leading-tight"
                 />
               </td>
-              <!-- <td>
-                <datepicker
-                  v-model="confirm.received"
-                  :upper-limit="upper"
-                  :lower-limit="lower"
-                  class="pr-2 pb-2 w-44 rounded-md leading-tight"
-                  label="received"
-                />
-              </td> -->
               <td>
                 <button
                   @click.prevent="deleteRow(index)"

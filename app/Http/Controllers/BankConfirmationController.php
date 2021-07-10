@@ -29,7 +29,6 @@ class BankConfirmationController extends Controller
                         $sent = $confirmation->sent ? new Carbon($confirmation->sent) : null,
                         $reminder = $confirmation->reminder ? new Carbon($confirmation->reminder) : null,
                         $confirm_create = $confirmation->confirm_create ? new Carbon($confirmation->confirm_create) : null,
-                        $confirm_create = $confirmation->confirm_create ? new Carbon($confirmation->confirm_create) : null,
                         $received = $confirmation->received ? new Carbon($confirmation->received) : null,
 
 
@@ -79,7 +78,7 @@ class BankConfirmationController extends Controller
                         if ($account->company_id == session('company_id')) {
 
                             if ($account->bankBranch->bankConfirmations()
-                                ->where('year_id', session('year_id'))->first('sent')
+                                ->where('year_id', session('year_id'))->first('confirm_create')
                             ) {
 
                                 return false;
@@ -94,10 +93,10 @@ class BankConfirmationController extends Controller
 
 
             ->map(function ($branch) {
-                $sent = Carbon::now();
+                $confirm_create = Carbon::now();
 
                 BankConfirmation::create([
-                    'sent' => $sent->format('Y-m-d'),
+                    'confirm_create' => $confirm_create->format('Y-m-d'),
                     'company_id' => session('company_id'),
                     'year_id' => session('year_id'),
                     'branch_id' => $branch->id,
@@ -123,8 +122,19 @@ class BankConfirmationController extends Controller
     public function edit()
     {
         return Inertia::render('Confirmations/Edit', [
+            'data' => BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))
+                ->get()
+                ->map(function ($confirmation) {
+                    return [
+                        'id' => $confirmation->id,
+                        'name' => $confirmation->bankBranch->bank->name . "-" . $confirmation->bankBranch->address,
+                        'confirm_create' => $confirmation->confirm_create,
+                        'sent' => $confirmation->sent,
+                        'reminder' => $confirmation->reminder,
+                        'received' => $confirmation->received,
 
-            'data' => BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))->get(),
+                    ];
+                }),
 
             'branches' => BankBranch::all()
                 ->filter(function ($branch) {
@@ -146,20 +156,12 @@ class BankConfirmationController extends Controller
 
     public function update(Req $request, BankConfirmation $balance)
     {
-        // dd($request);
-
-
-
         Request::validate([
-            'balances.*.sent' => ['required'],
+            'balances.*.confirm_create' => ['required'],
         ]);
-        // dd($request);
         foreach ($request->balances as $balance) {
-            // dd($balance);
             $bal = BankConfirmation::find($balance['id']);
-
             $bal->update([
-                // dd($bal),
                 'sent' => $balance['sent'],
                 'confirm_create' => $balance['confirm_create'],
                 'reminder' =>  $balance['reminder'],
@@ -179,13 +181,13 @@ class BankConfirmationController extends Controller
 
     public function bankConfig()
     {
-
+        //template
         $account = \App\Models\BankAccount::where('company_id', session('company_id'))->first();
         if ($account) {
             $year = Year::where('company_id', session('company_id'))
                 ->where('id', session('year_id'))->first();
             $end = $year->end ? new Carbon($year->end) : null;
-            // dd($end);
+
             $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('templatebr.docx');
             $templateProcessor->setValue('client', $year->company->name);
             $templateProcessor->setValue('end', $end->format("F j Y"));
