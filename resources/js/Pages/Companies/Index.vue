@@ -289,19 +289,6 @@ export default {
           preserveState: true,
         });
       }, 150),
-      // () {
-      // let params = pickBy(this.params);
-      // // Object.keys(params).forEach((key) => {
-      // //   if (params[key] == "") {
-      // //     delete params[key];
-      // //   }
-      // // });
-      // this.$inertia.get(this.route("companies"), params, {
-      //   replace: true,
-      //   preserveState: true,
-      // });
-      // },
-
       deep: true,
     },
   },

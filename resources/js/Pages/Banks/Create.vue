@@ -86,7 +86,7 @@ export default {
   setup(props) {
     const form = useForm({
       name: null,
-      accounts: this.accounts,
+      accounts: props.accounts,
     });
     return { form };
   },

@@ -18092,7 +18092,7 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup(props) {
     var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.useForm)({
       name: null,
-      accounts: this.accounts
+      accounts: props.accounts
     });
     return {
       form: form
@@ -18419,18 +18419,6 @@ __webpack_require__.r(__webpack_exports__);
           preserveState: true
         });
       }, 150),
-      // () {
-      // let params = pickBy(this.params);
-      // // Object.keys(params).forEach((key) => {
-      // //   if (params[key] == "") {
-      // //     delete params[key];
-      // //   }
-      // // });
-      // this.$inertia.get(this.route("companies"), params, {
-      //   replace: true,
-      //   preserveState: true,
-      // });
-      // },
       deep: true
     }
   },
