@@ -24,13 +24,13 @@
             >Back
           </inertia-link>
         </div>
-        <button
+        <!-- <button
           class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"
           @click.prevent="addRow"
         >
           Add row
         </button>
-        <div v-if="isError">{{ firstError }}</div>
+        <div v-if="isError">{{ firstError }}</div> -->
         <table class="table border">
           <thead class="">
             <tr>
@@ -42,12 +42,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(confirm, index) in data" :key="confirm.id">
+            <tr v-for="confirm in data" :key="confirm.id">
               <td>
                 <input
                   v-model="confirm.name"
                   type="text"
-                  class="pr-2 pb-2 w-60 rounded-md leading-tight"
+                  class="pr-2 pb-2 w-96 rounded-md leading-tight"
                   readonly
                 />
               </td>
@@ -55,6 +55,7 @@
                 <input
                   v-model="confirm.confirm_create"
                   type="date"
+                  readonly
                   class="pr-2 pb-2 w-44 rounded-md leading-tight"
                 />
               </td>
@@ -85,14 +86,14 @@
                   class="pr-2 pb-2 w-44 rounded-md leading-tight"
                 />
               </td>
-              <td>
+              <!-- <td>
                 <button
                   @click.prevent="deleteRow(index)"
                   class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"
                 >
                   Delete
                 </button>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>

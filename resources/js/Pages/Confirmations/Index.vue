@@ -41,6 +41,7 @@
         <inertia-link
           class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
           :href="route('confirmations.create')"
+          v-if="create"
           >Create
         </inertia-link>
 
@@ -108,7 +109,7 @@
             <th class="px-4 pt-4 pb-4 border">Sent Date</th>
             <th class="px-4 pt-4 pb-4 border">Reminder Date</th>
             <th class="px-4 pt-4 pb-4 border">Received Date</th>
-            <th class="px-4 pt-4 pb-4 border">Actions</th>
+            <!-- <th class="px-4 pt-4 pb-4 border">Actions</th> -->
           </tr>
         </thead>
         <tbody>
@@ -122,14 +123,14 @@
             <td class="py-2 px-4 border text-center">{{ item.sent }}</td>
             <td class="py-2 px-4 border text-center">{{ item.reminder }}</td>
             <td class="py-2 px-4 border text-center">{{ item.received }}</td>
-            <td class="py-2 px-4 border text-center">
+            <!-- <td class="py-2 px-4 border text-center">
               <button
                 class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
                 @click="destroy(item.id)"
               >
                 <span>Delete</span>
               </button>
-            </td>
+            </td> -->
           </tr>
           <tr v-if="balances.data.length === 0">
             <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
@@ -153,6 +154,7 @@ export default {
     balances: Object,
     companies: Object,
     years: Object,
+    create: Object,
   },
   data() {
     return {

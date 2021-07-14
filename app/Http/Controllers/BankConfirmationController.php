@@ -21,7 +21,27 @@ class BankConfirmationController extends Controller
     public function index()
     {
 
+        //Condition Create Button
+        $branches = BankBranch::all()
+            ->filter(
+                function ($branch) {
+                    foreach ($branch->bankAccounts as $account) {
+                        if ($account->company_id == session('company_id')) {
+                            if ($account->bankBranch->bankConfirmations()
+                                ->where('year_id', session('year_id'))->first('confirm_create')
+                            ) {
+                                return false;
+                            } else {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            )->first();
+
+
         return Inertia::render('Confirmations/Index', [
+            'create' => $branches,
             'balances' => BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))->paginate(5)->withQueryString()
                 ->through(
                     fn ($confirmation) =>
@@ -30,8 +50,9 @@ class BankConfirmationController extends Controller
                         $reminder = $confirmation->reminder ? new Carbon($confirmation->reminder) : null,
                         $confirm_create = $confirmation->confirm_create ? new Carbon($confirmation->confirm_create) : null,
                         $received = $confirmation->received ? new Carbon($confirmation->received) : null,
-
-
+                        // dd($branches),
+                        // $create = $confirmation->bankBranch->address,
+                        // dd($create),
                         'id' => $confirmation->id,
                         'sent' => $sent ? $sent->format("M d Y") : null,
                         'reminder' => $reminder ? $reminder->format("M d Y") : null,
@@ -69,28 +90,23 @@ class BankConfirmationController extends Controller
 
     public  function create()
     {
+
         $branches = BankBranch::all()
             ->filter(
                 function ($branch) {
-
                     foreach ($branch->bankAccounts as $account) {
-
                         if ($account->company_id == session('company_id')) {
-
                             if ($account->bankBranch->bankConfirmations()
                                 ->where('year_id', session('year_id'))->first('confirm_create')
                             ) {
-
                                 return false;
                             } else {
-
                                 return true;
                             }
                         }
                     }
                 }
             )
-
 
             ->map(function ($branch) {
                 $confirm_create = Carbon::now();
@@ -105,6 +121,7 @@ class BankConfirmationController extends Controller
             });
 
         return back()->withInput();
+
 
 
         // }

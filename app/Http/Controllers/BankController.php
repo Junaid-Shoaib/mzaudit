@@ -54,9 +54,8 @@ class BankController extends Controller
      */
     public function store(Req $request)
     {
-        // dd($request->bankcreate);
         Request::validate([
-            'name' => ['required'],
+            'name' => 'required|unique:App\Models\Bank,name',
         ]);
 
         Bank::create([

@@ -50,7 +50,7 @@
         >
           Forgot your password?
         </inertia-link>
-        <inertia-link
+        <!-- <inertia-link
           :href="route('register')"
           class="
             ml-4
@@ -76,7 +76,7 @@
           "
         >
           Register
-        </inertia-link>
+        </inertia-link> -->
         <jet-button
           class="ml-4"
           :class="{ 'opacity-25': form.processing }"
