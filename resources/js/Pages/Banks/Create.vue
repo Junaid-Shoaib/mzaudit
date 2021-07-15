@@ -43,8 +43,8 @@
             "
             label="name"
           />
-          <div v-if="errors.name">{{ errors.name }}</div>
         </div>
+        <div v-if="errors.name">{{ errors.name }}</div>
         <div
           class="
             px-4

@@ -26,6 +26,16 @@
             :href="route('accounts')"
             >Back
           </inertia-link>
+          <inertia-link
+            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+            :href="route('banks.create', 'accounts')"
+            >Create Bank
+          </inertia-link>
+          <inertia-link
+            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+            :href="route('branches.create', 'accounts')"
+            >Create Branch
+          </inertia-link>
         </div>
 
         <button
@@ -34,16 +44,7 @@
         >
           Add row
         </button>
-        <inertia-link
-          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
-          :href="route('banks.create', 'accounts')"
-          >Create Bank
-        </inertia-link>
-        <inertia-link
-          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
-          :href="route('branches.create', 'accounts')"
-          >Create Branch
-        </inertia-link>
+
         <div v-if="isError">{{ firstError }}</div>
         <table class="table border">
           <thead class="">
