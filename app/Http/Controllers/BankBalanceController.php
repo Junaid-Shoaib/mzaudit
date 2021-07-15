@@ -164,6 +164,7 @@ class BankBalanceController extends Controller
     {
         Request::validate([
             'balances.*.company_id' => ['required'],
+            'balances.*.ledger' => ['required'],
         ]);
         foreach ($request->balances as $balance) {
             $bal = BankBalance::find($balance['id']);

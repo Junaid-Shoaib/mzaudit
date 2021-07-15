@@ -250,7 +250,6 @@ class CompanyController extends Controller
             session(['year_id' => $active_yr]);
         }
 
-        // return redirect()->back();
         return back()->withInput();
     }
 
@@ -276,7 +275,6 @@ class CompanyController extends Controller
     // excel file Generator
     public function ex()
     {
-        $s = '';
         $spreadsheet = new Spreadsheet();
 
         $colArray = ['H:H', 'I:I', 'J:J', 'K:K'];
@@ -366,7 +364,7 @@ class CompanyController extends Controller
             )
         );
 
-        $rowArray = ['SR#', 'BANK', 'ACCOUNT#', 'ACCOUNT TYPE', 'CURRENCY', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'DIFFERENCE', 'PREPARED', 'DISPATCHED', 'REMINDER', 'RECEIVED'];
+        $rowArray = ['SR#', 'BANK', 'ACCOUNT#', 'ACCOUNT TYPE', 'CURRENCY', 'ADDRESS', 'AS PER LEDGER', 'AS PER BANK STATEMENT', 'AS PER CONFIRMATION', 'DIFFERENCE', 'CREATED', 'SENT', 'REMINDER', 'RECEIVED'];
         $spreadsheet->getActiveSheet()->fromArray($rowArray, NULL, 'B7');
         $widthArray = ['10', '5', '20', '20', '20', '15', '25', '17', '17', '17', '20', '20', '20', '20', '20'];
         foreach (range('A', 'O') as $key => $col) {
@@ -389,12 +387,12 @@ class CompanyController extends Controller
                             'statement' => $bal->statement,
                             'confirmation' => $bal->confirmation,
                             'difference' => $bal->statement - $bal->confirmation ? $bal->statement - $bal->confirmation : '0',
+                            'confirm_create' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()->first()->confirm_create,
                             'sent' => $bal->bankAccount->bankBranch->bankConfirmations
                                 ->filter(function ($confirmation) {
                                     return ($confirmation->company_id == session('company_id') && $confirmation->year_id == session('year_id'));
                                 })->first()->sent,
-                            'remind_first' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()->first()->reminder,
-                            'remind_second' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()->first()->confirm_create,
+                            'reminder' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()->first()->reminder,
                             'received' => $bal->bankAccount->bankBranch->bankConfirmations()->where('company_id', session('company_id'))->where('year_id', session('year_id'))->get()->first()->received,
                         ];
                     }
@@ -407,15 +405,16 @@ class CompanyController extends Controller
         $cnt = count($data);
         for ($i = 0; $i < $cnt; $i++) {
             // dd($data[$i]);
+            $data[$i]['confirm_create'] = $data[$i]['confirm_create'] ? new Carbon($data[$i]['confirm_create']) : null;
+            $data[$i]['confirm_create'] = $data[$i]['confirm_create'] ? $data[$i]['confirm_create']->format('F j, Y') : null;
             $data[$i]['sent'] = $data[$i]['sent'] ? new Carbon($data[$i]['sent']) : null;
             $data[$i]['sent'] = $data[$i]['sent'] ? $data[$i]['sent']->format('F j, Y') : null;
-            $data[$i]['remind_first'] = $data[$i]['remind_first'] ? new Carbon($data[$i]['remind_first']) : null;
-            $data[$i]['remind_first'] = $data[$i]['remind_first'] ? $data[$i]['remind_first']->format('F j, Y') : null;
-            $data[$i]['remind_second'] = $data[$i]['remind_second'] ? new Carbon($data[$i]['remind_second']) : null;
-            $data[$i]['remind_second'] = $data[$i]['remind_second'] ? $data[$i]['remind_second']->format('F j, Y') : null;
+            $data[$i]['reminder'] = $data[$i]['reminder'] ? new Carbon($data[$i]['reminder']) : null;
+            $data[$i]['reminder'] = $data[$i]['reminder'] ? $data[$i]['reminder']->format('F j, Y') : null;
             $data[$i]['received'] = $data[$i]['received'] ? new Carbon($data[$i]['received']) : null;
             $data[$i]['received'] = $data[$i]['received'] ? $data[$i]['received']->format('F j, Y') : null;
         }
+
 
         // dd($cnt);
         $spreadsheet->getActiveSheet()->fromArray($data, NULL, 'B9');

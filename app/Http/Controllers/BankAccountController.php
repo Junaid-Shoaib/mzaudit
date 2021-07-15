@@ -111,38 +111,36 @@ class BankAccountController extends Controller
     }
 
     //BankAccount Edit
-    public function edit(BankAccount $account)
+    public function edit()
     {
-        return Inertia::render('Accounts/Edit', [
-            'account' => [
-                'id' => $account->id,
-                'name' => $account->name,
-                'type' => $account->type,
-                'currency' => $account->currency,
-                'company_id' => $account->company_id,
-                'branch_id' => $account->branch_id,
-            ],
-            'branches' => BankBranch::all('id', 'address'),
-        ]);
+        return Inertia::render(
+            'Accounts/Edit',
+            [
+                'data' => BankAccount::where('company_id', session('company_id'))->get(),
+            ]
+        );
     }
 
     //BankAccount Update
     public function update(Req $request, BankAccount $account)
     {
         Request::validate([
-            'name' => 'required|unique:App\Models\BankAccount,name',
-            'type' => ['required'],
-            'currency' => ['required'],
+            'balances.*.name' => 'required',
         ]);
 
-        $account->name = Request::input('name');
-        $account->type = Request::input('type');
-        $account->currency = Request::input('currency');
-        $account->branch_id = Request::input('branch_id');
-        $account->save();
+
+        foreach ($request->balances as $account) {
+
+            $acc = BankAccount::find($account['id']);
+            $acc->update([
+
+                'name' => $account['name'],
+                'type' => $account['type'],
+                'currency' => $account['currency'],
+            ]);
+        }
         return Redirect::route('accounts')->with('success', 'Bank Account updated.');
     }
-
     //BanKAccount Delete
     public function destroy(BankAccount $account)
     {

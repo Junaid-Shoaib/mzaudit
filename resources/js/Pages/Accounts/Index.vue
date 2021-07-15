@@ -42,6 +42,12 @@
           :href="route('accounts.create')"
           >Create
         </inertia-link>
+        <inertia-link
+          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+          :href="route('account.edit')"
+        >
+          <span>Edit</span>
+        </inertia-link>
       </div>
     </div>
 
@@ -67,19 +73,13 @@
               {{ item.branches }}
             </td>
             <td class="py-3 px-4 border text-center">
-              <inertia-link
-                class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
-                :href="route('accounts.edit', item.id)"
-              >
-                <span>Edit</span>
-              </inertia-link>
-              <button
+              <!-- <button
                 class="border bg-red-500 rounded-xl px-4 py-1 m-1"
                 @click="destroy(item.id)"
                 v-if="item.delete"
               >
                 <span>Delete</span>
-              </button>
+              </button> -->
             </td>
           </tr>
           <!-- Null Balance -->
