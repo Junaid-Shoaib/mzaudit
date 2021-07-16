@@ -17,6 +17,7 @@ class BankAccountController extends Controller
 {
     public function index()
     {
+        //
 
 
         return Inertia::render(
@@ -53,6 +54,16 @@ class BankAccountController extends Controller
                             'id' => $year->id,
                             'begin' => $begin->format("F j Y"),
                             'end' => $end->format("F j Y"),
+                        ];
+                    }),
+
+                'branches' => BankBranch::all()
+                    ->map(function ($branch) {
+                        return [
+                            'id' => $branch->id,
+                            'address' => $branch->address,
+                            'bank_id' => $branch->bank_id,
+                            'name' => $branch->bank->name,
                         ];
                     }),
             ],
@@ -101,6 +112,8 @@ class BankAccountController extends Controller
                 'company_id' => session('company_id'),
             ]);
         }
+
+
         return Redirect::route('accounts')->with('success', 'Bank Account created.');
     }
 
