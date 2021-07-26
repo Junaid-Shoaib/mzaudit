@@ -40,7 +40,7 @@
           v-on:click="ch"
           class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
         >
-          Create
+          Add Accounts
         </button>
         <inertia-link
           class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
@@ -67,7 +67,7 @@
       class="relative mt-5 flex-row border-t border-b border-gray-200"
     >
       <form @submit.prevent="form.post(route('accounts.store'))">
-        <div v-if="isError">{{ firstError }}</div>
+        <!-- <form @submit.prevent="submit"> -->
         <div class="">
           <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
             <thead>
@@ -126,7 +126,6 @@
             </tbody>
           </table>
         </div>
-        <!-- <div v-if="isError">{{ firstError }}</div> -->
         <div
           class="
             relative
@@ -141,22 +140,29 @@
         >
           <button
             class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+            type="button"
+            @click="seen = false"
+          >
+            Record
+          </button>
+
+          <button
+            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
             @click.prevent="addRow"
           >
             Add row
           </button>
-
           <button
             class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
             type="submit"
             :disabled="form.processing"
           >
-            Create Accounts
+            Submit
           </button>
+          <div v-if="isError">{{ firstError }}</div>
         </div>
       </form>
     </div>
-
     <div class="">
       <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
         <thead>
@@ -246,12 +252,15 @@ export default {
     },
   },
 
-  //   mounted() {
-  //     // seen() {
-  //     this.seen = false;
-  //     // },
-  //   },
   methods: {
+    // hide() {
+    //   if (this.seen == true) {
+    //     this.seen = false;
+    //   } else {
+    //     this.seen = false;
+    //   }
+    // },
+
     ch() {
       if (this.seen == true) {
         this.seen = false;
@@ -259,10 +268,6 @@ export default {
         this.seen = true;
       }
     },
-
-    // store() {
-    //   this.$inertia.form.accounts.name = null;
-    // },
 
     addRow() {
       this.form.accounts.push({

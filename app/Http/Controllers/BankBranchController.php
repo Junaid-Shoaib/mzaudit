@@ -20,13 +20,10 @@ class BankBranchController extends Controller
 
     public function index()
     {
-
-
-
         return Inertia::render(
             'Branches/Index',
             [
-                'balances' =>  $bal = BankBranch::paginate(6)
+                'balances' => BankBranch::paginate(6)
                     ->through(
                         fn ($branch) =>
                         [
@@ -46,7 +43,6 @@ class BankBranchController extends Controller
     //Create Branches
     public function create($accounts)
     {
-
         $data  = Bank::all()->map->only('id')->first();
         if ($data) {
             return Inertia::render('Branches/Create', [
@@ -60,19 +56,35 @@ class BankBranchController extends Controller
 
     public function store(Req $request)
     {
+
         Request::validate([
             'bank_id' => ['required'],
             'address' => ['required'],
         ]);
 
-        BankBranch::create([
-            'bank_id' => Request::input('bank_id'),
-            'address' => ucwords(Request::input('address')),
-        ]);
-        if ($request->accounts == 'accounts') {
-            return Redirect::route('accounts.create')->with('success', 'Bank Branch created.');
+        $branches = BankBranch::all()->where("bank_id", $request->bank_id);
+        $add = ucwords($request->address);
+        $branchi = true;
+
+        foreach ($branches as $branch) {
+            if ($branch->address == $add) {
+                $branchi = false;
+                break;
+            }
+        }
+        if ($branchi == true) {
+            BankBranch::create([
+                'bank_id' => Request::input('bank_id'),
+                'address' => ucwords(Request::input('address')),
+            ]);
+
+            if ($request->accounts == 'accounts') {
+                return Redirect::route('accounts.create')->with('success', 'Bank Branch created.');
+            } else {
+                return Redirect::route('branches')->with('success', 'Bank Branch created.');
+            }
         } else {
-            return Redirect::route('branches')->with('success', 'Bank Branch created.');
+            return Redirect::route('branches.create', 'create')->with('success', 'The Name has Already been taken.');
         }
     }
 
@@ -81,7 +93,6 @@ class BankBranchController extends Controller
     {
         //
     }
-
     //Branches Edit
     public function edit(BankBranch $branch)
     {

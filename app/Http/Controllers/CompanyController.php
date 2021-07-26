@@ -493,12 +493,14 @@ class CompanyController extends Controller
 
 
 
+
         foreach ($branches  as $branch) {
             // dd($branch);
             $section = $phpWord->addSection();
             $textrun = $section->addTextRun();
             $section->addTextBreak(2);
-            $ref = "MZ-BCONF/" . $acronym . "/" . $year . "/" . $count++;
+            $acronyms = str_replace(["&"], "&amp;", $acronym);
+            $ref = "MZ-BCONF/" . $acronyms . "/" . $year . "/" . $count++;
             $section->addText($ref, 'f2Style', 'p1Style');
             $textrun = $section->addTextRun();
             $section->addTextBreak(1);
@@ -525,12 +527,13 @@ class CompanyController extends Controller
             $textrun = $section->addTextRun('p2Style');
             $textrun->addText('Subject: ', 'f1Style');
             $textrun->addText('Bank Report for Audit Purpose of ', 'f2Style');
-            $textrun->addText($company->name, 'f2Style');
+            $names = str_replace(["&"], "&amp;", $company->name);
+            $textrun->addText($names, 'f2Style');
 
             $textrun = $section->addTextRun();
             $section->addTextBreak(0);
             $section->addTextBreak(0);
-
+            // dd($section);
             $textrun = $section->addTextRun('p2Style');
             $textrun->addText(
                 "In accordance with your above named customer’s instructions given hereon, please send DIRECT to us at the below address, as auditors of your customer, the following information relating to their affairs at your branch as at the close of business on ",

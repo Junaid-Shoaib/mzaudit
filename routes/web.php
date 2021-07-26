@@ -191,9 +191,6 @@ Route::post('accounts', [BankAccountController::class, 'store'])
 Route::get('account/edit', [BankAccountController::class, 'edit'])
     ->name('account.edit')
     ->middleware('auth');
-// Route::get('accounts/{account}/edit', [BankAccountController::class, 'edit'])
-// ->name('accounts.edit')
-// ->middleware('auth');
 
 Route::put('accounts/{account}', [BankAccountController::class, 'update'])
     ->name('accounts.update')
