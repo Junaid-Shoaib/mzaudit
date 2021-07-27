@@ -61,12 +61,13 @@
         </inertia-link>
       </div>
     </div>
-
     <div
       v-if="seen"
       class="relative mt-5 flex-row border-t border-b border-gray-200"
     >
-      <form @submit.prevent="form.post(route('accounts.store'))">
+      <div v-if="isError">{{ firstError }}</div>
+      <!-- <form @submit.prevent="form.post(route('accounts.store'))"> -->
+      <form @submit.prevent="submit">
         <!-- <form @submit.prevent="submit"> -->
         <div class="">
           <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
@@ -95,7 +96,7 @@
                 <td class="w-3/12">
                   <input
                     v-model="account.name"
-                    type="text"
+                    type="number"
                     class="rounded-md w-full"
                   />
                 </td>
@@ -155,14 +156,16 @@
           <button
             class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
             type="submit"
+            @click="checkForm"
             :disabled="form.processing"
           >
+            <!-- v-html="form" -->
             Submit
           </button>
-          <div v-if="isError">{{ firstError }}</div>
         </div>
       </form>
     </div>
+
     <div class="">
       <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
         <thead>
@@ -214,6 +217,7 @@ export default {
   },
 
   props: {
+    errors: Object,
     balances: Object,
     companies: Object,
     years: Object,
@@ -232,7 +236,11 @@ export default {
       ],
     });
 
-    return { form };
+    function submit() {
+      this.form.post("/accounts", form);
+    }
+
+    return { form, submit };
   },
 
   data() {
@@ -253,14 +261,6 @@ export default {
   },
 
   methods: {
-    // hide() {
-    //   if (this.seen == true) {
-    //     this.seen = false;
-    //   } else {
-    //     this.seen = false;
-    //   }
-    // },
-
     ch() {
       if (this.seen == true) {
         this.seen = false;

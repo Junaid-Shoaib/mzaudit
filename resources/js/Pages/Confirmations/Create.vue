@@ -98,7 +98,6 @@ export default {
   data() {
     return {
       form: {
-        // sent: new Date(this.doFormat()),
         sent: new Date(),
         branch_id: this.branches[0].id,
         // branch_id: this.branches.id,
@@ -111,10 +110,6 @@ export default {
 
   methods: {
     submit() {
-      //             if(this.form.sent) this.form.sent=this.doFormat(this.form.sent)
-      //             if(this.form.remind_first) this.form.remind_first=this.doFormat(this.form.remind_first)
-      //             if(this.form.remind_second) this.form.remind_second=this.doFormat(this.form.remind_second)
-      //             if(this.form.received) this.form.received=this.doFormat(this.form.received)
       this.isLoading = true;
       setTimeout(() => {
         this.isLoading = false;
