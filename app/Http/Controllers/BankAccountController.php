@@ -24,7 +24,6 @@ class BankAccountController extends Controller
                 'Accounts/Index',
                 [
 
-                    'seen' => false,
                     'balances' => BankAccount::all()
                         ->where('company_id', session('company_id'))
                         ->map(
@@ -59,15 +58,15 @@ class BankAccountController extends Controller
                             ];
                         }),
 
-                    'branches' => BankBranch::all()
-                        ->map(function ($branch) {
-                            return [
-                                'id' => $branch->id,
-                                'address' => $branch->address,
-                                'bank_id' => $branch->bank_id,
-                                'name' => $branch->bank->name,
-                            ];
-                        }),
+                    // 'branches' => BankBranch::all()
+                    //     ->map(function ($branch) {
+                    //         return [
+                    //             'id' => $branch->id,
+                    //             'address' => $branch->address,
+                    //             'bank_id' => $branch->bank_id,
+                    //             'name' => $branch->bank->name,
+                    //         ];
+                    //     }),
                 ],
 
             );
@@ -79,27 +78,46 @@ class BankAccountController extends Controller
     //BankAccount Create
     public function create()
     {
-        //     $data  = BankBranch::all()->map->only('bank_id')->first();
-        //     if ($data) {
-        //         return Inertia::render('Accounts/Create', [
-        //             'branches' => BankBranch::all()
-        //                 ->map(function ($branch) {
-        //                     return [
-        //                         'id' => $branch->id,
-        //                         'address' => $branch->address,
-        //                         'bank_id' => $branch->bank_id,
-        //                         'name' => $branch->bank->name,
-        //                     ];
-        //                 }),
-        //         ]);
-        //     } else {
-        //         return Redirect::route('branches.create', 'accounts')->with('success', 'Create Branch First');
-        //     }
+        $data  = BankBranch::all()->map->only('bank_id')->first();
+        if ($data) {
+            return Inertia::render('Accounts/Create', [
+
+                //just fetch crete
+                'balances' => BankAccount::all()
+                    ->where('company_id', session('company_id'))
+                    ->map(
+                        function ($branch) {
+                            return
+                                [
+                                    'id' => $branch->id,
+                                    'name' => $branch->name,
+                                    'type' => $branch->type,
+                                    'currency' => $branch->currency,
+                                    'branches' => $branch->bankBranch->bank->name . " - " . $branch->bankBranch->address,
+                                    'delete' => BankBalance::where('account_id', $branch->id)->first() ? false : true,
+                                ];
+                        }
+                    ),
+
+                'branches' => BankBranch::all()
+                    ->map(function ($branch) {
+                        return [
+                            'id' => $branch->id,
+                            'address' => $branch->address,
+                            'bank_id' => $branch->bank_id,
+                            'name' => $branch->bank->name,
+                        ];
+                    }),
+            ]);
+        } else {
+            return Redirect::route('branches.create', 'accounts')->with('success', 'Create Branch First');
+        }
     }
 
     public function store(Req $request)
     {
         // dd($request->accounts);
+        // dd($request);
         Request::validate([
             'accounts.*.name' => 'required|unique:App\Models\BankAccount,name',
             'accounts.*.type' => ['required'],
@@ -118,8 +136,6 @@ class BankAccountController extends Controller
 
             ]);
         }
-
-        // return
         return Redirect::route('accounts')->with('success', 'Bank Account created.');
     }
 

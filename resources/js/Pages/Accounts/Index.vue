@@ -36,19 +36,20 @@
     </div>
     <div class="relative mt-5 ml-7 flex-row">
       <div class="flex-1 inline-block">
-        <button
-          v-on:click="ch"
+        <inertia-link
           class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+          :href="route('accounts.create')"
         >
+          <!-- v-on:click="ch" -->
           Add Accounts
-        </button>
+        </inertia-link>
         <inertia-link
           class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
           :href="route('account.edit')"
         >
           <span>Edit</span>
         </inertia-link>
-
+        <!--
         <inertia-link
           class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
           :href="route('banks.create', 'accounts')"
@@ -58,17 +59,15 @@
           class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
           :href="route('branches.create', 'accounts')"
           >Create Branch
-        </inertia-link>
+        </inertia-link> -->
       </div>
     </div>
-    <div
+    <div v-if="isError">{{ firstError }}</div>
+    <!-- <div
       v-if="seen"
       class="relative mt-5 flex-row border-t border-b border-gray-200"
     >
-      <div v-if="isError">{{ firstError }}</div>
-      <!-- <form @submit.prevent="form.post(route('accounts.store'))"> -->
       <form @submit.prevent="submit">
-        <!-- <form @submit.prevent="submit"> -->
         <div class="">
           <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
             <thead>
@@ -153,18 +152,18 @@
           >
             Add row
           </button>
+
           <button
-            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
             type="submit"
-            @click="checkForm"
+            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
             :disabled="form.processing"
           >
-            <!-- v-html="form" -->
+
             Submit
           </button>
         </div>
       </form>
-    </div>
+    </div> -->
 
     <div class="">
       <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
@@ -174,7 +173,7 @@
             <th class="px-4 pt-4 pb-4 border">Type</th>
             <th class="px-4 pt-4 pb-4 border">Currency</th>
             <th class="px-4 pt-4 pb-4 border">Branch</th>
-            <th class="px-4 pt-4 pb-4 border">Actions</th>
+            <!-- <th class="px-4 pt-4 pb-4 border">Actions</th> -->
           </tr>
         </thead>
         <tbody>
@@ -187,15 +186,15 @@
             <td class="py-1 px-4 border text-center">
               {{ item.branches }}
             </td>
-            <td class="py-3 px-4 border text-center">
-              <!-- <button
+            <!-- <td class="py-3 px-4 border text-center">
+              <button
                 class="border bg-red-500 rounded-xl px-4 py-1 m-1"
                 @click="destroy(item.id)"
                 v-if="item.delete"
               >
                 <span>Delete</span>
-              </button> -->
-            </td>
+              </button>
+            </td> -->
           </tr>
           <!-- Null Balance -->
           <tr v-if="balances.length === 0">
@@ -207,6 +206,12 @@
   </app-layout>
 </template>
 
+
+
+
+
+
+
 <script>
 import AppLayout from "@/Layouts/AppLayout";
 import { useForm } from "@inertiajs/inertia-vue3";
@@ -217,37 +222,48 @@ export default {
   },
 
   props: {
-    errors: Object,
+    // errors: Object,
     balances: Object,
     companies: Object,
     years: Object,
     branches: Object,
   },
 
-  setup(props) {
-    const form = useForm({
-      accounts: [
-        {
-          branch_id: props.branches[0].id,
-          name: null,
-          type: null,
-          currency: null,
-        },
-      ],
-    });
+  //   setup(props) {
+  //     const form = useForm({
+  //       accounts: [
+  //         {
+  //           branch_id: props.branches[0].id,
+  //           name: null,
+  //           type: null,
+  //           currency: null,
+  //         },
+  //       ],
+  //     });
 
-    function submit() {
-      this.form.post("/accounts", form);
-    }
+  //     function submit() {
+  //       this.form.post(route("accounts.store"));
+  //     }
 
-    return { form, submit };
-  },
+  //     return { form, submit };
+  //   },
 
   data() {
     return {
       co_id: this.$page.props.co_id,
       yr_id: this.$page.props.yr_id,
-      seen: false,
+      //   seen: false,
+      //   form: this.$inertia.form({
+      //     accounts: [
+      //       {
+      //         branch_id: this.branches[0].id,
+      //         name: "",
+      //         type: "",
+      //         currency: "",
+      //       },
+      //     ],
+      //   }),
+      //   isLoading: false,
     };
   },
 
@@ -256,18 +272,59 @@ export default {
       if (this.errors) {
         this.firstError = this.errors[Object.keys(this.errors)[0]];
         this.isError = true;
+        // this.seen = true;
       }
+      //   else {
+      //     setTimeout(() => {
+      //       // if (this.isError !== true) {
+      //       this.seen = false;
+      //       // }
+      //     }, 3000);
+      //   }
     },
   },
 
   methods: {
-    ch() {
-      if (this.seen == true) {
-        this.seen = false;
-      } else {
-        this.seen = true;
-      }
-    },
+    // submit() {
+    //   this.isLoading = true;
+    //   setTimeout(() => {
+    //     this.isLoading = false;
+    //   }, 4000);
+    //   this.$inertia.post(route("accounts.store"), this.form.accounts);
+    // },
+
+    // checkForm() {
+    //   setTimeout(() => {
+    //     if (this.isError !== true) {
+    //       this.seen = false;
+    //     }
+    //   }, 3000);
+    // },
+    // checkForm() {
+    //   //   this.isLoading = true;
+    //   setTimeout(() => {
+    //     // if (this.isError == true) {
+    //     if (this.isError) {
+    //       this.seen = true;
+    //     } else {
+    //       // this.submit(
+    //       console.log("else");
+    //       this.seen = false;
+    //     }
+    //   }, 5000);
+    // },
+
+    // submit() {
+    //   this.form.post("/accounts");
+    // },
+
+    // ch() {
+    //   if (this.seen == true) {
+    //     this.seen = false;
+    //   } else {
+    //     this.seen = true;
+    //   }
+    // },
 
     addRow() {
       this.form.accounts.push({
