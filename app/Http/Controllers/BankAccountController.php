@@ -151,11 +151,25 @@ class BankAccountController extends Controller
         return Inertia::render(
             'Accounts/Edit',
             [
-                'data' => BankAccount::where('company_id', session('company_id'))->get(),
+                'data' => BankAccount::where('company_id', session('company_id'))
+                    ->get()
+                    ->map(
+                        function ($account) {
+                            return
+                                [
+                                    'id' => $account->id,
+                                    'name' => $account->name,
+                                    'type' => $account->type,
+                                    'currency' => $account->currency,
+                                    'branches' => $account->bankBranch->bank->name . " - " . $account->bankBranch->address,
+
+                                ];
+                        }
+                    )
+
             ]
         );
     }
-
     //BankAccount Update
     public function update(Req $request, BankAccount $account)
     {

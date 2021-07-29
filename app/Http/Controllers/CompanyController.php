@@ -84,7 +84,7 @@ class CompanyController extends Controller
     public function store()
     {
         Request::validate([
-            'name' => ['required'],
+            'name' => 'required|unique:App\Models\Company,name',
             'fiscal' => ['required'],
         ]);
         DB::transaction(function () {
@@ -183,8 +183,8 @@ class CompanyController extends Controller
             'fiscal' => ['required'],
         ]);
 
-        $company->name = Request::input('name');
-        $company->address = strtoupper(Request::input('address'));
+        $company->name = strtoupper(Request::input('name'));
+        $company->address = Request::input('address');
         $company->email = Request::input('email');
         $company->web = Request::input('web');
         $company->phone = Request::input('phone');
@@ -510,8 +510,10 @@ class CompanyController extends Controller
 
 
             $section->addText('The Manager,', 'f1Style', 'p1Style');
-            $section->addText($branch->bank->name . ",", 'f1Style', 'p1Style');
-            $branch = explode("\n", $branch->address);
+            $bankname = str_replace(["&"], "&amp;", $branch->bank->name);
+            $section->addText($bankname . ",", 'f1Style', 'p1Style');
+            $branchname = str_replace(["&"], "&amp;", $branch->address);
+            $branch = explode("\n", $branchname);
 
             foreach ($branch as $branchadd) {
                 $section->addText($branchadd . ",", 'f1Style', 'p1Style');
@@ -527,8 +529,8 @@ class CompanyController extends Controller
             $textrun = $section->addTextRun('p2Style');
             $textrun->addText('Subject: ', 'f1Style');
             $textrun->addText('Bank Report for Audit Purpose of ', 'f2Style');
-            $names = str_replace(["&"], "&amp;", $company->name);
-            $textrun->addText($names, 'f2Style');
+            $companyname = str_replace(["&"], "&amp;", $company->name);
+            $textrun->addText($companyname, 'f2Style');
 
             $textrun = $section->addTextRun();
             $section->addTextBreak(0);

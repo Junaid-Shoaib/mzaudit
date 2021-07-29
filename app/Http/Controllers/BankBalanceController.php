@@ -145,25 +145,28 @@ class BankBalanceController extends Controller
 
     {
         return Inertia::render('Balances/Edit', [
-            'accounts' => BankAccount::all()
-                ->map(function ($account) {
+
+            'data' => BankBalance::where('company_id', session('company_id'))->where('year_id', session('year_id'))
+                ->get()
+                ->map(function ($balances) {
                     return [
-                        'id' => $account->id,
-                        'name' => $account->name,
-                        'type' => $account->type,
-                        'currency' => $account->currency,
-                        'branch' => $account->bankBranch->bank->name . " - " . $account->bankBranch->address,
-                        'company_id' => $account->company_id,
+                        'id' => $balances->id,
+                        'ledger' => $balances->ledger,
+                        'statement' => $balances->statement,
+                        'confirmation' => $balances->confirmation,
+                        'branches' => $balances->bankAccount->bankBranch->bank->name . " - " . $balances->bankAccount->bankBranch->address,
                     ];
                 }),
-            'data' => BankBalance::where('company_id', session('company_id'))->where('year_id', session('year_id'))->get(),
+
+
         ]);
     }
 
     public function update(Req $request, BankBalance $balance)
     {
+        // dd($request);
+
         Request::validate([
-            'balances.*.company_id' => ['required'],
             'balances.*.ledger' => ['required'],
         ]);
         foreach ($request->balances as $balance) {
@@ -173,7 +176,6 @@ class BankBalanceController extends Controller
                 'ledger' => $balance['ledger'],
                 'statement' => $balance['statement'],
                 'confirmation' => $balance['confirmation'],
-                'account_id' => $balance['account_id'],
             ]);
         }
 

@@ -40,17 +40,34 @@
               uppercase
             "
             label="name"
+            placeholder="Company Name"
           />
           <div v-if="errors.name">{{ errors.name }}</div>
         </div>
         <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
           <label class="w-28 inline-block text-right mr-4">Address:</label>
-          <input
+          <textarea
+            v-model="form.address"
+            rows="4"
+            cols="100"
+            class="
+              pr-2
+              pb-2
+              w-full
+              lg:w-1/4
+              rounded-md
+              leading-tight
+              text-transform:
+              capitalize
+            "
+            label="address"
+          ></textarea>
+          <!--<input
             type="text"
             v-model="form.address"
             class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight"
             label="address"
-          />
+          /> -->
           <div v-if="errors.address">{{ errors.address }}</div>
         </div>
         <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
@@ -58,6 +75,7 @@
           <input
             type="text"
             v-model="form.email"
+            placeholder="xyz@gmail.com"
             class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight"
             label="email"
           />
@@ -70,6 +88,7 @@
             v-model="form.web"
             class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight"
             label="web"
+            placeholder="wwww.google.com.pk"
           />
           <div v-if="errors.web">{{ errors.web }}</div>
         </div>
@@ -80,6 +99,7 @@
             v-model="form.phone"
             class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight"
             label="phone"
+            placeholder="0300-1234567"
           />
           <div v-if="errors.phone">{{ errors.phone }}</div>
         </div>

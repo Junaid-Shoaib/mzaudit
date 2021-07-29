@@ -5,63 +5,67 @@
         Bank Account
       </h2>
     </template>
-    <div class="">
+
+    <div class="relative mt-5 ml-7 flex-row">
+      <div class="flex-1 inline-block">
+        <inertia-link
+          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+          :href="route('accounts')"
+          >Back
+        </inertia-link>
+        <button
+          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+          type="button"
+          @click.prevent="addRow"
+        >
+          Add row
+        </button>
+      </div>
+    </div>
+
+    <div class="relative mt-5 flex-row border-t border-b border-gray-200">
       <form @submit.prevent="submit">
-        <div class="panel-body">
-          <div
-            class="
-              px-4
-              py-2
-              bg-gray-100
-              border-t border-gray-200
-              flex
-              justify-start
-              items-center
-            "
-          >
-            <inertia-link
-              class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
-              :href="route('accounts')"
-              >Back
-            </inertia-link>
-          </div>
-          <button
-            class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"
-            @click.prevent="addRow"
-          >
-            Add row
-          </button>
+        <div class="">
           <div v-if="isError">{{ firstError }}</div>
-          <table class="table border">
-            <thead class="">
+          <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
+            <thead class="bg-indigo-100 text-centre font-bold">
               <tr>
-                <th>Account Number</th>
-                <th>Type</th>
-                <th>Currency</th>
-                <th>Action</th>
+                <th class="px-4 pt-4 pb-4 border">Branches</th>
+                <th class="px-4 pt-4 pb-4 border">Account Number</th>
+                <th class="px-4 pt-4 pb-4 border">Type</th>
+                <th class="px-4 pt-4 pb-4 border">Currency</th>
+                <th class="px-4 pt-4 pb-4 border">Action</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="(account, index) in data" :key="account.id">
-                <td>
+                <td class="w-4/12">
+                  <input
+                    v-model="account.branches"
+                    type="text"
+                    readonly
+                    class="rounded-md w-full"
+                  />
+                </td>
+                <td class="w-3/12">
                   <input
                     v-model="account.name"
                     type="text"
-                    class="rounded-md w-36"
+                    class="rounded-md w-full"
                   />
                 </td>
-                <td>
+                <td class="w-3/12">
                   <input
                     v-model="account.type"
                     type="text"
-                    class="rounded-md w-36"
+                    class="rounded-md w-full"
                   />
                 </td>
-                <td>
+                <td class="w-2/12">
                   <input
                     v-model="account.currency"
                     type="text"
-                    class="rounded-md w-36"
+                    class="rounded-md w-full"
                   />
                 </td>
                 <!-- <td>
@@ -75,8 +79,9 @@
                     </option>
                   </select>
                 </td> -->
-                <td>
+                <td class="w-3/12">
                   <button
+                    type="button"
                     @click.prevent="deleteRow(index)"
                     class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"
                   >

@@ -79,6 +79,7 @@
                 </td>
                 <td>
                   <button
+                    type="button"
                     @click.prevent="deleteRow(index)"
                     class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"
                   >
@@ -103,9 +104,10 @@
         >
           <button
             class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+            type="button"
             @click.prevent="addRow"
           >
-            Add row
+            Add More Accounts
           </button>
 
           <button
@@ -113,7 +115,7 @@
             class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
             :disabled="form.processing"
           >
-            Submit
+            Save
           </button>
         </div>
       </form>
