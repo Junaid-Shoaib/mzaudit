@@ -35,7 +35,7 @@
                   <input
                     v-model="confirm.name"
                     type="text"
-                    class="rounded-md w-full"
+                    class="rounded-md w-full my-2"
                     readonly
                   />
                 </td>
@@ -44,7 +44,7 @@
                     v-model="confirm.confirm_create"
                     type="date"
                     readonly
-                    class="rounded-md w-full"
+                    class="rounded-md w-full my-2"
                   />
                 </td>
                 <td class="w-2/12">
@@ -53,7 +53,7 @@
                     type="date"
                     :upper-limit="upper"
                     :lower-limit="lower"
-                    class="rounded-md w-full"
+                    class="rounded-md w-full my-2"
                   />
                 </td>
                 <td class="w-2/12">
@@ -62,7 +62,7 @@
                     type="date"
                     :upper-limit="upper"
                     :lower-limit="lower"
-                    class="rounded-md w-full"
+                    class="rounded-md w-full my-2"
                   />
                 </td>
                 <td class="w-2/12">
@@ -71,7 +71,7 @@
                     type="date"
                     :upper-limit="upper"
                     :lower-limit="lower"
-                    class="rounded-md w-full"
+                    class="rounded-md w-full my-2"
                   />
                 </td>
                 <!-- <td>

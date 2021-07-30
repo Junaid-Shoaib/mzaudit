@@ -12,7 +12,8 @@
       <inertia-link
         class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
         :href="route('branches.create', 'create')"
-        >Create
+      >
+        Add Branch
       </inertia-link>
     </div>
     <div class="">

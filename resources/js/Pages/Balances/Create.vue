@@ -33,7 +33,7 @@
                 <td class="w-5/12">
                   <input
                     v-model="balance.ledger"
-                    type="text"
+                    type="number"
                     class="rounded-md w-full"
                   />
                 </td>
@@ -95,7 +95,7 @@
             type="button"
             @click.prevent="addRow"
           >
-            Add More Accounts
+            Add More Balances
           </button>
 
           <button

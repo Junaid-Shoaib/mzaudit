@@ -50,38 +50,38 @@
                 <th class="px-4 pt-4 pb-4 border">Ledger</th>
                 <th class="px-4 pt-4 pb-4 border">Statement</th>
                 <th class="px-4 pt-4 pb-4 border">Confirmation</th>
-                <th class="px-4 pt-4 pb-4 border">Action</th>
+                <!-- <th class="px-4 pt-4 pb-4 border">Action</th> -->
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(balance, index) in data" :key="balance.id">
+              <tr v-for="balance in data" :key="balance.id">
                 <td class="w-6/12">
                   <input
                     v-model="balance.branches"
                     type="text"
                     readonly
-                    class="rounded-md w-full"
+                    class="rounded-md w-full my-2"
                   />
                 </td>
                 <td class="w-2/12">
                   <input
                     v-model="balance.ledger"
-                    type="text"
-                    class="rounded-md w-full"
+                    type="number"
+                    class="rounded-md w-full my-2"
                   />
                 </td>
                 <td class="w-2/12">
                   <input
                     v-model="balance.statement"
-                    type="text"
-                    class="rounded-md w-full"
+                    type="number"
+                    class="rounded-md w-full my-2"
                   />
                 </td>
                 <td class="w-2/12">
                   <input
                     v-model="balance.confirmation"
-                    type="text"
-                    class="rounded-md w-full"
+                    type="number"
+                    class="rounded-md w-full my-2"
                   />
                 </td>
                 <!-- <td>
@@ -95,14 +95,6 @@
                     </option>
                   </select>
                 </td> -->
-                <td>
-                  <button
-                    @click.prevent="deleteRow(index)"
-                    class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"
-                  >
-                    Delete
-                  </button>
-                </td>
               </tr>
             </tbody>
           </table>
@@ -122,7 +114,7 @@
             class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
             type="submit"
           >
-            Create Balance
+            Update Balance
           </button>
         </div>
       </form>

@@ -145,7 +145,7 @@
             type="submit"
             :disabled="form.processing"
           >
-            Create Company
+            Save
           </button>
         </div>
       </form>

@@ -61,7 +61,7 @@
             type="submit"
             :disabled="form.processing"
           >
-            Create Bank
+            Save
           </button>
         </div>
       </form>

@@ -66,14 +66,13 @@
                   <select v-model="account.type" class="rounded-md w-full">
                     <option>CURRENT</option>
                     <option>SAVING</option>
-                    <option>ASAAN</option>
                   </select>
                 </td>
                 <td class="2/12">
                   <select v-model="account.currency" class="rounded-md w-full">
-                    <option>USD</option>
-                    <option>$</option>
                     <option>PKR</option>
+                    <option>$</option>
+                    <option>USD</option>
                     <option>EUR</option>
                   </select>
                 </td>

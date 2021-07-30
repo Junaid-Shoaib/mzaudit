@@ -9,9 +9,7 @@ use App\Models\BankBranch;
 use App\Models\Bank;
 use App\Models\BankAccount;
 use Inertia\Inertia;
-use PhpParser\Node\Expr\Cast\Bool_;
 
-use function PHPUnit\Framework\isTrue;
 
 class BankBranchController extends Controller
 {
@@ -47,12 +45,28 @@ class BankBranchController extends Controller
         if ($data) {
             return Inertia::render('Branches/Create', [
                 "accounts" => $accounts,
-                'banks' => \App\Models\Bank::all()->map->only('id', 'name')
+                'banks' => \App\Models\Bank::all()->map->only('id', 'name'),
+                // 'branches' => \App\Models\BankBranch::all(),
             ]);
         } else {
             return Redirect::route('banks.create', 'accounts')->with('success', 'Create Bank first.');
         }
     }
+
+
+    // public function branchchange($id){
+    //     $branches = BankBranch::where("bank_id", $id)->get()
+    //         ->map(
+    //             function ($branch) {
+    //                 // dd($branch->address);
+    //                 return [
+    //                     'add' => $branch->address,
+    //                 ];
+    //             }
+    //         );
+    // }
+
+
 
     public function store(Req $request)
     {

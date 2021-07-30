@@ -13,13 +13,6 @@
           :href="route('accounts')"
           >Back
         </inertia-link>
-        <button
-          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
-          type="button"
-          @click.prevent="addRow"
-        >
-          Add row
-        </button>
       </div>
     </div>
 
@@ -34,39 +27,42 @@
                 <th class="px-4 pt-4 pb-4 border">Account Number</th>
                 <th class="px-4 pt-4 pb-4 border">Type</th>
                 <th class="px-4 pt-4 pb-4 border">Currency</th>
-                <th class="px-4 pt-4 pb-4 border">Action</th>
+                <!-- <th class="px-4 pt-4 pb-4 border">Action</th> -->
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(account, index) in data" :key="account.id">
+              <tr v-for="account in data" :key="account.id">
                 <td class="w-4/12">
                   <input
                     v-model="account.branches"
                     type="text"
                     readonly
-                    class="rounded-md w-full"
+                    class="rounded-md w-full my-2"
                   />
                 </td>
                 <td class="w-3/12">
                   <input
                     v-model="account.name"
-                    type="text"
-                    class="rounded-md w-full"
+                    type="number"
+                    class="rounded-md w-full my-2"
                   />
                 </td>
                 <td class="w-3/12">
-                  <input
-                    v-model="account.type"
-                    type="text"
-                    class="rounded-md w-full"
-                  />
+                  <select v-model="account.type" class="rounded-md w-full py-2">
+                    <option>CURRENT</option>
+                    <option>SAVING</option>
+                  </select>
                 </td>
                 <td class="w-2/12">
-                  <input
+                  <select
                     v-model="account.currency"
-                    type="text"
-                    class="rounded-md w-full"
-                  />
+                    class="rounded-md w-full my-2"
+                  >
+                    <option>PKR</option>
+                    <option>$</option>
+                    <option>USD</option>
+                    <option>EUR</option>
+                  </select>
                 </td>
                 <!-- <td>
                   <select v-model="account.account_id" class="rounded-md w-36">
@@ -79,15 +75,6 @@
                     </option>
                   </select>
                 </td> -->
-                <td class="w-3/12">
-                  <button
-                    type="button"
-                    @click.prevent="deleteRow(index)"
-                    class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"
-                  >
-                    Delete
-                  </button>
-                </td>
               </tr>
             </tbody>
           </table>
@@ -107,7 +94,7 @@
             class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
             type="submit"
           >
-            Submit
+            Update Account
           </button>
         </div>
       </form>
