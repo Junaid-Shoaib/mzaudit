@@ -79,6 +79,7 @@ Route::delete('companies/{company}', [CompanyController::class, 'destroy'])
     ->middleware('auth');
 
 Route::get('indexy', [CompanyController::class, 'indexy']);
+
 Route::get('companies/coch/{id}', [CompanyController::class, 'coch'])
     ->name('companies.coch');
 
@@ -149,6 +150,9 @@ Route::get('branches/{accounts}create', [BankBranchController::class, 'create'])
     ->name('branches.create')
     ->middleware('auth');
 
+Route::get('branches/branchchange/{id}', [BankBranchController::class, 'branchchange'])
+    ->name('branches.branchchange');
+
 Route::get('branches/{branch}', [BankBranchController::class, 'show'])
     ->name('branches.show')
     ->middleware('auth');
@@ -188,8 +192,8 @@ Route::post('accounts', [BankAccountController::class, 'store'])
     ->name('accounts.store')
     ->middleware('auth');
 
-Route::get('accounts/{account}/edit', [BankAccountController::class, 'edit'])
-    ->name('accounts.edit')
+Route::get('account/edit', [BankAccountController::class, 'edit'])
+    ->name('account.edit')
     ->middleware('auth');
 
 Route::put('accounts/{account}', [BankAccountController::class, 'update'])

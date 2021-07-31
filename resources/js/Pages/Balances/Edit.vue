@@ -5,55 +5,83 @@
         Bank Balances
       </h2>
     </template>
-    <div class="">
+
+    <div class="relative mt-5 ml-7 flex-row">
+      <div class="flex-1 inline-block">
+        <inertia-link
+          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+          :href="route('balances')"
+          >Back
+        </inertia-link>
+      </div>
+    </div>
+
+    <div class="relative mt-5 flex-row border-t border-b border-gray-200">
       <form @submit.prevent="submit">
-        <div class="panel-body">
-          <div
-            class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+        <div class="">
+          <!-- <div
+            class="
+              px-4
+              py-2
+              bg-gray-100
+              border-t border-gray-200
+              flex
+              justify-start
+              items-center
+            "
           >
             <inertia-link
               class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
               :href="route('balances')"
               >Back
             </inertia-link>
-          </div>
-          <button
+          </div> -->
+          <!-- <button
             class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"
             @click.prevent="addRow"
           >
             Add row
-          </button>
+          </button> -->
           <div v-if="isError">{{ firstError }}</div>
-          <table class="table border">
-            <thead class="">
+          <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
+            <thead class="bg-indigo-100 text-centre font-bold">
               <tr>
-                <th>Ledger</th>
-                <th>Statement</th>
-                <th>Confirmation</th>
-                <th>Action</th>
+                <th class="px-4 pt-4 pb-4 border">Branches</th>
+                <th class="px-4 pt-4 pb-4 border">Ledger</th>
+                <th class="px-4 pt-4 pb-4 border">Statement</th>
+                <th class="px-4 pt-4 pb-4 border">Confirmation</th>
+                <!-- <th class="px-4 pt-4 pb-4 border">Action</th> -->
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(balance, index) in data" :key="balance.id">
-                <td>
+              <tr v-for="balance in data" :key="balance.id">
+                <td class="w-6/12">
+                  <input
+                    v-model="balance.branches"
+                    type="text"
+                    readonly
+                    class="rounded-md w-full my-2"
+                  />
+                </td>
+                <td class="w-2/12">
                   <input
                     v-model="balance.ledger"
-                    type="text"
-                    class="rounded-md w-36"
+                    type="number"
+                    class="rounded-md w-full my-2"
                   />
                 </td>
-                <td>
+                <td class="w-2/12">
                   <input
                     v-model="balance.statement"
-                    type="text"
-                    class="rounded-md w-36"
+                    type="number"
+                    class="rounded-md w-full my-2"
                   />
                 </td>
-                <td>
+                <td class="w-2/12">
                   <input
                     v-model="balance.confirmation"
-                    type="text"
-                    class="rounded-md w-36"
+                    type="number"
+                    class="rounded-md w-full my-2"
                   />
                 </td>
                 <!-- <td>
@@ -67,26 +95,26 @@
                     </option>
                   </select>
                 </td> -->
-                <td>
-                  <button
-                    @click.prevent="deleteRow(index)"
-                    class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"
-                  >
-                    Delete
-                  </button>
-                </td>
               </tr>
             </tbody>
           </table>
         </div>
         <div
-          class="px-4 py-2 bg-gray-100 border-t border-gray-200 flex justify-start items-center"
+          class="
+            px-4
+            py-2
+            bg-gray-100
+            border-t border-gray-200
+            flex
+            justify-start
+            items-center
+          "
         >
           <button
             class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
             type="submit"
           >
-            Create Balance
+            Update Balance
           </button>
         </div>
       </form>
@@ -104,7 +132,6 @@ export default {
 
   props: {
     errors: Object,
-    accounts: Object,
     data: Object,
   },
 

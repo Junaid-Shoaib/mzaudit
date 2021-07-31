@@ -29,19 +29,29 @@
           <input
             type="text"
             v-model="form.name"
-            class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight"
+            class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight uppercase"
             label="name"
           />
           <div v-if="errors.name">{{ errors.name }}</div>
         </div>
         <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
           <label class="w-28 inline-block text-right mr-4">Address:</label>
-          <input
-            type="text"
+          <textarea
             v-model="form.address"
-            class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight"
+            rows="4"
+            cols="100"
+            class="
+              pr-2
+              pb-2
+              w-full
+              lg:w-1/4
+              rounded-md
+              leading-tight
+              text-transform:
+              capitalize
+            "
             label="address"
-          />
+          ></textarea>
           <div v-if="errors.address">{{ errors.address }}</div>
         </div>
         <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">

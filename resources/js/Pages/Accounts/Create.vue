@@ -8,120 +8,145 @@
     <div v-if="$page.props.flash.success" class="bg-yellow-400 text-white">
       {{ $page.props.flash.success }}
     </div>
-    <div class="">
+    <div class="relative mt-5 ml-7 flex-row">
+      <div class="flex-1 inline-block">
+        <inertia-link
+          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+          :href="route('accounts')"
+          >Back
+        </inertia-link>
+        <inertia-link
+          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+          :href="route('banks.create', 'accounts')"
+          >Create Bank
+        </inertia-link>
+        <inertia-link
+          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+          :href="route('branches.create', 'accounts')"
+          >Create Branch
+        </inertia-link>
+      </div>
+    </div>
+
+    <div class="relative mt-5 flex-row border-t border-b border-gray-200">
+      <div v-if="isError">{{ firstError }}</div>
       <form @submit.prevent="form.post(route('accounts.store'))">
-        <div
-          class="
-            px-4
-            py-2
-            bg-gray-100
-            border-t border-gray-200
-            flex
-            justify-start
-            items-center
-          "
-        >
-          <inertia-link
-            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
-            :href="route('accounts')"
-            >Back
-          </inertia-link>
-          <inertia-link
-            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
-            :href="route('banks.create', 'accounts')"
-            >Create Bank
-          </inertia-link>
-          <inertia-link
-            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
-            :href="route('branches.create', 'accounts')"
-            >Create Branch
-          </inertia-link>
-        </div>
-
-        <button
-          class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"
-          @click.prevent="addRow"
-        >
-          Add row
-        </button>
-
-        <div v-if="isError">{{ firstError }}</div>
-        <table class="table border">
-          <thead class="">
-            <tr>
-              <th>Branch</th>
-              <th>A/c Number</th>
-              <th>Type</th>
-              <th>Currency</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(account, index) in form.accounts" :key="account.id">
-              <td>
-                <select v-model="account.branch_id" class="rounded-md w-36">
-                  <option
-                    v-for="branch in branches"
-                    :key="branch.id"
-                    :value="branch.id"
+        <div class="">
+          <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
+            <thead>
+              <tr class="bg-indigo-100 text-centre font-bold">
+                <th class="px-4 pt-4 pb-4 border">Branch</th>
+                <th class="px-4 pt-4 pb-4 border">Account Number</th>
+                <th class="px-4 pt-4 pb-4 border">Type</th>
+                <th class="px-4 pt-4 pb-4 border">Currency</th>
+                <th class="px-4 pt-4 pb-4 border">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(account, index) in form.accounts" :key="account.id">
+                <td class="w-4/12">
+                  <select v-model="account.branch_id" class="rounded-md w-full">
+                    <option
+                      v-for="branch in branches"
+                      :key="branch.id"
+                      :value="branch.id"
+                    >
+                      {{ branch.name }} - {{ branch.address }}
+                    </option>
+                  </select>
+                </td>
+                <td class="w-3/12">
+                  <input
+                    v-model="account.name"
+                    type="number"
+                    class="rounded-md w-full"
+                  />
+                </td>
+                <td class="3/12">
+                  <select v-model="account.type" class="rounded-md w-full">
+                    <option>CURRENT</option>
+                    <option>SAVING</option>
+                  </select>
+                </td>
+                <td class="2/12">
+                  <select v-model="account.currency" class="rounded-md w-full">
+                    <option>PKR</option>
+                    <option>$</option>
+                    <option>USD</option>
+                    <option>EUR</option>
+                  </select>
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    @click.prevent="deleteRow(index)"
+                    class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"
                   >
-                    {{ branch.name }} - {{ branch.address }}
-                  </option>
-                </select>
-              </td>
-              <td>
-                <input
-                  v-model="account.name"
-                  type="text"
-                  class="rounded-md w-36"
-                />
-              </td>
-              <td>
-                <select v-model="account.type" class="rounded-md w-36">
-                  <option>CURRENT</option>
-                  <option>SAVING</option>
-                  <option>ASAAN</option>
-                </select>
-              </td>
-              <td>
-                <select v-model="account.currency" class="rounded-md w-36">
-                  <option>USD</option>
-                  <option>$</option>
-                  <option>PKR</option>
-                  <option>EUR</option>
-                </select>
-              </td>
-              <td>
-                <button
-                  @click.prevent="deleteRow(index)"
-                  class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div
           class="
-            px-4
-            py-2
+            relative
+            mt-5
+            mb-5
+            ml-7
+            flex-row
             bg-gray-100
-            border-t border-gray-200
-            flex
             justify-start
             items-center
           "
         >
           <button
-            class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
+            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+            type="button"
+            @click.prevent="addRow"
+          >
+            Add More Accounts
+          </button>
+
+          <button
             type="submit"
+            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
             :disabled="form.processing"
           >
-            Create Accounts
+            Save
           </button>
         </div>
       </form>
+    </div>
+
+    <div class="">
+      <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
+        <thead>
+          <tr class="bg-indigo-100 text-centre font-bold">
+            <th class="px-4 pt-4 pb-4 border">Account #</th>
+            <th class="px-4 pt-4 pb-4 border">Type</th>
+            <th class="px-4 pt-4 pb-4 border">Currency</th>
+            <th class="px-4 pt-4 pb-4 border">Branch</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in balances" :key="item.id">
+            <td class="py-3 px-4 border text-left">{{ item.name }}</td>
+            <td class="py-3 px-4 border text-center">{{ item.type }}</td>
+            <td class="py-3 px-4 border text-center">
+              {{ item.currency }}
+            </td>
+            <td class="py-1 px-4 border text-center">
+              {{ item.branches }}
+            </td>
+          </tr>
+          <!-- Null Balance -->
+          <tr v-if="balances.length === 0">
+            <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </app-layout>
 </template>
@@ -138,6 +163,7 @@ export default {
   props: {
     errors: Object,
     branches: Object,
+    balances: Object,
   },
 
   setup(props) {

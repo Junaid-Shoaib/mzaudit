@@ -12,16 +12,77 @@ use App\Models\BankBranch;
 use App\Models\Company;
 use Inertia\Inertia;
 use Carbon\Carbon;
+use Dompdf\Renderer;
 
 class BankAccountController extends Controller
 {
     public function index()
     {
+        //
+        if (BankBranch::all()->first()) {
+            return Inertia::render(
+                'Accounts/Index',
+                [
 
+                    'balances' => BankAccount::all()
+                        ->where('company_id', session('company_id'))
+                        ->map(
+                            function ($branch) {
+                                return
+                                    [
+                                        'id' => $branch->id,
+                                        'name' => $branch->name,
+                                        'type' => $branch->type,
+                                        'currency' => $branch->currency,
+                                        'branches' => $branch->bankBranch->bank->name . " - " . $branch->bankBranch->address,
+                                        'delete' => BankBalance::where('account_id', $branch->id)->first() ? false : true,
+                                    ];
+                            }
+                        ),
+                    'companies' => Company::all()
+                        ->map(function ($company) {
+                            return [
+                                'id' => $company->id,
+                                'name' => $company->name,
+                            ];
+                        }),
 
-        return Inertia::render(
-            'Accounts/Index',
-            [
+                    'years' => Year::where('company_id', session('company_id'))->get()
+                        ->map(function ($year) {
+                            $end = new Carbon($year->end);
+                            $begin = new Carbon($year->begin);
+                            return [
+                                'id' => $year->id,
+                                'begin' => $begin->format("F j Y"),
+                                'end' => $end->format("F j Y"),
+                            ];
+                        }),
+
+                    // 'branches' => BankBranch::all()
+                    //     ->map(function ($branch) {
+                    //         return [
+                    //             'id' => $branch->id,
+                    //             'address' => $branch->address,
+                    //             'bank_id' => $branch->bank_id,
+                    //             'name' => $branch->bank->name,
+                    //         ];
+                    //     }),
+                ],
+
+            );
+        } else {
+            return Redirect::route('branches.create', 'accounts')->with('success', 'Create Branch First');
+        }
+    }
+
+    //BankAccount Create
+    public function create()
+    {
+        $data  = BankBranch::all()->map->only('bank_id')->first();
+        if ($data) {
+            return Inertia::render('Accounts/Create', [
+
+                //just fetch crete
                 'balances' => BankAccount::all()
                     ->where('company_id', session('company_id'))
                     ->map(
@@ -32,40 +93,12 @@ class BankAccountController extends Controller
                                     'name' => $branch->name,
                                     'type' => $branch->type,
                                     'currency' => $branch->currency,
-                                    'branches' => $branch->bankBranch->address,
+                                    'branches' => $branch->bankBranch->bank->name . " - " . $branch->bankBranch->address,
                                     'delete' => BankBalance::where('account_id', $branch->id)->first() ? false : true,
                                 ];
                         }
                     ),
-                'companies' => Company::all()
-                    ->map(function ($company) {
-                        return [
-                            'id' => $company->id,
-                            'name' => $company->name,
-                        ];
-                    }),
 
-                'years' => Year::where('company_id', session('company_id'))->get()
-                    ->map(function ($year) {
-                        $end = new Carbon($year->end);
-                        $begin = new Carbon($year->begin);
-                        return [
-                            'id' => $year->id,
-                            'begin' => $begin->format("F j Y"),
-                            'end' => $end->format("F j Y"),
-                        ];
-                    }),
-            ],
-
-        );
-    }
-
-    //BankAccount Create
-    public function create()
-    {
-        $data  = BankBranch::all()->map->only('bank_id')->first();
-        if ($data) {
-            return Inertia::render('Accounts/Create', [
                 'branches' => BankBranch::all()
                     ->map(function ($branch) {
                         return [
@@ -83,6 +116,7 @@ class BankAccountController extends Controller
 
     public function store(Req $request)
     {
+        // dd($request->accounts);
         // dd($request);
         Request::validate([
             'accounts.*.name' => 'required|unique:App\Models\BankAccount,name',
@@ -99,6 +133,7 @@ class BankAccountController extends Controller
                 'currency' => $acc['currency'],
                 'branch_id' => $acc['branch_id'],
                 'company_id' => session('company_id'),
+
             ]);
         }
         return Redirect::route('accounts')->with('success', 'Bank Account created.');
@@ -111,38 +146,50 @@ class BankAccountController extends Controller
     }
 
     //BankAccount Edit
-    public function edit(BankAccount $account)
+    public function edit()
     {
-        return Inertia::render('Accounts/Edit', [
-            'account' => [
-                'id' => $account->id,
-                'name' => $account->name,
-                'type' => $account->type,
-                'currency' => $account->currency,
-                'company_id' => $account->company_id,
-                'branch_id' => $account->branch_id,
-            ],
-            'branches' => BankBranch::all('id', 'address'),
-        ]);
-    }
+        return Inertia::render(
+            'Accounts/Edit',
+            [
+                'data' => BankAccount::where('company_id', session('company_id'))
+                    ->get()
+                    ->map(
+                        function ($account) {
+                            return
+                                [
+                                    'id' => $account->id,
+                                    'name' => $account->name,
+                                    'type' => $account->type,
+                                    'currency' => $account->currency,
+                                    'branches' => $account->bankBranch->bank->name . " - " . $account->bankBranch->address,
 
+                                ];
+                        }
+                    )
+
+            ]
+        );
+    }
     //BankAccount Update
     public function update(Req $request, BankAccount $account)
     {
         Request::validate([
-            'name' => 'required|unique:App\Models\BankAccount,name',
-            'type' => ['required'],
-            'currency' => ['required'],
+            'balances.*.name' => 'required',
         ]);
 
-        $account->name = Request::input('name');
-        $account->type = Request::input('type');
-        $account->currency = Request::input('currency');
-        $account->branch_id = Request::input('branch_id');
-        $account->save();
+
+        foreach ($request->balances as $account) {
+
+            $acc = BankAccount::find($account['id']);
+            $acc->update([
+
+                'name' => $account['name'],
+                'type' => $account['type'],
+                'currency' => $account['currency'],
+            ]);
+        }
         return Redirect::route('accounts')->with('success', 'Bank Account updated.');
     }
-
     //BanKAccount Delete
     public function destroy(BankAccount $account)
     {

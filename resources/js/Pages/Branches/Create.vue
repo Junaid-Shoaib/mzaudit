@@ -29,11 +29,11 @@
         </div>
         <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
           <label class="w-28 inline-block text-right mr-4">ID:</label>
+          <!-- @change="branchchange" -->
           <select
-            v-model="form.bank_id"
             class="pr-2 pb-2 w-full lg:w-1/4 rounded-md"
             label="bank_id"
-            placeholder="Enter type"
+            v-model="form.bank_id"
           >
             <option v-for="bank in banks" :key="bank.id" :value="bank.id">
               {{ bank.name }}
@@ -80,11 +80,28 @@
             type="submit"
             :disabled="form.processing"
           >
-            Create Branch
+            Save
           </button>
         </div>
       </form>
     </div>
+    <!-- <div class="">
+      <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
+        <thead>
+          <tr class="bg-indigo-100 text-centre font-bold">
+            <th class="px-4 pt-4 pb-4 border">branches #</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="item in branches" :key="item.id">
+            <td class="py-3 px-4 border text-left">{{ item.address }}</td>
+          </tr>
+          <tr v-if="branches.length === 0">
+          <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div> -->
   </app-layout>
 </template>
 
@@ -98,10 +115,12 @@ export default {
   },
 
   props: {
+    branches: Object,
     errors: Object,
     banks: Object,
     accounts: Object,
   },
+
   setup(props) {
     const form = useForm({
       address: null,
@@ -109,6 +128,12 @@ export default {
       bank_id: props.banks[0].id,
     });
     return { form };
+  },
+
+  methods: {
+    // branchchange() {
+    //   this.form.bank_id == this.branches.bank;
+    // },
   },
 };
 </script>

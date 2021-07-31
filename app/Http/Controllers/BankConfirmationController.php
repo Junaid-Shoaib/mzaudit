@@ -50,9 +50,6 @@ class BankConfirmationController extends Controller
                         $reminder = $confirmation->reminder ? new Carbon($confirmation->reminder) : null,
                         $confirm_create = $confirmation->confirm_create ? new Carbon($confirmation->confirm_create) : null,
                         $received = $confirmation->received ? new Carbon($confirmation->received) : null,
-                        // dd($branches),
-                        // $create = $confirmation->bankBranch->address,
-                        // dd($create),
                         'id' => $confirmation->id,
                         'sent' => $sent ? $sent->format("M d Y") : null,
                         'reminder' => $reminder ? $reminder->format("M d Y") : null,
@@ -206,7 +203,8 @@ class BankConfirmationController extends Controller
             $end = $year->end ? new Carbon($year->end) : null;
 
             $templateProcessor = new \PhpOffice\PhpWord\TemplateProcessor('templatebr.docx');
-            $templateProcessor->setValue('client', $year->company->name);
+            $names = str_replace(["&"], "&amp;", $year->company->name);
+            $templateProcessor->setValue('client', $names);
             $templateProcessor->setValue('end', $end->format("F j Y"));
             $templateProcessor->saveAs(storage_path('app/public/' . $year->company->id . '/' . $year->id . '/' .  'Remaining_pages.docx'));
             return response()->download(storage_path('app/public/' . $year->company->id . '/' . $year->id . '/' .  'Remaining_pages.docx'));
