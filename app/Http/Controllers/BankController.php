@@ -110,7 +110,7 @@ class BankController extends Controller
     public function update(Req $request, Bank $bank)
     {
         Request::validate([
-            'name' => ['required'],
+            'name' => 'required|unique:App\Models\Bank,name'
         ]);
 
         $bank->name = strtoupper(Request::input('name'));

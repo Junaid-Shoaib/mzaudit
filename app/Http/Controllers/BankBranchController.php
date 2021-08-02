@@ -125,10 +125,31 @@ class BankBranchController extends Controller
     //Branches Update
     public function update(Req $request, BankBranch $branch)
     {
+        // dd($branch);
         Request::validate([
             'bank_id' => ['required'],
             'address' => ['required'],
         ]);
+
+        // $branches = BankBranch::all()->where("bank_id", $request->bank_id);
+        // $add = ucwords($request->address);
+        // $branchi = true;
+
+        // foreach ($branches as $branch) {
+        //     if ($branch->address == $add) {
+        //         $branchi = false;
+        //         break;
+        //     }
+        // }
+        // if ($branchi == true) {
+        $branch->bank_id = Request::input('bank_id');
+        $branch->address = ucwords(Request::input('address'));
+        $branch->save();
+
+        return Redirect::route('branches')->with('success', 'Bank Branch updated.');
+        // } else {
+        //     return Redirect::route('branches.edit', $branch->id)->with('success', 'The Name has Already been taken.');
+        // }
 
         $branch->bank_id = Request::input('bank_id');
         $branch->address = ucwords(Request::input('address'));

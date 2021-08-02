@@ -29,8 +29,8 @@
         </div>
         <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
           <label class="w-28 inline-block text-right mr-4">ID:</label>
-          <!-- @change="branchchange" -->
           <select
+            @change="branchchange"
             class="pr-2 pb-2 w-full lg:w-1/4 rounded-md"
             label="bank_id"
             v-model="form.bank_id"
@@ -131,9 +131,10 @@ export default {
   },
 
   methods: {
-    // branchchange() {
-    //   this.form.bank_id == this.branches.bank;
-    // },
+    branchchange() {
+      console.log(this.form.bank_id);
+      //   this.form.bank_id == this.branches.bank;
+    },
   },
 };
 </script>

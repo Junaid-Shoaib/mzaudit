@@ -427,6 +427,7 @@ class CompanyController extends Controller
             $total = $total + $data[$i]['ledger'];
         }
 
+        // dd($total);
         $tstr = $cnt + 9;
         $tcell = "H" . strval($tstr);
         $spreadsheet->getActiveSheet()->setCellValue($tcell, $total);
@@ -463,13 +464,32 @@ class CompanyController extends Controller
         $phpWord->addFontStyle('f1Style', array('name' => 'Calibri', 'size' => 12));
         $phpWord->addFontStyle('f2Style', array('name' => 'Calibri', 'bold' => true, 'size' => 12));
         $company = \App\Models\Company::where('id', session('company_id'))->first();
-        // dd($company);
 
         if ($company->bankAccounts()->first()) {
             $branch = $company->bankAccounts()->get();
+
+            // foreach ($branch as $b) {
+            //     $branches[$i] = $b->bankBranch;
+            //     $i++;
+            // }
+
+
+            $branches = null;
             foreach ($branch as $b) {
-                $branches[$i] = $b->bankBranch;
-                $i++;
+
+                $check = true;
+                if ($branches) {
+                    foreach ($branches as $bran) {
+                        if ($bran->id == $b->bankBranch->id) {
+                            $check = false;
+                            break;
+                        }
+                    }
+                }
+                if ($check) {
+                    $branches[$i] = $b->bankBranch;
+                    $i++;
+                }
             }
         } else {
             return Redirect::route('accounts.create')->with('success', 'Create Account First');
@@ -490,8 +510,6 @@ class CompanyController extends Controller
         foreach ($words as $w) {
             $acronym .= $w[0];
         }
-
-
 
 
         foreach ($branches  as $branch) {
