@@ -150,8 +150,8 @@ Route::get('branches/{accounts}create', [BankBranchController::class, 'create'])
     ->name('branches.create')
     ->middleware('auth');
 
-// Route::get('branches/branchchange/{id}', [BankBranchController::class, 'branchchange'])
-//     ->name('branches.branchchange');
+Route::get('branches/branchchange/{id}', [BankBranchController::class, 'branchchange'])
+    ->name('branches.branchchange');
 
 Route::get('branches/{branch}', [BankBranchController::class, 'show'])
     ->name('branches.show')

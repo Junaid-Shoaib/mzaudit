@@ -8,6 +8,7 @@
     <div v-if="$page.props.flash.success" class="bg-yellow-400 text-white">
       {{ $page.props.flash.success }}
     </div>
+
     <div class="">
       <form @submit.prevent="form.post(route('branches.store'))">
         <div
@@ -17,6 +18,7 @@
             bg-gray-100
             border-t border-gray-200
             flex
+            border
             justify-start
             items-center
           "
@@ -28,10 +30,10 @@
           </inertia-link>
         </div>
         <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
-          <label class="w-28 inline-block text-right mr-4">ID:</label>
+          <label class="w-28 inline-block text-right mr-4">Bank:</label>
           <select
             @change="branchchange"
-            class="pr-2 pb-2 w-full lg:w-1/4 rounded-md"
+            class="pr-2 pb-2 max-h-10 w-full lg:w-1/4 rounded-md"
             label="bank_id"
             v-model="form.bank_id"
           >
@@ -40,8 +42,8 @@
             </option>
           </select>
           <div v-if="errors.bank_id">{{ errors.bank_id }}</div>
-        </div>
-        <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
+          <!-- </div>
+        <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap"> -->
           <label class="w-28 inline-block text-right mr-4"
             >Branch name and address:</label
           >
@@ -85,7 +87,7 @@
         </div>
       </form>
     </div>
-    <!-- <div class="">
+    <div class="">
       <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
         <thead>
           <tr class="bg-indigo-100 text-centre font-bold">
@@ -94,14 +96,19 @@
         </thead>
         <tbody>
           <tr v-for="item in branches" :key="item.id">
-            <td class="py-3 px-4 border text-left">{{ item.address }}</td>
+            <td
+              v-if="item.bank_id == this.form.bank_id"
+              class="py-3 px-4 border text-left"
+            >
+              {{ item.add }}
+            </td>
           </tr>
           <tr v-if="branches.length === 0">
-          <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
+            <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
           </tr>
         </tbody>
       </table>
-    </div> -->
+    </div>
   </app-layout>
 </template>
 
@@ -131,10 +138,10 @@ export default {
   },
 
   methods: {
-    branchchange() {
-      console.log(this.form.bank_id);
-      //   this.form.bank_id == this.branches.bank;
-    },
+    // branchchange() {
+    //   //   console.log(this.form.bank_id);
+    //   //   this.form.bank_id == this.branches.bank;
+    // },
   },
 };
 </script>

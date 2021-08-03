@@ -41,10 +41,27 @@ class BankBranchController extends Controller
     //Create Branches
     public function create($accounts)
     {
+        // dd($accounts);
+
+        $branches = BankBranch::all()
+            ->map(
+                function ($branch) {
+                    // dd($branch->address);
+                    return [
+                        'add' => $branch->address,
+                        'bank_id' => $branch->bank_id,
+                    ];
+                }
+            );
+
+        // dd($branches);
+
         $data  = Bank::all()->map->only('id')->first();
+
         if ($data) {
             return Inertia::render('Branches/Create', [
                 "accounts" => $accounts,
+                "branches" => $branches,
                 'banks' => \App\Models\Bank::all()->map->only('id', 'name'),
                 // 'branches' => \App\Models\BankBranch::all(),
             ]);
@@ -54,7 +71,11 @@ class BankBranchController extends Controller
     }
 
 
-    // public function branchchange($id){
+    // public function branchchange($id)
+    // {
+
+    //     // dd($id);
+    //     // return Inertia::render('Branches/Create',
     //     $branches = BankBranch::where("bank_id", $id)->get()
     //         ->map(
     //             function ($branch) {
@@ -64,6 +85,23 @@ class BankBranchController extends Controller
     //                 ];
     //             }
     //         );
+
+
+    // return Redirect::route('branches.create', 'create')->with('success', 'Bank Branch created.');
+
+
+
+
+    // $branches = BankBranch::where("bank_id", $id)->get()
+    //     ->map(
+    //         function ($branch) {
+    //             // dd($branch->address);
+    //             return [
+    //                 'add' => $branch->address,
+    //             ];
+    //         }
+    //     );
+    // dd($branches);
     // }
 
 

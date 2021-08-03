@@ -18299,10 +18299,10 @@ __webpack_require__.r(__webpack_exports__);
       form: form
     };
   },
-  methods: {
-    branchchange: function branchchange() {
-      console.log(this.form.bank_id); //   this.form.bank_id == this.branches.bank;
-    }
+  methods: {// branchchange() {
+    //   //   console.log(this.form.bank_id);
+    //   //   this.form.bank_id == this.branches.bank;
+    // },
   }
 });
 
@@ -24852,7 +24852,7 @@ var _hoisted_3 = {
   "class": ""
 };
 var _hoisted_4 = {
-  "class": "\n            px-4\n            py-2\n            bg-gray-100\n            border-t border-gray-200\n            flex\n            justify-start\n            items-center\n          "
+  "class": "\n            px-4\n            py-2\n            bg-gray-100\n            border-t border-gray-200\n            flex\n            border\n            justify-start\n            items-center\n          "
 };
 
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Back ");
@@ -24863,30 +24863,59 @@ var _hoisted_6 = {
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
   "class": "w-28 inline-block text-right mr-4"
-}, "ID:", -1
+}, "Bank:", -1
 /* HOISTED */
 );
 
 var _hoisted_8 = {
   key: 0
 };
-var _hoisted_9 = {
-  "class": "p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap"
-};
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
   "class": "w-28 inline-block text-right mr-4"
 }, "Branch name and address:", -1
 /* HOISTED */
 );
 
-var _hoisted_11 = {
-  key: 0
+var _hoisted_10 = {
+  key: 1
 };
-var _hoisted_12 = {
+var _hoisted_11 = {
   "class": "\n            px-4\n            py-2\n            bg-gray-100\n            border-t border-gray-200\n            flex\n            justify-start\n            items-center\n          "
 };
+var _hoisted_12 = {
+  "class": ""
+};
+var _hoisted_13 = {
+  "class": "shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12"
+};
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", {
+  "class": "bg-indigo-100 text-centre font-bold"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", {
+  "class": "px-4 pt-4 pb-4 border"
+}, "branches #")])], -1
+/* HOISTED */
+);
+
+var _hoisted_15 = {
+  key: 0,
+  "class": "py-3 px-4 border text-left"
+};
+var _hoisted_16 = {
+  key: 0
+};
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
+  "class": "border-t px-6 py-4",
+  colspan: "4"
+}, "No Record found.", -1
+/* HOISTED */
+);
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _this = this;
+
   var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
 
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
@@ -24916,9 +24945,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         onChange: _cache[1] || (_cache[1] = function () {
-          return $options.branchchange && $options.branchchange.apply($options, arguments);
+          return _ctx.branchchange && _ctx.branchchange.apply(_ctx, arguments);
         }),
-        "class": "pr-2 pb-2 w-full lg:w-1/4 rounded-md",
+        "class": "pr-2 pb-2 max-h-10 w-full lg:w-1/4 rounded-md",
         label: "bank_id",
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return $setup.form.bank_id = $event;
@@ -24936,7 +24965,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* HYDRATE_EVENTS, NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.form.bank_id]]), $props.errors.bank_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.bank_id), 1
       /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("textarea", {
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\n        <div class=\"p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap\"> "), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("textarea", {
         "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
           return $setup.form.address = $event;
         }),
@@ -24946,9 +24975,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         label: "address"
       }, null, 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.address]]), $props.errors.address ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.address), 1
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.form.address]]), $props.errors.address ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.address), 1
       /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
         "class": "border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4",
         type: "submit",
         disabled: $setup.form.processing
@@ -24956,7 +24985,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["disabled"])])], 32
       /* HYDRATE_EVENTS */
-      )])];
+      )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.branches, function (item) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
+          key: item.id
+        }, [item.bank_id == _this.form.bank_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.add), 1
+        /* TEXT */
+        )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+      }), 128
+      /* KEYED_FRAGMENT */
+      )), $props.branches.length === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_16, [_hoisted_17])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])];
     }),
     _: 1
     /* STABLE */
