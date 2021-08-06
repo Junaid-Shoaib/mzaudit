@@ -18,21 +18,55 @@ class BankBranchController extends Controller
 
     public function index()
     {
+
+        request()->validate([
+            'direction' => ['in:asc,desc'],
+            'field' => ['in:bank_id,address'],
+        ]);
+        $query = BankBranch::query();
+        if (request()->has(['field', 'direction'])) {
+            $query->orderBy(request('field'), request('direction'));
+        } else {
+            $query->orderBy(('bank_id'), ('asc'));
+        }
+
+        // dd($query);
+        $balance = $query->paginate(6)
+            ->through(
+                function ($branch) {
+
+                    return [
+                        'id' => $branch->id,
+                        'address' => $branch->address,
+                        'bank_id' => $branch->bank_id,
+                        'name' => $branch->bank->name,
+                        'delete' => BankAccount::where('branch_id', $branch->id)->first() ? false : true,
+
+                    ];
+                }
+            );
+
+
+        // dd($balance);
+
+
         return Inertia::render(
             'Branches/Index',
             [
-                'balances' => BankBranch::paginate(6)
-                    ->through(
-                        fn ($branch) =>
-                        [
-                            'id' => $branch->id,
-                            'address' => $branch->address,
-                            'bank_id' => $branch->bank_id,
-                            'name' => $branch->bank->name,
-                            'delete' => BankAccount::where('branch_id', $branch->id)->first() ? false : true,
+                'balances' => $balance,
+                // 'balances' => $query->paginate(6)
+                //     ->through(
+                //         function ($branch) {
+                //             return [
+                //                 'id' => $branch->id,
+                //                 'address' => $branch->address,
+                //                 'bank_id' => $branch->bank_id,
+                //                 'name' => $branch->bank->name,
+                //                 'delete' => BankAccount::where('branch_id', $branch->id)->first() ? false : true,
 
-                        ]
-                    ),
+                //             ];
+                //         }
+                //     ),
             ]
 
         );
@@ -42,20 +76,15 @@ class BankBranchController extends Controller
     public function create($accounts)
     {
         // dd($accounts);
-
         $branches = BankBranch::all()
             ->map(
                 function ($branch) {
-                    // dd($branch->address);
                     return [
                         'add' => $branch->address,
                         'bank_id' => $branch->bank_id,
                     ];
                 }
             );
-
-        // dd($branches);
-
         $data  = Bank::all()->map->only('id')->first();
 
         if ($data) {
@@ -69,42 +98,6 @@ class BankBranchController extends Controller
             return Redirect::route('banks.create', 'accounts')->with('success', 'Create Bank first.');
         }
     }
-
-
-    // public function branchchange($id)
-    // {
-
-    //     // dd($id);
-    //     // return Inertia::render('Branches/Create',
-    //     $branches = BankBranch::where("bank_id", $id)->get()
-    //         ->map(
-    //             function ($branch) {
-    //                 // dd($branch->address);
-    //                 return [
-    //                     'add' => $branch->address,
-    //                 ];
-    //             }
-    //         );
-
-
-    // return Redirect::route('branches.create', 'create')->with('success', 'Bank Branch created.');
-
-
-
-
-    // $branches = BankBranch::where("bank_id", $id)->get()
-    //     ->map(
-    //         function ($branch) {
-    //             // dd($branch->address);
-    //             return [
-    //                 'add' => $branch->address,
-    //             ];
-    //         }
-    //     );
-    // dd($branches);
-    // }
-
-
 
     public function store(Req $request)
     {

@@ -18,27 +18,65 @@ class BankAccountController extends Controller
 {
     public function index()
     {
-        //
+        request()->validate([
+            'direction' => ['in:asc,desc'],
+            'field' => ['in:name,address'],
+        ]);
+
+        $query = BankAccount::query();
+
+        if (request('search')) {
+            $query->where('name', 'LIKE', '%' . request('search') . '%');
+        }
+
+        if (request()->has(['field', 'direction'])) {
+            $query->orderBy(request('field'), request('direction'));
+        } else {
+            $query->orderBy(('name'), ('asc'));
+        }
+
+        // dd($query->all());
+
+        $balances = $query
+            ->where('company_id', session('company_id'))
+            ->paginate()
+            ->through(
+                function ($branch) {
+                    return
+                        [
+                            'id' => $branch->id,
+                            'name' => $branch->name,
+                            'type' => $branch->type,
+                            'currency' => $branch->currency,
+                            'branches' => $branch->bankBranch->bank->name . " - " . $branch->bankBranch->address,
+                            'delete' => BankBalance::where('account_id', $branch->id)->first() ? false : true,
+                        ];
+                }
+            );
+
+        // dd($balances);
+
         if (BankBranch::all()->first()) {
             return Inertia::render(
                 'Accounts/Index',
                 [
-
-                    'balances' => BankAccount::all()
-                        ->where('company_id', session('company_id'))
-                        ->map(
-                            function ($branch) {
-                                return
-                                    [
-                                        'id' => $branch->id,
-                                        'name' => $branch->name,
-                                        'type' => $branch->type,
-                                        'currency' => $branch->currency,
-                                        'branches' => $branch->bankBranch->bank->name . " - " . $branch->bankBranch->address,
-                                        'delete' => BankBalance::where('account_id', $branch->id)->first() ? false : true,
-                                    ];
-                            }
-                        ),
+                    'filters' => request()->all(['search', 'field', 'direction']),
+                    'balances' => $balances,
+                    // 'balances' => BankAccount::all()
+                    //     ->where('company_id', session('company_id'))
+                    //     ->map(
+                    //         function ($branch) {
+                    //             return
+                    //                 [
+                    //                     'id' => $branch->id,
+                    //                     'name' => $branch->name,
+                    //                     'type' => $branch->type,
+                    //                     'currency' => $branch->currency,
+                    //                     'branches' => $branch->bankBranch->bank->name . " - " . $branch->bankBranch->address,
+                    //                     'delete' => BankBalance::where('account_id', $branch->id)->first() ? false : true,
+                    //                 ];
+                    //         }
+                    //     ),
                     'companies' => Company::all()
                         ->map(function ($company) {
                             return [
@@ -58,15 +96,6 @@ class BankAccountController extends Controller
                             ];
                         }),
 
-                    // 'branches' => BankBranch::all()
-                    //     ->map(function ($branch) {
-                    //         return [
-                    //             'id' => $branch->id,
-                    //             'address' => $branch->address,
-                    //             'bank_id' => $branch->bank_id,
-                    //             'name' => $branch->bank->name,
-                    //         ];
-                    //     }),
                 ],
 
             );
@@ -119,6 +148,7 @@ class BankAccountController extends Controller
         // dd($request->accounts);
         // dd($request);
         Request::validate([
+
             'accounts.*.name' => 'required|unique:App\Models\BankAccount,name',
             'accounts.*.type' => ['required'],
             'accounts.*.currency' => ['required'],

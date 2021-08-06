@@ -44,7 +44,7 @@
           <div v-if="errors.bank_id">{{ errors.bank_id }}</div>
           <!-- </div>
         <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap"> -->
-          <label class="w-28 inline-block text-right mr-4"
+          <label class="w-28 inline-block text-right ml-7 mr-4"
             >Branch name and address:</label
           >
 
@@ -64,8 +64,24 @@
             "
             label="address"
           ></textarea>
-          <div v-if="errors.address">{{ errors.address }}</div>
+          <button
+            class="
+              border
+              bg-indigo-300
+              rounded-xl
+              px-8
+              py-2
+              ml-16
+              my-5
+              max-h-10
+            "
+            type="submit"
+            :disabled="form.processing"
+          >
+            Save
+          </button>
         </div>
+        <div v-if="errors.address">{{ errors.address }}</div>
         <div
           class="
             px-4
@@ -76,15 +92,7 @@
             justify-start
             items-center
           "
-        >
-          <button
-            class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
-            type="submit"
-            :disabled="form.processing"
-          >
-            Save
-          </button>
-        </div>
+        ></div>
       </form>
     </div>
     <div class="">
