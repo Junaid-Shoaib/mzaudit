@@ -42,7 +42,7 @@ class BankConfirmationController extends Controller
 
         return Inertia::render('Confirmations/Index', [
             'create' => $branches,
-            'balances' => BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))->paginate(5)->withQueryString()
+            'balances' => BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))->paginate(10)->withQueryString()
                 ->through(
                     fn ($confirmation) =>
                     [

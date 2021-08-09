@@ -50,7 +50,7 @@ class CompanyController extends Controller
             [
                 'data' => Company::all(),
                 'filters' => request()->all(['search', 'field', 'direction']),
-                'balances' => $query->with('years')->paginate(6)
+                'balances' => $query->with('years')->paginate(10)
                 // 'balances' => Company::paginate(6)
                 // ->withQueryString()
                 // ->through(

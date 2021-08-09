@@ -20,7 +20,7 @@ class BankBalanceController extends Controller
             'Balances/Index',
             [
                 'balances' => BankBalance::where('company_id', session('company_id'))
-                    ->where('year_id', session('year_id'))->paginate(6)->withQueryString()
+                    ->where('year_id', session('year_id'))->paginate(10)->withQueryString()
                     ->through(
                         fn ($bal) =>
                         [

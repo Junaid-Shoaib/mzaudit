@@ -31,7 +31,7 @@ class BankBranchController extends Controller
         }
 
         // dd($query);
-        $balance = $query->paginate(6)
+        $balance = $query->paginate(10)
             ->through(
                 function ($branch) {
 

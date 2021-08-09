@@ -176,11 +176,12 @@
             </td> -->
           </tr>
           <!-- Null Balance -->
-          <tr v-if="balances">
+          <tr v-if="balances.data.length === 0">
             <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
           </tr>
         </tbody>
       </table>
+      <paginator class="mt-6" :balances="balances" />
     </div>
   </app-layout>
 </template>
@@ -193,12 +194,14 @@
 
 <script>
 import AppLayout from "@/Layouts/AppLayout";
+import Paginator from "@/Layouts/Paginator";
 import { throttle } from "lodash";
 import { pickBy } from "lodash";
 
 export default {
   components: {
     AppLayout,
+    Paginator,
   },
 
   props: {

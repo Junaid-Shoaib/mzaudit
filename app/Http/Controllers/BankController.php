@@ -34,7 +34,7 @@ class BankController extends Controller
 
         return Inertia::render('Banks/Index', [
             // 'balances' => $balance,
-            'balances' => $query->paginate(6)
+            'balances' => $query->paginate(10)
                 ->through(
                     fn ($bank) =>
                     [

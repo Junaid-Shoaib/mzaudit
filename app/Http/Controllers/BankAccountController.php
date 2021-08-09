@@ -39,7 +39,7 @@ class BankAccountController extends Controller
 
         $balances = $query
             ->where('company_id', session('company_id'))
-            ->paginate()
+            ->paginate(15)
             ->through(
                 function ($branch) {
                     return
@@ -54,7 +54,7 @@ class BankAccountController extends Controller
                 }
             );
 
-        // dd($balances);
+        //        dd($balances);
 
         if (BankBranch::all()->first()) {
             return Inertia::render(
