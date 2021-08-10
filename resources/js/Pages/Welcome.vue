@@ -51,10 +51,20 @@
           src="img/wallpaper.jpg"
           alt="Welcome to Confirmation.pk"
         />
-        <div class="absolute z-20 invisible md:visible w-full text-left">
-          <h2 class="text-white ml-16 font-sans font-bold text-3xl mt-6">
+        <div class="absolute z-20 invisible md:visible w-full my-8 text-left">
+          <inertia-link
+            :href="route('login')"
+            class="
+              text-white
+              ml-16
+              font-sans font-bold
+              text-3xl
+              hover:text-blue-300
+            "
+          >
             CONFIRMATION.PK
-          </h2>
+          </inertia-link>
+
           <p class="ml-6 text-md font-bold text-white">
             Is a online platform that facilitates balance confirmation.
           </p>

@@ -28293,9 +28293,36 @@ var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNod
 
 var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Login ");
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"\"><div class=\"flex w-screen h-screen z-10\"><img class=\"px-2 w-full object-cover\" src=\"img/wallpaper.jpg\" alt=\"Welcome to Confirmation.pk\"><div class=\"absolute z-20 invisible md:visible w-full text-left\"><h2 class=\"text-white ml-16 font-sans font-bold text-3xl mt-6\"> CONFIRMATION.PK </h2><p class=\"ml-6 text-md font-bold text-white\"> Is a online platform that facilitates balance confirmation. </p></div><div class=\"absolute z-20 invisible md:visible bottom-16 right-10\"><p class=\"\n              text-white text-center\n              underline\n              font-sans font-bold\n              text-2xl\n            \"> Powered by </p><p class=\"font-bold text-md text-center text-white\"> Digital Solution Department </p><p class=\"font-bold text-md text-white\"> Muniff Ziauddin &amp; Co. Chartered Accountants </p></div><div class=\"absolute z-20 invisible md:visible bottom-16 left-10\"><p class=\"text-white text-left underline font-sans font-bold text-2xl\"> Benefits </p><p class=\"font-bold text-md mt-2 text-left text-white\"> 1. Save cost Eliminating extra <br> stationery expenses associated<br> with conventional method <br> 2. Save time<br> 3. Secure </p></div></div></div>", 1);
+var _hoisted_7 = {
+  "class": ""
+};
+var _hoisted_8 = {
+  "class": "flex w-screen h-screen z-10"
+};
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+  "class": "px-2 w-full object-cover",
+  src: "img/wallpaper.jpg",
+  alt: "Welcome to Confirmation.pk"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_10 = {
+  "class": "absolute z-20 invisible md:visible w-full my-8 text-left"
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" CONFIRMATION.PK ");
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+  "class": "ml-6 text-md font-bold text-white"
+}, " Is a online platform that facilitates balance confirmation. ", -1
+/* HOISTED */
+);
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"absolute z-20 invisible md:visible bottom-16 right-10\"><p class=\"\n              text-white text-center\n              underline\n              font-sans font-bold\n              text-2xl\n            \"> Powered by </p><p class=\"font-bold text-md text-center text-white\"> Digital Solution Department </p><p class=\"font-bold text-md text-white\"> Muniff Ziauddin &amp; Co. Chartered Accountants </p></div><div class=\"absolute z-20 invisible md:visible bottom-16 left-10\"><p class=\"text-white text-left underline font-sans font-bold text-2xl\"> Benefits </p><p class=\"font-bold text-md mt-2 text-left text-white\"> 1. Save cost Eliminating extra <br> stationery expenses associated<br> with conventional method <br> 2. Save time<br> 3. Secure </p></div>", 2);
+
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "\n        flex flex-row\n        bottom-px\n        items-center\n        w-full\n        justify-center\n        fixed\n        px-6\n        py-1\n      "
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": ""
@@ -28335,7 +28362,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <inertia-link\n            v-if=\"canRegister\"\n            :href=\"route('register')\"\n            class=\"text-sm text-white ml-5 hover:text-blue-300\"\n          >\n            Register\n          </inertia-link> ")], 64
   /* STABLE_FRAGMENT */
-  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End if "), _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("picture end "), _hoisted_8]);
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End if "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
+    href: _ctx.route('login'),
+    "class": "\n              text-white\n              ml-16\n              font-sans font-bold\n              text-3xl\n              hover:text-blue-300\n            "
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_11];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["href"]), _hoisted_12]), _hoisted_13])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("picture end "), _hoisted_15]);
 }
 
 /***/ }),

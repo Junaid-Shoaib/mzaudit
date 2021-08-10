@@ -108,13 +108,13 @@ class BankBranchController extends Controller
         ]);
 
         $branches = BankBranch::all()->where("bank_id", $request->bank_id);
-        $add = ucwords($request->address);
+        $address = str_replace([" "], "\n", $request->address);
+        $add = ucwords($address);
         $branchi = true;
 
         foreach ($branches as $branch) {
             if ($branch->address == $add) {
                 $branchi = false;
-                break;
             }
         }
         if ($branchi == true) {
