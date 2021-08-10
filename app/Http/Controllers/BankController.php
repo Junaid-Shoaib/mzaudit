@@ -6,6 +6,7 @@ use Illuminate\Http\Request as Req;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\Bank;
+use Illuminate\Support\Facades\DB;
 use App\Models\BankBranch;
 use Inertia\Inertia;
 
@@ -18,8 +19,22 @@ class BankController extends Controller
      */
     public function index()
     {
+
+        request()->validate([
+            'direction' => ['in:asc,desc'],
+            'field' => ['in:name,address'],
+        ]);
+        $query = Bank::query();
+        if (request()->has(['field', 'direction'])) {
+            $query->orderBy(request('field'), request('direction'));
+        } else {
+            $query->orderBy(('name'), ('asc'));
+        }
+
+
         return Inertia::render('Banks/Index', [
-            'balances' => Bank::paginate(6)
+            // 'balances' => $balance,
+            'balances' => $query->paginate(10)
                 ->through(
                     fn ($bank) =>
                     [
@@ -32,6 +47,8 @@ class BankController extends Controller
 
         ]);
     }
+
+    // 'balances' => Bank::paginate(6)
 
     /**
      * Show the form for creating a new resource.
@@ -110,7 +127,7 @@ class BankController extends Controller
     public function update(Req $request, Bank $bank)
     {
         Request::validate([
-            'name' => ['required'],
+            'name' => 'required|unique:App\Models\Bank,name'
         ]);
 
         $bank->name = strtoupper(Request::input('name'));

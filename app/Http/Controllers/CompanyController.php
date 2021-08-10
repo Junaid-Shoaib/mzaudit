@@ -25,6 +25,9 @@ class CompanyController extends Controller
     // Company Index
     public function index()
     {
+
+
+
         request()->validate([
             'direction' => ['in:asc,desc'],
             'field' => ['in:name,address'],
@@ -38,6 +41,8 @@ class CompanyController extends Controller
 
         if (request()->has(['field', 'direction'])) {
             $query->orderBy(request('field'), request('direction'));
+        } else {
+            $query->orderBy(('name'), ('asc'));
         }
 
         return Inertia::render(
@@ -45,13 +50,7 @@ class CompanyController extends Controller
             [
                 'data' => Company::all(),
                 'filters' => request()->all(['search', 'field', 'direction']),
-                // 'can' => [
-                //     'publish' => auth()->user()->can('publish articles'),
-                //     'unpublish' => auth()->user()->can('unpublish articles'),
-                //     'edit' => auth()->user()->can('edit articles'),
-                //     'delete' => auth()->user()->can('delete articles'),
-                // ],
-                'balances' => $query->with('years')->paginate(6)
+                'balances' => $query->with('years')->paginate(10)
                 // 'balances' => Company::paginate(6)
                 // ->withQueryString()
                 // ->through(
@@ -427,6 +426,7 @@ class CompanyController extends Controller
             $total = $total + $data[$i]['ledger'];
         }
 
+        // dd($total);
         $tstr = $cnt + 9;
         $tcell = "H" . strval($tstr);
         $spreadsheet->getActiveSheet()->setCellValue($tcell, $total);
@@ -463,13 +463,32 @@ class CompanyController extends Controller
         $phpWord->addFontStyle('f1Style', array('name' => 'Calibri', 'size' => 12));
         $phpWord->addFontStyle('f2Style', array('name' => 'Calibri', 'bold' => true, 'size' => 12));
         $company = \App\Models\Company::where('id', session('company_id'))->first();
-        // dd($company);
 
         if ($company->bankAccounts()->first()) {
             $branch = $company->bankAccounts()->get();
+
+            // foreach ($branch as $b) {
+            //     $branches[$i] = $b->bankBranch;
+            //     $i++;
+            // }
+
+
+            $branches = null;
             foreach ($branch as $b) {
-                $branches[$i] = $b->bankBranch;
-                $i++;
+
+                $check = true;
+                if ($branches) {
+                    foreach ($branches as $bran) {
+                        if ($bran->id == $b->bankBranch->id) {
+                            $check = false;
+                            break;
+                        }
+                    }
+                }
+                if ($check) {
+                    $branches[$i] = $b->bankBranch;
+                    $i++;
+                }
             }
         } else {
             return Redirect::route('accounts.create')->with('success', 'Create Account First');
@@ -490,8 +509,6 @@ class CompanyController extends Controller
         foreach ($words as $w) {
             $acronym .= $w[0];
         }
-
-
 
 
         foreach ($branches  as $branch) {

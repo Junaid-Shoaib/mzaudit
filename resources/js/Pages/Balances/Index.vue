@@ -55,7 +55,7 @@
       <table class="shadow-lg border mt-4 ml-12 rounded-xl w-11/12">
         <thead>
           <tr class="bg-indigo-100 text-centre font-bold">
-            <th class="px-4 pt-4 pb-4 border">Account</th>
+            <th class="px-4 pt-4 pb-4 border">Account Number</th>
             <th class="px-4 pt-4 pb-4 border">Ledger</th>
             <th class="px-4 pt-4 pb-4 border">Statement</th>
             <th class="px-4 pt-4 pb-4 border">Confirmation</th>

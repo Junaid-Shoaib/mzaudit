@@ -48,9 +48,10 @@
               <span @click="sort('name')">
                 Name
                 <!-- name Descending  -->
+                <!-- v-if="params.field == 'name' && params.direction == 'desc'" -->
                 <svg
+                  v-if="params.direction == 'desc'"
                   version="1.1"
-                  v-if="params.field == 'name' && params.direction == 'desc'"
                   id="Capa_1"
                   xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -86,8 +87,9 @@
                   </g>
                 </svg>
                 <!-- name Ascending  Starts-->
+                <!-- v-if="params.field === 'name' && params.direction === 'asc'" -->
                 <svg
-                  v-if="params.field === 'name' && params.direction === 'asc'"
+                  v-if="params.direction === 'asc'"
                   version="1.1"
                   id="Capa_1"
                   xmlns="http://www.w3.org/2000/svg"
@@ -274,8 +276,8 @@ export default {
       co_id: this.$page.props.co_id,
       params: {
         search: this.filters.search,
-        field: this.filters.field,
-        direction: this.filters.direction,
+        field: "name",
+        direction: "asc",
       },
     };
   },

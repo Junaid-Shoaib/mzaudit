@@ -27,7 +27,7 @@
           <input
             type="text"
             v-model="form.name"
-            class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight"
+            class="uppercase pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight"
             label="name"
           />
           <div v-if="errors.name">{{ errors.name }}</div>

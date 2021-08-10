@@ -23,8 +23,8 @@
           <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
             <thead class="bg-indigo-100 text-centre font-bold">
               <tr>
-                <th class="px-4 pt-4 pb-4 border">Branches</th>
                 <th class="px-4 pt-4 pb-4 border">Account Number</th>
+                <th class="px-4 pt-4 pb-4 border">Branches</th>
                 <th class="px-4 pt-4 pb-4 border">Type</th>
                 <th class="px-4 pt-4 pb-4 border">Currency</th>
                 <!-- <th class="px-4 pt-4 pb-4 border">Action</th> -->
@@ -32,18 +32,18 @@
             </thead>
             <tbody>
               <tr v-for="account in data" :key="account.id">
+                <td class="w-3/12">
+                  <input
+                    v-model="account.name"
+                    type="number"
+                    class="rounded-md w-full my-2"
+                  />
+                </td>
                 <td class="w-4/12">
                   <input
                     v-model="account.branches"
                     type="text"
                     readonly
-                    class="rounded-md w-full my-2"
-                  />
-                </td>
-                <td class="w-3/12">
-                  <input
-                    v-model="account.name"
-                    type="number"
                     class="rounded-md w-full my-2"
                   />
                 </td>

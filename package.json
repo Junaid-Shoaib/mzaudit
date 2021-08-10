@@ -27,6 +27,7 @@
     },
     "dependencies": {
         "@inertiajs/progress": "^0.2.4",
+        "vue-multiselect": "^2.1.6",
         "vue3-datepicker": "^0.2.4"
     }
 }

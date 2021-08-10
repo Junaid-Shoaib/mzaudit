@@ -35,8 +35,8 @@
           <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
             <thead>
               <tr class="bg-indigo-100 text-centre font-bold">
-                <th class="px-4 pt-4 pb-4 border">Branch</th>
                 <th class="px-4 pt-4 pb-4 border">Account Number</th>
+                <th class="px-4 pt-4 pb-4 border">Branch</th>
                 <th class="px-4 pt-4 pb-4 border">Type</th>
                 <th class="px-4 pt-4 pb-4 border">Currency</th>
                 <th class="px-4 pt-4 pb-4 border">Actions</th>
@@ -44,7 +44,33 @@
             </thead>
             <tbody>
               <tr v-for="(account, index) in form.accounts" :key="account.id">
+                <td class="w-3/12">
+                  <input
+                    v-model="account.name"
+                    type="number"
+                    class="rounded-md w-full"
+                  />
+                </td>
                 <td class="w-4/12">
+                  <!-- <input
+                    type="text"
+                    list="branches"
+                    v-model="account.branch_id"
+                    placeholder="Select Your Bank........"
+                    class="rounded-md w-full"
+                  /> -->
+                  <!-- <datalist id="branches">
+                    <option
+                      :key="branch.name"
+                      :value="branch.id"
+                      v-for="branch in branches"
+                    >
+                      {{ branch.name }}
+                      {{ branch.address }}
+
+                      {{ film }}
+                    </option>
+                  </datalist> -->
                   <select v-model="account.branch_id" class="rounded-md w-full">
                     <option
                       v-for="branch in branches"
@@ -54,13 +80,6 @@
                       {{ branch.name }} - {{ branch.address }}
                     </option>
                   </select>
-                </td>
-                <td class="w-3/12">
-                  <input
-                    v-model="account.name"
-                    type="number"
-                    class="rounded-md w-full"
-                  />
                 </td>
                 <td class="3/12">
                   <select v-model="account.type" class="rounded-md w-full">
@@ -124,25 +143,25 @@
       <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
         <thead>
           <tr class="bg-indigo-100 text-centre font-bold">
-            <th class="px-4 pt-4 pb-4 border">Account #</th>
+            <th class="px-4 pt-4 pb-4 border">Account Number</th>
+            <th class="px-4 pt-4 pb-4 border">Branch</th>
             <th class="px-4 pt-4 pb-4 border">Type</th>
             <th class="px-4 pt-4 pb-4 border">Currency</th>
-            <th class="px-4 pt-4 pb-4 border">Branch</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in balances" :key="item.id">
             <td class="py-3 px-4 border text-left">{{ item.name }}</td>
+            <td class="py-1 px-4 border text-center">
+              {{ item.branches }}
+            </td>
             <td class="py-3 px-4 border text-center">{{ item.type }}</td>
             <td class="py-3 px-4 border text-center">
               {{ item.currency }}
             </td>
-            <td class="py-1 px-4 border text-center">
-              {{ item.branches }}
-            </td>
           </tr>
           <!-- Null Balance -->
-          <tr v-if="balances.length === 0">
+          <tr v-if="balances.items === 0">
             <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
           </tr>
         </tbody>
@@ -171,29 +190,14 @@ export default {
       accounts: [
         {
           branch_id: props.branches[0].id,
-          name: "",
-          type: "",
-          currency: "",
+          type: "CURRENT",
+          name: null,
+          currency: "PKR",
         },
       ],
     });
     return { form };
   },
-  // data() {
-  //   return {
-  //     form: this.$inertia.form({
-  //       accounts: [
-  //         {
-  //           branch_id: this.branches[0].id,
-  //           name: "",
-  //           type: "",
-  //           currency: "",
-  //         },
-  //       ],
-  //     }),
-  //     isLoading: false,
-  //   };
-  // },
 
   watch: {
     errors: function () {
@@ -205,20 +209,12 @@ export default {
   },
 
   methods: {
-    // submit() {
-    //   this.isLoading = true;
-    //   setTimeout(() => {
-    //     this.isLoading = false;
-    //   }, 4000);
-    //   this.$inertia.post(route("accounts.store"), this.form.accounts);
-    // },
-
     addRow() {
       this.form.accounts.push({
         branch_id: this.branches[0].id,
-        name: "",
-        type: "",
-        currency: "",
+        type: "CURRENT",
+        name: null,
+        currency: "PKR",
       });
     },
 
