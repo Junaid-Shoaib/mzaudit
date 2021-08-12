@@ -142,8 +142,13 @@
             <td class="py-3 px-4 border text-left text-transform: uppercase">
               {{ item.name }}
             </td>
-            <td class="py-3 px-4 border text-center">{{ item.address }}</td>
-            <td class="py-3 px-4 border text-center">{{ item.address }}</td>
+            <td class="py-3 px-4 border text-center">
+              {{ item.confirm }}
+            </td>
+
+            <td class="py-3 px-4 border text-center">
+              {{ item.name }}
+            </td>
             <td class="py-3 px-4 border text-center">{{ item.address }}</td>
             <td class="py-3 px-4 border text-center">{{ item.fiscal }}</td>
           </tr>
