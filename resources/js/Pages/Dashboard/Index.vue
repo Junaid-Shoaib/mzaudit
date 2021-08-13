@@ -24,21 +24,27 @@
     <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
       {{ $page.props.flash.success }}
     </div>
-    <div class="relative mt-5 ml-7">
-      <!-- <inertia-link
-        class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
-        :href="route('companies.create')"
-        >Add Company
-      </inertia-link> -->
-      <label class="px-4 py-1 m-1"> Search:</label>
 
-      <input
-        type="search"
-        v-model="params.search"
-        aria-label="Search"
-        placeholder="Search..."
-        class="border rounded-xl px-4 py-1 m-1"
-      />
+    <div class="row">
+      <div class="col-2 inline-block mt-5 ml-7">
+        <label class="px-4 py-1 m-1"> Search:</label>
+        <input
+          type="search"
+          v-model="params.search"
+          aria-label="Search"
+          placeholder="Search..."
+          class="border rounded-xl px-4 py-1 m-1"
+        />
+      </div>
+
+      <div class="inline-block col-4">
+        <p class="inline-block pl-10 py-1 m-1">
+          Client : {{ this.balances.data.length }}
+        </p>
+        <p class="inline-block pl-10 py-1 m-1">
+          Confirmation : {{ this.confirmation }}
+        </p>
+      </div>
     </div>
 
     <div class="">
@@ -139,18 +145,40 @@
         </thead>
         <tbody>
           <tr v-for="item in balances.data" :key="item.id">
-            <td class="py-3 px-4 border text-left text-transform: uppercase">
+            <td
+              v-if="item.create_confirm"
+              class="py-3 px-4 border text-left text-transform: uppercase"
+            >
+              {{ item.name }}
+            </td>
+            <td
+              v-else
+              class="
+                py-3
+                text-red-600
+                px-4
+                border
+                text-left text-transform:
+                uppercase
+              "
+            >
               {{ item.name }}
             </td>
             <td class="py-3 px-4 border text-center">
-              {{ item.confirm }}
+              {{ item.create_confirm }}
             </td>
 
             <td class="py-3 px-4 border text-center">
-              {{ item.name }}
+              {{ item.total_confirm }}
             </td>
-            <td class="py-3 px-4 border text-center">{{ item.address }}</td>
-            <td class="py-3 px-4 border text-center">{{ item.fiscal }}</td>
+            <td class="py-3 px-4 border text-center">{{ item.total_sent }}</td>
+
+            <td v-if="item.reamaning == 0" class="py-3 px-4 border text-center">
+              {{ item.reamaning }}
+            </td>
+            <td v-else class="py-3 px-4 text-red-600 border text-center">
+              {{ item.reamaning }}
+            </td>
           </tr>
           <tr v-if="balances.data.length === 0">
             <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
@@ -177,7 +205,7 @@ export default {
     data: Object,
     balances: Object,
     filters: Object,
-    // can: Object,
+    confirmation: Object,
   },
 
   data() {

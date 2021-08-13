@@ -36,63 +36,53 @@ class DashboardController extends Controller
         } else {
             $query->orderBy(('name'), ('asc'));
         }
-        // $dataa = \App\Models\BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))->first()->confirm_create;
-        // dd($dataa);
 
+        // Dashboard Data
         $balances = $query->paginate(10)
             ->through(
                 function ($dash) {
-                    if ($dash->bankconfirmations()->get()->first()->confirm_create) {
-                        $confirm_create = $dash->bankconfirmations()->get()->first()->confirm_create;
+                    $confirmations = $dash->bankconfirmations()->get();
+                    $total_sent = 0;
+                    $total_confirm = 0;
+                    $confirm_create = "";
+                    foreach ($confirmations as $confirmation) {
+                        if ($confirmation->sent) {
+                            $total_sent++;
+                        }
+
+                        if ($total_confirm == 0) {
+                            $confirm_create = $confirmation->confirm_create;
+                        }
+
+
+                        $total_confirm++;
                     }
-
-
 
                     return [
                         'id' => $dash->id,
                         'name' => $dash->name,
-                        // 'confirm_create' => $dash->bankconfirmations->first()->confirm_create,
-                        'confirm' => $confirm_create,
-                        // $confirm =
-                        // $dash->bankconfirmations()
-                        // ->select('confirm_create')
-                        // ->get()->first()->confirm_create,
-                        // 'confirm_create' => $confirm[0]['confirm_create'],
-                        // ->first()->confirm_create,
-                        // $confirm_create = BankConfirmation::all()->where('company_id', $dash->id)->map->only('confirm_create'),
-                        // 'confirm_create' => BankConfirmation::all()->where('company_id', $dash->id)->map->only('confirm_create')->first(),
-
-                        // ->where('company_id', session('company_id'))
-                        // ->where('year_id', session('year_id'))
-
-                        // ->first()->confirm_create,
-                        // ()->select('confirm_create'),
-                        // 'confirm_create' => $confirm->select(['confirm_create']),
-
-
-                        // dd($confirm->confirm_create),
-                        // $confirm_create = BankConfirmation::find($dash)->where('company_id', $dash->id),
-                        // ->confirm_create,
-                        // dd($confirm),
-                        // ->confirm_create,
-
-                        // dd($confirm_create[2]->confirm_create[0]),
-                        // $confirm_create = $dash->bankconfirmations->first()
-                        // ->where('company_id', session('company_id'))
-                        // ->where('year_id', session('year_id'))->first(),
-
-                        // ->first()->confirm_create,
+                        'create_confirm' => $confirm_create,
+                        'total_confirm' => $total_confirm,
+                        'total_sent' => $total_sent,
+                        'reamaning' => $total_confirm - $total_sent,
                     ];
                 }
             );
-        // //
-        //         dd($balances);
+
+        //UnConfirmation Record
+        $companies = Company::all();
+        $confirm = 0;
+        foreach ($companies as $company) {
+            if (!$company->bankConfirmations()->get()->first()) {
+                $confirm++;
+            }
+        }
 
         return Inertia::render('Dashboard/Index', [
 
             'filters' => request()->all(['search', 'field', 'direction']),
             'balances' => $balances,
-
+            'confirmation' => $confirm,
         ]);
     }
 
