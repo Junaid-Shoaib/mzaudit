@@ -120,7 +120,7 @@ class BankBranchController extends Controller
         if ($branchi == true) {
             BankBranch::create([
                 'bank_id' => Request::input('bank_id'),
-                'address' => ucwords(Request::input('address')),
+                'address' => $add,
             ]);
 
             if ($request->accounts == 'accounts') {
@@ -162,25 +162,26 @@ class BankBranchController extends Controller
             'address' => ['required'],
         ]);
 
-        // $branches = BankBranch::all()->where("bank_id", $request->bank_id);
-        // $add = ucwords($request->address);
-        // $branchi = true;
 
-        // foreach ($branches as $branch) {
-        //     if ($branch->address == $add) {
-        //         $branchi = false;
-        //         break;
-        //     }
-        // }
-        // if ($branchi == true) {
-        $branch->bank_id = Request::input('bank_id');
-        $branch->address = ucwords(Request::input('address'));
-        $branch->save();
+        $branches = BankBranch::all()->where("bank_id", $request->bank_id);
+        $address = str_replace([" "], "\n", $request->address);
+        $add = ucwords($address);
+        $branchi = true;
 
-        return Redirect::route('branches')->with('success', 'Bank Branch updated.');
-        // } else {
-        //     return Redirect::route('branches.edit', $branch->id)->with('success', 'The Name has Already been taken.');
-        // }
+        foreach ($branches as $branch) {
+            if ($branch->address == $add) {
+                $branchi = false;
+                break;
+            }
+        }
+        if ($branchi == true) {
+            $branch->bank_id = Request::input('bank_id');
+            $branch->address = $add;
+            $branch->save();
+            return Redirect::route('branches')->with('success', 'Bank Branch updated.');
+        } else {
+            return Redirect::route('branches.edit', $branch->id)->with('success', 'The Name has Already been taken.');
+        }
 
         $branch->bank_id = Request::input('bank_id');
         $branch->address = ucwords(Request::input('address'));

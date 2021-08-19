@@ -37,11 +37,27 @@
         />
       </div>
 
-      <div class="inline-block col-4">
-        <p class="inline-block pl-10 py-1 m-1">
+      <div class="inline-block float-right mt-3 mr-36 col-4">
+        <p class="inline-block font-sans font-bold text-4xl pl-10 py-1 m-1">
           Client : {{ this.balances.data.length }}
         </p>
-        <p class="inline-block pl-10 py-1 m-1">
+        <p
+          v-if="this.confirmation == 0"
+          class="inline-block font-sans font-bold text-4xl pl-10 py-1 m-1"
+        >
+          Confirmation : {{ this.confirmation }}
+        </p>
+        <p
+          v-else
+          class="
+            inline-block
+            font-sans font-bold
+            text-red-600 text-4xl
+            pl-10
+            py-1
+            m-1
+          "
+        >
           Confirmation : {{ this.confirmation }}
         </p>
       </div>
@@ -156,6 +172,7 @@
               class="
                 py-3
                 text-red-600
+                font-bold
                 px-4
                 border
                 text-left text-transform:
@@ -176,7 +193,10 @@
             <td v-if="item.reamaning == 0" class="py-3 px-4 border text-center">
               {{ item.reamaning }}
             </td>
-            <td v-else class="py-3 px-4 text-red-600 border text-center">
+            <td
+              v-else
+              class="py-3 px-4 font-bold text-red-600 border text-center"
+            >
               {{ item.reamaning }}
             </td>
           </tr>

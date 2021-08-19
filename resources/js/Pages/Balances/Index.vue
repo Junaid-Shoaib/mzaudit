@@ -59,7 +59,7 @@
             <th class="px-4 pt-4 pb-4 border">Ledger</th>
             <th class="px-4 pt-4 pb-4 border">Statement</th>
             <th class="px-4 pt-4 pb-4 border">Confirmation</th>
-            <th class="px-4 pt-4 pb-4 border">Actions</th>
+            <!-- <th class="px-4 pt-4 pb-4 border">Actions</th> -->
           </tr>
         </thead>
         <tbody>
@@ -70,14 +70,14 @@
             <td class="py-3 px-4 border text-center">
               {{ item.confirmation }}
             </td>
-            <td class="border text-center">
+            <!-- <td class="border text-center">
               <button
                 class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
                 @click="destroy(item.id)"
               >
                 <span>Delete</span>
               </button>
-            </td>
+            </td> -->
           </tr>
 
           <!-- Null Balance -->

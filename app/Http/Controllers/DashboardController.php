@@ -7,6 +7,8 @@ use Illuminate\Http\Request as Req;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\Company;
+use Carbon\Carbon;
+
 use Illuminate\Support\Facades\DB;
 // use App\Models\BankConfirmation;
 use Inertia\Inertia;
@@ -58,10 +60,13 @@ class DashboardController extends Controller
                         $total_confirm++;
                     }
 
+
+
                     return [
                         'id' => $dash->id,
                         'name' => $dash->name,
-                        'create_confirm' => $confirm_create,
+                        $confirm_create = $confirm_create ? new Carbon($confirm_create) : null,
+                        'create_confirm' => $confirm_create ?  $confirm_create->format("M d Y") : null,
                         'total_confirm' => $total_confirm,
                         'total_sent' => $total_sent,
                         'reamaning' => $total_confirm - $total_sent,
