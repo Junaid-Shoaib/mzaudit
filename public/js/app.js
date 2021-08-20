@@ -17276,6 +17276,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
 
+ // import Multiselect from "vue-multiselect";
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -22659,7 +22660,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "rounded-md w-full"
         }, null, 8
         /* PROPS */
-        , ["onUpdate:modelValue"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, account.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <input\n                    type=\"text\"\n                    list=\"branches\"\n                    v-model=\"account.branch_id\"\n                    placeholder=\"Select Your Bank........\"\n                    class=\"rounded-md w-full\"\n                  /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <datalist id=\"branches\">\n                    <option\n                      :key=\"branch.name\"\n                      :value=\"branch.id\"\n                      v-for=\"branch in branches\"\n                    >\n                      {{ branch.name }}\n                      {{ branch.address }}\n\n                      {{ film }}\n                    </option>\n                  </datalist> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+        , ["onUpdate:modelValue"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, account.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <label for=\"mechanic_id\">Mechanic</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <multiselect v-model=\"selectedMechanic\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" placeholder=\"Search mechanic\" "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" id=\"mechanic_id\" "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" :options=\"mechanics\" label=\"name\" track-by=\"id\" "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" @search-change=\"onSearchMechanicsChange\" "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" @input=\"onSelectedMechanic\" "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
           "onUpdate:modelValue": function onUpdateModelValue($event) {
             return account.branch_id = $event;
           },

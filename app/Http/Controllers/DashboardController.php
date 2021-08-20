@@ -91,7 +91,6 @@ class DashboardController extends Controller
         ]);
     }
 
-    // 'balances' => Bank::paginate(6)
 
     /**
      * Show the form for creating a new resource.

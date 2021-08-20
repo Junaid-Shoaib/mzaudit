@@ -32,7 +32,6 @@ class BankBalanceController extends Controller
                         ]
                     ),
 
-                // dd($balances['participants']->links()),
                 'companies' => Company::all()
                     ->map(function ($company) {
                         return [
