@@ -52,13 +52,6 @@
                   />
                 </td>
                 <td class="w-4/12">
-                  <!-- <label for="mechanic_id">Mechanic</label> -->
-                  <!-- <multiselect v-model="selectedMechanic" /> -->
-                  <!-- placeholder="Search mechanic" -->
-                  <!-- id="mechanic_id" -->
-                  <!-- :options="mechanics" label="name" track-by="id" -->
-                  <!-- @search-change="onSearchMechanicsChange" -->
-                  <!-- @input="onSelectedMechanic" -->
                   <select v-model="account.branch_id" class="rounded-md w-full">
                     <option
                       v-for="branch in branches"

@@ -22660,7 +22660,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "rounded-md w-full"
         }, null, 8
         /* PROPS */
-        , ["onUpdate:modelValue"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, account.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <label for=\"mechanic_id\">Mechanic</label> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <multiselect v-model=\"selectedMechanic\" /> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" placeholder=\"Search mechanic\" "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" id=\"mechanic_id\" "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" :options=\"mechanics\" label=\"name\" track-by=\"id\" "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" @search-change=\"onSearchMechanicsChange\" "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" @input=\"onSelectedMechanic\" "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+        , ["onUpdate:modelValue"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, account.name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
           "onUpdate:modelValue": function onUpdateModelValue($event) {
             return account.branch_id = $event;
           },
@@ -27241,7 +27241,7 @@ var _hoisted_7 = {
 };
 var _hoisted_8 = {
   key: 0,
-  "class": "inline-block font-sans font-bold text-4xl pl-10 py-1 m-1"
+  "class": "\n            inline-block\n            font-sans\n            text-green-500\n            font-bold\n            text-4xl\n            pl-10\n            py-1\n            m-1\n          "
 };
 var _hoisted_9 = {
   key: 1,
@@ -27338,7 +27338,7 @@ var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 
 var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", {
   "class": "px-4 pt-4 pb-4 border"
-}, "Reamaning Confirmation", -1
+}, "Remaining Confirmation", -1
 /* HOISTED */
 );
 
@@ -27354,24 +27354,34 @@ var _hoisted_25 = {
   "class": "py-3 px-4 border text-center"
 };
 var _hoisted_26 = {
-  "class": "py-3 px-4 border text-center"
+  key: 2,
+  "class": "py-3 px-4 font-bold border text-red-600 text-center"
 };
 var _hoisted_27 = {
-  "class": "py-3 px-4 border text-center"
+  key: 3,
+  "class": "py-3 px-4 font-bold border text-center"
 };
 var _hoisted_28 = {
-  key: 2,
-  "class": "py-3 px-4 border text-center"
+  key: 4,
+  "class": "py-3 px-4 font-bold border text-green-600 text-center"
 };
 var _hoisted_29 = {
-  key: 3,
-  "class": "py-3 px-4 font-bold text-red-600 border text-center"
+  key: 5,
+  "class": "py-3 px-4 font-bold border text-red-600 text-center"
 };
 var _hoisted_30 = {
+  key: 6,
+  "class": "py-3 px-4 font-bold border text-green-500 text-center"
+};
+var _hoisted_31 = {
+  key: 7,
+  "class": "py-3 px-4 font-bold text-red-600 border text-center"
+};
+var _hoisted_32 = {
   key: 0
 };
 
-var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
+var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
   "class": "border-t px-6 py-4",
   colspan: "4"
 }, "No Record found.", -1
@@ -27421,18 +27431,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         /* TEXT */
         )), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.create_confirm), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.total_confirm), 1
+        ), item.total_confirm == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.total_confirm), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.total_sent), 1
+        )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.total_confirm), 1
         /* TEXT */
-        ), item.reamaning == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.reamaning), 1
+        )), item.total_sent == item.total_confirm ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.total_sent), 1
         /* TEXT */
-        )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.reamaning), 1
+        )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.total_sent), 1
+        /* TEXT */
+        )), item.reamaning == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.reamaning), 1
+        /* TEXT */
+        )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.reamaning), 1
         /* TEXT */
         ))]);
       }), 128
       /* KEYED_FRAGMENT */
-      )), $props.balances.data.length === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_30, [_hoisted_31])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_paginator, {
+      )), $props.balances.data.length === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_32, [_hoisted_33])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_paginator, {
         "class": "mt-6",
         balances: $props.balances
       }, null, 8

@@ -43,7 +43,16 @@
         </p>
         <p
           v-if="this.confirmation == 0"
-          class="inline-block font-sans font-bold text-4xl pl-10 py-1 m-1"
+          class="
+            inline-block
+            font-sans
+            text-green-500
+            font-bold
+            text-4xl
+            pl-10
+            py-1
+            m-1
+          "
         >
           Confirmation : {{ this.confirmation }}
         </p>
@@ -154,11 +163,12 @@
             <th class="px-4 pt-4 pb-4 border">Confirmations</th>
             <th class="px-4 pt-4 pb-4 border">Total Confirmation</th>
             <th class="px-4 pt-4 pb-4 border">Sent Confirmation</th>
-            <th class="px-4 pt-4 pb-4 border">Reamaning Confirmation</th>
+            <th class="px-4 pt-4 pb-4 border">Remaining Confirmation</th>
           </tr>
 
           <!-- Null Balance -->
         </thead>
+
         <tbody>
           <tr v-for="item in balances.data" :key="item.id">
             <td
@@ -185,12 +195,33 @@
               {{ item.create_confirm }}
             </td>
 
-            <td class="py-3 px-4 border text-center">
+            <td
+              v-if="item.total_confirm == 0"
+              class="py-3 px-4 font-bold border text-red-600 text-center"
+            >
               {{ item.total_confirm }}
             </td>
-            <td class="py-3 px-4 border text-center">{{ item.total_sent }}</td>
+            <td v-else class="py-3 px-4 font-bold border text-center">
+              {{ item.total_confirm }}
+            </td>
 
-            <td v-if="item.reamaning == 0" class="py-3 px-4 border text-center">
+            <td
+              v-if="item.total_sent == item.total_confirm"
+              class="py-3 px-4 font-bold border text-green-600 text-center"
+            >
+              {{ item.total_sent }}
+            </td>
+            <td
+              v-else
+              class="py-3 px-4 font-bold border text-red-600 text-center"
+            >
+              {{ item.total_sent }}
+            </td>
+
+            <td
+              v-if="item.reamaning == 0"
+              class="py-3 px-4 font-bold border text-green-500 text-center"
+            >
               {{ item.reamaning }}
             </td>
             <td

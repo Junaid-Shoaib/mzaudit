@@ -45,9 +45,11 @@ class DashboardController extends Controller
                 function ($dash) {
                     $confirmations = $dash->bankconfirmations()->get();
                     $total_sent = 0;
+                    $total_recieve = 0;
                     $total_confirm = 0;
                     $confirm_create = "";
                     foreach ($confirmations as $confirmation) {
+                        // dd($confirmation->received);
                         if ($confirmation->sent) {
                             $total_sent++;
                         }
@@ -56,11 +58,12 @@ class DashboardController extends Controller
                             $confirm_create = $confirmation->confirm_create;
                         }
 
+                        if ($confirmation->received) {
+                            $total_recieve++;
+                        }
 
                         $total_confirm++;
                     }
-
-
 
                     return [
                         'id' => $dash->id,
@@ -69,7 +72,7 @@ class DashboardController extends Controller
                         'create_confirm' => $confirm_create ?  $confirm_create->format("M d Y") : null,
                         'total_confirm' => $total_confirm,
                         'total_sent' => $total_sent,
-                        'reamaning' => $total_confirm - $total_sent,
+                        'reamaning' => $total_confirm - $total_recieve,
                     ];
                 }
             );
