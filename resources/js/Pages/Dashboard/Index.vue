@@ -39,7 +39,7 @@
 
       <div class="inline-block float-right mt-3 mr-36 col-4">
         <p class="inline-block font-sans font-bold text-4xl pl-10 py-1 m-1">
-          Client : {{ this.balances.data.length }}
+          Client : {{ this.client }}
         </p>
         <p
           v-if="this.confirmation == 0"
@@ -257,6 +257,7 @@ export default {
     balances: Object,
     filters: Object,
     confirmation: Object,
+    client: Object,
   },
 
   data() {

@@ -18845,7 +18845,8 @@ __webpack_require__.r(__webpack_exports__);
     data: Object,
     balances: Object,
     filters: Object,
-    confirmation: Object
+    confirmation: Object,
+    client: Object
   },
   data: function data() {
     return {
@@ -27412,7 +27413,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "class": "border rounded-xl px-4 py-1 m-1"
       }, null, 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.params.search]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_7, " Client : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.balances.data.length), 1
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.params.search]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", _hoisted_7, " Client : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.client), 1
       /* TEXT */
       ), _this.confirmation == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("p", _hoisted_8, " Confirmation : " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_this.confirmation), 1
       /* TEXT */
@@ -28609,7 +28610,7 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 
 var _hoisted_4 = {
   key: 0,
-  "class": "fixed inset-y-0 right-0 mr-12 py-1"
+  "class": "fixed inset-y-0 right-0 mr-12 py-5"
 };
 
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Dashboard ");

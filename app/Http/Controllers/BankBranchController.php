@@ -119,7 +119,16 @@ class BankBranchController extends Controller
 
         $branchi = true;
         foreach ($branches as $branch) {
-            if (strtolower($branch->address) == strtolower($address)) {
+            $replace = str_replace([" "], "\n", $branch->address);
+            $explode = explode("\n", $replace);
+            $add = "";
+            foreach ($explode as $ex) {
+                if ($ex != "") {
+                    $add = $add .  $ex . "\n";
+                }
+            }
+            if (strtolower($add) == strtolower($address)) {
+
                 $branchi = false;
             }
         }
@@ -183,7 +192,15 @@ class BankBranchController extends Controller
 
         $branchi = true;
         foreach ($branches as $branch) {
-            if (strtolower($branch->address) == strtolower($address)) {
+            $replace = str_replace([" "], "\n", $branch->address);
+            $explode = explode("\n", $replace);
+            $add = "";
+            foreach ($explode as $ex) {
+                if ($ex != "") {
+                    $add = $add .  $ex . "\n";
+                }
+            }
+            if (strtolower($add) == strtolower($address)) {
                 $branchi = false;
             }
         }

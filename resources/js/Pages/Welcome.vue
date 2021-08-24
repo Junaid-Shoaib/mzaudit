@@ -9,7 +9,7 @@
           Confirmation.pk
         </inertia-link> -->
       </div>
-      <div class="fixed inset-y-0 right-0 mr-12 py-1" v-if="canLogin">
+      <div class="fixed inset-y-0 right-0 mr-12 py-5" v-if="canLogin">
         <inertia-link
           v-if="$page.props.user"
           href="/dashboard"

@@ -65,6 +65,9 @@ class DashboardController extends Controller
                         $total_confirm++;
                     }
 
+
+
+
                     return [
                         'id' => $dash->id,
                         'name' => $dash->name,
@@ -79,18 +82,25 @@ class DashboardController extends Controller
 
         //UnConfirmation Record
         $companies = Company::all();
+        $name = 0;
         $confirm = 0;
         foreach ($companies as $company) {
+            if ($company->name) {
+                $name++;
+            }
+
             if (!$company->bankConfirmations()->get()->first()) {
                 $confirm++;
             }
         }
+
 
         return Inertia::render('Dashboard/Index', [
 
             'filters' => request()->all(['search', 'field', 'direction']),
             'balances' => $balances,
             'confirmation' => $confirm,
+            'client' => $name,
         ]);
     }
 
