@@ -11,7 +11,7 @@ use App\Http\Controllers\BankBranchController;
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\BankBalanceController;
 use App\Http\Controllers\BankConfirmationController;
-use App\Models\BankBalance;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -44,11 +44,10 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->name('dashboard');
+// Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+//     return Inertia::render('Dashboard');
+// })->name('dashboard');
 
-// Companies
 
 Route::get('companies', [CompanyController::class, 'index'])
     ->name('companies')
@@ -105,6 +104,11 @@ Route::get('bankConfig', [BankConfirmationController::class, 'bankConfig'])
     ->name('bankConfig')
     ->middleware('auth');
 
+//Dashboad
+
+Route::get('dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard')
+    ->middleware('auth');
 
 // Banks
 

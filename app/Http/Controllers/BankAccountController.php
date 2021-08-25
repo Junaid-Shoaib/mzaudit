@@ -9,6 +9,7 @@ use App\Models\BankAccount;
 use App\Models\BankBalance;
 use App\Models\Year;
 use App\Models\BankBranch;
+use App\Models\Bank;
 use App\Models\Company;
 use Inertia\Inertia;
 use Carbon\Carbon;
@@ -109,6 +110,10 @@ class BankAccountController extends Controller
     {
         $data  = BankBranch::all()->map->only('bank_id')->first();
         if ($data) {
+
+
+
+
             return Inertia::render('Accounts/Create', [
 
                 //just fetch crete
@@ -137,6 +142,9 @@ class BankAccountController extends Controller
                             'name' => $branch->bank->name,
                         ];
                     }),
+
+
+
             ]);
         } else {
             return Redirect::route('branches.create', 'accounts')->with('success', 'Create Branch First');

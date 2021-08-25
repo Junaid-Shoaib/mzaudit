@@ -52,25 +52,6 @@
                   />
                 </td>
                 <td class="w-4/12">
-                  <!-- <input
-                    type="text"
-                    list="branches"
-                    v-model="account.branch_id"
-                    placeholder="Select Your Bank........"
-                    class="rounded-md w-full"
-                  /> -->
-                  <!-- <datalist id="branches">
-                    <option
-                      :key="branch.name"
-                      :value="branch.id"
-                      v-for="branch in branches"
-                    >
-                      {{ branch.name }}
-                      {{ branch.address }}
-
-                      {{ film }}
-                    </option>
-                  </datalist> -->
                   <select v-model="account.branch_id" class="rounded-md w-full">
                     <option
                       v-for="branch in branches"
@@ -173,6 +154,7 @@
 <script>
 import AppLayout from "@/Layouts/AppLayout";
 import { useForm } from "@inertiajs/inertia-vue3";
+// import Multiselect from "vue-multiselect";
 
 export default {
   components: {

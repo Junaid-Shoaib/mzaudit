@@ -9,7 +9,7 @@
           Confirmation.pk
         </inertia-link> -->
       </div>
-      <div class="fixed inset-y-0 right-0 mr-12 py-1" v-if="canLogin">
+      <div class="fixed inset-y-0 right-0 mr-12 py-5" v-if="canLogin">
         <inertia-link
           v-if="$page.props.user"
           href="/dashboard"
@@ -71,14 +71,7 @@
         </div>
 
         <div class="absolute z-20 invisible md:visible bottom-16 right-10">
-          <p
-            class="
-              text-white text-center
-              underline
-              font-sans font-bold
-              text-2xl
-            "
-          >
+          <p class="text-white text-center font-sans font-bold text-2xl">
             Powered by
           </p>
           <p class="font-bold text-md text-center text-white">
@@ -90,9 +83,7 @@
         </div>
 
         <div class="absolute z-20 invisible md:visible bottom-16 left-10">
-          <p
-            class="text-white text-left underline font-sans font-bold text-2xl"
-          >
+          <p class="text-white text-left font-sans font-bold text-2xl">
             Benefits
           </p>
           <p class="font-bold text-md mt-2 text-left text-white">
@@ -121,8 +112,8 @@
       "
     >
       <div class="">
-        <p class="text-sm font-bold text-white ml-5">
-          Copyright @ 2021, Confirmation
+        <p class="text-sm font-bold bg-blend-screen text-white ml-5">
+          Copyright @ 2021, Confirmation.pk
         </p>
       </div>
     </div>

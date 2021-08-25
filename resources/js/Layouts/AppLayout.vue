@@ -66,6 +66,7 @@
                     <!-- <div class="block px-4 py-2 text-xs text-gray-400">
                         Create Activity
                         </div> -->
+
                     <jet-dropdown-link
                       :href="route('companies')"
                       :active="route().current('companies')"
