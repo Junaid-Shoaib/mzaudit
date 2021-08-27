@@ -27,7 +27,10 @@
     },
     "dependencies": {
         "@inertiajs/progress": "^0.2.4",
+        "@suadelabs/vue3-multiselect": "^1.0.2",
         "vue-multiselect": "^2.1.6",
-        "vue3-datepicker": "^0.2.4"
+        "vue-simple-search-dropdown": "^1.0.1",
+        "vue3-datepicker": "^0.2.4",
+        "vue3-treeselect": "^0.1.10"
     }
 }

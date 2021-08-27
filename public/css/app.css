@@ -32718,7 +32718,8 @@ select {
           animation: bounce 1s infinite;
 }
 
-/* @import "../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"; */
+/* @import "../../node_modules/vue-multiselect/dist/vue-multiselect.min.css";
+@import 'vue3-treeselect/dist/vue3-treeselect.css'; */
 
 @media (min-width: 640px) {
   .sm\:container {

@@ -51,16 +51,25 @@
                     class="rounded-md w-full"
                   />
                 </td>
-                <td class="w-4/12">
-                  <select v-model="account.branch_id" class="rounded-md w-full">
+                <td class="w-4/12 rounded-md">
+                  <multiselect
+                    placeholder="Select Branch."
+                    v-model="account.branch_id"
+                    track-by="id"
+                    label="address"
+                    :options="options"
+                  >
+                  </multiselect>
+                  <!-- <select v-model="account.branch_id" class="rounded-md w-full">
                     <option
                       v-for="branch in branches"
                       :key="branch.id"
                       :value="branch.id"
                     >
-                      {{ branch.name }} - {{ branch.address }}
+                      {{ branch.name }} -
+                      {{ branch.address }}
                     </option>
-                  </select>
+                  </select> -->
                 </td>
                 <td class="3/12">
                   <select v-model="account.type" class="rounded-md w-full">
@@ -154,24 +163,31 @@
 <script>
 import AppLayout from "@/Layouts/AppLayout";
 import { useForm } from "@inertiajs/inertia-vue3";
-// import Multiselect from "vue-multiselect";
+import Multiselect from "@suadelabs/vue3-multiselect";
 
 export default {
   components: {
     AppLayout,
+    Multiselect,
   },
 
   props: {
     errors: Object,
-    branches: Object,
+    branches: Array,
     balances: Object,
+  },
+
+  data() {
+    return {
+      options: this.branches,
+    };
   },
 
   setup(props) {
     const form = useForm({
       accounts: [
         {
-          branch_id: props.branches[0].id,
+          branch_id: null,
           type: "CURRENT",
           name: null,
           currency: "PKR",
@@ -206,3 +222,4 @@ export default {
   },
 };
 </script>
+<style src="@suadelabs/vue3-multiselect/dist/vue3-multiselect.css"></style>

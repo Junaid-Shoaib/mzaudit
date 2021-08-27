@@ -23,7 +23,6 @@ class BankAccountController extends Controller
             'direction' => ['in:asc,desc'],
             'field' => ['in:name,address'],
         ]);
-
         $query = BankAccount::query();
 
         if (request('search')) {
@@ -112,6 +111,21 @@ class BankAccountController extends Controller
         if ($data) {
 
 
+            // $mechanics = User::where('type', 'mechanic')->when(request('term'), function ($query, $term) {
+            // $mechanics = BankBranch::when(request('term'), function ($query, $term) {
+            //     $query->where('name', 'like', "%$term%");
+            // })->limit(15)->get()->map(
+
+            //     function ($branch) {
+            //         return
+            //             [
+            //                 'id' => $branch->id,
+            //                 'address'  => $branch->address,
+            //             ];
+            //     }
+            // );
+            // dd($mechanics);
+
 
 
             return Inertia::render('Accounts/Create', [
@@ -134,15 +148,30 @@ class BankAccountController extends Controller
                     ),
 
                 'branches' => BankBranch::all()
+                    // $branches = BankBranch::all()
                     ->map(function ($branch) {
-                        return [
-                            'id' => $branch->id,
-                            'address' => $branch->address,
-                            'bank_id' => $branch->bank_id,
-                            'name' => $branch->bank->name,
-                        ];
-                    }),
+                        return
+                            [
+                                'id' => $branch->id,
+                                'address' => $branch->bank->name . " - " . $branch->address,
 
+                            ];
+                    }),
+                // dd($branches),
+                //
+                // 'branches' => $branches,
+                'mechanics' => BankBranch::when(request('term'), function ($query, $term) {
+                    $query->where('name', 'like', "%$term%");
+                })->limit(15)->get()->map(
+
+                    function ($branch) {
+                        return
+                            [
+                                'id' => $branch->id,
+                                'address'  => $branch->address,
+                            ];
+                    }
+                ),
 
 
             ]);
@@ -164,12 +193,14 @@ class BankAccountController extends Controller
         ]);
 
         $accounts = $request->accounts;
+        // dd($accounts);
         foreach ($accounts as $acc) {
+            // dd($acc);
             BankAccount::create([
                 'name' => $acc['name'],
                 'type' => $acc['type'],
                 'currency' => $acc['currency'],
-                'branch_id' => $acc['branch_id'],
+                'branch_id' => $acc['branch_id']['id'],
                 'company_id' => session('company_id'),
 
             ]);
