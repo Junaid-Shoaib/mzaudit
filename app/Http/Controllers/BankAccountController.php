@@ -110,24 +110,6 @@ class BankAccountController extends Controller
         $data  = BankBranch::all()->map->only('bank_id')->first();
         if ($data) {
 
-
-            // $mechanics = User::where('type', 'mechanic')->when(request('term'), function ($query, $term) {
-            // $mechanics = BankBranch::when(request('term'), function ($query, $term) {
-            //     $query->where('name', 'like', "%$term%");
-            // })->limit(15)->get()->map(
-
-            //     function ($branch) {
-            //         return
-            //             [
-            //                 'id' => $branch->id,
-            //                 'address'  => $branch->address,
-            //             ];
-            //     }
-            // );
-            // dd($mechanics);
-
-
-
             return Inertia::render('Accounts/Create', [
 
                 //just fetch crete
@@ -147,8 +129,8 @@ class BankAccountController extends Controller
                         }
                     ),
 
+                // $branches = BankBranch::all()
                 'branches' => BankBranch::all()
-                    // $branches = BankBranch::all()
                     ->map(function ($branch) {
                         return
                             [
@@ -157,23 +139,8 @@ class BankAccountController extends Controller
 
                             ];
                     }),
+
                 // dd($branches),
-                //
-                // 'branches' => $branches,
-                'mechanics' => BankBranch::when(request('term'), function ($query, $term) {
-                    $query->where('name', 'like', "%$term%");
-                })->limit(15)->get()->map(
-
-                    function ($branch) {
-                        return
-                            [
-                                'id' => $branch->id,
-                                'address'  => $branch->address,
-                            ];
-                    }
-                ),
-
-
             ]);
         } else {
             return Redirect::route('branches.create', 'accounts')->with('success', 'Create Branch First');

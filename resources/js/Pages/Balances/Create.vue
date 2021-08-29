@@ -52,7 +52,15 @@
                   />
                 </td> -->
                 <td class="w-5/12">
-                  <select
+                  <multiselect
+                    placeholder="Select Account Number."
+                    v-model="balance.account_id"
+                    track-by="id"
+                    label="branch"
+                    :options="options"
+                  >
+                  </multiselect>
+                  <!-- <select
                     v-model="balance.account_id"
                     class="rounded-md w-full"
                   >
@@ -63,7 +71,7 @@
                     >
                       {{ account.branch }}
                     </option>
-                  </select>
+                  </select> -->
                 </td>
                 <td class="w-2/12">
                   <button
@@ -114,15 +122,23 @@
 <script>
 import AppLayout from "@/Layouts/AppLayout";
 import { useForm } from "@inertiajs/inertia-vue3";
+import Multiselect from "@suadelabs/vue3-multiselect";
 
 export default {
   components: {
     AppLayout,
+    Multiselect,
   },
 
   props: {
     errors: Object,
-    accounts: Object,
+    accounts: Array,
+  },
+
+  data() {
+    return {
+      options: this.accounts,
+    };
   },
 
   setup(props) {
@@ -132,30 +148,13 @@ export default {
           ledger: "",
           statement: "",
           confirmation: "",
-          account_id: props.accounts[0].id,
+          account_id: props.accounts[0],
+          //   account_id: props.accounts[0].id,
         },
       ],
     });
     return { form };
   },
-
-  // data() {
-  //     return {
-  //       form: this.$inertia.form({
-  //         balances: [
-  //           {
-  //             ledger: "",
-  //             statement: "",
-  //             confirmation: "",
-  //             account_id: this.accounts[0].id,
-  //           },
-  //         ],
-  //       }),
-  //       isError: false,
-  //       isLoading: false,
-  //       firstError: "",
-  //     };
-  //   },
 
   watch: {
     errors: function () {
@@ -167,21 +166,12 @@ export default {
   },
 
   methods: {
-    // submit() {
-    //   this.isLoading = true;
-    //   setTimeout(() => {
-    //     this.isLoading = false;
-    //   }, 4000);
-
-    //   this.$inertia.post(route("balances.store"), this.form);
-    // },
-
     addRow() {
       this.form.balances.push({
         ledger: "",
         statement: "",
         confirmation: "",
-        account_id: this.accounts[0].id,
+        account_id: props.accounts[0],
       });
     },
 
@@ -191,3 +181,4 @@ export default {
   },
 };
 </script>
+<style src="@suadelabs/vue3-multiselect/dist/vue3-multiselect.css"></style>

@@ -17309,7 +17309,7 @@ __webpack_require__.r(__webpack_exports__);
   setup: function setup(props) {
     var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.useForm)({
       accounts: [{
-        branch_id: null,
+        branch_id: props.branches[0],
         type: "CURRENT",
         name: null,
         currency: "PKR"
@@ -17330,7 +17330,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addRow: function addRow() {
       this.form.accounts.push({
-        branch_id: this.branches[0].id,
+        branch_id: props.branches[0],
         type: "CURRENT",
         name: null,
         currency: "PKR"
@@ -17913,15 +17913,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
+/* harmony import */ var _suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @suadelabs/vue3-multiselect */ "./node_modules/@suadelabs/vue3-multiselect/dist/vue3-multiselect.umd.min.js");
+/* harmony import */ var _suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default
+    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
+    Multiselect: (_suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2___default())
   },
   props: {
     errors: Object,
-    accounts: Object
+    accounts: Array
+  },
+  data: function data() {
+    return {
+      options: this.accounts
+    };
   },
   setup: function setup(props) {
     var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.useForm)({
@@ -17929,30 +17938,14 @@ __webpack_require__.r(__webpack_exports__);
         ledger: "",
         statement: "",
         confirmation: "",
-        account_id: props.accounts[0].id
+        account_id: props.accounts[0] //   account_id: props.accounts[0].id,
+
       }]
     });
     return {
       form: form
     };
   },
-  // data() {
-  //     return {
-  //       form: this.$inertia.form({
-  //         balances: [
-  //           {
-  //             ledger: "",
-  //             statement: "",
-  //             confirmation: "",
-  //             account_id: this.accounts[0].id,
-  //           },
-  //         ],
-  //       }),
-  //       isError: false,
-  //       isLoading: false,
-  //       firstError: "",
-  //     };
-  //   },
   watch: {
     errors: function errors() {
       if (this.errors) {
@@ -17962,19 +17955,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    // submit() {
-    //   this.isLoading = true;
-    //   setTimeout(() => {
-    //     this.isLoading = false;
-    //   }, 4000);
-    //   this.$inertia.post(route("balances.store"), this.form);
-    // },
     addRow: function addRow() {
       this.form.balances.push({
         ledger: "",
         statement: "",
         confirmation: "",
-        account_id: this.accounts[0].id
+        account_id: props.accounts[0]
       });
     },
     deleteRow: function deleteRow(index) {
@@ -18242,11 +18228,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
+/* harmony import */ var _suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @suadelabs/vue3-multiselect */ "./node_modules/@suadelabs/vue3-multiselect/dist/vue3-multiselect.umd.min.js");
+/* harmony import */ var _suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
-    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default
+    AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
+    Multiselect: (_suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2___default())
   },
   props: {
     branches: Object,
@@ -18254,20 +18244,21 @@ __webpack_require__.r(__webpack_exports__);
     banks: Object,
     accounts: Object
   },
+  data: function data() {
+    return {
+      options: this.banks
+    };
+  },
   setup: function setup(props) {
     var form = (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.useForm)({
       address: null,
       accounts: props.accounts,
-      bank_id: props.banks[0].id
+      bank_id: props.banks[0].id //   bank_id: null,
+
     });
     return {
       form: form
     };
-  },
-  methods: {// branchchange() {
-    //   //   console.log(this.form.bank_id);
-    //   //   this.form.bank_id == this.branches.bank;
-    // },
   }
 });
 
@@ -24171,6 +24162,8 @@ var _hoisted_13 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
 
+  var _component_multiselect = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("multiselect");
+
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, null, {
@@ -24207,23 +24200,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "rounded-md w-full"
         }, null, 8
         /* PROPS */
-        , ["onUpdate:modelValue"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, balance.ledger]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <td>\n                  <input\n                    v-model=\"balance.statement\"\n                    type=\"text\"\n                    class=\"rounded-md w-36\"\n                  />\n                </td>\n                <td>\n                  <input\n                    v-model=\"balance.confirmation\"\n                    type=\"text\"\n                    class=\"rounded-md w-36\"\n                  />\n                </td> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+        , ["onUpdate:modelValue"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, balance.ledger]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <td>\n                  <input\n                    v-model=\"balance.statement\"\n                    type=\"text\"\n                    class=\"rounded-md w-36\"\n                  />\n                </td>\n                <td>\n                  <input\n                    v-model=\"balance.confirmation\"\n                    type=\"text\"\n                    class=\"rounded-md w-36\"\n                  />\n                </td> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_multiselect, {
+          placeholder: "Select Account Number.",
+          modelValue: balance.account_id,
           "onUpdate:modelValue": function onUpdateModelValue($event) {
             return balance.account_id = $event;
           },
-          "class": "rounded-md w-full"
-        }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.accounts, function (account) {
-          return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
-            key: account.id,
-            value: account.id
-          }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(account.branch), 9
-          /* TEXT, PROPS */
-          , ["value"]);
-        }), 128
-        /* KEYED_FRAGMENT */
-        ))], 8
+          "track-by": "id",
+          label: "branch",
+          options: $data.options
+        }, null, 8
         /* PROPS */
-        , ["onUpdate:modelValue"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, balance.account_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+        , ["modelValue", "onUpdate:modelValue", "options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <select\n                    v-model=\"balance.account_id\"\n                    class=\"rounded-md w-full\"\n                  >\n                    <option\n                      v-for=\"account in accounts\"\n                      :key=\"account.id\"\n                      :value=\"account.id\"\n                    >\n                      {{ account.branch }}\n                    </option>\n                  </select> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
           type: "button",
           onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
             return $options.deleteRow(index);
@@ -25110,8 +25098,6 @@ var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 );
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _this = this;
-
   var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
 
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
@@ -25139,7 +25125,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }, 8
       /* PROPS */
-      , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+      , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <multiselect\n            v-model=\"form.bank_id\"\n            placeholder=\"Select Branch.\"\n            label=\"name\"\n            track-by=\"id\"\n            :options=\"options\"\n            @tag=\"addTag\"\n          >\n          </multiselect> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" :close-on-select=\"false\" "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         onChange: _cache[1] || (_cache[1] = function () {
           return _ctx.branchchange && _ctx.branchchange.apply(_ctx, arguments);
         }),
@@ -25161,7 +25147,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* HYDRATE_EVENTS, NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $setup.form.bank_id]]), $props.errors.bank_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.errors.bank_id), 1
       /* TEXT */
-      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" </div>\n        <div class=\"p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap\"> "), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("textarea", {
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("textarea", {
         "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
           return $setup.form.address = $event;
         }),
@@ -25184,7 +25170,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.branches, function (item) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
           key: item.id
-        }, [item.bank_id == _this.form.bank_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.add), 1
+        }, [item.bank_id == $setup.form.bank_id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("td", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.add), 1
         /* TEXT */
         )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
       }), 128
@@ -80774,9 +80760,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Create_vue_vue_type_template_id_f87e4f0a__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Create.vue?vue&type=template&id=f87e4f0a */ "./resources/js/Pages/Balances/Create.vue?vue&type=template&id=f87e4f0a");
 /* harmony import */ var _Create_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Create.vue?vue&type=script&lang=js */ "./resources/js/Pages/Balances/Create.vue?vue&type=script&lang=js");
+/* harmony import */ var _suadelabs_vue3_multiselect_dist_vue3_multiselect_css_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @suadelabs/vue3-multiselect/dist/vue3-multiselect.css?vue&type=style&index=0&lang=css */ "./node_modules/@suadelabs/vue3-multiselect/dist/vue3-multiselect.css?vue&type=style&index=0&lang=css");
 
 
 
+
+;
 _Create_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _Create_vue_vue_type_template_id_f87e4f0a__WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}
@@ -80930,9 +80919,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Create_vue_vue_type_template_id_1b73f622__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Create.vue?vue&type=template&id=1b73f622 */ "./resources/js/Pages/Branches/Create.vue?vue&type=template&id=1b73f622");
 /* harmony import */ var _Create_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Create.vue?vue&type=script&lang=js */ "./resources/js/Pages/Branches/Create.vue?vue&type=script&lang=js");
+/* harmony import */ var _suadelabs_vue3_multiselect_dist_vue3_multiselect_css_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @suadelabs/vue3-multiselect/dist/vue3-multiselect.css?vue&type=style&index=0&lang=css */ "./node_modules/@suadelabs/vue3-multiselect/dist/vue3-multiselect.css?vue&type=style&index=0&lang=css");
 
 
 
+
+;
 _Create_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _Create_vue_vue_type_template_id_1b73f622__WEBPACK_IMPORTED_MODULE_0__.render
 /* hot reload */
 if (false) {}

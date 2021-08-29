@@ -187,7 +187,7 @@ export default {
     const form = useForm({
       accounts: [
         {
-          branch_id: null,
+          branch_id: props.branches[0],
           type: "CURRENT",
           name: null,
           currency: "PKR",
@@ -209,7 +209,7 @@ export default {
   methods: {
     addRow() {
       this.form.accounts.push({
-        branch_id: this.branches[0].id,
+        branch_id: props.branches[0],
         type: "CURRENT",
         name: null,
         currency: "PKR",

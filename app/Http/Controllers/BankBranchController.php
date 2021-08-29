@@ -30,43 +30,25 @@ class BankBranchController extends Controller
             $query->orderBy(('bank_id'), ('asc'));
         }
 
-        // dd($query);
-        $balance = $query->paginate(10)
-            ->through(
-                function ($branch) {
-
-                    return [
-                        'id' => $branch->id,
-                        'address' => $branch->address,
-                        'bank_id' => $branch->bank_id,
-                        'name' => $branch->bank->name,
-                        'delete' => BankAccount::where('branch_id', $branch->id)->first() ? false : true,
-
-                    ];
-                }
-            );
-
-
-        // dd($balance);
-
 
         return Inertia::render(
             'Branches/Index',
             [
-                'balances' => $balance,
-                // 'balances' => $query->paginate(6)
-                //     ->through(
-                //         function ($branch) {
-                //             return [
-                //                 'id' => $branch->id,
-                //                 'address' => $branch->address,
-                //                 'bank_id' => $branch->bank_id,
-                //                 'name' => $branch->bank->name,
-                //                 'delete' => BankAccount::where('branch_id', $branch->id)->first() ? false : true,
+                'balances' => $query->paginate(10)
+                    ->through(
+                        function ($branch) {
 
-                //             ];
-                //         }
-                //     ),
+                            return [
+                                'id' => $branch->id,
+                                'address' => $branch->address,
+                                'bank_id' => $branch->bank_id,
+                                'name' => $branch->bank->name,
+                                'delete' => BankAccount::where('branch_id', $branch->id)->first() ? false : true,
+
+                            ];
+                        }
+                    ),
+
             ]
 
         );
@@ -75,7 +57,6 @@ class BankBranchController extends Controller
     //Create Branches
     public function create($accounts)
     {
-        // dd($accounts);
         $branches = BankBranch::all()
             ->map(
                 function ($branch) {
@@ -92,7 +73,8 @@ class BankBranchController extends Controller
                 "accounts" => $accounts,
                 "branches" => $branches,
                 'banks' => \App\Models\Bank::all()->map->only('id', 'name'),
-                // 'branches' => \App\Models\BankBranch::all(),
+                // $banks = \App\Models\Bank::all()->map->only('id', 'name'),
+                // dd($banks),
             ]);
         } else {
             return Redirect::route('banks.create', 'accounts')->with('success', 'Create Bank first.');
@@ -101,7 +83,7 @@ class BankBranchController extends Controller
 
     public function store(Req $request)
     {
-
+        dd($request);
         Request::validate([
             'bank_id' => ['required'],
             'address' => ['required'],
@@ -134,7 +116,7 @@ class BankBranchController extends Controller
         }
         // dd($add);
         if ($branchi == true) {
-
+            // dd($address);
             BankBranch::create([
                 'bank_id' => Request::input('bank_id'),
                 'address' => ucwords($address),
