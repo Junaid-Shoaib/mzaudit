@@ -53,6 +53,7 @@
                 </td> -->
                 <td class="w-5/12">
                   <multiselect
+                    class="w-full rounded-md border border-black"
                     placeholder="Select Account Number."
                     v-model="balance.account_id"
                     track-by="id"
@@ -181,4 +182,3 @@ export default {
   },
 };
 </script>
-<style src="@suadelabs/vue3-multiselect/dist/vue3-multiselect.css"></style>

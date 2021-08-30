@@ -83,7 +83,7 @@ class BankBranchController extends Controller
 
     public function store(Req $request)
     {
-        dd($request);
+        // dd($request);
         Request::validate([
             'bank_id' => ['required'],
             'address' => ['required'],

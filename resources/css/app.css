@@ -1,5 +1,5 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-/* @import "../../node_modules/vue-multiselect/dist/vue-multiselect.min.css";
-@import 'vue3-treeselect/dist/vue3-treeselect.css'; */
+@import '@suadelabs/vue3-multiselect/dist/vue3-multiselect.css'
+

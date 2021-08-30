@@ -29,20 +29,20 @@
             >Back
           </inertia-link>
         </div>
+
         <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
           <label class="w-28 inline-block text-right mr-4">Bank:</label>
-          <!-- <multiselect
+
+          <multiselect
+            class="max-h-10 w-full lg:w-1/4 rounded-md border border-black"
             v-model="form.bank_id"
             placeholder="Select Branch."
-            label="name"
             track-by="id"
+            label="name"
             :options="options"
-            @tag="addTag"
           >
-          </multiselect> -->
-          <!-- :close-on-select="false" -->
-          <select
-            @change="branchchange"
+          </multiselect>
+          <!-- <select
             class="pr-2 pb-2 max-h-10 w-full lg:w-1/4 rounded-md"
             label="bank_id"
             v-model="form.bank_id"
@@ -50,13 +50,11 @@
             <option v-for="bank in banks" :key="bank.id" :value="bank.id">
               {{ bank.name }}
             </option>
-          </select>
-          <div v-if="errors.bank_id">{{ errors.bank_id }}</div>
-
+          </select> -->
+          <!-- <div v-if="errors.bank_id">{{ errors.bank_id }}</div> -->
           <label class="w-28 inline-block text-right ml-7 mr-4"
             >Branch name and address:</label
           >
-
           <textarea
             v-model="form.address"
             rows="4"
@@ -91,6 +89,8 @@
           </button>
         </div>
         <div v-if="errors.address">{{ errors.address }}</div>
+        <!-- </div> -->
+
         <div
           class="
             px-4
@@ -114,7 +114,7 @@
         <tbody>
           <tr v-for="item in branches" :key="item.id">
             <td
-              v-if="item.bank_id == form.bank_id"
+              v-if="item.bank_id == form.bank_id['id']"
               class="py-3 px-4 border text-left"
             >
               {{ item.add }}
@@ -157,12 +157,11 @@ export default {
     const form = useForm({
       address: null,
       accounts: props.accounts,
-      bank_id: props.banks[0].id,
+      bank_id: props.banks[0],
       //   bank_id: null,
     });
     return { form };
   },
 };
 </script>
-<style src="@suadelabs/vue3-multiselect/dist/vue3-multiselect.css"></style>
 

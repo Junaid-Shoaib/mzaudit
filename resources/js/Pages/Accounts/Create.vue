@@ -53,6 +53,7 @@
                 </td>
                 <td class="w-4/12 rounded-md">
                   <multiselect
+                    class="w-full rounded-md border border-black"
                     placeholder="Select Branch."
                     v-model="account.branch_id"
                     track-by="id"
@@ -222,4 +223,3 @@ export default {
   },
 };
 </script>
-<style src="@suadelabs/vue3-multiselect/dist/vue3-multiselect.css"></style>
