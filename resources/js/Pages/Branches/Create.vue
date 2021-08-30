@@ -29,10 +29,20 @@
             >Back
           </inertia-link>
         </div>
+
         <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
           <label class="w-28 inline-block text-right mr-4">Bank:</label>
-          <select
-            @change="branchchange"
+
+          <multiselect
+            class="max-h-10 w-full lg:w-1/4 rounded-md border border-black"
+            v-model="form.bank_id"
+            placeholder="Select Branch."
+            track-by="id"
+            label="name"
+            :options="options"
+          >
+          </multiselect>
+          <!-- <select
             class="pr-2 pb-2 max-h-10 w-full lg:w-1/4 rounded-md"
             label="bank_id"
             v-model="form.bank_id"
@@ -40,14 +50,11 @@
             <option v-for="bank in banks" :key="bank.id" :value="bank.id">
               {{ bank.name }}
             </option>
-          </select>
-          <div v-if="errors.bank_id">{{ errors.bank_id }}</div>
-          <!-- </div>
-        <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap"> -->
+          </select> -->
+          <!-- <div v-if="errors.bank_id">{{ errors.bank_id }}</div> -->
           <label class="w-28 inline-block text-right ml-7 mr-4"
             >Branch name and address:</label
           >
-
           <textarea
             v-model="form.address"
             rows="4"
@@ -82,6 +89,8 @@
           </button>
         </div>
         <div v-if="errors.address">{{ errors.address }}</div>
+        <!-- </div> -->
+
         <div
           class="
             px-4
@@ -105,7 +114,7 @@
         <tbody>
           <tr v-for="item in branches" :key="item.id">
             <td
-              v-if="item.bank_id == this.form.bank_id"
+              v-if="item.bank_id == form.bank_id['id']"
               class="py-3 px-4 border text-left"
             >
               {{ item.add }}
@@ -123,10 +132,12 @@
 <script>
 import AppLayout from "@/Layouts/AppLayout";
 import { useForm } from "@inertiajs/inertia-vue3";
+import Multiselect from "@suadelabs/vue3-multiselect";
 
 export default {
   components: {
     AppLayout,
+    Multiselect,
   },
 
   props: {
@@ -136,20 +147,21 @@ export default {
     accounts: Object,
   },
 
+  data() {
+    return {
+      options: this.banks,
+    };
+  },
+
   setup(props) {
     const form = useForm({
       address: null,
       accounts: props.accounts,
-      bank_id: props.banks[0].id,
+      bank_id: props.banks[0],
+      //   bank_id: null,
     });
     return { form };
   },
-
-  methods: {
-    // branchchange() {
-    //   //   console.log(this.form.bank_id);
-    //   //   this.form.bank_id == this.branches.bank;
-    // },
-  },
 };
 </script>
+

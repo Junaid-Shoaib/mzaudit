@@ -23,7 +23,6 @@ class BankAccountController extends Controller
             'direction' => ['in:asc,desc'],
             'field' => ['in:name,address'],
         ]);
-
         $query = BankAccount::query();
 
         if (request('search')) {
@@ -111,9 +110,6 @@ class BankAccountController extends Controller
         $data  = BankBranch::all()->map->only('bank_id')->first();
         if ($data) {
 
-
-
-
             return Inertia::render('Accounts/Create', [
 
                 //just fetch crete
@@ -133,18 +129,18 @@ class BankAccountController extends Controller
                         }
                     ),
 
+                // $branches = BankBranch::all()
                 'branches' => BankBranch::all()
                     ->map(function ($branch) {
-                        return [
-                            'id' => $branch->id,
-                            'address' => $branch->address,
-                            'bank_id' => $branch->bank_id,
-                            'name' => $branch->bank->name,
-                        ];
+                        return
+                            [
+                                'id' => $branch->id,
+                                'address' => $branch->bank->name . " - " . $branch->address,
+
+                            ];
                     }),
 
-
-
+                // dd($branches),
             ]);
         } else {
             return Redirect::route('branches.create', 'accounts')->with('success', 'Create Branch First');
@@ -164,12 +160,14 @@ class BankAccountController extends Controller
         ]);
 
         $accounts = $request->accounts;
+        // dd($accounts);
         foreach ($accounts as $acc) {
+            // dd($acc);
             BankAccount::create([
                 'name' => $acc['name'],
                 'type' => $acc['type'],
                 'currency' => $acc['currency'],
-                'branch_id' => $acc['branch_id'],
+                'branch_id' => $acc['branch_id']['id'],
                 'company_id' => session('company_id'),
 
             ]);

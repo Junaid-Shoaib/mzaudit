@@ -77,7 +77,7 @@ class BankBalanceController extends Controller
 
             ->map(
                 function ($bal) {
-                    // dd($account);
+
                     return [
                         'id' => $bal->id,
                         'name' => $bal->name,
@@ -98,6 +98,7 @@ class BankBalanceController extends Controller
             }
         }
 
+        // dd($accounts);
         if ($account) {
 
             return Inertia::render('Balances/Create', [
@@ -121,12 +122,12 @@ class BankBalanceController extends Controller
         ]);
 
         foreach ($request->balances as $balance) {
-
+            // dd($balance);
             BankBalance::create([
                 'ledger' => $balance['ledger'],
                 'statement' => $balance['statement'],
                 'confirmation' => $balance['confirmation'],
-                'account_id' => $balance['account_id'],
+                'account_id' => $balance['account_id']['id'],
                 'company_id' => session('company_id'),
                 'year_id' => session('year_id'),
             ]);
