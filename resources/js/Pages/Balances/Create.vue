@@ -164,7 +164,7 @@ export default {
         this.isError = true;
       }
     },
-  },
+},
 
   methods: {
     addRow() {
@@ -172,7 +172,7 @@ export default {
         ledger: "",
         statement: "",
         confirmation: "",
-        account_id: props.accounts[0],
+        account_id: this.accounts[0],
       });
     },
 

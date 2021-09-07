@@ -31,7 +31,7 @@
                           border border-transparent
                           text-sm
                           leading-4
-                          font-medium
+                          font-mediumla
                           rounded-md
                           text-gray-500
                           bg-white

@@ -210,7 +210,7 @@ export default {
   methods: {
     addRow() {
       this.form.accounts.push({
-        branch_id: props.branches[0],
+        branch_id: this.branches[0],
         type: "CURRENT",
         name: null,
         currency: "PKR",
