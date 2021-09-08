@@ -17330,7 +17330,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addRow: function addRow() {
       this.form.accounts.push({
-        branch_id: props.branches[0],
+        branch_id: this.branches[0],
         type: "CURRENT",
         name: null,
         currency: "PKR"
@@ -17960,7 +17960,7 @@ __webpack_require__.r(__webpack_exports__);
         ledger: "",
         statement: "",
         confirmation: "",
-        account_id: props.accounts[0]
+        account_id: this.accounts[0]
       });
     },
     deleteRow: function deleteRow(index) {
@@ -18180,11 +18180,13 @@ __webpack_require__.r(__webpack_exports__);
     Paginator: _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__.default
   },
   props: {
-    balances: Object
+    balances: Object,
+    filters: Object
   },
   data: function data() {
     return {
       params: {
+        search: this.filters.search,
         field: "name",
         direction: "asc"
       }
@@ -18328,11 +18330,13 @@ __webpack_require__.r(__webpack_exports__);
     Paginator: _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__.default
   },
   props: {
-    balances: Object
+    balances: Object,
+    filters: Object
   },
   data: function data() {
     return {
       params: {
+        search: this.filters.search,
         field: "bank_id",
         direction: "asc"
       }
@@ -20918,7 +20922,7 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
   "class": "hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
   type: "button",
-  "class": "\n                          inline-flex\n                          items-center\n                          px-3\n                          py-2\n                          border border-transparent\n                          text-sm\n                          leading-4\n                          font-medium\n                          rounded-md\n                          text-gray-500\n                          bg-white\n                          hover:text-gray-700\n                          focus:outline-none\n                          transition\n                          ease-in-out\n                          duration-150\n                        "
+  "class": "\n                          inline-flex\n                          items-center\n                          px-3\n                          py-2\n                          border border-transparent\n                          text-sm\n                          leading-4\n                          font-mediumla\n                          rounded-md\n                          text-gray-500\n                          bg-white\n                          hover:text-gray-700\n                          focus:outline-none\n                          transition\n                          ease-in-out\n                          duration-150\n                        "
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Menu "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("svg", {
   "class": "ml-2 -mr-0.5 h-4 w-4",
   xmlns: "http://www.w3.org/2000/svg",
@@ -24959,8 +24963,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }, 8
       /* PROPS */
-      , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
-        onClick: _cache[1] || (_cache[1] = function ($event) {
+      , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+        type: "search",
+        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+          return $data.params.search = $event;
+        }),
+        "aria-label": "Search",
+        placeholder: "Search",
+        "class": "border rounded-xl px-4 py-1 m-1"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.params.search]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+        onClick: _cache[2] || (_cache[2] = function ($event) {
           return $options.sort('name');
         })
       }, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" name Descending  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" v-if=\"params.field == 'name' && params.direction == 'desc'\" "), $data.params.direction == 'desc' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg", _hoisted_10, [_hoisted_11])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" name Ascending  Starts"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" v-if=\"params.field === 'name' && params.direction === 'asc'\" "), $data.params.direction === 'asc' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg", _hoisted_12, [_hoisted_13])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" name Ascending  Ends")])]), _hoisted_14])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.balances.data, function (item) {
@@ -25484,8 +25498,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }, 8
       /* PROPS */
-      , ["href"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
-        onClick: _cache[1] || (_cache[1] = function ($event) {
+      , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+        type: "search",
+        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+          return $data.params.search = $event;
+        }),
+        "aria-label": "Search",
+        placeholder: "Search",
+        "class": "border rounded-xl px-4 py-1 m-1"
+      }, null, 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.params.search]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+        onClick: _cache[2] || (_cache[2] = function ($event) {
           return $options.sort('bank_id');
         })
       }, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" name Descending  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" v-if=\"params.field == 'name' && params.direction == 'desc'\" "), $data.params.direction == 'desc' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg", _hoisted_10, [_hoisted_11])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" name Ascending  Starts"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" v-if=\"params.field === 'name' && params.direction === 'asc'\" "), $data.params.direction === 'asc' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg", _hoisted_12, [_hoisted_13])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" name Ascending  Ends")])]), _hoisted_14, _hoisted_15])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.balances.data, function (item) {

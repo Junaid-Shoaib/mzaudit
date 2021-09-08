@@ -34,6 +34,7 @@
           />
           <div v-if="errors.begin">{{ errors.begin }}</div>
         </div>
+        
         <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
           <label class="w-28 inline-block text-right mr-4">End:</label>
           <datepicker

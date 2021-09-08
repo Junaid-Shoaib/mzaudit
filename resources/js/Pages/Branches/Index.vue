@@ -15,6 +15,13 @@
       >
         Add Branch
       </inertia-link>
+      <input
+        type="search"
+        v-model="params.search"
+        aria-label="Search"
+        placeholder="Search"
+        class="border rounded-xl px-4 py-1 m-1"
+        />
     </div>
     <div class="">
       <table class="shadow-lg border mt-4 ml-12 rounded-xl w-11/12">
@@ -154,11 +161,13 @@ export default {
 
   props: {
     balances: Object,
+    filters: Object,
   },
 
   data() {
     return {
       params: {
+        search: this.filters.search,
         field: "bank_id",
         direction: "asc",
       },

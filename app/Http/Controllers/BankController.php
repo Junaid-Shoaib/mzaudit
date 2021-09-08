@@ -25,6 +25,9 @@ class BankController extends Controller
             'field' => ['in:name,address'],
         ]);
         $query = Bank::query();
+        if (request('search')) {
+            $query->where('name', 'LIKE', '%' . request('search') . '%');
+        }
         if (request()->has(['field', 'direction'])) {
             $query->orderBy(request('field'), request('direction'));
         } else {
@@ -33,7 +36,7 @@ class BankController extends Controller
 
 
         return Inertia::render('Banks/Index', [
-            // 'balances' => $balance,
+            'filters' => request()->all(['search', 'field', 'direction']),
             'balances' => $query->paginate(10)
                 ->through(
                     fn ($bank) =>

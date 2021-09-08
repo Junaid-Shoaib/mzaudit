@@ -23,10 +23,17 @@ class BankBranchController extends Controller
             'direction' => ['in:asc,desc'],
             'field' => ['in:bank_id,address'],
         ]);
+
         $query = BankBranch::query();
+
+        if (request('search')) {
+            $query->where('address', 'LIKE', '%' . request('search') . '%');
+        }
+
         if (request()->has(['field', 'direction'])) {
             $query->orderBy(request('field'), request('direction'));
-        } else {
+        } 
+        else {
             $query->orderBy(('bank_id'), ('asc'));
         }
 
@@ -34,6 +41,7 @@ class BankBranchController extends Controller
         return Inertia::render(
             'Branches/Index',
             [
+                'filters' => request()->all(['search', 'field', 'direction']),
                 'balances' => $query->paginate(10)
                     ->through(
                         function ($branch) {
@@ -99,6 +107,7 @@ class BankBranchController extends Controller
             }
         }
 
+        
         $branchi = true;
         foreach ($branches as $branch) {
             $replace = str_replace([" "], "\n", $branch->address);
@@ -114,11 +123,11 @@ class BankBranchController extends Controller
                 $branchi = false;
             }
         }
-        // dd($add);
+    
         if ($branchi == true) {
-            // dd($address);
-            BankBranch::create([
-                'bank_id' => Request::input('bank_id'),
+            
+            BankBranch::create([                
+                'bank_id' => Request::input('bank_id')['id'],
                 'address' => ucwords($address),
             ]);
 
@@ -192,13 +201,17 @@ class BankBranchController extends Controller
             $branch->address = ucwords($address);
             $branch->save();
             return Redirect::route('branches')->with('success', 'Bank Branch updated.');
-        } else {
+
+        } 
+        else 
+        {
             return Redirect::route('branches.edit', $branch->id)->with('success', 'The Name has Already been taken.');
         }
 
         $branch->bank_id = Request::input('bank_id');
         $branch->address = ucwords(Request::input('address'));
         $branch->save();
+        
 
         return Redirect::route('branches')->with('success', 'Bank Branch updated.');
     }
