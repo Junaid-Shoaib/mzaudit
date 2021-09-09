@@ -19,7 +19,17 @@
           "
         >
           <inertia-link
-            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+            class="
+              border
+              bg-blue-400
+              text-black
+              rounded-xl
+              px-4
+              py-1
+              m-1
+              hover:text-white
+              hover:bg-blue-600
+            "
             :href="route('companies')"
             >Back
           </inertia-link>
@@ -141,7 +151,17 @@
           "
         >
           <button
-            class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
+            class="
+              border
+              rounded-xl
+              px-8
+              py-2
+              ml-4
+              mt-3
+              bg-green-500
+              hover:text-white
+              hover:bg-green-600
+            "
             type="submit"
             :disabled="form.processing"
           >

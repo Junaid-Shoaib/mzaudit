@@ -26,7 +26,16 @@
     </div>
     <div class="relative mt-5 ml-7">
       <inertia-link
-        class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+        class="
+          border
+          bg-blue-400
+          rounded-xl
+          px-4
+          py-1
+          m-1
+          hover:text-white
+          hover:bg-blue-600
+        "
         :href="route('companies.create')"
         >Add Company
       </inertia-link>
@@ -43,8 +52,8 @@
     <div class="">
       <table class="shadow-lg border mt-4 ml-12 rounded-xl w-11/12">
         <thead>
-          <tr class="bg-indigo-100">
-            <th class="px-4 border">
+          <tr class="bg-gray-700 text-white">
+            <th class="px-3 pt-3 pb-3 border">
               <span @click="sort('name')">
                 Name
                 <!-- name Descending  -->
@@ -59,7 +68,7 @@
                   y="0px"
                   width="20px"
                   height="20px"
-                  class="inline ml-4 float-right"
+                  class="inline ml-4 float-right fill-current text-white"
                   viewBox="0 0 97.761 97.762"
                   style="enable-background: new 0 0 97.761 97.762"
                   xml:space="preserve"
@@ -96,7 +105,7 @@
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                   x="0px"
                   y="0px"
-                  class="inline ml-4 float-right"
+                  class="inline ml-4 float-right fill-current text-white"
                   width="20px"
                   height="20px"
                   viewBox="0 0 97.68 97.68"
@@ -128,13 +137,13 @@
                 <!-- name Ascending  Ends-->
               </span>
             </th>
-            <th class="px-4 pt-4 pb-4 border">
+            <th class="px-3 pt-3 pb-3 border">
               <span @click="sort('address')">
                 Address
                 <!-- Address Descending  -->
                 <svg
                   version="1.1"
-                  v-if="params.field == 'address' && params.direction == 'desc'"
+                  v-if="params.direction == 'desc'"
                   id="Capa_1"
                   xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -142,7 +151,7 @@
                   y="0px"
                   width="20px"
                   height="20px"
-                  class="inline ml-4 float-right"
+                  class="inline ml-4 float-right fill-current text-white"
                   viewBox="0 0 97.761 97.762"
                   style="enable-background: new 0 0 97.761 97.762"
                   xml:space="preserve"
@@ -171,16 +180,14 @@
                 </svg>
                 <!-- address Ascending  Starts-->
                 <svg
-                  v-if="
-                    params.field === 'address' && params.direction === 'asc'
-                  "
+                  v-if="params.direction === 'asc'"
                   version="1.1"
                   id="Capa_1"
                   xmlns="http://www.w3.org/2000/svg"
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                   x="0px"
                   y="0px"
-                  class="inline ml-4 float-right"
+                  class="inline ml-4 float-right fill-current text-white"
                   width="20px"
                   height="20px"
                   viewBox="0 0 97.68 97.68"
@@ -212,29 +219,47 @@
                 <!-- address Ascending  Ends-->
               </span>
             </th>
-            <th class="px-4 pt-4 pb-4 border">Year End</th>
-            <th class="px-4 pt-4 pb-4 border">Actions</th>
+            <th class="px-3 pt-3 pb-3 border">Year End</th>
+            <th class="px-3 pt-3 pb-3 border">Actions</th>
           </tr>
 
           <!-- Null Balance -->
         </thead>
         <tbody>
           <tr v-for="item in balances.data" :key="item.id">
-            <td class="py-3 px-4 border text-left text-transform: uppercase">
+            <td class="py-2 px-2 border text-left text-transform: uppercase">
               {{ item.name }}
             </td>
-            <td class="py-3 px-4 border text-center">{{ item.address }}</td>
-            <td class="py-3 px-4 border text-center">{{ item.fiscal }}</td>
-            <td class="py-3 px-4 border text-center">
+            <td class="py-2 px-2 border text-center">{{ item.address }}</td>
+            <td class="py-2 px-2 border text-center">{{ item.fiscal }}</td>
+            <td class="py-2 px-2 border text-center">
               <inertia-link
-                class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+                class="
+                  border
+                  bg-blue-400
+                  rounded-xl
+                  px-4
+                  py-1
+                  m-1
+                  hover:text-white
+                  hover:bg-blue-600
+                "
                 :href="route('companies.edit', item.id)"
               >
                 <!-- v-if="can.edit" -->
                 <span>Edit</span>
               </inertia-link>
               <button
-                class="border bg-red-500 rounded-xl px-4 py-1 m-1"
+                class="
+                  border
+                  bg-red-500
+                  rounded-xl
+                  px-4
+                  py-1
+                  m-1
+                  hover:text-white
+                  hover:bg-red-600
+                "
                 @click="destroy(item.id)"
                 v-if="!item.years[0]"
               >

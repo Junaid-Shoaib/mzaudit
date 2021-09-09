@@ -9,7 +9,16 @@
     <div class="relative mt-5 ml-7 flex-row">
       <div class="flex-1 inline-block">
         <inertia-link
-          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+          class="
+            border
+            bg-blue-400
+            rounded-xl
+            px-4
+            py-1
+            m-1
+            hover:text-white
+            hover:bg-blue-600
+          "
           :href="route('confirmations')"
           >Back
         </inertia-link>
@@ -20,13 +29,13 @@
       <form @submit.prevent="submit">
         <div class="">
           <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
-            <thead class="bg-indigo-100 text-centre font-bold">
+            <thead class="bg-gray-700 text-white text-centre font-bold">
               <tr>
-                <th class="px-4 pt-4 pb-4 border">Bank</th>
-                <th class="px-4 pt-4 pb-4 border">Create Date</th>
-                <th class="px-4 pt-4 pb-4 border">Sent Date</th>
-                <th class="px-4 pt-4 pb-4 border">Reminder Date</th>
-                <th class="px-4 pt-4 pb-4 border">Received Date</th>
+                <th class="px-3 pt-3 pb-3 border">Bank</th>
+                <th class="px-3 pt-3 pb-3 border">Create Date</th>
+                <th class="px-3 pt-3 pb-3 border">Sent Date</th>
+                <th class="px-3 pt-3 pb-3 border">Reminder Date</th>
+                <th class="px-3 pt-3 pb-3 border">Received Date</th>
               </tr>
             </thead>
             <tbody>
@@ -35,7 +44,7 @@
                   <input
                     v-model="confirm.name"
                     type="text"
-                    class="rounded-md w-full my-2"
+                    class="rounded-md w-full my-1"
                     readonly
                   />
                 </td>
@@ -44,7 +53,7 @@
                     v-model="confirm.confirm_create"
                     type="date"
                     readonly
-                    class="rounded-md w-full my-2"
+                    class="rounded-md w-full my-1"
                   />
                 </td>
                 <td class="w-2/12">
@@ -53,7 +62,7 @@
                     type="date"
                     :upper-limit="upper"
                     :lower-limit="lower"
-                    class="rounded-md w-full my-2"
+                    class="rounded-md w-full my-1"
                   />
                 </td>
                 <td class="w-2/12">
@@ -62,7 +71,7 @@
                     type="date"
                     :upper-limit="upper"
                     :lower-limit="lower"
-                    class="rounded-md w-full my-2"
+                    class="rounded-md w-full my-1"
                   />
                 </td>
                 <td class="w-2/12">
@@ -71,7 +80,7 @@
                     type="date"
                     :upper-limit="upper"
                     :lower-limit="lower"
-                    class="rounded-md w-full my-2"
+                    class="rounded-md w-full my-1"
                   />
                 </td>
                 <!-- <td>
@@ -98,7 +107,17 @@
           "
         >
           <button
-            class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
+            class="
+              border
+              bg-green-500
+              rounded-xl
+              px-4
+              py-2
+              ml-4
+              mt-4
+              hover:text-white
+              hover:bg-green-600
+            "
             type="submit"
           >
             Update Confirmation

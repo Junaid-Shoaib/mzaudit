@@ -9,7 +9,16 @@
     <div class="relative mt-5 ml-7 flex-row">
       <div class="flex-1 inline-block">
         <inertia-link
-          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+          class="
+            border
+            bg-blue-400
+            rounded-xl
+            px-4
+            py-1
+            m-1
+            hover:text-white
+            hover:bg-blue-600
+          "
           :href="route('balances')"
           >Back
         </inertia-link>
@@ -44,12 +53,12 @@
           </button> -->
           <div v-if="isError">{{ firstError }}</div>
           <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
-            <thead class="bg-indigo-100 text-centre font-bold">
+            <thead class="bg-gray-700 text-white text-centre font-bold">
               <tr>
-                <th class="px-4 pt-4 pb-4 border">Branches</th>
-                <th class="px-4 pt-4 pb-4 border">Ledger</th>
-                <th class="px-4 pt-4 pb-4 border">Statement</th>
-                <th class="px-4 pt-4 pb-4 border">Confirmation</th>
+                <th class="px-3 pt-3 pb-3 border">Branches</th>
+                <th class="px-3 pt-3 pb-3 border">Ledger</th>
+                <th class="px-3 pt-3 pb-3 border">Statement</th>
+                <th class="px-3 pt-3 pb-3 border">Confirmation</th>
                 <!-- <th class="px-4 pt-4 pb-4 border">Action</th> -->
               </tr>
             </thead>
@@ -60,28 +69,28 @@
                     v-model="balance.branches"
                     type="text"
                     readonly
-                    class="rounded-md w-full my-2"
+                    class="rounded-md w-full my-1"
                   />
                 </td>
                 <td class="w-2/12">
                   <input
                     v-model="balance.ledger"
                     type="number"
-                    class="rounded-md w-full my-2"
+                    class="rounded-md w-full my-1"
                   />
                 </td>
                 <td class="w-2/12">
                   <input
                     v-model="balance.statement"
                     type="number"
-                    class="rounded-md w-full my-2"
+                    class="rounded-md w-full my-1"
                   />
                 </td>
                 <td class="w-2/12">
                   <input
                     v-model="balance.confirmation"
                     type="number"
-                    class="rounded-md w-full my-2"
+                    class="rounded-md w-full my-1"
                   />
                 </td>
                 <!-- <td>
@@ -111,7 +120,17 @@
           "
         >
           <button
-            class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
+            class="
+              border
+              bg-green-500
+              hover:text-white
+              hover:bg-green-600
+              rounded-xl
+              px-4
+              py-2
+              ml-4
+              mt-4
+            "
             type="submit"
           >
             Update Balance

@@ -9,7 +9,7 @@
           Confirmation.pk
         </inertia-link> -->
       </div>
-      <div class="fixed inset-y-0 right-0 mr-12 py-5" v-if="canLogin">
+      <div class="fixed inset-y-0 right-0 mt-4 mr-14 py-5" v-if="canLogin">
         <inertia-link
           v-if="$page.props.user"
           href="/dashboard"
@@ -26,9 +26,22 @@
         </inertia-link>
 
         <template v-else>
+          <!-- hover:text-blue-300 -->
           <inertia-link
             :href="route('login')"
-            class="text-md underline text-white ml-5 hover:text-blue-300"
+            class="
+              text-md
+              bg-blue-500
+              underline
+              text-white
+              font-bold
+              ml-5
+              border
+              px-6
+              rounded-md
+              hover:text-red-300
+              hover:bg-blue-700
+            "
           >
             Login
           </inertia-link>
@@ -48,25 +61,41 @@
       <div class="flex w-screen h-screen z-10">
         <img
           class="px-2 w-full object-cover"
-          src="img/wallpaper.jpg"
-          alt="Welcome to Confirmation.pk"
+          src="img/wallpaper3.jpg"
+          alt="Picture not Load Confirmtaion.pk"
         />
-        <div class="absolute z-20 invisible md:visible w-full my-8 text-left">
-          <inertia-link
-            :href="route('login')"
-            class="
-              text-white
-              ml-16
-              font-sans font-bold
-              text-3xl
-              hover:text-blue-300
-            "
-          >
-            CONFIRMATION.PK
+        <div class="absolute z-20 invisible md:visible w-50% my-2 text-left">
+          <!-- class="
+                text-white
+                ml-16
+                font-sans font-bold
+                text-3xl
+                hover:text-blue-300
+              " -->
+          <inertia-link :href="route('login')">
+            <img
+              class="block ml-16 h-28 w-auto"
+              src="img/logoMenu1.png"
+              alt="Welcome to Confirmation.pk"
+            />
+            <p
+              class="
+                text-white
+                ml-12
+                font-sans font-bold
+                text-3xl
+                hover:text-blue-400
+              "
+            >
+              Confirmation.pk
+            </p>
           </inertia-link>
 
-          <p class="ml-6 text-md font-bold text-white">
-            Is a online platform that facilitates balance confirmation.
+          <p class="ml-8 text-md font-bold text-white">
+            Is a online platform that facilitates
+          </p>
+          <p class="ml-20 text-md font-bold text-white">
+            balance confirmation.
           </p>
         </div>
 
@@ -87,10 +116,15 @@
             Benefits
           </p>
           <p class="font-bold text-md mt-2 text-left text-white">
-            1. Save cost Eliminating extra <br />
+            1. Save cost Eliminating extra
+          </p>
+          <p class="font-bold ml-4 text-md text-left text-white">
             stationery expenses associated<br />
+          </p>
+          <p class="font-bold ml-4 text-md text-left text-white">
             with conventional method
-            <br />
+          </p>
+          <p class="font-bold text-md text-left text-white">
             2. Save time<br />
             3. Secure
           </p>

@@ -38,7 +38,7 @@
       </div>
 
       <div class="inline-block float-right mt-3 mr-36 col-4">
-        <p class="inline-block font-sans font-bold text-4xl pl-10 py-1 m-1">
+        <p class="inline-block font-sans font-bold text-3xl pl-10 py-1 m-1">
           Client : {{ this.client }}
         </p>
         <p
@@ -48,7 +48,7 @@
             font-sans
             text-green-500
             font-bold
-            text-4xl
+            text-3xl
             pl-10
             py-1
             m-1
@@ -61,7 +61,7 @@
           class="
             inline-block
             font-sans font-bold
-            text-red-600 text-4xl
+            text-red-600 text-3xl
             pl-10
             py-1
             m-1
@@ -75,8 +75,9 @@
     <div class="">
       <table class="shadow-lg border mt-4 ml-12 rounded-xl w-11/12">
         <thead>
-          <tr class="bg-indigo-100">
-            <th class="px-4 border">
+          <!-- <tr class="bg-indigo-100"> -->
+          <tr class="bg-gray-700 text-white">
+            <th class="px-3 pt-3 pb-3 border">
               <span @click="sort('name')">
                 Client
                 <!-- name Descending  -->
@@ -91,11 +92,12 @@
                   y="0px"
                   width="20px"
                   height="20px"
-                  class="inline ml-4 float-right"
+                  class="inline ml-4 float-right fill-current text-white"
                   viewBox="0 0 97.761 97.762"
                   style="enable-background: new 0 0 97.761 97.762"
                   xml:space="preserve"
                 >
+                  <!-- style="enable-background: new 0 0 97.761 97.762" -->
                   <g>
                     <g>
                       <path
@@ -128,7 +130,14 @@
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                   x="0px"
                   y="0px"
-                  class="inline ml-4 float-right"
+                  class="
+                    inline
+                    ml-4
+                    float-right
+                    text-white
+                    fill-current
+                    text-white
+                  "
                   width="20px"
                   height="20px"
                   viewBox="0 0 97.68 97.68"
@@ -160,10 +169,10 @@
                 <!-- name Ascending  Ends-->
               </span>
             </th>
-            <th class="px-4 pt-4 pb-4 border">Confirmations</th>
-            <th class="px-4 pt-4 pb-4 border">Total Confirmation</th>
-            <th class="px-4 pt-4 pb-4 border">Sent Confirmation</th>
-            <th class="px-4 pt-4 pb-4 border">Remaining Confirmation</th>
+            <th class="px-3 pt-3 pb-3 border">Confirmations</th>
+            <th class="px-3 pt-3 pb-3 border">Total Confirmation</th>
+            <th class="px-3 pt-3 pb-3 border">Sent Confirmation</th>
+            <th class="px-3 pt-3 pb-3 border">Remaining Confirmation</th>
           </tr>
 
           <!-- Null Balance -->
@@ -173,17 +182,17 @@
           <tr v-for="item in balances.data" :key="item.id">
             <td
               v-if="item.create_confirm"
-              class="py-3 px-4 border text-left text-transform: uppercase"
+              class="py-2 px-2 border text-left text-transform: uppercase"
             >
               {{ item.name }}
             </td>
             <td
               v-else
               class="
-                py-3
+                py-2
+                px-2
                 text-red-600
                 font-bold
-                px-4
                 border
                 text-left text-transform:
                 uppercase
@@ -191,42 +200,42 @@
             >
               {{ item.name }}
             </td>
-            <td class="py-3 px-4 border text-center">
+            <td class="py-2 px-2 border text-center">
               {{ item.create_confirm }}
             </td>
 
             <td
               v-if="item.total_confirm == 0"
-              class="py-3 px-4 font-bold border text-red-600 text-center"
+              class="py-2 px-2 font-bold border text-red-600 text-center"
             >
               {{ item.total_confirm }}
             </td>
-            <td v-else class="py-3 px-4 font-bold border text-center">
+            <td v-else class="py-2 px-2 font-bold border text-center">
               {{ item.total_confirm }}
             </td>
 
             <td
               v-if="item.total_sent == item.total_confirm"
-              class="py-3 px-4 font-bold border text-green-600 text-center"
+              class="py-2 px-2 font-bold border text-green-600 text-center"
             >
               {{ item.total_sent }}
             </td>
             <td
               v-else
-              class="py-3 px-4 font-bold border text-red-600 text-center"
+              class="py-2 px-2 font-bold border text-red-600 text-center"
             >
               {{ item.total_sent }}
             </td>
 
             <td
               v-if="item.reamaning == 0"
-              class="py-3 px-4 font-bold border text-green-500 text-center"
+              class="py-2 px-2 font-bold border text-green-500 text-center"
             >
               {{ item.reamaning }}
             </td>
             <td
               v-else
-              class="py-3 px-4 font-bold text-red-600 border text-center"
+              class="py-2 px-2 font-bold text-red-600 border text-center"
             >
               {{ item.reamaning }}
             </td>
