@@ -11,15 +11,13 @@
               <!-- Logo -->
               <div class="flex-shrink-0 flex items-center">
                 <inertia-link :href="route('dashboard')">
-                   <img
-         class="block h-12 w-auto"
-          src="img/logoMenu1.png"
-          alt="Welcome to Confirmation.pk"
-        />
+                  <img
+                    class="block h-12 w-auto"
+                    src="img/logoMenu1.png"
+                    alt="logo Confirmation.pk"
+                  />
                 </inertia-link>
               </div>
-
-
 
               <!-- Navigation Links -->
               <div class="ml-3 relative mt-4">

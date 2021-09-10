@@ -16407,7 +16407,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     type: {
       type: String,
-      "default": 'submit'
+      "default": "submit"
     }
   }
 });
@@ -19922,7 +19922,7 @@ __webpack_require__.r(__webpack_exports__);
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     type: $props.type,
-    "class": "inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:shadow-outline-gray transition ease-in-out duration-150"
+    "class": "\n      inline-flex\n      items-center\n      px-4\n      py-2\n      bg-blue-600\n      border border-transparent\n      rounded-md\n      font-semibold\n      text-xs text-white\n      uppercase\n      tracking-widest\n      hover:underline\n      active:bg-gray-900\n      focus:outline-none\n      focus:border-gray-900\n      focus:shadow-outline-gray\n      transition\n      ease-in-out\n      duration-150\n    "
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default")], 8
   /* PROPS */
   , ["type"]);
@@ -20918,7 +20918,7 @@ var _hoisted_6 = {
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
   "class": "block h-12 w-auto",
   src: "img/logoMenu1.png",
-  alt: "Welcome to Confirmation.pk"
+  alt: "logo Confirmation.pk"
 }, null, -1
 /* HOISTED */
 );
@@ -28635,8 +28635,8 @@ var _hoisted_8 = {
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
   "class": "px-2 w-full object-cover",
-  src: "img/wallpaper3.jpg",
-  alt: "Picture not Load Confirmtaion.pk"
+  src: "img/wallpaper2.jpg",
+  alt: "Welcome to Confirmation.pk"
 }, null, -1
 /* HOISTED */
 );
@@ -28648,7 +28648,7 @@ var _hoisted_10 = {
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
   "class": "block ml-16 h-28 w-auto",
   src: "img/logoMenu1.png",
-  alt: "Welcome to Confirmation.pk"
+  alt: "Logo Picture"
 }, null, -1
 /* HOISTED */
 );
@@ -28671,7 +28671,22 @@ var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"absolute z-20 invisible md:visible bottom-16 right-10\"><p class=\"text-white text-center font-sans font-bold text-2xl\"> Powered by </p><p class=\"font-bold text-md text-center text-white\"> Digital Solution Department </p><p class=\"font-bold text-md text-white\"> Muniff Ziauddin &amp; Co. Chartered Accountants </p></div><div class=\"absolute z-20 invisible md:visible bottom-16 left-10\"><p class=\"text-white text-left font-sans font-bold text-2xl\"> Benefits </p><p class=\"font-bold text-md mt-2 text-left text-white\"> 1. Save cost Eliminating extra </p><p class=\"font-bold ml-4 text-md text-left text-white\"> stationery expenses associated<br></p><p class=\"font-bold ml-4 text-md text-left text-white\"> with conventional method </p><p class=\"font-bold text-md text-left text-white\"> 2. Save time<br> 3. Secure </p></div>", 2);
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  style: {
+    "text-shadow": "4px 4px 16px #0000ff"
+  },
+  "class": "absolute z-20 invisible md:visible bottom-16 right-10"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+  "class": "text-white text-center font-sans font-bold text-2xl"
+}, " Powered by "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+  "class": "font-bold text-md text-center text-white"
+}, " Digital Solution Department "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+  "class": "font-bold text-md text-white"
+}, " Muniff Ziauddin & Co. Chartered Accountants ")], -1
+/* HOISTED */
+);
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"absolute z-20 invisible md:visible bottom-16 left-10\" style=\"text-shadow:4px 4px 16px #0000ff;\"><p class=\"text-white text-left font-sans font-bold text-2xl\"> Benefits </p><p class=\"font-bold text-md mt-2 text-left text-white\"> 1. Save cost Eliminating extra </p><p class=\"font-bold ml-4 text-md text-left text-white\"> stationery expenses associated<br></p><p class=\"font-bold ml-4 text-md text-left text-white\"> with conventional method </p><p class=\"font-bold text-md text-left text-white\"> 2. Save time<br> 3. Secure </p></div>", 1);
 
 var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "\n        flex flex-row\n        bottom-px\n        items-center\n        w-full\n        justify-center\n        fixed\n        px-6\n        py-1\n      "
@@ -28689,7 +28704,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [_hoisted_3, $props.canLogin ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_4, [_ctx.$page.props.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_inertia_link, {
     key: 0,
     href: "/dashboard",
-    "class": "\n            text-md\n            underline\n            text-white\n            ml-5\n            hover:text-blue-300\n            font-bold\n          "
+    "class": "\n            text-md\n            bg-blue-500\n            underline\n            text-white\n            font-bold\n            ml-5\n            border\n            px-6\n            rounded-md\n            hover:text-red-300\n            hover:bg-blue-700\n          "
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_hoisted_5];
@@ -28713,7 +28728,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   /* PROPS */
   , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <inertia-link\n            v-if=\"canRegister\"\n            :href=\"route('register')\"\n            class=\"text-sm text-white ml-5 hover:text-blue-300\"\n          >\n            Register\n          </inertia-link> ")], 64
   /* STABLE_FRAGMENT */
-  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End if "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" class=\"\n                text-white\n                ml-16\n                font-sans font-bold\n                text-3xl\n                hover:text-blue-300\n              \" "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" End if "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" src=\"img/wallpaper3.jpg\" "), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" class=\"\n                text-white\n                ml-16\n                font-sans font-bold\n                text-3xl\n                hover:text-blue-300\n              \" "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_inertia_link, {
     href: _ctx.route('login')
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -28724,7 +28739,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["href"]), _hoisted_13, _hoisted_14]), _hoisted_15])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("picture end "), _hoisted_17]);
+  , ["href"]), _hoisted_13, _hoisted_14]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" backdrop-filter: blur(20px) ; "), _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" backdrop-filter: "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" blur(30px); "), _hoisted_16])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("picture end "), _hoisted_17]);
 }
 
 /***/ }),

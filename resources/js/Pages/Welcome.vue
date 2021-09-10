@@ -15,11 +15,16 @@
           href="/dashboard"
           class="
             text-md
+            bg-blue-500
             underline
             text-white
-            ml-5
-            hover:text-blue-300
             font-bold
+            ml-5
+            border
+            px-6
+            rounded-md
+            hover:text-red-300
+            hover:bg-blue-700
           "
         >
           Dashboard
@@ -59,10 +64,11 @@
     <!-- End if -->
     <div class="">
       <div class="flex w-screen h-screen z-10">
+        <!-- src="img/wallpaper3.jpg" -->
         <img
           class="px-2 w-full object-cover"
-          src="img/wallpaper3.jpg"
-          alt="Picture not Load Confirmtaion.pk"
+          src="img/wallpaper2.jpg"
+          alt="Welcome to Confirmation.pk"
         />
         <div class="absolute z-20 invisible md:visible w-50% my-2 text-left">
           <!-- class="
@@ -76,7 +82,7 @@
             <img
               class="block ml-16 h-28 w-auto"
               src="img/logoMenu1.png"
-              alt="Welcome to Confirmation.pk"
+              alt="Logo Picture"
             />
             <p
               class="
@@ -98,8 +104,11 @@
             balance confirmation.
           </p>
         </div>
-
-        <div class="absolute z-20 invisible md:visible bottom-16 right-10">
+        <!-- backdrop-filter: blur(20px) ; -->
+        <div
+          style="text-shadow: 4px 4px 16px #0000ff"
+          class="absolute z-20 invisible md:visible bottom-16 right-10"
+        >
           <p class="text-white text-center font-sans font-bold text-2xl">
             Powered by
           </p>
@@ -111,7 +120,12 @@
           </p>
         </div>
 
-        <div class="absolute z-20 invisible md:visible bottom-16 left-10">
+        <!-- backdrop-filter: -->
+        <!-- blur(30px); -->
+        <div
+          class="absolute z-20 invisible md:visible bottom-16 left-10"
+          style="text-shadow: 4px 4px 16px #0000ff"
+        >
           <p class="text-white text-left font-sans font-bold text-2xl">
             Benefits
           </p>
