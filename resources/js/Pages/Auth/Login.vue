@@ -1,11 +1,7 @@
 <template>
   <jet-authentication-card>
     <template #logo>
-      <img
-        class="block h-24 w-auto"
-        src="img/login1.png"
-        alt="Welcome to Confirmation.pk"
-      />
+      <jet-authentication-card-logo />
     </template>
 
     <jet-validation-errors class="mb-4" />
