@@ -4,6 +4,17 @@
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         Companies
         <div class="flex-1 inline-block float-right">
+          <!-- <multiselect
+            class="w-full rounded-md border border-black"
+            placeholder="Select Company."
+            v-model="co_id"
+            track-by="id"
+            label="name"
+            :options="options"
+            @change="coch"
+          >
+          </multiselect> -->
+
           <select
             v-model="co_id"
             class="max-w-md rounded-md"
@@ -283,14 +294,18 @@ import AppLayout from "@/Layouts/AppLayout";
 import Paginator from "@/Layouts/Paginator";
 import { throttle } from "lodash";
 import { pickBy } from "lodash";
+// import Multiselect from "@suadelabs/vue3-multiselect";
+
 export default {
   components: {
     AppLayout,
     Paginator,
+    // Multiselect,
   },
 
   props: {
     data: Object,
+    // data: Array,
     balances: Object,
     filters: Object,
     // can: Object,
@@ -298,6 +313,8 @@ export default {
 
   data() {
     return {
+      // options: this.data,
+      // co_id: null,
       co_id: this.$page.props.co_id,
       params: {
         search: this.filters.search,
@@ -329,6 +346,7 @@ export default {
       this.$inertia.delete(route("companies.destroy", id));
     },
     coch() {
+      console.log("Junaid");
       this.$inertia.get(route("companies.coch", this.co_id));
     },
   },

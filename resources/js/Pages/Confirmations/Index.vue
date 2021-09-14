@@ -119,6 +119,23 @@
       >
         <a href="ex">Generate Control Sheet</a>
       </div>
+
+      <div
+        class="
+          border
+          inline-block
+          bg-blue-400
+          hover:bg-blue-600
+          hover:text-white
+          shadow-md
+          rounded-xl
+          px-4
+          py-1
+          m-1
+        "
+      >
+        <a href="branchespdf">Generate Branch</a>
+      </div>
     </div>
 
     <div class="">

@@ -18469,20 +18469,25 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ // import Multiselect from "@suadelabs/vue3-multiselect";
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
-    Paginator: _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__.default
+    Paginator: _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__.default // Multiselect,
+
   },
   props: {
     data: Object,
+    // data: Array,
     balances: Object,
     filters: Object // can: Object,
 
   },
   data: function data() {
     return {
+      // options: this.data,
+      // co_id: null,
       co_id: this.$page.props.co_id,
       params: {
         search: this.filters.search,
@@ -18512,6 +18517,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$inertia["delete"](route("companies.destroy", id));
     },
     coch: function coch() {
+      console.log("Junaid");
       this.$inertia.get(route("companies.coch", this.co_id));
     }
   }
@@ -26532,7 +26538,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, null, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <multiselect\n            class=\"w-full rounded-md border border-black\"\n            placeholder=\"Select Company.\"\n            v-model=\"co_id\"\n            track-by=\"id\"\n            label=\"name\"\n            :options=\"options\"\n            @change=\"coch\"\n          >\n          </multiselect> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
           return $data.co_id = $event;
         }),
@@ -27217,16 +27223,16 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 /* HOISTED */
 );
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"\n          border\n          bg-blue-400\n          hover:bg-blue-600\n          hover:text-white\n          inline-block\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"word\">Generate Bank Letters</a></div><div class=\"\n          border\n          inline-block\n          bg-blue-400\n          hover:bg-blue-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"bankConfig\">Generate Remaining Pages</a></div><div class=\"\n          border\n          inline-block\n          bg-blue-400\n          hover:bg-blue-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"ex\">Generate Control Sheet</a></div>", 3);
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"\n          border\n          bg-blue-400\n          hover:bg-blue-600\n          hover:text-white\n          inline-block\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"word\">Generate Bank Letters</a></div><div class=\"\n          border\n          inline-block\n          bg-blue-400\n          hover:bg-blue-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"bankConfig\">Generate Remaining Pages</a></div><div class=\"\n          border\n          inline-block\n          bg-blue-400\n          hover:bg-blue-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"ex\">Generate Control Sheet</a></div><div class=\"\n          border\n          inline-block\n          bg-blue-400\n          hover:bg-blue-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"branchespdf\">Generate Branch</a></div>", 4);
 
-var _hoisted_12 = {
+var _hoisted_13 = {
   "class": ""
 };
-var _hoisted_13 = {
+var _hoisted_14 = {
   "class": "shadow-lg border mt-4 ml-12 rounded-xl w-11/12"
 };
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", {
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", {
   "class": "bg-gray-700 text-white text-centre font-bold"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", {
   "class": "px-3 pt-3 pb-3 border"
@@ -27242,11 +27248,8 @@ var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_15 = {
-  "class": "py-2 px-2 border text-left capitalize"
-};
 var _hoisted_16 = {
-  "class": "py-2 px-2 border text-center"
+  "class": "py-2 px-2 border text-left capitalize"
 };
 var _hoisted_17 = {
   "class": "py-2 px-2 border text-center"
@@ -27258,10 +27261,13 @@ var _hoisted_19 = {
   "class": "py-2 px-2 border text-center"
 };
 var _hoisted_20 = {
+  "class": "py-2 px-2 border text-center"
+};
+var _hoisted_21 = {
   key: 0
 };
 
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", {
   "class": "border-t px-6 py-4",
   colspan: "4"
 }, "No Record found.", -1
@@ -27347,23 +27353,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
       }, 8
       /* PROPS */
-      , ["href"])]), _hoisted_9]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.balances.data, function (item) {
+      , ["href"])]), _hoisted_9]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.balances.data, function (item) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", {
           key: item.id
-        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.branch), 1
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.branch), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.confirm_create), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.confirm_create), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.sent), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.sent), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.reminder), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.reminder), 1
         /* TEXT */
-        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.received), 1
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("td", _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(item.received), 1
         /* TEXT */
         ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <td class=\"py-2 px-4 border text-center\">\n              <button\n                class=\"border bg-indigo-300 rounded-xl px-4 py-1 m-1\"\n                @click=\"destroy(item.id)\"\n              >\n                <span>Delete</span>\n              </button>\n            </td> ")]);
       }), 128
       /* KEYED_FRAGMENT */
-      )), $props.balances.data.length === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_20, [_hoisted_21])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_paginator, {
+      )), $props.balances.data.length === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("tr", _hoisted_21, [_hoisted_22])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_paginator, {
         "class": "mt-6",
         balances: $props.balances
       }, null, 8
