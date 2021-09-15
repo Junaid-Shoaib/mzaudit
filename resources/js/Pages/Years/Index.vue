@@ -31,7 +31,18 @@
     <div class="">
       <form @submit.prevent="form.get(route('years.create'))">
         <button
-          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1 ml-8 mt-4"
+          class="
+            border
+            bg-blue-400
+            rounded-xl
+            px-4
+            py-1
+            m-1
+            ml-8
+            mt-4
+            hover:text-white
+            hover:bg-blue-600
+          "
           type="submit"
           :disabled="form.processing"
         >
@@ -40,32 +51,49 @@
         <div class="">
           <table class="shadow-lg border mt-4 ml-12 rounded-xl w-11/12">
             <thead>
-              <tr class="bg-indigo-100 text-centre font-bold">
-                <th class="px-4 pt-4 pb-4 border">Begin</th>
-                <th class="px-4 pt-4 pb-4 border">End</th>
-                <th class="px-4 pt-4 pb-4 border">Actions</th>
+              <tr class="bg-gray-700 text-white text-centre font-bold">
+                <th class="px-3 pt-3 pb-3 border">Begin</th>
+                <th class="px-3 pt-3 pb-3 border">End</th>
+                <th class="px-3 pt-3 pb-3 border">Actions</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="item in balances.data" :key="item.id">
-                <td class="py-1 px-4 border text-center">{{ item.begin }}</td>
-                <td class="py-1 px-4 border text-center">{{ item.end }}</td>
-                <td class="py-1 px-4 border text-center">
+                <td class="py-2 px-2 border text-center">{{ item.begin }}</td>
+                <td class="py-2 px-2 border text-center">{{ item.end }}</td>
+                <td class="py-2 px-2 border text-center">
                   <inertia-link
-                    class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+                    class="
+                      border
+                      bg-blue-400
+                      rounded-xl
+                      px-4
+                      py-1
+                      m-1
+                      hover:text-white
+                      hover:bg-blue-600
+                    "
                     :href="route('years.edit', item.id)"
                   >
                     <span>Edit</span>
                   </inertia-link>
 
-                  <button
-                    type="button"
-                    class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+                  <inertia-link
+                    class="
+                      border
+                      bg-red-500
+                      rounded-xl
+                      px-4
+                      py-1
+                      m-1
+                      hover:text-white
+                      hover:bg-red-600
+                    "
                     @click="destroy(item.id)"
                     v-if="item.delete"
                   >
                     <span>Delete</span>
-                  </button>
+                  </inertia-link>
                 </td>
               </tr>
             </tbody>

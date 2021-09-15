@@ -13,11 +13,12 @@ use Inertia\Inertia;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
+
+
+
 class BankConfirmationController extends Controller
 {
-
-
-
+//Index 
     public function index()
     {
 
@@ -81,10 +82,7 @@ class BankConfirmationController extends Controller
                 }),
         ]);
     }
-
-
-
-
+//Create
     public  function create()
     {
 
@@ -123,16 +121,12 @@ class BankConfirmationController extends Controller
 
         // }
     }
-
-
-
-
+//Show
     public function show($id)
     {
         //
     }
-
-
+//Edit
     public function edit()
     {
         return Inertia::render('Confirmations/Edit', [
@@ -167,7 +161,7 @@ class BankConfirmationController extends Controller
             'year' => Year::where('id', session('year_id'))->first(),
         ]);
     }
-
+//Update
     public function update(Req $request, BankConfirmation $balance)
     {
         Request::validate([
@@ -187,12 +181,14 @@ class BankConfirmationController extends Controller
         return Redirect::route('confirmations')->with('success', 'Bank Confirmation updated.');
     }
 
+//Delete
     public function destroy(BankConfirmation $confirmation)
     {
         $confirmation->delete();
         return Redirect::back()->with('success', 'Bank Confirmation deleted.');
     }
 
+    //Template Sheet
     public function bankConfig()
     {
         //template
@@ -209,7 +205,52 @@ class BankConfirmationController extends Controller
             $templateProcessor->saveAs(storage_path('app/public/' . $year->company->id . '/' . $year->id . '/' .  'Remaining_pages.docx'));
             return response()->download(storage_path('app/public/' . $year->company->id . '/' . $year->id . '/' .  'Remaining_pages.docx'));
         } else {
-            return Redirect::route('balances.create')->with('success', 'Create Account first.');
+            return Redirect::route('balances.create')->with('success', 'Create Balance first.');
         }
+    }
+
+//Branches Pdf
+    public function branchespdf(Request $request)
+    {
+        $company = BankConfirmation::where('company_id', session('company_id'))->first();
+        if ($company) {
+            
+            $year = Year::where('company_id', session('company_id'))
+            ->where('id', session('year_id'))->first();
+            $end = $year->end ? new Carbon($year->end) : null;
+            
+            $names = str_replace(["&"], "&amp;", $year->company->name);
+            $endDate = $end->format("F j Y");
+            //   $a = "hello world";
+
+            $confirmation = BankConfirmation::where('company_id', session('company_id'))->get()
+            ->map(function ($confirm){
+                return[
+                    'id' => $confirm->id,
+                    'branch' => $confirm->bankBranch->bank->name . " - " . $confirm->bankBranch->address,
+                ];
+            });
+            // dd($confirmation);
+
+
+        $pdf = app('dompdf.wrapper');   
+        $pdf->getDomPDF()->set_option("enable_php", true);
+        // $pdf->loadView('branchespdf', compact('a'));
+        $pdf->loadView('branchespdf', compact( 'names', 'endDate' ,'confirmation' ));
+        return $pdf->stream('users.pdf');
+        }else{
+            return Redirect::route('accounts.create')->with('success', 'Create Account first.');
+
+        }
+      
+    
+    
+    
+        // $a = "hello world";
+        //     $pdf = App::make('dompdf.wrapper');
+        //     $pdf->loadView('pdd', compact('a'));
+        //     return $pdf->stream('v.pdf');
+    
+    
     }
 }

@@ -22,12 +22,21 @@
           "
         >
           <inertia-link
-            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+            class="
+              border
+              rounded-xl
+              px-4
+              py-1
+              m-1
+              bg-blue-400
+              hover:text-white
+              hover:bg-blue-600
+            "
             :href="route('branches')"
             >Back
           </inertia-link>
         </div>
-        <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
+        <!-- <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
           <label class="w-28 inline-block text-right mr-4">ID:</label>
           <select
             v-model="form.bank_id"
@@ -40,7 +49,7 @@
             </option>
           </select>
           <div v-if="errors.bank_id">{{ errors.bank_id }}</div>
-        </div>
+        </div> -->
         <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
           <label class="w-28 inline-block text-right mr-4">Branch:</label>
           <textarea
@@ -79,7 +88,17 @@
           "
         >
           <button
-            class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
+            class="
+              border
+              bg-green-500
+              rounded-xl
+              px-4
+              py-2
+              ml-4
+              mt-4
+              hover:text-white
+              hover:bg-green-600
+            "
             type="submit"
           >
             Update Branch

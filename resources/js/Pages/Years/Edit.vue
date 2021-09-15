@@ -17,7 +17,16 @@
           "
         >
           <inertia-link
-            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+            class="
+              border
+              rounded-xl
+              px-4
+              py-1
+              m-1
+              bg-blue-400
+              hover:text-white
+              hover:bg-blue-600
+            "
             :href="route('years')"
             >Back
           </inertia-link>
@@ -58,18 +67,28 @@
           class="
             px-4
             py-2
-            bg-gray-100
             border-t border-gray-200
+            bg-gray-100
             flex
             justify-start
             items-center
           "
         >
           <button
-            class="border bg-indigo-300 rounded-xl px-4 py-2 ml-4 mt-4"
+            class="
+              border
+              bg-green-500
+              rounded-xl
+              px-4
+              py-2
+              ml-4
+              mt-4
+              hover:text-white
+              hover:bg-green-600
+            "
             type="submit"
           >
-            Edit Year
+            Update Year
           </button>
         </div>
       </form>

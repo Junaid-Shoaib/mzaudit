@@ -10,7 +10,16 @@
     </div>
     <div class="relative mt-5 ml-7">
       <inertia-link
-        class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+        class="
+          border
+          bg-blue-400
+          rounded-xl
+          px-4
+          py-1
+          m-1
+          hover:text-white
+          hover:bg-blue-600
+        "
         :href="route('branches.create', 'create')"
       >
         Add Branch
@@ -21,13 +30,13 @@
         aria-label="Search"
         placeholder="Search"
         class="border rounded-xl px-4 py-1 m-1"
-        />
+      />
     </div>
     <div class="">
       <table class="shadow-lg border mt-4 ml-12 rounded-xl w-11/12">
         <thead>
-          <tr class="bg-indigo-100 text-centre font-bold">
-            <th class="px-4 pt-4 pb-4 border">
+          <tr class="bg-gray-700 text-white text-centre font-bold">
+            <th class="px-3 pt-3 pb-3 border">
               <span @click="sort('bank_id')">
                 Bank Name
                 <!-- name Descending  -->
@@ -42,7 +51,7 @@
                   y="0px"
                   width="20px"
                   height="20px"
-                  class="inline ml-4 float-right"
+                  class="inline ml-4 float-right fill-current text-white"
                   viewBox="0 0 97.761 97.762"
                   style="enable-background: new 0 0 97.761 97.762"
                   xml:space="preserve"
@@ -79,7 +88,7 @@
                   xmlns:xlink="http://www.w3.org/1999/xlink"
                   x="0px"
                   y="0px"
-                  class="inline ml-4 float-right"
+                  class="inline ml-4 float-right fill-current text-white"
                   width="20px"
                   height="20px"
                   viewBox="0 0 97.68 97.68"
@@ -111,30 +120,49 @@
                 <!-- name Ascending  Ends-->
               </span>
             </th>
-            <th class="px-4 pt-4 pb-4 border">Branch Name & Address</th>
-            <th class="px-4 pt-4 pb-4 border">Actions</th>
+            <th class="px-3 pt-3 pb-3 border">Branch Name & Address</th>
+            <th class="px-3 pt-3 pb-3 border">Actions</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in balances.data" :key="item.id">
-            <td class="py-3 px-4 border text-left">{{ item.name }}</td>
-            <td class="py-3 px-4 border text-center text-transform: capitalize">
+            <td class="py-2 px-2 border text-left">{{ item.name }}</td>
+            <td class="py-2 px-2 border text-center text-transform: capitalize">
               {{ item.address }}
             </td>
-            <td class="py-3 px-4 border text-center">
+            <td class="py-2 px-2 border text-center">
               <inertia-link
-                class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+                class="
+                  border
+                  bg-blue-400
+                  rounded-xl
+                  px-4
+                  py-1
+                  m-1
+                  hover:text-white
+                  hover:bg-blue-600
+                "
                 :href="route('branches.edit', item.id)"
               >
                 <span>Edit</span>
               </inertia-link>
-              <button
-                class="border bg-red-500 rounded-xl px-4 py-1 m-1"
+
+              <inertia-link
+                class="
+                  border
+                  bg-red-500
+                  rounded-xl
+                  px-4
+                  py-1
+                  m-1
+                  hover:text-white
+                  hover:bg-red-600
+                "
                 @click="destroy(item.id)"
                 v-if="item.delete"
               >
                 <span>Delete</span>
-              </button>
+              </inertia-link>
             </td>
           </tr>
           <tr v-if="balances.data.length === 0">

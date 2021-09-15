@@ -89,6 +89,8 @@ Route::get('get_banks', [CompanyController::class, 'getBanks']);
 Route::get('get_branches/{bank}', [CompanyController::class, 'getBranches'])
     ->name('braches')
     ->middleware('auth');
+
+
 Route::get('pd', [CompanyController::class, 'pd'])
     ->name('pd')
     ->middleware('auth');
@@ -100,9 +102,7 @@ Route::get('word', [CompanyController::class, 'word'])
     ->name('word')
     ->middleware('auth');
 
-Route::get('bankConfig', [BankConfirmationController::class, 'bankConfig'])
-    ->name('bankConfig')
-    ->middleware('auth');
+
 
 //Dashboad
 
@@ -270,6 +270,13 @@ Route::delete('confirmations/{confirmation}', [BankConfirmationController::class
     ->name('confirmations.destroy')
     ->middleware('auth');
 
+Route::get('bankConfig', [BankConfirmationController::class, 'bankConfig'])
+->name('bankConfig')
+->middleware('auth');
+
+Route::get('branchespdf', [BankConfirmationController::class, 'branchespdf'])
+->name('branchespdf')
+->middleware('auth');
 
 // Years
 

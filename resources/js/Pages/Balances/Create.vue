@@ -8,7 +8,16 @@
     <div class="relative mt-5 ml-7 flex-row">
       <div class="flex-1 inline-block">
         <inertia-link
-          class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+          class="
+            border
+            bg-blue-400
+            rounded-xl
+            px-4
+            py-1
+            m-1
+            hover:text-white
+            hover:bg-blue-600
+          "
           :href="route('balances')"
           >Back
         </inertia-link>
@@ -22,10 +31,10 @@
 
           <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
             <thead>
-              <tr class="bg-indigo-100 text-centre font-bold">
-                <th class="px-4 pt-4 pb-4 border">Ledger</th>
-                <th class="px-4 pt-4 pb-4 border">Account</th>
-                <th class="px-4 pt-4 pb-4 border">Action</th>
+              <tr class="bg-gray-700 text-white text-centre font-bold">
+                <th class="px-3 pt-3 pb-3 border">Ledger</th>
+                <th class="px-3 pt-3 pb-3 border">Account</th>
+                <th class="px-3 pt-3 pb-3 border">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -78,7 +87,16 @@
                   <button
                     type="button"
                     @click.prevent="deleteRow(index)"
-                    class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"
+                    class="
+                      border
+                      bg-red-500
+                      rounded-xl
+                      px-4
+                      py-2
+                      m-1
+                      hover:text-white
+                      hover:bg-red-600
+                    "
                   >
                     Delete
                   </button>
@@ -100,7 +118,16 @@
           "
         >
           <button
-            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+            class="
+              border
+              bg-blue-400
+              rounded-xl
+              px-4
+              py-1
+              m-1
+              hover:text-white
+              hover:bg-blue-600
+            "
             type="button"
             @click.prevent="addRow"
           >
@@ -109,7 +136,16 @@
 
           <button
             type="submit"
-            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+            class="
+              border
+              bg-green-500
+              hover:text-white
+              hover:bg-green-600
+              rounded-xl
+              px-6
+              py-1
+              m-1
+            "
             :disabled="form.processing"
           >
             Save
@@ -164,7 +200,7 @@ export default {
         this.isError = true;
       }
     },
-},
+  },
 
   methods: {
     addRow() {

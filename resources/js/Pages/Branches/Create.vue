@@ -24,7 +24,16 @@
           "
         >
           <inertia-link
-            class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+            class="
+              border
+              rounded-xl
+              px-4
+              py-1
+              m-1
+              bg-blue-400
+              hover:text-white
+              hover:bg-blue-600
+            "
             :href="route('branches')"
             >Back
           </inertia-link>
@@ -52,9 +61,7 @@
             </option>
           </select> -->
           <!-- <div v-if="errors.bank_id">{{ errors.bank_id }}</div> -->
-          <label class="w-28 inline-block text-right ml-7 mr-4"
-            >Branch name and address:</label
-          >
+          <label class="w-28 inline-block text-right ml-7 mr-4">Address:</label>
           <textarea
             v-model="form.address"
             rows="4"
@@ -74,13 +81,15 @@
           <button
             class="
               border
-              bg-indigo-300
               rounded-xl
               px-8
               py-2
               ml-16
               my-5
               max-h-10
+              bg-green-500
+              hover:text-white
+              hover:bg-green-600
             "
             type="submit"
             :disabled="form.processing"
@@ -107,15 +116,15 @@
     <div class="">
       <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
         <thead>
-          <tr class="bg-indigo-100 text-centre font-bold">
-            <th class="px-4 pt-4 pb-4 border">branches #</th>
+          <tr class="bg-gray-700 text-white text-centre font-bold">
+            <th class="px-3 pt-3 pb-3 border">Branches</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in branches" :key="item.id">
             <td
               v-if="item.bank_id == form.bank_id['id']"
-              class="py-3 px-4 border text-left"
+              class="py-2 px-2 border text-left"
             >
               {{ item.add }}
             </td>
