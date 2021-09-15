@@ -235,22 +235,13 @@ class BankConfirmationController extends Controller
 
         $pdf = app('dompdf.wrapper');   
         $pdf->getDomPDF()->set_option("enable_php", true);
-        // $pdf->loadView('branchespdf', compact('a'));
         $pdf->loadView('branchespdf', compact( 'names', 'endDate' ,'confirmation' ));
-        return $pdf->stream('users.pdf');
+        return $pdf->stream('branches.pdf');
         }else{
             return Redirect::route('accounts.create')->with('success', 'Create Account first.');
 
         }
       
-    
-    
-    
-        // $a = "hello world";
-        //     $pdf = App::make('dompdf.wrapper');
-        //     $pdf->loadView('pdd', compact('a'));
-        //     return $pdf->stream('v.pdf');
-    
     
     }
 }
