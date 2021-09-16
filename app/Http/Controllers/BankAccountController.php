@@ -11,6 +11,8 @@ use App\Models\Year;
 use App\Models\BankBranch;
 use App\Models\Bank;
 use App\Models\Company;
+use App\Models\Setting;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Carbon\Carbon;
 use Dompdf\Renderer;
@@ -35,55 +37,46 @@ class BankAccountController extends Controller
             $query->orderBy(('name'), ('asc'));
         }
 
-        // dd($query->all());
 
-        $balances = $query
-            ->where('company_id', session('company_id'))
-            ->paginate(15)
-            ->through(
-                function ($branch) {
-                    return
-                        [
-                            'id' => $branch->id,
-                            'name' => $branch->name,
-                            'type' => $branch->type,
-                            'currency' => $branch->currency,
-                            'branches' => $branch->bankBranch->bank->name . " - " . $branch->bankBranch->address,
-                            'delete' => BankBalance::where('account_id', $branch->id)->first() ? false : true,
-                        ];
-                }
-            );
+        $active_co = Setting::where('user_id', Auth::user()->id)
+        ->where('key', 'active_company')->first();
+        $coch_hold = Company::where('id', $active_co->value)->first();
 
-        //        dd($balances);
+
+        
 
         if (BankBranch::all()->first()) {
             return Inertia::render(
                 'Accounts/Index',
                 [
                     'filters' => request()->all(['search', 'field', 'direction']),
-                    'balances' => $balances,
-                    // 'balances' => BankAccount::all()
-                    //     ->where('company_id', session('company_id'))
-                    //     ->map(
-                    //         function ($branch) {
-                    //             return
-                    //                 [
-                    //                     'id' => $branch->id,
-                    //                     'name' => $branch->name,
-                    //                     'type' => $branch->type,
-                    //                     'currency' => $branch->currency,
-                    //                     'branches' => $branch->bankBranch->bank->name . " - " . $branch->bankBranch->address,
-                    //                     'delete' => BankBalance::where('account_id', $branch->id)->first() ? false : true,
-                    //                 ];
-                    //         }
-                    //     ),
+                    'balances' => $query
+                    ->where('company_id', session('company_id'))
+                    ->paginate(15)
+                    ->through(
+                        function ($branch) {
+                            return
+                                [
+                                    'id' => $branch->id,
+                                    'name' => $branch->name,
+                                    'type' => $branch->type,
+                                    'currency' => $branch->currency,
+                                    'branches' => $branch->bankBranch->bank->name . " - " . $branch->bankBranch->address,
+                                    'delete' => BankBalance::where('account_id', $branch->id)->first() ? false : true,
+                                ];
+                        }
+                    ),
+                  
                     'companies' => Company::all()
-                        ->map(function ($company) {
-                            return [
-                                'id' => $company->id,
-                                'name' => $company->name,
-                            ];
-                        }),
+                    ->map(function ($company) {
+                        return [
+                            'id' => $company->id,
+                            'name' => $company->name,
+                        ];
+                    }),
+
+                    
+                    'cochange' => $coch_hold,
 
                     'years' => Year::where('company_id', session('company_id'))->get()
                         ->map(function ($year) {

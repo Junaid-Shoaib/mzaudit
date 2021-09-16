@@ -17424,6 +17424,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/Paginator */ "./resources/js/Layouts/Paginator.vue");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @suadelabs/vue3-multiselect */ "./node_modules/@suadelabs/vue3-multiselect/dist/vue3-multiselect.umd.min.js");
+/* harmony import */ var _suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
@@ -17431,19 +17434,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
-    Paginator: _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__.default
+    Paginator: _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__.default,
+    Multiselect: (_suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_3___default())
   },
   props: {
     // errors: Object,
     branches: Object,
     balances: Object,
-    companies: Object,
+    companies: Array,
     years: Object,
-    filters: Object
+    filters: Object,
+    cochange: Object
   },
   data: function data() {
     return {
-      co_id: this.$page.props.co_id,
+      options: this.companies,
+      co_id: this.cochange,
+      // co_id: this.$page.props.co_id,
       yr_id: this.$page.props.yr_id,
       params: {
         search: this.filters.search,
@@ -18049,21 +18056,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/Paginator */ "./resources/js/Layouts/Paginator.vue");
+/* harmony import */ var _suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @suadelabs/vue3-multiselect */ "./node_modules/@suadelabs/vue3-multiselect/dist/vue3-multiselect.umd.min.js");
+/* harmony import */ var _suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
-    Paginator: _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__.default
+    Paginator: _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__.default,
+    Multiselect: (_suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2___default())
   },
   props: {
     companies: Object,
     years: Object,
-    balances: Object
+    balances: Object,
+    cochange: Object
   },
   data: function data() {
     return {
-      co_id: this.$page.props.co_id,
+      options: this.companies,
+      co_id: this.cochange,
+      // co_id: this.$page.props.co_id,
       yr_id: this.$page.props.yr_id
     };
   },
@@ -18466,29 +18480,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/Paginator */ "./resources/js/Layouts/Paginator.vue");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @suadelabs/vue3-multiselect */ "./node_modules/@suadelabs/vue3-multiselect/dist/vue3-multiselect.umd.min.js");
+/* harmony import */ var _suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
- // import Multiselect from "@suadelabs/vue3-multiselect";
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
-    Paginator: _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__.default // Multiselect,
-
+    Paginator: _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__.default,
+    Multiselect: (_suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_3___default())
   },
   props: {
-    data: Object,
-    // data: Array,
+    company: Array,
     balances: Object,
-    filters: Object // can: Object,
-
+    filters: Object,
+    cochange: Object
   },
   data: function data() {
     return {
-      // options: this.data,
-      // co_id: null,
-      co_id: this.$page.props.co_id,
+      options: this.company,
+      // co_id: this.$page.props.co_id["name"],
+      co_id: this.cochange,
       params: {
         search: this.filters.search,
         field: "name",
@@ -18517,7 +18532,6 @@ __webpack_require__.r(__webpack_exports__);
       this.$inertia["delete"](route("companies.destroy", id));
     },
     coch: function coch() {
-      console.log("Junaid");
       this.$inertia.get(route("companies.coch", this.co_id));
     }
   }
@@ -18775,22 +18789,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/Layouts/AppLayout */ "./resources/js/Layouts/AppLayout.vue");
 /* harmony import */ var _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/Layouts/Paginator */ "./resources/js/Layouts/Paginator.vue");
+/* harmony import */ var _suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @suadelabs/vue3-multiselect */ "./node_modules/@suadelabs/vue3-multiselect/dist/vue3-multiselect.umd.min.js");
+/* harmony import */ var _suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
     AppLayout: _Layouts_AppLayout__WEBPACK_IMPORTED_MODULE_0__.default,
-    Paginator: _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__.default
+    Paginator: _Layouts_Paginator__WEBPACK_IMPORTED_MODULE_1__.default,
+    Multiselect: (_suadelabs_vue3_multiselect__WEBPACK_IMPORTED_MODULE_2___default())
   },
   props: {
     balances: Object,
     companies: Object,
     years: Object,
-    create: Object
+    create: Object,
+    cochange: Object
   },
   data: function data() {
     return {
-      co_id: this.$page.props.co_id,
+      options: this.companies,
+      co_id: this.cochange,
+      // co_id: this.$page.props.co_id,
       yr_id: this.$page.props.yr_id
     };
   },
@@ -23328,6 +23349,8 @@ var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 );
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_multiselect = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("multiselect");
+
   var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
 
   var _component_paginator = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("paginator");
@@ -23336,32 +23359,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, null, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_multiselect, {
+        "class": "max-w-md rounded-md border border-black",
+        placeholder: "Select Company.",
+        modelValue: $data.co_id,
+        "onUpdate:modelValue": [_cache[1] || (_cache[1] = function ($event) {
           return $data.co_id = $event;
-        }),
+        }), $options.coch],
+        "track-by": "id",
+        label: "name",
+        options: $data.options
+      }, null, 8
+      /* PROPS */
+      , ["modelValue", "options", "onUpdate:modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <select\n            v-model=\"co_id\"\n            class=\"max-w-md rounded-md\"\n            label=\"company_id\"\n            @change=\"coch\"\n          >\n            <option\n              v-for=\"company in companies\"\n              :key=\"company.id\"\n              :value=\"company.id\"\n            >\n              {{ company.name }}\n            </option>\n          </select> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         "class": "max-w-md rounded-md",
-        label: "company_id",
-        onChange: _cache[2] || (_cache[2] = function () {
-          return $options.coch && $options.coch.apply($options, arguments);
-        })
-      }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.companies, function (company) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
-          key: company.id,
-          value: company.id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(company.name), 9
-        /* TEXT, PROPS */
-        , ["value"]);
-      }), 128
-      /* KEYED_FRAGMENT */
-      ))], 544
-      /* HYDRATE_EVENTS, NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.co_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-        "class": "max-w-md rounded-md",
-        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return $data.yr_id = $event;
         }),
-        onChange: _cache[4] || (_cache[4] = function () {
+        onChange: _cache[3] || (_cache[3] = function () {
           return $options.yrch && $options.yrch.apply($options, arguments);
         }),
         label: "yr_id"
@@ -23407,7 +23422,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         type: "search",
-        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
+        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
           return $data.params.search = $event;
         }),
         "aria-label": "Search",
@@ -23418,7 +23433,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.params.search]])])]), _ctx.isError ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.firstError), 1
       /* TEXT */
       )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
-        onClick: _cache[6] || (_cache[6] = function ($event) {
+        onClick: _cache[5] || (_cache[5] = function ($event) {
           return $options.sort('name');
         })
       }, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" name Descending  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" v-if=\"params.field == 'name' && params.direction == 'desc'\" "), $data.params.direction == 'desc' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg", _hoisted_15, [_hoisted_16])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" name Ascending  Starts"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" v-if=\"params.field === 'name' && params.direction === 'asc'\" "), $data.params.direction === 'asc' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg", _hoisted_17, [_hoisted_18])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" name Ascending  Ends")])]), _hoisted_19, _hoisted_20, _hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <th class=\"px-4 pt-4 pb-4 border\">Actions</th> ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.balances.data, function (item) {
@@ -24732,6 +24747,8 @@ var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 );
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_multiselect = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("multiselect");
+
   var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
 
   var _component_paginator = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("paginator");
@@ -24740,32 +24757,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, null, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_multiselect, {
+        "class": "w-full rounded-md border border-black",
+        placeholder: "Select Company.",
+        modelValue: $data.co_id,
+        "onUpdate:modelValue": [_cache[1] || (_cache[1] = function ($event) {
           return $data.co_id = $event;
-        }),
+        }), $options.coch],
+        "track-by": "id",
+        label: "name",
+        options: $data.options
+      }, null, 8
+      /* PROPS */
+      , ["modelValue", "options", "onUpdate:modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <select\n            v-model=\"co_id\"\n            class=\"max-w-md rounded-md\"\n            label=\"company_id\"\n            @change=\"coch\"\n          >\n            <option\n              v-for=\"company in companies\"\n              :key=\"company.id\"\n              :value=\"company.id\"\n            >\n              {{ company.name }}\n            </option>\n          </select> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         "class": "max-w-md rounded-md",
-        label: "company_id",
-        onChange: _cache[2] || (_cache[2] = function () {
-          return $options.coch && $options.coch.apply($options, arguments);
-        })
-      }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.companies, function (company) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
-          key: company.id,
-          value: company.id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(company.name), 9
-        /* TEXT, PROPS */
-        , ["value"]);
-      }), 128
-      /* KEYED_FRAGMENT */
-      ))], 544
-      /* HYDRATE_EVENTS, NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.co_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-        "class": "max-w-md rounded-md",
-        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return $data.yr_id = $event;
         }),
-        onChange: _cache[4] || (_cache[4] = function () {
+        onChange: _cache[3] || (_cache[3] = function () {
           return $options.yrch && $options.yrch.apply($options, arguments);
         }),
         label: "yr_id"
@@ -26530,6 +26539,8 @@ var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 );
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_multiselect = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("multiselect");
+
   var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
 
   var _component_paginator = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("paginator");
@@ -26538,27 +26549,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, null, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <multiselect\n            class=\"w-full rounded-md border border-black\"\n            placeholder=\"Select Company.\"\n            v-model=\"co_id\"\n            track-by=\"id\"\n            label=\"name\"\n            :options=\"options\"\n            @change=\"coch\"\n          >\n          </multiselect> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_multiselect, {
+        "class": "w-full rounded-md border border-black",
+        placeholder: "Select Company.",
+        modelValue: $data.co_id,
+        "onUpdate:modelValue": [_cache[1] || (_cache[1] = function ($event) {
           return $data.co_id = $event;
-        }),
-        "class": "max-w-md rounded-md",
-        label: "company_id",
-        onChange: _cache[2] || (_cache[2] = function () {
-          return $options.coch && $options.coch.apply($options, arguments);
-        })
-      }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.data, function (company) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
-          key: company.id,
-          value: company.id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(company.name), 9
-        /* TEXT, PROPS */
-        , ["value"]);
-      }), 128
-      /* KEYED_FRAGMENT */
-      ))], 544
-      /* HYDRATE_EVENTS, NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.co_id]])])])];
+        }), $options.coch],
+        "track-by": "id",
+        label: "name",
+        options: $data.options
+      }, null, 8
+      /* PROPS */
+      , ["modelValue", "options", "onUpdate:modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <select\n            v-model=\"co_id\"\n            class=\"max-w-md rounded-md\"\n            label=\"company_id\"\n            @change=\"coch\"\n          >\n            <option\n              v-for=\"company in data\"\n              :key=\"company.id\"\n              :value=\"company.id\"\n            >\n              {{ company.name }}\n            </option>\n          </select> ")])])];
     }),
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [_ctx.$page.props.flash.success ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.$page.props.flash.success), 1
@@ -26577,7 +26580,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       /* PROPS */
       , ["href"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         type: "search",
-        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return $data.params.search = $event;
         }),
         "aria-label": "Search",
@@ -26586,11 +26589,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, null, 512
       /* NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.params.search]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("table", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("thead", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tr", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
-        onClick: _cache[4] || (_cache[4] = function ($event) {
+        onClick: _cache[3] || (_cache[3] = function ($event) {
           return $options.sort('name');
         })
       }, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" name Descending  "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" v-if=\"params.field == 'name' && params.direction == 'desc'\" "), $data.params.direction == 'desc' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg", _hoisted_12, [_hoisted_13])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" name Ascending  Starts"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" v-if=\"params.field === 'name' && params.direction === 'asc'\" "), $data.params.direction === 'asc' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg", _hoisted_14, [_hoisted_15])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" name Ascending  Ends")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("th", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
-        onClick: _cache[5] || (_cache[5] = function ($event) {
+        onClick: _cache[4] || (_cache[4] = function ($event) {
           return $options.sort('address');
         })
       }, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Address Descending  "), $data.params.direction == 'desc' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg", _hoisted_18, [_hoisted_19])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" address Ascending  Starts"), $data.params.direction === 'asc' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("svg", _hoisted_20, [_hoisted_21])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" address Ascending  Ends")])]), _hoisted_22, _hoisted_23]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Null Balance ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.balances.data, function (item) {
@@ -27223,7 +27226,7 @@ var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 /* HOISTED */
 );
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"\n          border\n          bg-blue-400\n          hover:bg-blue-600\n          hover:text-white\n          inline-block\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"word\">Generate Bank Letters</a></div><div class=\"\n          border\n          inline-block\n          bg-blue-400\n          hover:bg-blue-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"bankConfig\">Generate Remaining Pages</a></div><div class=\"\n          border\n          inline-block\n          bg-blue-400\n          hover:bg-blue-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"ex\">Generate Control Sheet</a></div><div class=\"\n          border\n          inline-block\n          bg-blue-400\n          hover:bg-blue-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"branchespdf\">Generate Branch</a></div>", 4);
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"\n          border\n          bg-blue-400\n          hover:bg-blue-600\n          hover:text-white\n          inline-block\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"word\">Generate Bank Letters</a></div><div class=\"\n          border\n          inline-block\n          bg-blue-400\n          hover:bg-blue-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"bankConfig\">Generate Remaining Pages</a></div><div class=\"\n          border\n          inline-block\n          bg-blue-400\n          hover:bg-blue-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"ex\">Generate Control Sheet</a></div><div class=\"\n          border\n          inline-block\n          bg-blue-400\n          hover:bg-blue-600\n          hover:text-white\n          shadow-md\n          rounded-xl\n          px-4\n          py-1\n          m-1\n        \"><a href=\"branchespdf\" target=\"_blank\">Generate Branch</a></div>", 4);
 
 var _hoisted_13 = {
   "class": ""
@@ -27275,6 +27278,8 @@ var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 );
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_multiselect = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("multiselect");
+
   var _component_inertia_link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("inertia-link");
 
   var _component_paginator = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("paginator");
@@ -27283,32 +27288,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_app_layout, null, {
     header: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_multiselect, {
+        "class": "w-full rounded-md border border-black",
+        placeholder: "Select Company.",
+        modelValue: $data.co_id,
+        "onUpdate:modelValue": [_cache[1] || (_cache[1] = function ($event) {
           return $data.co_id = $event;
-        }),
+        }), $options.coch],
+        "track-by": "id",
+        label: "name",
+        options: $data.options
+      }, null, 8
+      /* PROPS */
+      , ["modelValue", "options", "onUpdate:modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <select\n            v-model=\"co_id\"\n            class=\"max-w-md rounded-md\"\n            label=\"company_id\"\n            @change=\"coch\"\n          >\n            <option\n              v-for=\"company in companies\"\n              :key=\"company.id\"\n              :value=\"company.id\"\n            >\n              {{ company.name }}\n            </option>\n          </select> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         "class": "max-w-md rounded-md",
-        label: "company_id",
-        onChange: _cache[2] || (_cache[2] = function () {
-          return $options.coch && $options.coch.apply($options, arguments);
-        })
-      }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.companies, function (company) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("option", {
-          key: company.id,
-          value: company.id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(company.name), 9
-        /* TEXT, PROPS */
-        , ["value"]);
-      }), 128
-      /* KEYED_FRAGMENT */
-      ))], 544
-      /* HYDRATE_EVENTS, NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.co_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
-        "class": "max-w-md rounded-md",
-        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return $data.yr_id = $event;
         }),
-        onChange: _cache[4] || (_cache[4] = function () {
+        onChange: _cache[3] || (_cache[3] = function () {
           return $options.yrch && $options.yrch.apply($options, arguments);
         }),
         label: "yr_id"

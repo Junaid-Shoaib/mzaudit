@@ -4,7 +4,17 @@
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         Bank Balances
         <div class="flex-1 inline-block float-right">
-          <select
+          <multiselect
+            class="w-full rounded-md border border-black"
+            placeholder="Select Company."
+            v-model="co_id"
+            track-by="id"
+            label="name"
+            :options="options"
+            @update:model-value="coch"
+          >
+          </multiselect>
+          <!-- <select
             v-model="co_id"
             class="max-w-md rounded-md"
             label="company_id"
@@ -17,7 +27,7 @@
             >
               {{ company.name }}
             </option>
-          </select>
+          </select> -->
           <select
             class="max-w-md rounded-md"
             v-model="yr_id"
@@ -112,21 +122,28 @@
 <script>
 import AppLayout from "@/Layouts/AppLayout";
 import Paginator from "@/Layouts/Paginator";
+import Multiselect from "@suadelabs/vue3-multiselect";
+
 export default {
   components: {
     AppLayout,
     Paginator,
+    Multiselect,
   },
 
   props: {
     companies: Object,
     years: Object,
     balances: Object,
+    cochange: Object,
   },
 
   data() {
     return {
-      co_id: this.$page.props.co_id,
+      options: this.companies,
+      co_id: this.cochange,
+
+      // co_id: this.$page.props.co_id,
       yr_id: this.$page.props.yr_id,
     };
   },
