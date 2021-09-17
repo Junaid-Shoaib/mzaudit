@@ -4,8 +4,21 @@
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         Bank Accounts
         <div class="flex-1 inline-block float-right">
+          <select
+            class="rounded-md"
+            v-model="yr_id"
+            @change="yrch"
+            label="yr_id"
+          >
+            <option v-for="year in years" :key="year.id" :value="year.id">
+              {{ year.end }}
+            </option>
+          </select>
+        </div>
+        <div class="flex-1 inline-block float-right">
           <multiselect
-            class="max-w-md rounded-md border border-black"
+            style="display: inline-block"
+            class="rounded-md border border-black"
             placeholder="Select Company."
             v-model="co_id"
             track-by="id"
@@ -28,16 +41,6 @@
               {{ company.name }}
             </option>
           </select> -->
-          <select
-            class="max-w-md rounded-md"
-            v-model="yr_id"
-            @change="yrch"
-            label="yr_id"
-          >
-            <option v-for="year in years" :key="year.id" :value="year.id">
-              {{ year.end }}
-            </option>
-          </select>
         </div>
       </h2>
     </template>

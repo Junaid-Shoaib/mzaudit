@@ -6,7 +6,17 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
           Years
           <div class="flex-1 inline-block float-right">
-            <select
+            <multiselect
+              class="w-full rounded-md border border-black"
+              placeholder="Select Company."
+              v-model="co_id"
+              track-by="id"
+              label="name"
+              :options="options"
+              @update:model-value="coch"
+            >
+            </multiselect>
+            <!-- <select
               v-model="co_id"
               class="max-w-md rounded-md"
               label="company_id"
@@ -19,7 +29,7 @@
               >
                 {{ company.name }}
               </option>
-            </select>
+            </select> -->
           </div>
         </h2>
       </div>
@@ -108,17 +118,20 @@
 <script>
 import AppLayout from "@/Layouts/AppLayout";
 import Paginator from "@/Layouts/Paginator";
+import Multiselect from "@suadelabs/vue3-multiselect";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 export default {
   components: {
     AppLayout,
     Paginator,
+    Multiselect,
   },
 
   props: {
     balances: Object,
     companies: Object,
+    cochange: Object,
   },
   setup(props) {
     const form = useForm({});
@@ -127,7 +140,9 @@ export default {
 
   data() {
     return {
-      co_id: this.$page.props.co_id,
+      options: this.companies,
+      co_id: this.cochange,
+      // co_id: this.$page.props.co_id,
     };
   },
 

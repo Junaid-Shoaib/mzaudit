@@ -5,17 +5,6 @@
         Bank Confirmations
 
         <div class="flex-1 inline-block float-right">
-          <multiselect
-            class="w-full rounded-md border border-black"
-            placeholder="Select Company."
-            v-model="co_id"
-            track-by="id"
-            label="name"
-            :options="options"
-            @update:model-value="coch"
-          >
-          </multiselect>
-
           <!-- <select
             v-model="co_id"
             class="max-w-md rounded-md"
@@ -40,6 +29,18 @@
               {{ year.end }}
             </option>
           </select>
+        </div>
+        <div class="flex-1 inline-block float-right">
+          <multiselect
+            class="rounded-md border border-black"
+            placeholder="Select Company."
+            v-model="co_id"
+            track-by="id"
+            label="name"
+            :options="options"
+            @update:model-value="coch"
+          >
+          </multiselect>
         </div>
       </h2>
     </template>

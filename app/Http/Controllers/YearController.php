@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use App\Models\Year;
+use App\Models\Setting;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Company;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -17,8 +19,12 @@ class YearController extends Controller
 {
     public function index()
     {
+        
+            $active_co = Setting::where('user_id', Auth::user()->id)->where('key', 'active_company')->first();
+            $coch_hold = Company::where('id', $active_co->value)->first();
 
         return Inertia::render('Years/Index', [
+
 
             'balances' => Year::where('company_id', session('company_id'))->paginate(6)->withQueryString()
                 ->through(
@@ -34,6 +40,8 @@ class YearController extends Controller
 
                     // 'delete' => BankBalance::where('year_id', $branch->id)->first() ? false : true,
                 ),
+            
+            'cochange' => $coch_hold,
 
             'companies' => Company::all()
                 ->map(function ($company) {
