@@ -44,13 +44,18 @@ class CompanyController extends Controller
         } else {
             $query->orderBy(('name'), ('asc'));
         }
+ 
+        $active_co = Setting::where('user_id', Auth::user()->id)->where('key', 'active_company')->first();
+        $coch_hold = Company::where('id', $active_co->value)->first();
 
         return Inertia::render(
             'Companies/Index',
             [
-                'data' => Company::all(),
+                'cochange' => $coch_hold,
+                'company' => Company::all(),
                 'filters' => request()->all(['search', 'field', 'direction']),
-                'balances' => $query->with('years')->paginate(10)
+                'balances' => $query->with('years')->paginate(10),
+
                 // 'balances' => Company::paginate(6)
                 // ->withQueryString()
                 // ->through(
@@ -227,7 +232,7 @@ class CompanyController extends Controller
     //Company Change function
     public function coch($id)
     {
-        // dd($id);
+     //   dd($id);
         $active_co = Setting::where('user_id', Auth::user()->id)->where('key', 'active_company')->first();
         if ($active_co) {
             $active_co->value = $id;

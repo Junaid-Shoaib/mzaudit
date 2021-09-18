@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Request;
 use App\Models\BankAccount;
 use App\Models\BankBalance;
 use App\Models\Year;
+use App\Models\Setting;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Company;
 use Inertia\Inertia;
 use Carbon\Carbon;
@@ -16,6 +18,10 @@ class BankBalanceController extends Controller
 {
     public function index()
     {
+
+        $active_co = Setting::where('user_id', Auth::user()->id)->where('key', 'active_company')->first();
+        $coch_hold = Company::where('id', $active_co->value)->first();
+
         return Inertia::render(
             'Balances/Index',
             [
@@ -32,13 +38,16 @@ class BankBalanceController extends Controller
                         ]
                     ),
 
+                'cochange' => $coch_hold,
                 'companies' => Company::all()
-                    ->map(function ($company) {
-                        return [
-                            'id' => $company->id,
-                            'name' => $company->name,
-                        ];
-                    }),
+                ->map(function ($company) {
+                    return [
+                        'id' => $company->id,
+                        'name' => $company->name,
+                    ];
+                }),
+
+                   
                 'years' => Year::where('company_id', session('company_id'))->get()
                     ->map(function ($year) {
                         $end = new Carbon($year->end);

@@ -4,18 +4,18 @@
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         Companies
         <div class="flex-1 inline-block float-right">
-          <!-- <multiselect
+          <multiselect
             class="w-full rounded-md border border-black"
             placeholder="Select Company."
             v-model="co_id"
             track-by="id"
             label="name"
             :options="options"
-            @change="coch"
+            @update:model-value="coch"
           >
-          </multiselect> -->
+          </multiselect>
 
-          <select
+          <!-- <select
             v-model="co_id"
             class="max-w-md rounded-md"
             label="company_id"
@@ -28,7 +28,7 @@
             >
               {{ company.name }}
             </option>
-          </select>
+          </select> -->
         </div>
       </h2>
     </template>
@@ -294,28 +294,27 @@ import AppLayout from "@/Layouts/AppLayout";
 import Paginator from "@/Layouts/Paginator";
 import { throttle } from "lodash";
 import { pickBy } from "lodash";
-// import Multiselect from "@suadelabs/vue3-multiselect";
+import Multiselect from "@suadelabs/vue3-multiselect";
 
 export default {
   components: {
     AppLayout,
     Paginator,
-    // Multiselect,
+    Multiselect,
   },
 
   props: {
-    data: Object,
-    // data: Array,
+    company: Array,
     balances: Object,
     filters: Object,
-    // can: Object,
+    cochange: Object,
   },
 
   data() {
     return {
-      // options: this.data,
-      // co_id: null,
-      co_id: this.$page.props.co_id,
+      options: this.company,
+      // co_id: this.$page.props.co_id["name"],
+      co_id: this.cochange,
       params: {
         search: this.filters.search,
         field: "name",
@@ -346,7 +345,6 @@ export default {
       this.$inertia.delete(route("companies.destroy", id));
     },
     coch() {
-      console.log("Junaid");
       this.$inertia.get(route("companies.coch", this.co_id));
     },
   },

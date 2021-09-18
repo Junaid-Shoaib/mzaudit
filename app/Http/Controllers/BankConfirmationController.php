@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request as Req;
+use App\Models\Setting;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\BankBranch;
@@ -21,7 +24,10 @@ class BankConfirmationController extends Controller
 //Index 
     public function index()
     {
-
+        //Company Change
+        $active_co = Setting::where('user_id', Auth::user()->id)->where('key', 'active_company')->first();
+        $coch_hold = Company::where('id', $active_co->value)->first();
+        
         //Condition Create Button
         $branches = BankBranch::all()
             ->filter(
@@ -62,7 +68,9 @@ class BankConfirmationController extends Controller
                     ]
                 ),
 
-            'companies' => Company::all()
+            
+                'cochange' => $coch_hold,
+                'companies' => Company::all()
                 ->map(function ($company) {
                     return [
                         'id' => $company->id,
@@ -235,22 +243,16 @@ class BankConfirmationController extends Controller
 
         $pdf = app('dompdf.wrapper');   
         $pdf->getDomPDF()->set_option("enable_php", true);
-        // $pdf->loadView('branchespdf', compact('a'));
         $pdf->loadView('branchespdf', compact( 'names', 'endDate' ,'confirmation' ));
-        return $pdf->stream('users.pdf');
+        return $pdf->stream($names ." ".'branches.pdf');
+
+
+        
         }else{
             return Redirect::route('accounts.create')->with('success', 'Create Account first.');
 
         }
       
-    
-    
-    
-        // $a = "hello world";
-        //     $pdf = App::make('dompdf.wrapper');
-        //     $pdf->loadView('pdd', compact('a'));
-        //     return $pdf->stream('v.pdf');
-    
     
     }
 }
