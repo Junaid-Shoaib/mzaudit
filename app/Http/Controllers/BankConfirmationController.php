@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request as Req;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
-
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\BankBranch;

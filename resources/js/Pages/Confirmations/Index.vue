@@ -48,132 +48,142 @@
       {{ $page.props.flash.success }}
     </div>
 
-    <div class="relative mt-3 ml-7 flex-row">
-      <div class="flex-1 inline-block">
-        <inertia-link
-          class="
-            border
-            bg-blue-400
-            rounded-xl
-            px-4
-            py-1
-            m-1
-            hover:text-white
-            hover:bg-blue-600
-          "
-          :href="route('confirmations.create')"
-          v-if="create"
-          >Add Confiramtion
-        </inertia-link>
+    <div class="max-w-7xl mx-auto pb-2">
+      <div class="relative mt-3 ml-7 flex-row">
+        <div class="flex-1 inline-block">
+          <inertia-link
+            class="
+              border
+              bg-blue-400
+              rounded-xl
+              px-4
+              py-1
+              m-1
+              hover:text-white
+              hover:bg-blue-600
+            "
+            :href="route('confirmations.create')"
+            v-if="create"
+            >Add Confiramtion
+          </inertia-link>
 
-        <inertia-link
+          <inertia-link
+            class="
+              border
+              bg-blue-400
+              rounded-xl
+              px-4
+              py-1
+              m-1
+              hover:text-white
+              hover:bg-blue-600
+            "
+            :href="route('confirmations.edit')"
+          >
+            <span>Edit</span>
+          </inertia-link>
+        </div>
+
+        <div
           class="
             border
             bg-blue-400
+            hover:bg-blue-600
+            hover:text-white
+            inline-block
+            shadow-md
             rounded-xl
             px-4
             py-1
             m-1
-            hover:text-white
-            hover:bg-blue-600
           "
-          :href="route('confirmations.edit')"
         >
-          <span>Edit</span>
-        </inertia-link>
+          <a href="word">Generate Bank Letters</a>
+        </div>
+        <div
+          class="
+            border
+            inline-block
+            bg-blue-400
+            hover:bg-blue-600
+            hover:text-white
+            shadow-md
+            rounded-xl
+            px-4
+            py-1
+            m-1
+          "
+        >
+          <a href="bankConfig">Generate Remaining Pages</a>
+        </div>
+        <div
+          class="
+            border
+            inline-block
+            bg-blue-400
+            hover:bg-blue-600
+            hover:text-white
+            shadow-md
+            rounded-xl
+            px-4
+            py-1
+            m-1
+          "
+        >
+          <a href="ex">Generate Control Sheet</a>
+        </div>
+
+        <div
+          class="
+            border
+            inline-block
+            bg-blue-400
+            hover:bg-blue-600
+            hover:text-white
+            shadow-md
+            rounded-xl
+            px-4
+            py-1
+            m-1
+          "
+        >
+          <a href="branchespdf" target="_blank">Generate Branch</a>
+        </div>
       </div>
 
-      <div
-        class="
-          border
-          bg-blue-400
-          hover:bg-blue-600
-          hover:text-white
-          inline-block
-          shadow-md
-          rounded-xl
-          px-4
-          py-1
-          m-1
-        "
-      >
-        <a href="word">Generate Bank Letters</a>
-      </div>
-      <div
-        class="
-          border
-          inline-block
-          bg-blue-400
-          hover:bg-blue-600
-          hover:text-white
-          shadow-md
-          rounded-xl
-          px-4
-          py-1
-          m-1
-        "
-      >
-        <a href="bankConfig">Generate Remaining Pages</a>
-      </div>
-      <div
-        class="
-          border
-          inline-block
-          bg-blue-400
-          hover:bg-blue-600
-          hover:text-white
-          shadow-md
-          rounded-xl
-          px-4
-          py-1
-          m-1
-        "
-      >
-        <a href="ex">Generate Control Sheet</a>
-      </div>
-
-      <div
-        class="
-          border
-          inline-block
-          bg-blue-400
-          hover:bg-blue-600
-          hover:text-white
-          shadow-md
-          rounded-xl
-          px-4
-          py-1
-          m-1
-        "
-      >
-        <a href="branchespdf" target="_blank">Generate Branch</a>
-      </div>
-    </div>
-
-    <div class="">
-      <table class="shadow-lg border mt-4 ml-12 rounded-xl w-11/12">
-        <thead>
-          <tr class="bg-gray-700 text-white text-centre font-bold">
-            <th class="px-3 pt-3 pb-3 border">Bank</th>
-            <th class="px-3 pt-3 pb-3 border">Create Date</th>
-            <th class="px-3 pt-3 pb-3 border">Sent Date</th>
-            <th class="px-3 pt-3 pb-3 border">Reminder Date</th>
-            <th class="px-3 pt-3 pb-3 border">Received Date</th>
-            <!-- <th class="px-4 pt-4 pb-4 border">Actions</th> -->
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in balances.data" :key="item.id">
-            <td class="py-2 px-2 border text-left capitalize">
-              {{ item.branch }}
-            </td>
-            <td class="py-2 px-2 border text-center">
-              {{ item.confirm_create }}
-            </td>
-            <td class="py-2 px-2 border text-center">{{ item.sent }}</td>
-            <td class="py-2 px-2 border text-center">{{ item.reminder }}</td>
-            <td class="py-2 px-2 border text-center">{{ item.received }}</td>
-            <!-- <td class="py-2 px-4 border text-center">
+      <div class="">
+        <table class="shadow-lg border mt-4 ml-12 rounded-xl w-11/12">
+          <thead>
+            <tr class="bg-gray-700 text-white text-centre font-bold">
+              <th class="px-3 pt-3 pb-3 border">Bank</th>
+              <th class="px-3 pt-3 pb-3 border">Create Date</th>
+              <th class="px-3 pt-3 pb-3 border">Sent Date</th>
+              <th class="px-3 pt-3 pb-3 border">Reminder Date</th>
+              <th class="px-3 pt-3 pb-3 border">Received Date</th>
+              <!-- <th class="px-4 pt-4 pb-4 border">Actions</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in balances.data" :key="item.id">
+              <td
+                Style="width: 52%"
+                class="py-2 px-2 border text-left capitalize"
+              >
+                {{ item.branch }}
+              </td>
+              <td Style="width: 12%" class="py-2 px-2 border text-center">
+                {{ item.confirm_create }}
+              </td>
+              <td Style="width: 12%" class="py-2 px-2 border text-center">
+                {{ item.sent }}
+              </td>
+              <td Style="width: 12%" class="py-2 px-2 border text-center">
+                {{ item.reminder }}
+              </td>
+              <td Style="width: 12%" class="py-2 px-2 border text-center">
+                {{ item.received }}
+              </td>
+              <!-- <td class="py-2 px-4 border text-center">
               <button
                 class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
                 @click="destroy(item.id)"
@@ -181,13 +191,14 @@
                 <span>Delete</span>
               </button>
             </td> -->
-          </tr>
-          <tr v-if="balances.data.length === 0">
-            <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
-          </tr>
-        </tbody>
-      </table>
-      <paginator class="mt-6" :balances="balances" />
+            </tr>
+            <tr v-if="balances.data.length === 0">
+              <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
+            </tr>
+          </tbody>
+        </table>
+        <paginator class="mt-6" :balances="balances" />
+      </div>
     </div>
   </app-layout>
 </template>

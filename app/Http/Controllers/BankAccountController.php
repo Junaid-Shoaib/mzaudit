@@ -66,7 +66,9 @@ class BankAccountController extends Controller
                                 ];
                         }
                     ),
-                  
+                    
+                    'dataEdit' => BankAccount::where('company_id', session('company_id'))->first(),
+
                     'companies' => Company::all()
                     ->map(function ($company) {
                         return [
