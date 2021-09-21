@@ -2,33 +2,34 @@
   <app-layout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Bank Balances
+        Update Bank Balances
       </h2>
     </template>
 
-    <div class="relative mt-5 ml-7 flex-row">
-      <div class="flex-1 inline-block">
-        <inertia-link
-          class="
-            border
-            bg-blue-400
-            rounded-xl
-            px-4
-            py-1
-            m-1
-            hover:text-white
-            hover:bg-blue-600
-          "
-          :href="route('balances')"
-          >Back
-        </inertia-link>
+    <div class="max-w-7xl mx-auto pb-2">
+      <div class="relative mt-5 ml-7 flex-row">
+        <div class="flex-1 inline-block">
+          <inertia-link
+            class="
+              border
+              bg-blue-400
+              rounded-xl
+              px-4
+              py-1
+              m-1
+              hover:text-white
+              hover:bg-blue-600
+            "
+            :href="route('balances')"
+            >Back
+          </inertia-link>
+        </div>
       </div>
-    </div>
 
-    <div class="relative mt-5 flex-row border-t border-b border-gray-200">
-      <form @submit.prevent="submit">
-        <div class="">
-          <!-- <div
+      <div class="relative mt-5 flex-row border-t border-b border-gray-200">
+        <form @submit.prevent="submit">
+          <div class="">
+            <!-- <div
             class="
               px-4
               py-2
@@ -45,55 +46,55 @@
               >Back
             </inertia-link>
           </div> -->
-          <!-- <button
+            <!-- <button
             class="border bg-indigo-300 rounded-xl px-4 py-2 m-4"
             @click.prevent="addRow"
           >
             Add row
           </button> -->
-          <div v-if="isError">{{ firstError }}</div>
-          <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
-            <thead class="bg-gray-700 text-white text-centre font-bold">
-              <tr>
-                <th class="px-3 pt-3 pb-3 border">Branches</th>
-                <th class="px-3 pt-3 pb-3 border">Ledger</th>
-                <th class="px-3 pt-3 pb-3 border">Statement</th>
-                <th class="px-3 pt-3 pb-3 border">Confirmation</th>
-                <!-- <th class="px-4 pt-4 pb-4 border">Action</th> -->
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="balance in data" :key="balance.id">
-                <td class="w-6/12">
-                  <input
-                    v-model="balance.branches"
-                    type="text"
-                    readonly
-                    class="rounded-md w-full my-1"
-                  />
-                </td>
-                <td class="w-2/12">
-                  <input
-                    v-model="balance.ledger"
-                    type="number"
-                    class="rounded-md w-full my-1"
-                  />
-                </td>
-                <td class="w-2/12">
-                  <input
-                    v-model="balance.statement"
-                    type="number"
-                    class="rounded-md w-full my-1"
-                  />
-                </td>
-                <td class="w-2/12">
-                  <input
-                    v-model="balance.confirmation"
-                    type="number"
-                    class="rounded-md w-full my-1"
-                  />
-                </td>
-                <!-- <td>
+            <div v-if="isError">{{ firstError }}</div>
+            <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
+              <thead class="bg-gray-700 text-white text-centre font-bold">
+                <tr>
+                  <th class="px-3 pt-3 pb-3 border">Branches</th>
+                  <th class="px-3 pt-3 pb-3 border">Ledger</th>
+                  <th class="px-3 pt-3 pb-3 border">Statement</th>
+                  <th class="px-3 pt-3 pb-3 border">Confirmation</th>
+                  <!-- <th class="px-4 pt-4 pb-4 border">Action</th> -->
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="balance in data" :key="balance.id">
+                  <td class="w-6/12">
+                    <input
+                      v-model="balance.branches"
+                      type="text"
+                      readonly
+                      class="rounded-md w-full my-1"
+                    />
+                  </td>
+                  <td class="w-2/12">
+                    <input
+                      v-model="balance.ledger"
+                      type="number"
+                      class="rounded-md w-full my-1"
+                    />
+                  </td>
+                  <td class="w-2/12">
+                    <input
+                      v-model="balance.statement"
+                      type="number"
+                      class="rounded-md w-full my-1"
+                    />
+                  </td>
+                  <td class="w-2/12">
+                    <input
+                      v-model="balance.confirmation"
+                      type="number"
+                      class="rounded-md w-full my-1"
+                    />
+                  </td>
+                  <!-- <td>
                   <select v-model="balance.account_id" class="rounded-md w-36">
                     <option
                       v-for="account in accounts"
@@ -104,39 +105,40 @@
                     </option>
                   </select>
                 </td> -->
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div
-          class="
-            px-4
-            py-2
-            bg-gray-100
-            border-t border-gray-200
-            flex
-            justify-start
-            items-center
-          "
-        >
-          <button
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div
             class="
-              border
-              bg-green-500
-              hover:text-white
-              hover:bg-green-600
-              rounded-xl
               px-4
               py-2
-              ml-4
-              mt-4
+              bg-gray-100
+              border-t border-gray-200
+              flex
+              justify-start
+              items-center
             "
-            type="submit"
           >
-            Update Balance
-          </button>
-        </div>
-      </form>
+            <button
+              class="
+                border
+                bg-green-500
+                hover:text-white
+                hover:bg-green-600
+                rounded-xl
+                px-4
+                py-2
+                ml-4
+                mt-4
+              "
+              type="submit"
+            >
+              Update Balance
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </app-layout>
 </template>

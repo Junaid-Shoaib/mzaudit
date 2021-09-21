@@ -1,97 +1,101 @@
 <template>
   <app-layout>
     <template #header>
-      <h2 class="font-semibold text-xl text-gray-800 leading-tight">Years</h2>
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        Update Years
+      </h2>
     </template>
-    <div class="">
-      <form @submit.prevent="submit">
-        <div
-          class="
-            px-4
-            py-2
-            bg-gray-100
-            border-t border-gray-200
-            flex
-            justify-start
-            items-center
-          "
-        >
-          <inertia-link
+    <div class="max-w-7xl mx-auto pb-2">
+      <div class="">
+        <form @submit.prevent="submit">
+          <div
             class="
-              border
-              rounded-xl
               px-4
-              py-1
-              m-1
-              bg-blue-400
-              hover:text-white
-              hover:bg-blue-600
+              py-2
+              bg-gray-100
+              border-t border-gray-200
+              flex
+              justify-start
+              items-center
             "
-            :href="route('years')"
-            >Back
-          </inertia-link>
-        </div>
-        <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
-          <label class="w-28 inline-block text-right mr-4">Begin:</label>
-          <input
-            v-model="form.begin"
-            type="date"
-            :upper-limit="upper"
-            :lower-limit="lower"
-            class="pr-2 pb-2 w-44 rounded-md leading-tight"
-          />
-          <!-- <datepicker
+          >
+            <inertia-link
+              class="
+                border
+                rounded-xl
+                px-4
+                py-1
+                m-1
+                bg-blue-400
+                hover:text-white
+                hover:bg-blue-600
+              "
+              :href="route('years')"
+              >Back
+            </inertia-link>
+          </div>
+          <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
+            <label class="w-28 inline-block text-right mr-4">Begin:</label>
+            <input
+              v-model="form.begin"
+              type="date"
+              :upper-limit="upper"
+              :lower-limit="lower"
+              class="pr-2 pb-2 w-44 rounded-md leading-tight"
+            />
+            <!-- <datepicker
             v-model="form.begin"
             class="pr-2 pb-2 w-44 rounded-md leading-tight"
             label="begin"
           /> -->
-          <div v-if="errors.begin">{{ errors.begin }}</div>
-        </div>
-        <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
-          <label class="w-28 inline-block text-right mr-4">End:</label>
-          <input
-            v-model="form.end"
-            type="date"
-            :upper-limit="upper"
-            :lower-limit="lower"
-            class="pr-2 pb-2 w-44 rounded-md leading-tight"
-          />
-          <!-- <datepicker
+            <div v-if="errors.begin">{{ errors.begin }}</div>
+          </div>
+          <div class="p-2 mr-2 mb-2 mt-4 ml-6 flex flex-wrap">
+            <label class="w-28 inline-block text-right mr-4">End:</label>
+            <input
+              v-model="form.end"
+              type="date"
+              :upper-limit="upper"
+              :lower-limit="lower"
+              class="pr-2 pb-2 w-44 rounded-md leading-tight"
+            />
+            <!-- <datepicker
             v-model="form.end"
             class="pr-2 pb-2 w-44 rounded-md leading-tight"
             label="end"
           /> -->
-          <div v-if="errors.end">{{ errors.end }}</div>
-        </div>
-        <div
-          class="
-            px-4
-            py-2
-            border-t border-gray-200
-            bg-gray-100
-            flex
-            justify-start
-            items-center
-          "
-        >
-          <button
+            <div v-if="errors.end">{{ errors.end }}</div>
+          </div>
+          <div
             class="
-              border
-              bg-green-500
-              rounded-xl
               px-4
               py-2
-              ml-4
-              mt-4
-              hover:text-white
-              hover:bg-green-600
+              border-t border-gray-200
+              bg-gray-100
+              flex
+              justify-start
+              items-center
             "
-            type="submit"
           >
-            Update Year
-          </button>
-        </div>
-      </form>
+            <button
+              class="
+                border
+                bg-green-500
+                rounded-xl
+                px-4
+                py-2
+                ml-4
+                mt-4
+                hover:text-white
+                hover:bg-green-600
+              "
+              type="submit"
+            >
+              Update Year
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </app-layout>
 </template>

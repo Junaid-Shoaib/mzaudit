@@ -19,6 +19,7 @@ class BankBalanceController extends Controller
     public function index()
     {
 
+        
         $active_co = Setting::where('user_id', Auth::user()->id)->where('key', 'active_company')->first();
         $coch_hold = Company::where('id', $active_co->value)->first();
 
@@ -26,6 +27,7 @@ class BankBalanceController extends Controller
             'Balances/Index',
             [
                 'balances' => BankBalance::where('company_id', session('company_id'))
+            
                     ->where('year_id', session('year_id'))->paginate(10)->withQueryString()
                     ->through(
                         fn ($bal) =>
@@ -37,6 +39,9 @@ class BankBalanceController extends Controller
                             'confirmation' => $bal->confirmation,
                         ]
                     ),
+            
+                    'dataEdit' => BankBalance::where('company_id', session('company_id'))
+            ->where('year_id', session('year_id'))->first(),
 
                 'cochange' => $coch_hold,
                 'companies' => Company::all()
