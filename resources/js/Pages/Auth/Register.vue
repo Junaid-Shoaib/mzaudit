@@ -141,9 +141,11 @@ export default {
 
   methods: {
     submit() {
-      this.form.post(this.route("register"), {
-        onFinish: () => this.form.reset("password", "password_confirmation"),
-      });
+      alert("Working Off For Security purpose");
+      // this.form.post(this.route("register"),
+      //  {
+      //   onFinish: () => this.form.reset("password", "password_confirmation"),
+      // });
     },
   },
 };
