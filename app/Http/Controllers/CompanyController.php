@@ -46,37 +46,30 @@ class CompanyController extends Controller
         }
  
         $active_co = Setting::where('user_id', Auth::user()->id)->where('key', 'active_company')->first();
-        $coch_hold = Company::where('id', $active_co->value)->first();
-
-        return Inertia::render(
-            'Companies/Index',
+     
+        if($active_co){
+           $coch_hold = Company::where('id', $active_co->value)->first();
+           return Inertia::render('Companies/Index',
             [
                 'cochange' => $coch_hold,
                 'company' => Company::all(),
                 'filters' => request()->all(['search', 'field', 'direction']),
                 'balances' => $query->with('years')->paginate(10),
 
-                // 'balances' => Company::paginate(6)
-                // ->withQueryString()
-                // ->through(
-                //     fn ($company) =>
-                //     [
-                //         'id' => $company->id,
-                //         'name' => $company->name,
-                //         'address' => $company->address,
-                //         'email' => $company->email,
-                //         'web' => $company->web,
-                //         'phone' => $company->phone,
-                //         'fiscal' => $company->fiscal,
-                //         'incorp' => $company->incorp,
-                //         'can' => [
-                //             'edit_articles' => $company->can('edit articles'),
-                //         ],
-                //         'delete' => Year::where('company_id', $company->id)->first() ? false : true,
-                //     ],
-                // ),
+                ]
+            );
+            }
+            else{       
+        return Inertia::render(
+            'Companies/Index',
+            [
+                
+                'company' => Company::all(),
+                'filters' => request()->all(['search', 'field', 'direction']),
+                'balances' => $query->with('years')->paginate(10),
             ],
         );
+     }
     }
 
     // Company Create

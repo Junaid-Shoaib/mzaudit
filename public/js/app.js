@@ -17723,13 +17723,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     submit: function submit() {
-      var _this = this;
-
-      this.form.post(this.route("register"), {
-        onFinish: function onFinish() {
-          return _this.form.reset("password", "password_confirmation");
-        }
-      });
+      alert("Working Off For Security purpose"); // this.form.post(this.route("register"),
+      //  {
+      //   onFinish: () => this.form.reset("password", "password_confirmation"),
+      // });
     }
   }
 });
