@@ -52,6 +52,23 @@
           :href="route('companies.create')"
           >Add Company
         </inertia-link>
+      <div
+          v-if="this.company"
+          class="
+            border
+            inline-block
+            bg-blue-400
+            hover:bg-blue-600
+            hover:text-white
+            shadow-md
+            rounded-xl
+            px-4
+            py-1
+            m-1
+          "
+        >
+          <a :href="route('companypdf')">Generate PDF</a>
+        </div>
 
         <input
           type="search"

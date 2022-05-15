@@ -20,13 +20,13 @@ use Illuminate\Support\Facades\Storage;
 
 class BankConfirmationController extends Controller
 {
-//Index 
+//Index
     public function index()
     {
         //Company Change
         $active_co = Setting::where('user_id', Auth::user()->id)->where('key', 'active_company')->first();
         $coch_hold = Company::where('id', $active_co->value)->first();
-        
+
         //Condition Create Button
         $branches = BankBranch::all()
             ->filter(
@@ -67,7 +67,7 @@ class BankConfirmationController extends Controller
                     ]
                 ),
 
-            
+
                 'cochange' => $coch_hold,
                 'companies' => Company::all()
                 ->map(function ($company) {
@@ -221,11 +221,11 @@ class BankConfirmationController extends Controller
     {
         $company = BankConfirmation::where('company_id', session('company_id'))->first();
         if ($company) {
-            
+
             $year = Year::where('company_id', session('company_id'))
             ->where('id', session('year_id'))->first();
             $end = $year->end ? new Carbon($year->end) : null;
-            
+
             $names = str_replace(["&"], "&amp;", $year->company->name);
             $endDate = $end->format("F j Y");
             //   $a = "hello world";
@@ -240,18 +240,18 @@ class BankConfirmationController extends Controller
             // dd($confirmation);
 
 
-        $pdf = app('dompdf.wrapper');   
+        $pdf = app('dompdf.wrapper');
         $pdf->getDomPDF()->set_option("enable_php", true);
         $pdf->loadView('branchespdf', compact( 'names', 'endDate' ,'confirmation' ));
         return $pdf->stream($names ." ".'branches.pdf');
 
 
-        
+
         }else{
             return Redirect::route('accounts.create')->with('success', 'Create Account first.');
 
         }
-      
-    
+
+
     }
 }
