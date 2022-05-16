@@ -638,13 +638,36 @@ class CompanyController extends Controller
     }
 
 
-    public function companypdf()
+    public function companypdf($fiscal)
     {
-        $company = Company::get()
-        // ->map(function ($comp){
+
+        if($fiscal == 'all'){
+            $company = Company::get();
+        }
+        // dd('march');
+        if($fiscal == 'march'){
+            $company = Company::where('fiscal',$fiscal)->orderBy('id','Asc')->get();
+        }
+
+        if($fiscal == 'june'){
+            $company = Company::where('fiscal',$fiscal)->orderBy('id','Asc')->get();
+        }
+
+        if($fiscal == 'september'){
+            $company = Company::where('fiscal',$fiscal)->orderBy('id','Asc')->get();
+        }
+
+        if($fiscal == 'december'){
+            $company = Company::where('fiscal',$fiscal)->orderBy('id','Asc')->get();
+        }
+
+        else{
+            return back()->with('error','No Fiscal Found');
+        }
+        // ->map(function ($comp , $fiscal){
         //     return[
         //         'name' => $comp->name,
-        //         'fiscal' => $comp->fiscal,
+        //         'fiscal' => $comp->fiscal == $fiscal ? $comp->fiscal : '' ,
         //     ];
         // })
         ;

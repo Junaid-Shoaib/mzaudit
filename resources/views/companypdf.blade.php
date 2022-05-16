@@ -28,7 +28,7 @@
     <table width="100%">
         <tr>
             <td align="left" style="width: 70%;">
-                <h3>All Clients</h3>
+                <h3>Clients</h3>
                 {{-- <h3>Client: {{$names}} --}}
                 {{-- <br> Year End: {{$endDate}}</h3> --}}
             </td>
