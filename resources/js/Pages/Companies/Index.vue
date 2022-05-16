@@ -104,10 +104,10 @@
                         <div class="absolute z-30 right-0 mt-2" :class="{'hidden': !isOpen2}">
                             <div class="bg-white rounded-lg shadow-lg py-2 w-48">
                                 <a :href="route('companypdf','all')" target="_blank" class="block text-blue-600 font-semibold px-4 py-2 | hover:text-white hover:bg-blue-700">All Fiscal</a>
-                                <a :href="route('companypdf','march')" class="block text-blue-600 font-semibold px-4 py-2 | hover:text-white hover:bg-blue-700">March</a>
-                                <a :href="route('companypdf','june')" class="block text-blue-600 font-semibold px-4 py-2 | hover:text-white hover:bg-blue-700">June</a>
-                                <a :href="route('companypdf','september')" class="block text-blue-600 font-semibold px-4 py-2 | hover:text-white hover:bg-blue-700">September</a>
-                                <a :href="route('companypdf','december')" class="block text-blue-600 font-semibold px-4 py-2 | hover:text-white hover:bg-blue-700">December</a>
+                                <a :href="route('companypdf','march')" target="_blank" class="block text-blue-600 font-semibold px-4 py-2 | hover:text-white hover:bg-blue-700">March</a>
+                                <a :href="route('companypdf','june')" target="_blank" class="block text-blue-600 font-semibold px-4 py-2 | hover:text-white hover:bg-blue-700">June</a>
+                                <a :href="route('companypdf','september')" target="_blank"  class="block text-blue-600 font-semibold px-4 py-2 | hover:text-white hover:bg-blue-700">September</a>
+                                <a :href="route('companypdf','december')" target="_blank" class="block text-blue-600 font-semibold px-4 py-2 | hover:text-white hover:bg-blue-700">December</a>
                             </div>
                         </div>
                     <!-- </div> -->
