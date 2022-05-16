@@ -85,6 +85,10 @@ Route::get('companies/coch/{id}', [CompanyController::class, 'coch'])
 Route::get('companies/yrch/{id}', [CompanyController::class, 'yrch'])
     ->name('companies.yrch');
 
+Route::get('company-pdf/{fiscal}', [CompanyController::class, 'companypdf'])
+->name('companypdf')
+->middleware('auth');
+
 Route::get('get_banks', [CompanyController::class, 'getBanks']);
 Route::get('get_branches/{bank}', [CompanyController::class, 'getBranches'])
     ->name('braches')

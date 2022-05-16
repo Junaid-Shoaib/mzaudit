@@ -33,8 +33,12 @@
       </h2>
     </template>
     <!-- sm:px-2 lg:px-2  -->
-    <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
+    <div v-if="$page.props.flash.success" class="bg-green-600 text-center text-white">
       {{ $page.props.flash.success }}
+    </div>
+
+     <div v-if="$page.props.flash.error" class="bg-yellow-600 text-center text-white">
+      {{ $page.props.flash.error }}
     </div>
     <div class="max-w-7xl mx-auto pb-2">
       <div class="relative mt-5 ml-7">
@@ -53,6 +57,24 @@
           >Add Company
         </inertia-link>
 
+      <!-- <div
+          v-if="this.company"
+          class="
+            border
+            inline-block
+            bg-blue-400
+            hover:bg-blue-600
+            hover:text-white
+            shadow-md
+            rounded-xl
+            px-4
+            py-1
+            m-1
+          "
+        >
+          <a :href="route('companypdf')" target="_blank">Generate PDF</a>
+        </div> -->
+
         <input
           type="search"
           v-model="params.search"
@@ -60,6 +82,37 @@
           placeholder="Search..."
           class="border rounded-xl px-4 py-1 m-1"
         />
+          <!-- <div class="flex-1"> -->
+                    <!-- <div class="relative"> -->
+                        <button class=" border
+                                        float-right
+                                        inline-block
+                                        bg-blue-400
+                                        hover:bg-blue-600
+                                        hover:text-white
+                                        shadow-md
+                                        rounded-xl
+                                        mr-14
+                                        px-4
+                                        py-1
+                                        m-1"
+                                        @click="isOpen2 = true">
+                                        Generate PDF
+                                        </button>
+
+                        <div v-if="isOpen2" class="fixed inset-0 w-full h-screen z-20 bg-black opacity-25" @click="isOpen2 = false"></div>
+                        <div class="absolute z-30 right-0 mt-2" :class="{'hidden': !isOpen2}">
+                            <div class="bg-white rounded-lg shadow-lg py-2 w-48">
+                                <a :href="route('companypdf','all')" target="_blank" class="block text-blue-600 font-semibold px-4 py-2 | hover:text-white hover:bg-blue-700">All Fiscal</a>
+                                <a :href="route('companypdf','march')" class="block text-blue-600 font-semibold px-4 py-2 | hover:text-white hover:bg-blue-700">March</a>
+                                <a :href="route('companypdf','june')" class="block text-blue-600 font-semibold px-4 py-2 | hover:text-white hover:bg-blue-700">June</a>
+                                <a :href="route('companypdf','september')" class="block text-blue-600 font-semibold px-4 py-2 | hover:text-white hover:bg-blue-700">September</a>
+                                <a :href="route('companypdf','december')" class="block text-blue-600 font-semibold px-4 py-2 | hover:text-white hover:bg-blue-700">December</a>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                <!-- </div> -->
+
       </div>
 
       <div class="">
@@ -321,6 +374,7 @@ export default {
     Multiselect,
   },
 
+
   props: {
     company: Array,
     balances: Object,
@@ -328,8 +382,11 @@ export default {
     cochange: Object,
   },
 
+
   data() {
     return {
+        isOpen1: true,
+        isOpen2: false,
       options: this.company,
       // co_id: this.$page.props.co_id["name"],
       co_id: this.cochange,
@@ -355,6 +412,7 @@ export default {
   },
 
   methods: {
+
     sort(field) {
       this.params.field = field;
       this.params.direction = this.params.direction === "asc" ? "desc" : "asc";

@@ -44,9 +44,9 @@ class CompanyController extends Controller
         } else {
             $query->orderBy(('name'), ('asc'));
         }
- 
+
         $active_co = Setting::where('user_id', Auth::user()->id)->where('key', 'active_company')->first();
-     
+
         if($active_co){
            $coch_hold = Company::where('id', $active_co->value)->first();
            return Inertia::render('Companies/Index',
@@ -59,11 +59,11 @@ class CompanyController extends Controller
                 ]
             );
             }
-            else{       
+            else{
         return Inertia::render(
             'Companies/Index',
             [
-                
+
                 'company' => Company::all(),
                 'filters' => request()->all(['search', 'field', 'direction']),
                 'balances' => $query->with('years')->paginate(10),
@@ -635,5 +635,49 @@ class CompanyController extends Controller
         $templateProcessor->setValue('end', $end->format("F j Y"));
         $templateProcessor->saveAs(storage_path('app/public/' . $company->id . '/' . $period->id . '/' .  'Remaining_pages.docx'));
         return response()->download(storage_path('app/public/' . $company->id . '/' . $period->id . '/' .  'Bank Letters.docx'));
+    }
+
+
+    public function companypdf($fiscal)
+    {
+
+        if($fiscal == 'all'){
+            $company = Company::get();
+        }
+        // dd('march');
+        if($fiscal == 'march'){
+            $company = Company::where('fiscal',$fiscal)->orderBy('id','Asc')->get();
+        }
+
+        if($fiscal == 'june'){
+            $company = Company::where('fiscal',$fiscal)->orderBy('id','Asc')->get();
+        }
+
+        if($fiscal == 'september'){
+            $company = Company::where('fiscal',$fiscal)->orderBy('id','Asc')->get();
+        }
+
+        if($fiscal == 'december'){
+            $company = Company::where('fiscal',$fiscal)->orderBy('id','Asc')->get();
+        }
+
+        else{
+            return back()->with('error','No Fiscal Found');
+        }
+        // ->map(function ($comp , $fiscal){
+        //     return[
+        //         'name' => $comp->name,
+        //         'fiscal' => $comp->fiscal == $fiscal ? $comp->fiscal : '' ,
+        //     ];
+        // })
+        ;
+        // dd($company);
+        if ($company) {
+
+        $pdf = app('dompdf.wrapper');
+        $pdf->getDomPDF()->set_option("enable_php", true);
+        $pdf->loadView('companypdf', compact( 'company' ));
+        return $pdf->stream('Clients.pdf');
+        }
     }
 }
