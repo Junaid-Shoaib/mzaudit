@@ -661,23 +661,14 @@ class CompanyController extends Controller
             $company = Company::where('fiscal',$fiscal)->orderBy('id','Asc')->get();
         }
 
-        else{
-            return back()->with('error','No Fiscal Found');
-        }
-        // ->map(function ($comp , $fiscal){
-        //     return[
-        //         'name' => $comp->name,
-        //         'fiscal' => $comp->fiscal == $fiscal ? $comp->fiscal : '' ,
-        //     ];
-        // })
-        ;
-        // dd($company);
-        if ($company) {
-
+        if ($company->isNotEmpty()) {
         $pdf = app('dompdf.wrapper');
         $pdf->getDomPDF()->set_option("enable_php", true);
         $pdf->loadView('companypdf', compact( 'company' ));
         return $pdf->stream('Clients.pdf');
+        }
+        else{
+            return back()->with('error','No Fiscal Found');
         }
     }
 }
