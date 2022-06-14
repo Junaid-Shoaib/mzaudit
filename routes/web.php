@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\YearController;
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\AdvisorController;
 use App\Http\Controllers\BankBranchController;
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\BankBalanceController;
@@ -113,6 +114,42 @@ Route::get('word', [CompanyController::class, 'word'])
 Route::get('dashboard', [DashboardController::class, 'index'])
     ->name('dashboard')
     ->middleware('auth');
+
+
+
+
+// Adviosr
+
+Route::get('advisors', [AdvisorController::class, 'index'])
+    ->name('advisors')
+    ->middleware('auth');
+
+
+Route::get('advisors/create', [AdvisorController::class, 'create'])
+    ->name('advisors.create')
+    ->middleware('auth');
+
+Route::get('advisors/{advisor}', [AdvisorController::class, 'show'])
+    ->name('advisors.show')
+    ->middleware('auth');
+
+Route::post('advisors', [AdvisorController::class, 'store'])
+    ->name('advisors.store')
+    ->middleware('auth');
+
+Route::get('advisors/{advisor}/edit', [AdvisorController::class, 'edit'])
+    ->name('advisors.edit')
+    ->middleware('auth');
+
+Route::put('advisors/{advisor}', [AdvisorController::class, 'update'])
+    ->name('advisors.update')
+    ->middleware('auth');
+
+Route::delete('advisors/{advisor}', [AdvisorController::class, 'destroy'])
+    ->name('advisors.destroy')
+    ->middleware('auth');
+
+
 
 // Banks
 

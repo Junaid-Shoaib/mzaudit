@@ -94,11 +94,23 @@
                 </jet-dropdown>
               </div>
 
+              <div class="hidden space-x-8 sm:-my-px sm:ml-5 sm:flex">
+                <jet-nav-link
+                  v-if="this.$page.props.co_id && this.$page.props.yr_id"
+                  :href="route('advisors')"
+                  :active="route().current('advisors')"
+                >
+                  Advisor
+                </jet-nav-link>
+              </div>
+
+
+
               <div class="relative mt-4">
                 <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"> -->
                 <jet-dropdown>
                   <template #trigger>
-                    <span class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <span class="hidden space-x-8 sm:-my-px sm:ml-5 sm:flex">
                       <button
                         v-if="this.$page.props.co_id && this.$page.props.yr_id"
                         type="button"
@@ -220,7 +232,7 @@
                 </jet-nav-link>
               </div> -->
 
-              <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+              <div class="hidden space-x-8 sm:-my-px sm:ml-5 sm:flex">
                 <jet-nav-link
                   v-if="this.$page.props.co_id && this.$page.props.yr_id"
                   :href="route('balances')"
