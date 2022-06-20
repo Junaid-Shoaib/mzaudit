@@ -72,7 +72,6 @@ class AdvisorController extends Controller
      */
     public function store(Request $request)
     {
-
        $validated = $request->validate([
             'name' => 'required|unique:App\Models\Advisor,name',
             'address' => 'required|unique:App\Models\Advisor,address',

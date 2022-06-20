@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdviserAccountController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
@@ -149,7 +150,35 @@ Route::delete('advisors/{advisor}', [AdvisorController::class, 'destroy'])
     ->name('advisors.destroy')
     ->middleware('auth');
 
+//AdviserAccount
 
+Route::get('advisor_accounts', [AdviserAccountController::class, 'index'])
+    ->name('advisor_accounts')
+    ->middleware('auth');
+
+Route::get('advisor_accounts/create', [AdviserAccountController::class, 'create'])
+    ->name('advisor_accounts.create')
+    ->middleware('auth');
+
+// Route::get('advisor_accounts/{account}', [AdviserAccountController::class, 'show'])
+//     ->name('accounts.show')
+//     ->middleware('auth');
+
+Route::post('advisor_accounts', [AdviserAccountController::class, 'store'])
+    ->name('advisor_accounts.store')
+    ->middleware('auth');
+
+Route::get('advisor_account/edit', [AdviserAccountController::class, 'edit'])
+    ->name('advisor_account.edit')
+    ->middleware('auth');
+
+Route::put('advisor_accounts/{account}', [AdviserAccountController::class, 'update'])
+    ->name('advisor_accounts.update')
+    ->middleware('auth');
+
+Route::delete('advisor_accounts/{adviserAccount}', [AdviserAccountController::class, 'destroy'])
+    ->name('advisor_accounts.destroy')
+    ->middleware('auth');
 
 // Banks
 
