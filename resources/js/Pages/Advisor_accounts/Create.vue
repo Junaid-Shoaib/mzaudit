@@ -173,7 +173,7 @@
           </thead>
           <tbody>
             <tr v-for="item in balances" :key="item.id">
-               <td class="py-2 px-2 border text-left">{{ item.company_id }}</td>
+               <td class="py-2 px-2 border text-left">{{ this.company_name }}</td>
               <td class="py-2 px-2 border text-center">
                 {{ item.advisors }}
               </td>

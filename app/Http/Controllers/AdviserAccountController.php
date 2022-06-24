@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdviserAccount;
+use App\Models\AdviserConfirmation;
 use App\Models\Advisor;
 use Illuminate\Http\Request;
 use Illuminate\Http\Request as Req;
@@ -84,8 +85,8 @@ class AdviserAccountController extends Controller
                                     'company_id' => $branch->company->name,
                                     // 'currency' => $branch->currency,
                                     // 'branches' => $branch->Advisor->bank->name . " - " . $branch->Advisor->address,
-                                    // 'delete' => BankBalance::where('account_id', $branch->id)->first() ? false : true,
-                                    'delete' => true,
+                                    'delete' => AdviserConfirmation::where('advisor_id', $branch->id)->first() ? false : true,
+                                    // 'delete' => true,
                                 ];
                         }
                     ),

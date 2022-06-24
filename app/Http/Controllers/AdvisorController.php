@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Advisor;
+use App\Models\AdviserAccount;
 use Illuminate\Http\Request;
 use Illuminate\Http\Request as Req;
 use Inertia\Inertia;
@@ -43,8 +44,8 @@ class AdvisorController extends Controller
                         'name' => $advisor->name,
                         'address' => $advisor->address,
                         'type' => $advisor->type,
-                        // 'delete' => BankBranch::where('bank_id', $bank->id)->first() ? false : true,
-                        'delete' => true,
+                        'delete' => AdviserAccount::where('advisor_id', $advisor->id)->first() ? false : true,
+                        // 'delete' => true,
 
                     ]
                 ),

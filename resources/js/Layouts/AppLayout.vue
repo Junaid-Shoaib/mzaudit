@@ -327,8 +327,8 @@
               <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                 <jet-nav-link
                   v-if="this.$page.props.co_id && this.$page.props.yr_id"
-                  :href="route('confirmations')"
-                  :active="route().current('confirmations')"
+                  :href="route('advisor_confirmations')"
+                  :active="route().current('advisor_confirmations')"
                 >
                  Advisor Confirmations
                 </jet-nav-link>

@@ -25,8 +25,9 @@ class DashboardController extends Controller
         request()->validate([
             'direction' => ['in:asc,desc'],
             'field' => ['in:name,address'],
+            'type' => [''],
         ]);
-
+        // dd(request('type'));
         $query = Company::query();
 
         if (request('search')) {
@@ -43,7 +44,7 @@ class DashboardController extends Controller
         $balances = $query->paginate(10)
             ->through(
                 function ($dash) {
-                    $confirmations = $dash->bankconfirmations()->get();
+                    $confirmations = request('type') == 'Advisor' ? $dash->advisorConfirmations()->get() : $dash->bankconfirmations()->get();
                     $total_sent = 0;
                     $total_recieve = 0;
                     $total_confirm = 0;
@@ -88,13 +89,13 @@ class DashboardController extends Controller
             if ($company->name) {
                 $name++;
             }
-
-            if (!$company->bankConfirmations()->get()->first()) {
+                $get = request('type') == 'Advisor' ? $company->advisorConfirmations()->get()->first() : $company->bankConfirmations()->get()->first();
+            if (!$get) {
                 $confirm++;
             }
         }
 
-
+        // dd($balances);
         return Inertia::render('Dashboard/Index', [
 
             'filters' => request()->all(['search', 'field', 'direction']),

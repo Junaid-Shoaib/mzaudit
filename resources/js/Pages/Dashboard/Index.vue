@@ -28,7 +28,7 @@
     <div class="max-w-7xl mx-auto pb-2">
       <div class="row">
         <div class="col-2 inline-block mt-5 ml-7">
-          <label class="px-4 py-1 m-1"> Search:</label>
+          <label class="px-2 py-1 m-1"> Search:</label>
           <input
             type="search"
             v-model="params.search"
@@ -36,6 +36,24 @@
             placeholder="Search..."
             class="border rounded-xl px-4 py-1 m-1"
           />
+          <label class="px-2 py-1 m-1"> Filter:</label>
+
+          <select
+              v-model="params.type"
+              class="border rounded-xl px-8 py-1 m-1"
+              label="type"
+            >
+              <!-- class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" -->
+              <option selected value="Bank">Bank</option>
+              <option value="Advisor">Advisor</option>
+            </select>
+          <!-- <input
+            type="search"
+            v-model="params.search"
+            aria-label="Search"
+            placeholder="Search..."
+            class="border rounded-xl px-4 py-1 m-1"
+          /> -->
         </div>
 
         <div class="inline-block float-right mt-3 mr-36 col-4">
@@ -278,6 +296,7 @@ export default {
         search: this.filters.search,
         field: "name",
         direction: "asc",
+        type: 'Bank',
       },
     };
   },

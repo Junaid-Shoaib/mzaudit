@@ -13,6 +13,7 @@ class AdviserAccount extends Model
 
 
     public function company()
+
     {
         return $this->belongsTo('App\Models\Company', 'company_id');
     }
@@ -20,6 +21,10 @@ class AdviserAccount extends Model
     public function advisor()
     {
         return $this->belongsTo('App\Models\Advisor', 'advisor_id');
+    }
+    public function advisorConfirmations()
+    {
+        return $this->hasMany('App\Models\AdviserConfirmation', 'advisor_id');
     }
 }
 
