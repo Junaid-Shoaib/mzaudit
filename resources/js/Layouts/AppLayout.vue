@@ -94,11 +94,97 @@
                 </jet-dropdown>
               </div>
 
+              <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-5 sm:flex">
+                <jet-nav-link
+                  v-if="this.$page.props.co_id && this.$page.props.yr_id"
+                  :href="route('advisors')"
+                  :active="route().current('advisors')"
+                >
+                  Advisor
+                </jet-nav-link>
+              </div> -->
+
+  <div class="relative mt-4">
+                <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"> -->
+                <jet-dropdown>
+                  <template #trigger>
+                    <span class="hidden space-x-8 sm:-my-px sm:ml-5 sm:flex">
+                      <button
+                        v-if="this.$page.props.co_id && this.$page.props.yr_id"
+                        type="button"
+                        class="
+                          inline-flex
+                          items-center
+                          px-3
+                          py-2
+                          border border-transparent
+                          text-sm
+                          leading-4
+                          font-medium
+                          rounded-md
+                          text-gray-500
+                          bg-white
+                          hover:text-gray-700
+                          focus:outline-none
+                          transition
+                          ease-in-out
+                          duration-150
+                        "
+                      >
+                        Advisor
+
+                        <svg
+                          class="ml-2 -mr-0.5 h-4 w-4"
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clip-rule="evenodd"
+                          />
+                        </svg>
+                      </button>
+                    </span>
+                  </template>
+
+                  <template #content>
+                    <!-- dropdown -->
+
+                    <!-- <div class="block px-4 py-2 text-xs text-gray-400">
+                      Create Activity
+                    </div> -->
+
+                    <!-- v-if="this.$page.props.co_id && this.$page.props.yr_id" -->
+                    <jet-dropdown-link
+                      :href="route('advisors')"
+                      :active="route().current('advisors')"
+                    >
+                      Advisors
+                    </jet-dropdown-link>
+                    <!-- </div> -->
+                    <jet-dropdown-link
+                      :href="route('advisor_accounts')"
+                      :active="route().current('advisor_accounts')"
+                    >
+                      Advisor Account
+                    </jet-dropdown-link>
+                    <!-- <jet-dropdown-link
+                      :href="route('accounts')"
+                      :active="route().current('accounts')"
+                    >
+                      Bank Accounts
+                    </jet-dropdown-link> -->
+                  </template>
+                </jet-dropdown>
+              </div>
+
               <div class="relative mt-4">
                 <!-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex"> -->
                 <jet-dropdown>
                   <template #trigger>
-                    <span class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <span class="hidden space-x-8 sm:-my-px sm:ml-5 sm:flex">
                       <button
                         v-if="this.$page.props.co_id && this.$page.props.yr_id"
                         type="button"
@@ -220,7 +306,7 @@
                 </jet-nav-link>
               </div> -->
 
-              <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+              <div class="hidden space-x-8 sm:-my-px sm:ml-5 sm:flex">
                 <jet-nav-link
                   v-if="this.$page.props.co_id && this.$page.props.yr_id"
                   :href="route('balances')"
@@ -235,7 +321,16 @@
                   :href="route('confirmations')"
                   :active="route().current('confirmations')"
                 >
-                  Confirmations
+                 Bank Confirmations
+                </jet-nav-link>
+              </div>
+              <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <jet-nav-link
+                  v-if="this.$page.props.co_id && this.$page.props.yr_id"
+                  :href="route('advisor_confirmations')"
+                  :active="route().current('advisor_confirmations')"
+                >
+                 Advisor Confirmations
                 </jet-nav-link>
               </div>
             </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdviserAccountController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
@@ -7,10 +8,12 @@ use Inertia\Inertia;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\YearController;
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\AdvisorController;
 use App\Http\Controllers\BankBranchController;
 use App\Http\Controllers\BankAccountController;
 use App\Http\Controllers\BankBalanceController;
 use App\Http\Controllers\BankConfirmationController;
+use App\Http\Controllers\AdviserConfirmationController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Auth;
 
@@ -108,10 +111,79 @@ Route::get('word', [CompanyController::class, 'word'])
 
 
 
+
+
 //Dashboad
 
 Route::get('dashboard', [DashboardController::class, 'index'])
     ->name('dashboard')
+    ->middleware('auth');
+
+    Route::get('dashboard/{value}', [DashboardController::class, 'dashboard_ilter'])
+    ->name('dashboard.filter')
+    ->middleware('auth');
+
+
+
+// Adviosr
+
+Route::get('advisors', [AdvisorController::class, 'index'])
+    ->name('advisors')
+    ->middleware('auth');
+
+
+Route::get('advisors/create', [AdvisorController::class, 'create'])
+    ->name('advisors.create')
+    ->middleware('auth');
+
+Route::get('advisors/{advisor}', [AdvisorController::class, 'show'])
+    ->name('advisors.show')
+    ->middleware('auth');
+
+Route::post('advisors', [AdvisorController::class, 'store'])
+    ->name('advisors.store')
+    ->middleware('auth');
+
+Route::get('advisors/{advisor}/edit', [AdvisorController::class, 'edit'])
+    ->name('advisors.edit')
+    ->middleware('auth');
+
+Route::put('advisors/{advisor}', [AdvisorController::class, 'update'])
+    ->name('advisors.update')
+    ->middleware('auth');
+
+Route::delete('advisors/{advisor}', [AdvisorController::class, 'destroy'])
+    ->name('advisors.destroy')
+    ->middleware('auth');
+
+//AdviserAccount
+
+Route::get('advisor_accounts', [AdviserAccountController::class, 'index'])
+    ->name('advisor_accounts')
+    ->middleware('auth');
+
+Route::get('advisor_accounts/create', [AdviserAccountController::class, 'create'])
+    ->name('advisor_accounts.create')
+    ->middleware('auth');
+
+// Route::get('advisor_accounts/{account}', [AdviserAccountController::class, 'show'])
+//     ->name('accounts.show')
+//     ->middleware('auth');
+
+Route::post('advisor_accounts', [AdviserAccountController::class, 'store'])
+    ->name('advisor_accounts.store')
+    ->middleware('auth');
+
+Route::get('advisor_account/edit', [AdviserAccountController::class, 'edit'])
+    ->name('advisor_account.edit')
+    ->middleware('auth');
+
+Route::put('advisor_accounts/{account}', [AdviserAccountController::class, 'update'])
+    ->name('advisor_accounts.update')
+    ->middleware('auth');
+
+Route::delete('advisor_accounts/{adviserAccount}', [AdviserAccountController::class, 'destroy'])
+    ->name('advisor_accounts.destroy')
     ->middleware('auth');
 
 // Banks
@@ -281,6 +353,56 @@ Route::get('bankConfig', [BankConfirmationController::class, 'bankConfig'])
 Route::get('branchespdf', [BankConfirmationController::class, 'branchespdf'])
 ->name('branchespdf')
 ->middleware('auth');
+
+
+
+// Advisor confirmations
+
+Route::get('advisor_confirmations', [AdviserConfirmationController::class, 'index'])
+    ->name('advisor_confirmations')
+    ->middleware('auth');
+
+Route::get('advisor_confirmations/create', [AdviserConfirmationController::class, 'create'])
+    ->name('advisor_confirmations.create')
+    ->middleware('auth');
+
+Route::get('advisor_confirmations/{advisor_confirmation}', [AdviserConfirmationController::class, 'show'])
+    ->name('advisor_confirmations.show')
+    ->middleware('auth');
+
+Route::post('advisor_confirmations', [AdviserConfirmationController::class, 'store'])
+    ->name('advisor_confirmations.store')
+    ->middleware('auth');
+
+
+Route::get('advisor_confirmationsP/edit', [AdviserConfirmationController::class, 'edit'])
+    ->name('advisor_confirmations.edit')
+    ->middleware('auth');
+
+
+Route::put('advisor_confirmations/{advisor_confirmation}', [AdviserConfirmationController::class, 'update'])
+    ->name('advisor_confirmations.update')
+    ->middleware('auth');
+
+Route::delete('advisor_confirmations/{advisor_confirmation}', [AdviserConfirmationController::class, 'destroy'])
+    ->name('advisor_confirmations.destroy')
+    ->middleware('auth');
+
+Route::get('advisor_word', [AdviserConfirmationController::class, 'advisor_word'])
+->name('advisor_word')
+->middleware('auth');
+
+Route::get('advisorspdf', [AdviserConfirmationController::class, 'advisorspdf'])
+->name('advisorspdf')
+->middleware('auth');
+
+// Route::get('bankConfig', [AdviserConfirmationController::class, 'bankConfig'])
+// ->name('bankConfig')
+// ->middleware('auth');
+
+// Route::get('branchespdf', [AdviserConfirmationController::class, 'branchespdf'])
+// ->name('branchespdf')
+// ->middleware('auth');
 
 // Years
 

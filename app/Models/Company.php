@@ -18,6 +18,11 @@ class Company extends Model
         return $this->hasMany('App\Models\BankAccount', 'company_id');
     }
 
+    public function advisorAccounts()
+    {
+        return $this->hasMany('App\Models\AdviserAccount', 'company_id');
+    }
+
     public function bankBalances()
     {
         return $this->hasMany('App\Models\BankBalance', 'company_id');
@@ -26,6 +31,10 @@ class Company extends Model
     public function bankConfirmations()
     {
         return $this->hasMany('App\Models\BankConfirmation', 'company_id');
+    }
+    public function advisorConfirmations()
+    {
+        return $this->hasMany('App\Models\AdviserConfirmation', 'company_id');
     }
 
     public function years()

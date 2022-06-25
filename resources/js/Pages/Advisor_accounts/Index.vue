@@ -2,23 +2,46 @@
   <app-layout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Dashboard
-        <!-- <div class="flex-1 inline-block float-right">
+        Bank Accounts
+        <div class="flex-1 inline-block float-right">
           <select
+            class="rounded-md"
+            v-model="yr_id"
+            @change="yrch"
+            label="yr_id"
+          >
+            <option v-for="year in years" :key="year.id" :value="year.id">
+              {{ year.end }}
+            </option>
+          </select>
+        </div>
+        <div class="flex-1 inline-block float-right">
+          <multiselect
+            style="display: inline-block"
+            class="rounded-md border border-black"
+            placeholder="Select Company."
+            v-model="co_id"
+            track-by="id"
+            label="name"
+            :options="options"
+            @update:model-value="coch"
+          >
+          </multiselect>
+          <!-- <select
             v-model="co_id"
             class="max-w-md rounded-md"
             label="company_id"
             @change="coch"
           >
             <option
-              v-for="company in data"
+              v-for="company in companies"
               :key="company.id"
               :value="company.id"
             >
               {{ company.name }}
             </option>
-          </select>
-        </div> -->
+          </select> -->
+        </div>
       </h2>
     </template>
     <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
@@ -26,9 +49,40 @@
     </div>
 
     <div class="max-w-7xl mx-auto pb-2">
-      <div class="row">
-        <div class="col-2 inline-block mt-5 ml-7">
-          <label class="px-2 py-1 m-1"> Search:</label>
+      <div class="relative mt-5 ml-7 flex-row">
+        <div class="flex-1 inline-block">
+          <inertia-link
+            class="
+              border
+              bg-blue-400
+              rounded-xl
+              px-4
+              py-1
+              m-1
+              hover:text-white
+              hover:bg-blue-600
+            "
+            :href="route('advisor_accounts.create')"
+          >
+            <!-- v-on:click="ch" -->
+            Add Advisor Accounts
+          </inertia-link>
+          <!-- <inertia-link
+            v-if="dataEdit"
+            class="
+              border
+              bg-blue-400
+              rounded-xl
+              px-4
+              py-1
+              m-1
+              hover:text-white
+              hover:bg-blue-600
+            "
+            :href="route('advisor_account.edit')"
+          >
+            <span>Edit</span>
+          </inertia-link> -->
           <input
             type="search"
             v-model="params.search"
@@ -36,71 +90,20 @@
             placeholder="Search..."
             class="border rounded-xl px-4 py-1 m-1"
           />
-          <label class="px-2 py-1 m-1"> Filter:</label>
-
-          <select
-              v-model="params.type"
-              class="border rounded-xl px-8 py-1 m-1"
-              label="type"
-            >
-              <!-- class="pr-2 pb-2 w-full lg:w-1/4 rounded-md leading-tight" -->
-              <option selected value="Bank">Bank</option>
-              <option value="Advisor">Advisor</option>
-            </select>
-          <!-- <input
-            type="search"
-            v-model="params.search"
-            aria-label="Search"
-            placeholder="Search..."
-            class="border rounded-xl px-4 py-1 m-1"
-          /> -->
-        </div>
-
-        <div class="inline-block float-right mt-3 mr-36 col-4">
-          <p class="inline-block font-sans font-bold text-3xl pl-10 py-1 m-1">
-            Client : {{ this.client }}
-          </p>
-          <p
-            v-if="this.confirmation == 0"
-            class="
-              inline-block
-              font-sans
-              text-green-500
-              font-bold
-              text-3xl
-              pl-10
-              py-1
-              m-1
-            "
-          >
-            Confirmation : {{ this.confirmation }}
-          </p>
-          <p
-            v-else
-            class="
-              inline-block
-              font-sans font-bold
-              text-red-600 text-3xl
-              pl-10
-              py-1
-              m-1
-            "
-          >
-            Confirmation : {{ this.confirmation }}
-          </p>
         </div>
       </div>
-
+      <div v-if="isError">{{ firstError }}</div>
       <div class="">
-        <table class="shadow-lg border mt-4 ml-12 rounded-xl w-11/12">
+        <table class="shadow-lg border mt-4 mb-4 ml-12 rounded-xl w-11/12">
           <thead>
-            <!-- <tr class="bg-indigo-100"> -->
-            <tr class="bg-gray-700 text-white">
-              <th class="px-3 pt-3 pb-3 border">
-                <span @click="sort('name')">
-                  Client
+            <tr class="bg-gray-700 text-white text-centre font-bold">
                   <!-- name Descending  -->
                   <!-- v-if="params.field == 'name' && params.direction == 'desc'" -->
+                  <!-- na   me Ascending  Starts-->
+                  <!-- v-if="params.field === 'name' && params.direction === 'asc'" -->
+              <!-- <th class="px-3 pt-3 pb-3 border">
+                <span @click="sort('name')">
+                  Account Number
                   <svg
                     v-if="params.direction == 'desc'"
                     version="1.1"
@@ -116,7 +119,6 @@
                     style="enable-background: new 0 0 97.761 97.762"
                     xml:space="preserve"
                   >
-                    <!-- style="enable-background: new 0 0 97.761 97.762" -->
                     <g>
                       <g>
                         <path
@@ -139,8 +141,7 @@
                       </g>
                     </g>
                   </svg>
-                  <!-- name Ascending  Starts-->
-                  <!-- v-if="params.field === 'name' && params.direction === 'asc'" -->
+
                   <svg
                     v-if="params.direction === 'asc'"
                     version="1.1"
@@ -149,14 +150,7 @@
                     xmlns:xlink="http://www.w3.org/1999/xlink"
                     x="0px"
                     y="0px"
-                    class="
-                      inline
-                      ml-4
-                      float-right
-                      text-white
-                      fill-current
-                      text-white
-                    "
+                    class="inline ml-4 float-right fill-current text-white"
                     width="20px"
                     height="20px"
                     viewBox="0 0 97.68 97.68"
@@ -185,80 +179,42 @@
                       </g>
                     </g>
                   </svg>
-                  <!-- name Ascending  Ends-->
                 </span>
-              </th>
-              <th class="px-3 pt-3 pb-3 border">Confirmations</th>
-              <th class="px-3 pt-3 pb-3 border">Total Confirmation</th>
-              <th class="px-3 pt-3 pb-3 border">Sent Confirmation</th>
-              <th class="px-3 pt-3 pb-3 border">Remaining Confirmation</th>
+              </th> -->
+                  <!-- name Ascending  Ends-->
+              <th class="px-3 pt-3 pb-3 border">Branch</th>
+              <th class="px-3 pt-3 pb-3 border">Type</th>
+              <!-- <th class="px-3 pt-3 pb-3 border">Currency</th> -->
+
+              <th class="px-4 pt-4 pb-4 border">Actions</th>
             </tr>
-
-            <!-- Null Balance -->
           </thead>
-
           <tbody>
             <tr v-for="item in balances.data" :key="item.id">
-              <td
-                v-if="item.create_confirm"
-                class="py-2 px-2 border text-left text-transform: uppercase"
-              >
-                {{ item.name }}
+              <td Style="width: 24%" class="py-2 px-2 border text-center">
+                {{ item.company_id }}
               </td>
-              <td
-                v-else
-                class="
-                  py-2
-                  px-2
-                  text-red-600
-                  font-bold
-                  border
-                  text-left text-transform:
-                  uppercase
-                "
-              >
-                {{ item.name }}
+              <td Style="width: 52%" class="py-2 px-2 border text-center">
+                {{ item.advisor_id }}
               </td>
-              <td class="py-2 px-2 border text-center">
-                {{ item.create_confirm }}
-              </td>
+              <!-- <td Style="width: 12%" class="py-2 px-2 border text-center">
+                {{ item.type }}
+              </td> -->
+              <!-- <td S/tyle="width: 12%" class="py-2 px-2 border text-center">
+                {{ item.currency }}
+              </td> -->
 
-              <td
-                v-if="item.total_confirm == 0"
-                class="py-2 px-2 font-bold border text-red-600 text-center"
+              <td class="py-1 px-4 border text-center">
+              <button
+                class="border bg-red-500 rounded-xl px-2 py-1 m-1"
+                @click="destroy(item.id)"
+                v-if="item.delete"
               >
-                {{ item.total_confirm }}
-              </td>
-              <td v-else class="py-2 px-2 font-bold border text-center">
-                {{ item.total_confirm }}
-              </td>
-
-              <td
-                v-if="item.total_sent == item.total_confirm"
-                class="py-2 px-2 font-bold border text-green-600 text-center"
-              >
-                {{ item.total_sent }}
-              </td>
-              <td
-                v-else
-                class="py-2 px-2 font-bold border text-red-600 text-center"
-              >
-                {{ item.total_sent }}
-              </td>
-
-              <td
-                v-if="item.reamaning == 0"
-                class="py-2 px-2 font-bold border text-green-500 text-center"
-              >
-                {{ item.reamaning }}
-              </td>
-              <td
-                v-else
-                class="py-2 px-2 font-bold text-red-600 border text-center"
-              >
-                {{ item.reamaning }}
-              </td>
+                <span>Delete</span>
+              </button>
+            </td>
             </tr>
+            <!-- Null Balance -->
             <tr v-if="balances.data.length === 0">
               <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
             </tr>
@@ -270,42 +226,62 @@
   </app-layout>
 </template>
 
+
+
+
+
+
+
 <script>
 import AppLayout from "@/Layouts/AppLayout";
 import Paginator from "@/Layouts/Paginator";
 import { throttle } from "lodash";
 import { pickBy } from "lodash";
+import Multiselect from "@suadelabs/vue3-multiselect";
+
 export default {
   components: {
     AppLayout,
     Paginator,
+    Multiselect,
   },
 
   props: {
-    data: Object,
+    // errors: Object,
+    dataEdit: Object,
+    branches: Object,
     balances: Object,
+    companies: Array,
+    years: Object,
     filters: Object,
-    confirmation: Object,
-    client: Object,
+    cochange: Object,
   },
-
   data() {
     return {
-      co_id: this.$page.props.co_id,
+      options: this.companies,
+      co_id: this.cochange,
+      // co_id: this.$page.props.co_id,
+      yr_id: this.$page.props.yr_id,
       params: {
         search: this.filters.search,
-        field: "name",
+        field: "company_id",
         direction: "asc",
-        type: 'Bank',
       },
     };
   },
 
   watch: {
+    errors: function () {
+      if (this.errors) {
+        this.firstError = this.errors[Object.keys(this.errors)[0]];
+        this.isError = true;
+      }
+    },
+
     params: {
       handler: throttle(function () {
         let params = pickBy(this.params);
-        this.$inertia.get(this.route("dashboard"), params, {
+        this.$inertia.get(this.route("advisor_accounts"), params, {
           replace: true,
           preserveState: true,
         });
@@ -319,11 +295,15 @@ export default {
       this.params.field = field;
       this.params.direction = this.params.direction === "asc" ? "desc" : "asc";
     },
-    destroy(id) {
-      this.$inertia.delete(route("companies.destroy", id));
+    destroy(id){
+      this.$inertia.delete(route("advisor_accounts.destroy", id));
     },
+
     coch() {
       this.$inertia.get(route("companies.coch", this.co_id));
+    },
+    yrch() {
+      this.$inertia.get(route("companies.yrch", this.yr_id));
     },
   },
 };

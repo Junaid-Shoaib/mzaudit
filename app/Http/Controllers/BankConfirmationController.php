@@ -118,7 +118,6 @@ class BankConfirmationController extends Controller
                     'company_id' => session('company_id'),
                     'year_id' => session('year_id'),
                     'branch_id' => $branch->id,
-
                 ]);
             });
 
