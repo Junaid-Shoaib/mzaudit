@@ -624,7 +624,7 @@ class AdviserConfirmationController extends Controller
 
 
         }else{
-            return Redirect::route('accounts.create')->with('success', 'Create Account first.');
+            return Redirect::route('advisor_accounts.create')->with('success', 'Create Advisor Account first.');
 
         }
 
