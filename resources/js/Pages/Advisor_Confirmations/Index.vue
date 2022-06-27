@@ -2,7 +2,7 @@
   <app-layout>
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Bank Confirmations
+        Advisor Confirmations
 
         <div class="flex-1 inline-block float-right">
           <!-- <select
