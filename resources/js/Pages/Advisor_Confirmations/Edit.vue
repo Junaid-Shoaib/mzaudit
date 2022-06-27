@@ -19,7 +19,7 @@
               hover:text-white
               hover:bg-blue-600
             "
-            :href="route('confirmations')"
+            :href="route('advisor_confirmations')"
             >Back
           </inertia-link>
         </div>
