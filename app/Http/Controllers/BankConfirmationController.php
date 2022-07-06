@@ -14,9 +14,7 @@ use App\Models\BankConfirmation;
 use Inertia\Inertia;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
-
-
-
+use Illuminate\Validation\Rules\Exists;
 
 class BankConfirmationController extends Controller
 {
@@ -61,6 +59,7 @@ class BankConfirmationController extends Controller
                         'reminder' => $reminder ? $reminder->format("M d Y") : null,
                         'confirm_create' => $confirm_create ?  $confirm_create->format("M d Y") : null,
                         'received' => $received ? $received->format("M d Y") : null,
+                        'path' => $confirmation->path  ? $confirmation->path : null,
                         'branch' => $confirmation->bankBranch->bank->name . " - " . $confirmation->bankBranch->address,
                         'company' => $confirmation->company->name,
                         'year' => $confirmation->year->begin . " - " . $confirmation->year->end,
@@ -122,9 +121,6 @@ class BankConfirmationController extends Controller
             });
 
         return back()->withInput();
-
-
-
         // }
     }
 //Show
@@ -135,6 +131,21 @@ class BankConfirmationController extends Controller
 //Edit
     public function edit()
     {
+        // $data = BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))
+        //         ->get()
+        //         ->map(function ($confirmation) {
+        //             return [
+        //                 'id' => $confirmation->id,
+        //                 'name' => $confirmation->bankBranch->bank->name . "-" . $confirmation->bankBranch->address,
+        //                 'confirm_create' => $confirmation->confirm_create,
+        //                 'sent' => $confirmation->sent,
+        //                 'reminder' => $confirmation->reminder,
+        //                 'received' => $confirmation->received,
+        //                 'path' =>  $confirmation->path,
+
+        //             ];
+        //         });
+        //         dd($data);
         return Inertia::render('Confirmations/Edit', [
             'data' => BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))
                 ->get()
@@ -146,10 +157,10 @@ class BankConfirmationController extends Controller
                         'sent' => $confirmation->sent,
                         'reminder' => $confirmation->reminder,
                         'received' => $confirmation->received,
-
+                        'path' =>  $confirmation->path,
                     ];
                 }),
-
+                // return response()->download(storage_path('app/public/' . $year->company->id . '/' . $year->id . '/' .  'Remaining_pages.docx'));
             'branches' => BankBranch::all()
                 ->filter(function ($branch) {
                     foreach ($branch->bankAccounts as $account) {
@@ -168,8 +179,33 @@ class BankConfirmationController extends Controller
         ]);
     }
 //Update
+
+
+    public function updated(Req $request){
+        // dd($request->all());
+       $validated = $request->validate([
+        'file' => 'required|mimes:pdf'
+        ]);
+
+            $confirm = BankConfirmation::find($request->id);
+            if($confirm){
+                $fileName = "B".$request->id.'.'.$validated['file']->getClientOriginalExtension();
+                $path = storage_path('app/public/' . session('company_id') . '/' . session('year_id') . '/'.$fileName);
+                $confirm->path = $path;
+                $validated['file']->move(storage_path('app/public/' . session('company_id') . '/' . session('year_id') . '/'), $fileName);
+                // dd('success');
+                $confirm->save();
+                return back()->with('success', 'File Uploaded');
+            }else{
+                // dd('1-0');
+                return back()->with('success', 'Only Pdf File Upload');
+            }
+    }
+
+
     public function update(Req $request, BankConfirmation $balance)
     {
+        // dd($request->all());
         Request::validate([
             'balances.*.confirm_create' => ['required'],
         ]);
@@ -180,6 +216,7 @@ class BankConfirmationController extends Controller
                 'confirm_create' => $balance['confirm_create'],
                 'reminder' =>  $balance['reminder'],
                 'received' => $balance['received'],
+                'path' => $balance['path'],
 
 
             ]);
@@ -195,6 +232,18 @@ class BankConfirmationController extends Controller
     }
 
     //Template Sheet
+
+    public function  bankconfirmUpload($id)
+    {
+        $confirm = \App\Models\BankConfirmation::find($id);
+             if ($confirm) {
+                     return response()->download($confirm->path);
+            // Storage::disk('public')->exists($confirm->path);
+        } else {
+            return Redirect::route('balances.create')->with('success', 'Create Balance first.');
+        }
+
+    }
     public function bankConfig()
     {
         //template

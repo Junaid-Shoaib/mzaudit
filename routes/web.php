@@ -306,7 +306,9 @@ Route::get('bal/edit', [BankBalanceController::class, 'edity'])
     ->name('bal.edit')
     ->middleware('auth');
 
-Route::put('balances/{balance}', [BankBalanceController::class, 'update'])
+
+
+Route::put('balances/{balance?}', [BankBalanceController::class, 'update'])
     ->name('balances.update')
     ->middleware('auth');
 
@@ -337,6 +339,9 @@ Route::get('confirmation/edit', [BankConfirmationController::class, 'edit'])
     ->name('confirmations.edit')
     ->middleware('auth');
 
+Route::post('balances_updated', [BankConfirmationController::class, 'updated'])
+->name('balances.updated')
+->middleware('auth');
 
 Route::put('confirmations/{balance}', [BankConfirmationController::class, 'update'])
     ->name('confirmations.update')
@@ -348,6 +353,10 @@ Route::delete('confirmations/{confirmation}', [BankConfirmationController::class
 
 Route::get('bankConfig', [BankConfirmationController::class, 'bankConfig'])
 ->name('bankConfig')
+->middleware('auth');
+
+Route::get('bankconfirmUpload/{id}', [BankConfirmationController::class, 'bankconfirmUpload'])
+->name('bankconfirmUpload')
 ->middleware('auth');
 
 Route::get('branchespdf', [BankConfirmationController::class, 'branchespdf'])

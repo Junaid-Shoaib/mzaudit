@@ -160,7 +160,7 @@
               <th class="px-3 pt-3 pb-3 border">Sent Date</th>
               <th class="px-3 pt-3 pb-3 border">Reminder Date</th>
               <th class="px-3 pt-3 pb-3 border">Received Date</th>
-              <!-- <th class="px-4 pt-4 pb-4 border">Actions</th> -->
+              <th class="px-4 pt-4 pb-4 border">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -182,6 +182,22 @@
               </td>
               <td Style="width: 12%" class="py-2 px-2 border text-center">
                 {{ item.received }}
+              </td>
+              <td Style="width: 12%" class="py-2 px-2 border text-center">
+                <a v-if="item.path" class="
+                        border
+                        inline-block
+                        bg-blue-400
+                        hover:bg-blue-600
+                        hover:text-white
+                        shadow-md
+                        rounded-xl
+                        px-4
+                        py-1
+                        m-1
+                    "
+                     :href="'/bankconfirmUpload/' +item.id"
+                     >Download</a>
               </td>
               <!-- <td class="py-2 px-4 border text-center">
               <button
