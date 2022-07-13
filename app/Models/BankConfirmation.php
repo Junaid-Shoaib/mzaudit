@@ -10,7 +10,7 @@ class BankConfirmation extends Model
     use HasFactory;
 
     protected $fillable = [
-        'sent', 'confirm_create', 'reminder', 'received', 'enabled', 'branch_id', 'year_id', 'company_id'
+        'sent', 'confirm_create', 'reminder', 'received', 'enabled', 'branch_id', 'year_id', 'company_id' , 'path'
     ];
 
     public function bankBranch()
