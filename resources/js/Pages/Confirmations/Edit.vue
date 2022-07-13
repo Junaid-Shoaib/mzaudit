@@ -42,7 +42,7 @@
                   <th class="px-3 pt-3 pb-3 border">Reminder Date</th>
                   <th class="px-3 pt-3 pb-3 border">Received Date</th>
                   <!-- <th class="px-3 pt-3 pb-3 border">Received Date</th> -->
-                  <th class="px-3 pt-3 pb-3 border">Uploading PDF</th>
+                  <!-- <th class="px-3 pt-3 pb-3 border">Uploading PDF</th> -->
                   <!-- <th class="px-3 pt-3 pb-3 border">Received Date</th> -->
                 </tr>
               </thead>
@@ -91,29 +91,7 @@
                       class="rounded-md w-full my-1"
                     />
                   </td>
-                  <td class="w-1/12">
-                 <input
-                    class="ml-2 border-gray-800 w-24 ring-gray-800 ring-1 outline-none"
-                    type="file"
-                    accept=".pdf"
-                    v-on:change="onFileChange($event,confirm.id)"
-                    />
-                    <a  v-if="confirm.path"
-                    class="
-                        border
-                        inline-block
-                        bg-blue-400
-                        hover:bg-blue-600
-                        hover:text-white
-                        shadow-md
-                        rounded-xl
-                        px-4
-                        py-1
-                        m-1
-                    "
-                     :href="'/bankconfirmUpload/' +confirm.id"
-                     >Download</a>
-                  </td>
+
 
                   <!-- <td>
                       <div></div>
@@ -177,7 +155,7 @@ export default {
     Datepicker,
     useForm,
   },
-
+//   remember: 'form',
   props: {
     errors: Object,
     data: Object,
@@ -196,13 +174,13 @@ export default {
 
   },
 
-     setup() {
-        const form = useForm({
-        file: null,
-        id:null,
-        });
-        return { form };
-    },
+    //  setup() {
+    //     const form = useForm({
+    //     file: null,
+    //     id:null,
+    //     });
+    //     return { form };
+    // },
 
   methods: {
     submit() {
@@ -211,50 +189,37 @@ export default {
       });
     },
 
-    //  submit() {
-    //   if (this.form.avatar) {
-    //     this.form.post(route("sales.trial.read"));
-    //   } else {
-    //     alert("Please select file first");
-    //   }
-    // },
+
 
     onFileChange(e, index) {
         //         console.log(id);
         // debugger;
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
-      this.form.file = files[0];
+    //   var file = files[0];
     //   var id = ;
     //   console.log(this.form.avatar);
-        this.form.id = index;
+        var id = index;
     //   this.files[indexOfConfirm] = this.form.avatar;
     // //   this.$set(this.balances, indexOfConfirm, files[0]);
     // //   this.balances.splice(indexOfConfirm,  files[0])
     //   console.log(this.balances);
     //   debugger;
-      this.form.post(route("balances.updated"));
+       this.$inertia.post(route('balances.updated', id),
+            {
+            _method: 'put',
+            file: files[0],
+            balances: this.balances,
+            },
+            {
+            preserveState: true,
+            preserveScroll: true,
+            }
+        )
+    //   this.form.post(route("balances.updated"));
     },
 
-    // onFileChange(event, id) {
-    //     var files = event.target.files || event.dataTransfer.files;
-    //     if (!files.length) return;
-    //         this.avatar = files[0];
-    //       this.$inertia.put(route("confirmations.update",  this.avatar));
-    // },
 
-    //  onFileChange(event, row) {
-    //         // console.log(event,row);
-    //         //  debugger;
-    //     var files = event.target.files || event.dataTransfer.files;
-    //     if (!files.length) return;
-    // // console.log("0 data"+this.data[0]['name']);
-    // // console.log('row' + row+ 'data'+ this.data[1]['path']);
-    // // console.log('file' + files[0]['name']);
-    // // debugger;
-    //     this.pdffile = files[row];
-    //   this.data[row]['path'] = this.pdffile;
-    // },
 
     addRow() {
       this.balances.push({

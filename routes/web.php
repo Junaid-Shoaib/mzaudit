@@ -339,7 +339,7 @@ Route::get('confirmation/edit', [BankConfirmationController::class, 'edit'])
     ->name('confirmations.edit')
     ->middleware('auth');
 
-Route::post('balances_updated', [BankConfirmationController::class, 'updated'])
+Route::put('balances_updated/{id}', [BankConfirmationController::class, 'updated'])
 ->name('balances.updated')
 ->middleware('auth');
 

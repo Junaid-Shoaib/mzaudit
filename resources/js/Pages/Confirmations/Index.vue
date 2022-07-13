@@ -44,9 +44,10 @@
         </div>
       </h2>
     </template>
-    <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
+    <div v-if="$page.props.flash.success" class="bg-green-600 text-white text-center">
       {{ $page.props.flash.success }}
     </div>
+    <div  class="bg-red-600 text-white text-center" v-if="errors.file">{{ errors.file }}</div>
 
     <div class="max-w-7xl mx-auto pb-2">
       <div class="relative mt-3 ml-7 flex-row">
@@ -184,6 +185,12 @@
                 {{ item.received }}
               </td>
               <td Style="width: 12%" class="py-2 px-2 border text-center">
+                 <input
+                    class="border-gray-800 w-24 ring-gray-800 ring-1 outline-none"
+                    type="file"
+                    accept=".pdf"
+                    v-on:change="onFileChange($event,item.id)"
+                    />
                 <a v-if="item.path" class="
                         border
                         inline-block
@@ -227,10 +234,12 @@ import Multiselect from "@suadelabs/vue3-multiselect";
 export default {
   components: {
     AppLayout,
+
     Paginator,
     Multiselect,
   },
   props: {
+     errors: Object,
     balances: Object,
     companies: Object,
     years: Object,
@@ -246,6 +255,21 @@ export default {
     };
   },
   methods: {
+      onFileChange(e, index) {
+      var files = e.target.files || e.dataTransfer.files;
+      if (!files.length) return;
+        var id = index;
+       this.$inertia.post(route('balances.updated', id),
+            {
+            _method: 'put',
+            file: files[0],
+            },
+            {
+            preserveState: true,
+            preserveScroll: true,
+            }
+        )
+    },
     destroy(id) {
       this.$inertia.delete(route("confirmations.destroy", id));
     },

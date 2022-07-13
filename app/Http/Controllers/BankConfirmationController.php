@@ -180,24 +180,22 @@ class BankConfirmationController extends Controller
     }
 //Update
 
+    public function updated(Req $request,$id){
 
-    public function updated(Req $request){
-        // dd($request->all());
+        // dd($id);
        $validated = $request->validate([
         'file' => 'required|mimes:pdf'
         ]);
 
-            $confirm = BankConfirmation::find($request->id);
+            $confirm = BankConfirmation::find($id);
             if($confirm){
-                $fileName = "B".$request->id.'.'.$validated['file']->getClientOriginalExtension();
+            $fileName = "B".$request->id.'.'.$validated['file']->getClientOriginalExtension();
                 $path = storage_path('app/public/' . session('company_id') . '/' . session('year_id') . '/'.$fileName);
                 $confirm->path = $path;
                 $validated['file']->move(storage_path('app/public/' . session('company_id') . '/' . session('year_id') . '/'), $fileName);
-                // dd('success');
                 $confirm->save();
                 return back()->with('success', 'File Uploaded');
             }else{
-                // dd('1-0');
                 return back()->with('success', 'Only Pdf File Upload');
             }
     }
@@ -205,7 +203,8 @@ class BankConfirmationController extends Controller
 
     public function update(Req $request, BankConfirmation $balance)
     {
-        // dd($request->all());
+
+
         Request::validate([
             'balances.*.confirm_create' => ['required'],
         ]);
@@ -290,16 +289,11 @@ class BankConfirmationController extends Controller
 
         $pdf = app('dompdf.wrapper');
         $pdf->getDomPDF()->set_option("enable_php", true);
-        $pdf->loadView('branchespdf', compact( 'names', 'endDate' ,'confirmation' ));
+        $pdf->loadView('branchespdf', compact( 'names', 'endDate' ,'confirmation'));
         return $pdf->stream($names ." ".'branches.pdf');
-
-
-
         }else{
             return Redirect::route('accounts.create')->with('success', 'Create Account first.');
 
         }
-
-
     }
 }
