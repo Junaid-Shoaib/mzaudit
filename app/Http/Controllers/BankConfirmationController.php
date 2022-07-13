@@ -190,8 +190,8 @@ class BankConfirmationController extends Controller
             $confirm = BankConfirmation::find($id);
             if($confirm){
             $fileName = "B".$request->id.'.'.$validated['file']->getClientOriginalExtension();
-                $path = storage_path('app/public/' . session('company_id') . '/' . session('year_id') . '/'.$fileName);
-                $confirm->path = $path;
+            $path  =  Request::file('file')->storeAs(session('company_id') . '/' . session('year_id') , $fileName, 'public');
+              $confirm->path = $path;
                 $validated['file']->move(storage_path('app/public/' . session('company_id') . '/' . session('year_id') . '/'), $fileName);
                 $confirm->save();
                 return back()->with('success', 'File Uploaded');
