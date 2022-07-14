@@ -203,8 +203,6 @@ class BankConfirmationController extends Controller
 
     public function update(Req $request, BankConfirmation $balance)
     {
-
-
         Request::validate([
             'balances.*.confirm_create' => ['required'],
         ]);
@@ -236,10 +234,10 @@ class BankConfirmationController extends Controller
     {
         $confirm = \App\Models\BankConfirmation::find($id);
              if ($confirm) {
-                     return response()->download($confirm->path);
+                     return response()->download(storage_path('app/public/' .$confirm->path));
             // Storage::disk('public')->exists($confirm->path);
         } else {
-            return Redirect::route('balances.create')->with('success', 'Create Balance first.');
+            return Redirect::route('confirmations')->with('success', 'File Not Found.');
         }
 
     }

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\AdviserConfirmation;
 use App\Models\Advisor;
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Http\Request as Req;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
@@ -74,6 +75,7 @@ class AdviserConfirmationController extends Controller
                         'received' => $received ? $received->format("M d Y") : null,
                         'branch' => $confirmation->advisorAccount->advisor->name . " - " . $confirmation->advisorAccount->advisor->type,
                         //  . " - " . $confirmation->bankBranch->address,
+                        'path' => $confirmation->path  ? $confirmation->path : null,
                         'company' => $confirmation->company->name,
                         'year' => $confirmation->year->begin . " - " . $confirmation->year->end,
                     ]
@@ -262,6 +264,42 @@ class AdviserConfirmationController extends Controller
         $adviserConfirmation->delete();
         return Redirect::back()->with('success', 'Bank Confirmation deleted.');
     }
+
+
+    public function advisorupload(Req $request,$id){
+       $validated = $request->validate([
+        'file' => 'required|mimes:pdf'
+        ]);
+
+            $confirm = AdviserConfirmation::find($id);
+            if($confirm){
+            $fileName = "A".$request->id.'.'.$validated['file']->getClientOriginalExtension();
+            $path  =  Request::file('file')->storeAs(session('company_id') . '/' . session('year_id') , $fileName, 'public');
+              $confirm->path = $path;
+                $validated['file']->move(storage_path('app/public/' . session('company_id') . '/' . session('year_id') . '/'), $fileName);
+                $confirm->save();
+                return back()->with('success', 'File Uploaded');
+            }else{
+                return back()->with('success', 'Only Pdf File Upload');
+            }
+    }
+
+
+    public function  advisorconfirmUpload($id)
+    {
+        $confirm = \App\Models\AdviserConfirmation::find($id);
+             if ($confirm) {
+                //  dd($confirm->path);
+                     return response()->download(storage_path('app/public/' .$confirm->path));
+            // Storage::disk('public')->exists($confirm->path);
+        } else {
+            return Redirect::route('advisor_confirmations')->with('error', 'File Not Found.');
+        }
+
+    }
+
+
+
 
     public function advisor_word()
 
