@@ -19,6 +19,7 @@ class CreateAdviserConfirmationsTable extends Migration
                 $table->date('remind_first')->nullable();
                 $table->date('remind_second')->nullable();
                 $table->date('received')->nullable();
+                $table->Longtext('path')->nullable();
                 $table->tinyInteger('enabled')->default('1');
                 $table->unsignedBigInteger('advisor_id');
                 $table->unsignedBigInteger('year_id');

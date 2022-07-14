@@ -388,6 +388,13 @@ Route::get('advisor_confirmationsP/edit', [AdviserConfirmationController::class,
     ->name('advisor_confirmations.edit')
     ->middleware('auth');
 
+Route::put('advisor_updated/{id}', [AdviserConfirmationController::class, 'advisorupload'])
+->name('advisor.updated')
+->middleware('auth');
+
+Route::get('advisorconfirmUpload/{id}', [AdviserConfirmationController::class, 'advisorconfirmUpload'])
+->name('advisorconfirmUpload')
+->middleware('auth');
 
 Route::put('advisor_confirmations/{advisor_confirmation}', [AdviserConfirmationController::class, 'update'])
     ->name('advisor_confirmations.update')

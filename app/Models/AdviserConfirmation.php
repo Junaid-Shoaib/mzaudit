@@ -9,7 +9,7 @@ class AdviserConfirmation extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'sent', 'confirm_create', 'reminder', 'received', 'enabled', 'advisor_id', 'year_id', 'company_id'
+        'sent', 'confirm_create', 'reminder', 'received', 'path' ,'enabled', 'advisor_id', 'year_id', 'company_id'
     ];
 
     public function advisorAccount()

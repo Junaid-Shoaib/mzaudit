@@ -20,6 +20,7 @@ class CreateBankConfirmationsTable extends Migration
             $table->date('remind_first')->nullable();
             $table->date('remind_second')->nullable();
             $table->date('received')->nullable();
+            $table->Longtext('path')->nullable();
             $table->tinyInteger('enabled')->default('1');
             $table->unsignedBigInteger('branch_id');
             $table->unsignedBigInteger('year_id');
@@ -29,20 +30,20 @@ class CreateBankConfirmationsTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();
         });
-        
+
 
     }
-    
-    
+
+
     // Schema::table('bank_confirmations', function (Blueprint $table) {
     //     $table->renameColumn('remind_first', 'remind');
     //     $table->renameColumn('remind_second', 'conf_create');
-        
+
     // });
 
-        
-        
-   
+
+
+
 
     /**
      * Reverse the migrations.
