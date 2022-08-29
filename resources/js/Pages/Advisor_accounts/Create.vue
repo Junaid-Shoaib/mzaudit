@@ -5,7 +5,7 @@
         Create Advisor Accounts
       </h2>
     </template>
-    <div v-if="$page.props.flash.success" class="bg-yellow-400 text-white">
+    <div v-if="$page.props.flash.success" class="bg-red-600 text-center text-white">
       {{ $page.props.flash.success }}
     </div>
     <div class="max-w-7xl mx-auto pb-2">
