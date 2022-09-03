@@ -14,6 +14,7 @@ use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Carbon\Carbon;
+use PDO;
 
 class AdviserAccountController extends Controller
 {
@@ -184,18 +185,60 @@ class AdviserAccountController extends Controller
                      */
     public function store(Request $request)
     {
-        $request->validate([
-            'accounts.*.advisor_id' => 'required|unique:App\Models\AdviserAccount,advisor_id',
-        ]);
-        $accounts = $request->accounts;
-            foreach ($accounts as $acc) {
+
+        $advisor_arr = array();
+        // $company_id = [];
+        // $year_id = [];
+        foreach($request->accounts as $key => $account){
+            // AdviserAccount::where($)
+            // dd($account['advisor_id']['id'],session('company_id'));
+            $adv = AdviserAccount::where('advisor_id',$account['advisor_id']['id'])
+            ->where('company_id', session('company_id'))
+            ->where('year_id', session('year_id'))
+            ->first();
+        // dd($adv);
+            if($adv == null){
+                $adv_arr =
+                // $advisor_arr +=
+                [
+                    'advisor_id' => $account['advisor_id']['id'],
+                    'company_id' => session('company_id'),
+                    'year_id' => session('year_id'),
+                ];
+
+                array_push($advisor_arr, $adv_arr);
+
+                // AdviserAccount::create([
+                //     'advisor_id' => $account['advisor_id']['id'],
+                //     'company_id' => session('company_id'),
+                //     'year_id' => session('year_id'),
+                // ]);
+            }else{
+        return Redirect::route('advisor_accounts.create')->with('success', 'Advisor Account '.$adv->advisor->name.' Already Taken');
+
+
+            }
+                // AdviserAccount::where('advisor_id'$ad)-
+                // dd($advisor);
+
+
+
+            }
+            // dd($advisor_arr);
+        // return Redirect::route('advisor_accounts',)->with('success', 'Advisor Account Created');
+    //     $request->validate([
+    //         'accounts.*.advisor_id' => 'required|unique:App\Models\AdviserAccount,advisor_id',
+    //     ]);
+
+    //     $accounts = $request->accounts;
+            foreach($advisor_arr as $acc) {
                 // dd($acc);
-            AdviserAccount::create([
-                'advisor_id' => $acc['advisor_id']['id'],
-                'company_id' => session('company_id'),
-                'year_id' => session('year_id'),
+        AdviserAccount::create([
+                'advisor_id' => $acc['advisor_id'],
+                'company_id' => $acc['company_id'],
+                'year_id' => $acc['year_id'],
             ]);
-    }
+        }
 
     return Redirect::route('advisor_accounts',)->with('success', 'Advisor Account Created');
     }
