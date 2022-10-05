@@ -184,15 +184,16 @@ class BankConfirmationController extends Controller
 
         // dd($id);
        $validated = $request->validate([
-        'file' => 'required|mimes:pdf'
+        'file' => 'required|mimes:pdf|max:2048',
         ]);
 
             $confirm = BankConfirmation::find($id);
             if($confirm){
             $fileName = "B".$request->id.'.'.$validated['file']->getClientOriginalExtension();
             $path  =  Request::file('file')->storeAs(session('company_id') . '/' . session('year_id') , $fileName, 'public');
-              $confirm->path = $path;
-                $validated['file']->move(storage_path('app/public/' . session('company_id') . '/' . session('year_id') . '/'), $fileName);
+            $validated['file']->move(storage_path('app/public/' . session('company_id') . '/' . session('year_id') . '/'), $fileName);
+                $confirm->path = $path;
+                $confirm->received = Carbon::now();
                 $confirm->save();
                 return back()->with('success', 'File Uploaded');
             }else{

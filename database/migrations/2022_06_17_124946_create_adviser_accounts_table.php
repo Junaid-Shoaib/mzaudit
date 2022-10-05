@@ -18,7 +18,7 @@ class CreateAdviserAccountsTable extends Migration
             $table->unsignedBigInteger('advisor_id');
                 $table->unsignedBigInteger('year_id');
                 $table->unsignedBigInteger('company_id');
-                $table->foreign('advisor_id')->references('id')->on('advisors');
+                $table->foreign('advisor_id')->references('id')->on('adviser_accounts');
                 $table->foreign('year_id')->references('id')->on('years');
                 $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();

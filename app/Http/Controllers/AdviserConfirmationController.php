@@ -275,8 +275,9 @@ class AdviserConfirmationController extends Controller
             if($confirm){
             $fileName = "A".$request->id.'.'.$validated['file']->getClientOriginalExtension();
             $path  =  Request::file('file')->storeAs(session('company_id') . '/' . session('year_id') , $fileName, 'public');
-              $confirm->path = $path;
-                $validated['file']->move(storage_path('app/public/' . session('company_id') . '/' . session('year_id') . '/'), $fileName);
+            $validated['file']->move(storage_path('app/public/' . session('company_id') . '/' . session('year_id') . '/'), $fileName);
+            $confirm->path = $path;
+            $confirm->received = Carbon::now();
                 $confirm->save();
                 return back()->with('success', 'File Uploaded');
             }else{
