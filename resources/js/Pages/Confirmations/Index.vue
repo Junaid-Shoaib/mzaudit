@@ -256,8 +256,18 @@ export default {
   },
   methods: {
       onFileChange(e, index) {
+
       var files = e.target.files || e.dataTransfer.files;
+            //   console.log(files[0].size);
+       if(files[0].size > 4194304){
+       alert("File size should be less than 4 MB!");
+       return
+    //    this.value = "";
+    };
       if (!files.length) return;
+
+        console.log(files[0]);
+
         var id = index;
        this.$inertia.post(route('balances.updated', id),
             {

@@ -44,7 +44,7 @@
         </div>
       </h2>
     </template>
-    <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
+    <div v-if="$page.props.flash.success" class="bg-green-600 text-center text-white">
       {{ $page.props.flash.success }}
     </div>
     <div  class="bg-red-600 text-white text-center" v-if="errors.file">{{ errors.file }}</div>
@@ -258,6 +258,10 @@ export default {
   methods: {
        onFileChange(e, index) {
       var files = e.target.files || e.dataTransfer.files;
+        if(files[0].size > 4194304){
+        alert("File size should be less than 4 MB!");
+        return
+        };
       if (!files.length) return;
         var id = index;
        this.$inertia.post(route('advisor.updated', id),
