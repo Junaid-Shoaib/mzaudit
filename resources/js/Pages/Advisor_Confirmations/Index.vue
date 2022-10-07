@@ -258,8 +258,8 @@ export default {
   methods: {
        onFileChange(e, index) {
       var files = e.target.files || e.dataTransfer.files;
-        if(files[0].size > 2097152){
-        alert("File size should be less than 2 MB!");
+        if(files[0].size > 4194304){
+        alert("File size should be less than 4 MB!");
         return
         };
       if (!files.length) return;
