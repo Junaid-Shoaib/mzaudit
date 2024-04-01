@@ -32,6 +32,7 @@ class AdviserConfirmationController extends Controller
      */
     public function index()
     {
+
         $active_co = Setting::where('user_id', Auth::user()->id)->where('key', 'active_company')->first();
         // dd($active_co);
         $coch_hold = Company::where('id', $active_co->value)->first();
@@ -53,11 +54,9 @@ class AdviserConfirmationController extends Controller
                             return true;
                         }
                     }
-
-            }
+                }
         )->first();
 
-// dd($branches);
         return Inertia::render('Advisor_Confirmations/Index', [
             'create' => $branches,
             'balances' => AdviserConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))->paginate(10)->withQueryString()
@@ -310,7 +309,7 @@ class AdviserConfirmationController extends Controller
         $phpWord->addParagraphStyle('p1Style', array('align' => 'both', 'spaceAfter' => 0, 'spaceBefore' => 0));
         $phpWord->addParagraphStyle('p2Style', array('align' => 'both'));
         $phpWord->addParagraphStyle('p3Style', array('align' => 'right', 'spaceAfter' => 0, 'spaceBefore' => 0));
-        $phpWord->addFontStyle('f1Style', array('name' => 'Calibri', 'size' => 12));
+        $phpWord->addFontStyle('f1Style', array('name' => 'Calibri', 'size' => 10));
         $phpWord->addFontStyle('f2Style', array('name' => 'Calibri', 'bold' => true, 'size' => 12));
         $company = \App\Models\Company::where('id', session('company_id'))->first();
 
@@ -492,8 +491,47 @@ class AdviserConfirmationController extends Controller
                         'f1Style',
                         'p2Style'
                     );
+                    
+
+                    $textrun = $section->addTextRun();
+                    $textrun->addText(
+                        "5. Please also indicate, if there are any assessments by the assessing authority in progress for.",
+                        'f1Style',
+                        'p2Style'
+                    );
+                    $textrun = $section->addTextRun();
+                    $textrun->addText(
+                        "    a) the years involved;",
+                        'f1Style',
+                        'p2Style'
+                    );
+                 
+
+                    $textrun = $section->addTextRun();
+                    $textrun->addText(
+                        "    b) any issue raised by the income tax department.",
+                        'f1Style',
+                        'p2Style'
+                    );
+              
+
+                    $textrun = $section->addTextRun();
+                    $textrun->addText(
+                        "    c) the amounts paid to the taxation authorities on account or of any tax losses which will be  available to offset future taxliabialities; and",
+                        'f1Style',
+                        'p2Style'
+                    );
+                
+
+                    $textrun = $section->addTextRun();
+                    $textrun->addText(
+                        "    d) en estimate of any additional taxes, over those already paid on account, which may be payable.",
+                        'f1Style',
+                        'p2Style'
+                    );
                     $textrun = $section->addTextRun();
                     $section->addTextBreak(0);
+
 
                     $textrun = $section->addTextRun();
                     $textrun->addText(
@@ -617,6 +655,7 @@ class AdviserConfirmationController extends Controller
             );
 
         }
+        // dd( $company->id . '/' . $period->id);
         $writer = new Word2007($phpWord);
         $writer->save(storage_path('app/public/' . $company->id . '/' . $period->id . '/' .  'Advisors Letters.docx'));
 
