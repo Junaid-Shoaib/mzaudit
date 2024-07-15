@@ -35,7 +35,7 @@
       </div>
     </template>
 
-    <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
+    <div v-if="$page.props.flash.success" class="bg-green-600 text-white text-center">
       {{ $page.props.flash.success }}
     </div>
     <div class="max-w-7xl mx-auto pb-2">

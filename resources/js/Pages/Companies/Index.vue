@@ -42,7 +42,7 @@
     </div>
     <div class="max-w-7xl mx-auto pb-2">
       <div class="relative mt-5 ml-7">
-        <inertia-link
+        <inertia-link 
           class="
             border
             bg-blue-400
@@ -53,6 +53,7 @@
             hover:text-white
             hover:bg-blue-600
           "
+          v-if="role"
           :href="route('companies.create')"
           >Add Company
         </inertia-link>
@@ -325,6 +326,7 @@
                     hover:text-white
                     hover:bg-blue-600
                   "
+                  v-if="role"
                   :href="route('companies.edit', item.id)"
                 >
                   <!-- v-if="can.edit" -->
@@ -380,6 +382,7 @@ export default {
     balances: Object,
     filters: Object,
     cochange: Object,
+    role: Object,
   },
 
 

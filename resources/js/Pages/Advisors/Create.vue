@@ -5,7 +5,7 @@
         Create Advisors
       </h2>
     </template>
-    <div v-if="$page.props.flash.success" class="bg-yellow-400 text-white content-center">
+    <div v-if="$page.props.flash.success" class="bg-yellow-400 text-white text-center content-center">
       {{ $page.props.flash.success }}
     </div>
 

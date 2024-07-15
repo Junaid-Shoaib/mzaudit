@@ -37,8 +37,8 @@ class BankController extends Controller
 
         return Inertia::render('Banks/Index', [
             'filters' => request()->all(['search', 'field', 'direction']),
-            'balances' => $query->paginate(10)
-                ->through(
+            'balances' => $query->get()
+                ->map(
                     fn ($bank) =>
                     [
                         'id' => $bank->id,
@@ -47,6 +47,8 @@ class BankController extends Controller
 
                     ]
                 ),
+
+                'role' => auth()->user()->role == 0 ? true : false,
 
         ]);
     }
@@ -62,6 +64,10 @@ class BankController extends Controller
     // Bank Create
     public function create($accounts)
     {
+        if(auth()->user()->role == 2){
+            abort(403, "You haven't permission for access this Page.");
+        }
+        
         // dd($bankcreate);
         return Inertia::render('Banks/Create', ["accounts" => $accounts]);
     }
@@ -111,6 +117,10 @@ class BankController extends Controller
     //Bank Edit
     public function edit(Bank $bank)
     {
+        if(auth()->user()->role == 2){
+            abort(403, "You haven't permission for access this Page.");
+        }
+        
         return Inertia::render('Banks/Edit', [
             'bank' => [
                 'id' => $bank->id,

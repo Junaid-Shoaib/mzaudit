@@ -37,8 +37,14 @@ class BankBalanceController extends Controller
                             'ledger' => $bal->ledger,
                             'statement' => $bal->statement,
                             'confirmation' => $bal->confirmation,
+                           
                         ]
+
+                        
                     ),
+
+
+                    'role' => auth()->user()->role == 0 ? true : false,
             
                     'dataEdit' => BankBalance::where('company_id', session('company_id'))
             ->where('year_id', session('year_id'))->first(),

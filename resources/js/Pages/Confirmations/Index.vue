@@ -206,14 +206,14 @@
                      :href="'/bankconfirmUpload/' +item.id"
                      >Download</a>
               </td>
-              <!-- <td class="py-2 px-4 border text-center">
+              <td class="py-2 px-4 border text-center" v-if="role">
               <button
-                class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+                class="border bg-red-600 rounded-xl px-4 py-1 m-1"
                 @click="destroy(item.id)"
               >
                 <span>Delete</span>
               </button>
-            </td> -->
+            </td>
             </tr>
             <tr v-if="balances.data.length === 0">
               <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
@@ -244,12 +244,14 @@ export default {
     companies: Object,
     years: Object,
     create: Object,
+    role: Object,
     cochange: Object,
   },
   data() {
     return {
       options: this.companies,
       co_id: this.cochange,
+      role: this.role,
       // co_id: this.$page.props.co_id,
       yr_id: this.$page.props.yr_id,
     };

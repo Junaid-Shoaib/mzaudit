@@ -3,25 +3,33 @@
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         Dashboard
-        <!-- <div class="flex-1 inline-block float-right">
+        <div class="flex-1 inline-block float-right">
           <select
-            v-model="co_id"
             class="max-w-md rounded-md"
-            label="company_id"
-            @change="coch"
+            v-model="yr_id"
+            @change="yrch"
+            label="yr_id"
           >
-            <option
-              v-for="company in data"
-              :key="company.id"
-              :value="company.id"
-            >
-              {{ company.name }}
+            <option v-for="year in years" :key="year.id" :value="year.id">
+              {{ year.end }}
             </option>
           </select>
-        </div> -->
+        </div>
+        <div class="flex-1 inline-block float-right">
+          <multiselect
+            class="rounded-md border border-black"
+            placeholder="Select Company."
+            v-model="co_id"
+            track-by="id"
+            label="name"
+            :options="options"
+            @update:model-value="coch"
+          >
+          </multiselect>
+        </div>
       </h2>
     </template>
-    <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
+    <div v-if="$page.props.flash.success" class="bg-green-600 text-white text-center">
       {{ $page.props.flash.success }}
     </div>
 
@@ -275,23 +283,33 @@ import AppLayout from "@/Layouts/AppLayout";
 import Paginator from "@/Layouts/Paginator";
 import { throttle } from "lodash";
 import { pickBy } from "lodash";
+import Multiselect from "@suadelabs/vue3-multiselect";
+
 export default {
   components: {
     AppLayout,
     Paginator,
+    Multiselect,
   },
 
   props: {
+    companies: Object,
+    years: Object,
     data: Object,
     balances: Object,
     filters: Object,
     confirmation: Object,
+    cochange: Object,
     client: Object,
   },
 
   data() {
     return {
-      co_id: this.$page.props.co_id,
+      // co_id: this.$page.props.co_id,
+  
+      options: this.companies,
+      co_id: this.cochange,
+      yr_id: this.$page.props.yr_id,
       params: {
         search: this.filters.search,
         field: "name",
@@ -322,8 +340,13 @@ export default {
     destroy(id) {
       this.$inertia.delete(route("companies.destroy", id));
     },
+
     coch() {
       this.$inertia.get(route("companies.coch", this.co_id));
+    },
+
+    yrch() {
+      this.$inertia.get(route("companies.yrch", this.yr_id));
     },
   },
 };

@@ -44,7 +44,7 @@
         </div>
       </h2>
     </template>
-    <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
+    <div v-if="$page.props.flash.success" class="bg-green-600 text-white text-center">
       {{ $page.props.flash.success }}
     </div>
 
@@ -203,15 +203,15 @@
                 {{ item.currency }}
               </td>
 
-              <!-- <td class="py-3 px-4 border text-center">
+              <td v-if="role" class="py-3 px-4 border text-center">
               <button
                 class="border bg-red-500 rounded-xl px-4 py-1 m-1"
                 @click="destroy(item.id)"
-                v-if="item.delete"
+                v-if="item.delete && role"
               >
                 <span>Delete</span>
               </button>
-            </td> -->
+            </td>
             </tr>
             <!-- Null Balance -->
             <tr v-if="balances.data.length === 0">
@@ -252,6 +252,7 @@ export default {
     balances: Object,
     companies: Array,
     years: Object,
+    role: Object,
     filters: Object,
     cochange: Object,
   },
@@ -259,6 +260,7 @@ export default {
     return {
       options: this.companies,
       co_id: this.cochange,
+      role: this.role,
       // co_id: this.$page.props.co_id,
       yr_id: this.$page.props.yr_id,
       params: {
