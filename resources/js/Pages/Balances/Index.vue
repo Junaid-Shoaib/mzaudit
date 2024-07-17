@@ -4,20 +4,6 @@
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
         Bank Balances
         <div class="flex-1 inline-block float-right">
-          <!-- <select
-            v-model="co_id"
-            class="max-w-md rounded-md"
-            label="company_id"
-            @change="coch"
-          >
-            <option
-              v-for="company in companies"
-              :key="company.id"
-              :value="company.id"
-            >
-              {{ company.name }}
-            </option>
-          </select> -->
           <select
             class="max-w-md rounded-md"
             v-model="yr_id"
@@ -43,7 +29,7 @@
         </div>
       </h2>
     </template>
-    <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
+    <div v-if="$page.props.flash.success" class="bg-green-600 text-white text-center">
       {{ $page.props.flash.success }}
     </div>
 
@@ -108,14 +94,14 @@
               <td Style="width: 20%" class="py-2 px-2 border text-center">
                 {{ item.confirmation }}
               </td>
-              <!-- <td class="border text-center">
+              <td class="border text-center" v-if="role">
               <button
-                class="border bg-indigo-300 rounded-xl px-4 py-1 m-1"
+                class="border bg-red-600 rounded-xl px-4 py-1 m-1"
                 @click="destroy(item.id)"
               >
                 <span>Delete</span>
               </button>
-            </td> -->
+            </td>
             </tr>
 
             <!-- Null Balance -->
@@ -148,13 +134,14 @@ export default {
     balances: Object,
     dataEdit: Object,
     cochange: Object,
+    role: Object,
   },
 
   data() {
     return {
       options: this.companies,
       co_id: this.cochange,
-
+      role: this.role,
       // co_id: this.$page.props.co_id,
       yr_id: this.$page.props.yr_id,
     };

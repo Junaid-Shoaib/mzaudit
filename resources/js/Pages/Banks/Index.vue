@@ -3,7 +3,7 @@
     <template #header>
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">Banks</h2>
     </template>
-    <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
+    <div v-if="$page.props.flash.success" class="bg-green-600 text-white text-center">
       {{ $page.props.flash.success }}
     </div>
 
@@ -19,7 +19,8 @@
             m-1
             hover:text-white
             hover:bg-blue-600
-          "
+          "   
+          v-if="role"
           :href="route('banks.create', 'create')"
           >Add Bank
         </inertia-link>
@@ -123,7 +124,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="item in balances.data" :key="item.id">
+            <tr v-for="item in balances" :key="item.id">
               <td
                 Style="width: 75%"
                 class="py-2 px-2 border text-left text-transform: uppercase"
@@ -142,6 +143,7 @@
                     hover:text-white
                     hover:bg-blue-600
                   "
+                  v-if="role"
                   :href="route('banks.edit', item.id)"
                 >
                   <span>Edit</span>
@@ -158,18 +160,18 @@
                     hover:bg-red-600
                   "
                   @click="destroy(item.id)"
-                  v-if="item.delete"
+                  v-if="item.delete && role"
                 >
                   <span>Delete</span>
                 </inertia-link>
               </td>
             </tr>
-            <tr v-if="balances.data.length === 0">
+            <tr v-if="balances.length < 1">
               <td class="border-t px-6 py-4" colspan="4">No Record found.</td>
             </tr>
           </tbody>
         </table>
-        <paginator class="mt-6" :balances="balances" />
+        <!-- <paginator class="mt-6" :balances="balances" /> -->
       </div>
     </div>
   </app-layout>
@@ -190,6 +192,7 @@ export default {
   props: {
     balances: Object,
     filters: Object,
+    role: Object,
   },
 
   data() {

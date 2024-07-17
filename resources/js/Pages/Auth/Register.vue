@@ -55,6 +55,17 @@
         />
       </div>
 
+      <div class="mt-4">
+        <jet-label for="role" value="Role" />
+        <jet-input
+          id="role"
+          type="role"
+          class="mt-1 block w-full"
+          v-model="form.role"
+          required
+        />
+      </div>
+
       <div
         class="mt-4"
         v-if="$page.props.jetstream.hasTermsAndPrivacyPolicyFeature"
@@ -133,6 +144,7 @@ export default {
         name: "",
         email: "",
         password: "",
+        role:"",
         password_confirmation: "",
         terms: false,
       }),
@@ -141,7 +153,7 @@ export default {
 
   methods: {
     submit() {
-      alert("Working Off For Security purpose");
+       alert("Working Off For Security purpose");
       // this.form.post(this.route("register"),
       //  {
       //   onFinish: () => this.form.reset("password", "password_confirmation"),

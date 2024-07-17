@@ -80,7 +80,7 @@ class AdviserConfirmationController extends Controller
                     ]
                 ),
 
-
+                'role' => auth()->user()->role == 0 ? true :  false ,
                 'cochange' => $coch_hold,
                 'companies' => Company::all()
                 ->map(function ($company) {

@@ -5,7 +5,7 @@
         Update Banks Confirmations
       </h2>
     </template>
-        <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
+        <div v-if="$page.props.flash.success" class="bg-green-600 text-white text-center">
       {{ $page.props.flash.success }}
     </div>
     <div  class="bg-red-600 text-white text-center" v-if="errors.file">{{ errors.file }}</div>

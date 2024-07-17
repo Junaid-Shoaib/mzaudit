@@ -7,6 +7,8 @@ use Illuminate\Http\Request as Req;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use App\Models\Company;
+use App\Models\Setting;
+use App\Models\Year;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\DB;
@@ -95,6 +97,11 @@ class DashboardController extends Controller
             }
         }
 
+
+        $active_co = Setting::where('user_id', auth()->user()->id)->where('key', 'active_company')->first();
+        $coch_hold = Company::where('id', $active_co->value)->first();
+
+        
         // dd($balances);
         return Inertia::render('Dashboard/Index', [
 
@@ -102,6 +109,27 @@ class DashboardController extends Controller
             'balances' => $balances,
             'confirmation' => $confirm,
             'client' => $name,
+            'cochange' => $coch_hold,
+                'companies' => Company::all()
+                ->map(function ($company) {
+                    return [
+                        'id' => $company->id,
+                        'name' => $company->name,
+                    ];
+                }),
+
+                   
+                'years' => Year::where('company_id', session('company_id'))->get()
+                    ->map(function ($year) {
+                        $end = new Carbon($year->end);
+                        return [
+                            'id' => $year->id,
+                            'begin' => $year->begin,
+                            'end' => $end->format('F j Y'),
+                        ];
+                    }),
+
+          
         ]);
     }
 

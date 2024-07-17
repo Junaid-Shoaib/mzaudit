@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Request;
 use App\Models\BankBranch;
 use App\Models\Bank;
 use App\Models\BankAccount;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 
@@ -21,13 +22,17 @@ class BankBranchController extends Controller
 
         request()->validate([
             'direction' => ['in:asc,desc'],
-            'field' => ['in:bank_id,address'],
+        'field' => ['in:bank_id,address'],
         ]);
 
         $query = BankBranch::query();
 
         if (request('search')) {
-            $query->where('address', 'LIKE', '%' . request('search') . '%');
+            $search = request('search');
+            $query->where('address', 'LIKE', '%' . $search . '%')
+            ->orWhereHas('bank', function ($query) use ($search) {
+                $query->where('name', 'LIKE', '%' . $search . '%');
+            });
         }
 
         if (request()->has(['field', 'direction'])) {
@@ -52,12 +57,15 @@ class BankBranchController extends Controller
                                 'bank_id' => $branch->bank_id,
                                 'name' => $branch->bank->name,
                                 'delete' => BankAccount::where('branch_id', $branch->id)->first() ? false : true,
-
+                                
                             ];
                         }
                     ),
 
-            ]
+                    'role' => auth()->user()->role != 2 ? true : false,
+             
+
+                ]
 
         );
     }
@@ -100,7 +108,7 @@ class BankBranchController extends Controller
         $branches = BankBranch::all()->where("bank_id", $request->bank_id);
         $replace = str_replace([" "], "\n", $request->address);
         $explode = explode("\n", $replace);
-        $address = "";
+           $address = "";
         foreach ($explode as $ex) {
             if ($ex != "") {
                 $address = $address .  $ex . "\n";
@@ -164,8 +172,7 @@ class BankBranchController extends Controller
     //Branches Update
     public function update(Req $request, BankBranch $branch)
     {
-        // dd($branch);
-        Request::validate([
+          Request::validate([
             'bank_id' => ['required'],
             'address' => ['required'],
         ]);
@@ -173,6 +180,7 @@ class BankBranchController extends Controller
 
         $branches = BankBranch::all()->where("bank_id", $request->bank_id);
         $replace = str_replace([" "], "\n", $request->address);
+      
         $explode = explode("\n", $replace);
         $address = "";
         foreach ($explode as $ex) {
@@ -183,19 +191,20 @@ class BankBranchController extends Controller
 
         $branchi = true;
         foreach ($branches as $branch) {
-            $replace = str_replace([" "], "\n", $branch->address);
-            $explode = explode("\n", $replace);
+            $replace1 = str_replace([" "], "\n", $branch->address);
+            $explode = explode("\n", $replace1);
             $add = "";
             foreach ($explode as $ex) {
                 if ($ex != "") {
                     $add = $add .  $ex . "\n";
                 }
             }
+           
             if (strtolower($add) == strtolower($address)) {
                 $branchi = false;
             }
+            
         }
-
         if ($branchi == true) {
             $branch->bank_id = Request::input('bank_id');
             $branch->address = ucwords($address);

@@ -86,7 +86,8 @@ class BankConfirmationController extends Controller
                         'end' => $end->format("F j Y"),
                     ];
                 }),
-        ]);
+                'role' => auth()->user()->role == 0 ? true :  false ,
+            ]);
     }
 //Create
     public  function create()

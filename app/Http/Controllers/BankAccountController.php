@@ -10,8 +10,10 @@ use App\Models\BankBalance;
 use App\Models\Year;
 use App\Models\BankBranch;
 use App\Models\Bank;
+use App\Models\BankConfirmation;
 use App\Models\Company;
 use App\Models\Setting;
+use App\Rules\UniqueBranchForCompany;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Carbon\Carbon;
@@ -42,30 +44,41 @@ class BankAccountController extends Controller
         ->where('key', 'active_company')->first();
         $coch_hold = Company::where('id', $active_co->value)->first();
 
+        $bal = $query
+        ->where('company_id', session('company_id'))
+        ->paginate(15)
+        ->through(
+            function ($branch) {
+                $BB = BankBalance::where('company_id', session('company_id'))->where('year_id', session('year_id'))->where('account_id', $branch->id)->first();
+                $AC = BankConfirmation::where('company_id', session('company_id'))->where('year_id', session('year_id'))->where('branch_id', $branch->branch_id)->first();
+
+                
+
+                // dd(BankBalance::where('company_id', session('company_id'))->where('year_id', session('year_id'))->where('account_id', $branch->id)->first() == null ? false : true);
+                return
+                    [
+                        'id' => $branch->id,
+                        'name' => $branch->name,
+                        'type' => $branch->type,
+                        'currency' => $branch->currency,
+                        'branches' => $branch->bankBranch->bank->name . " - " . $branch->bankBranch->address,
+                        'delete' => $BB || $AC == true ? false : true,
+                    ];
+            }
+        );
 
         
 
+
+        
+
+        
         if (BankBranch::all()->first()) {
             return Inertia::render(
                 'Accounts/Index',
                 [
                     'filters' => request()->all(['search', 'field', 'direction']),
-                    'balances' => $query
-                    ->where('company_id', session('company_id'))
-                    ->paginate(15)
-                    ->through(
-                        function ($branch) {
-                            return
-                                [
-                                    'id' => $branch->id,
-                                    'name' => $branch->name,
-                                    'type' => $branch->type,
-                                    'currency' => $branch->currency,
-                                    'branches' => $branch->bankBranch->bank->name . " - " . $branch->bankBranch->address,
-                                    'delete' => BankBalance::where('account_id', $branch->id)->first() ? false : true,
-                                ];
-                        }
-                    ),
+                    'balances' => $bal,
                     
                     'dataEdit' => BankAccount::where('company_id', session('company_id'))->first(),
 
@@ -79,7 +92,7 @@ class BankAccountController extends Controller
 
                     
                     'cochange' => $coch_hold,
-
+                    'role' => auth()->user()->role != 2 ? true : false,
                     'years' => Year::where('company_id', session('company_id'))->get()
                         ->map(function ($year) {
                             $end = new Carbon($year->end);
@@ -105,35 +118,47 @@ class BankAccountController extends Controller
         $data  = BankBranch::all()->map->only('bank_id')->first();
         if ($data) {
 
+            $bal = BankAccount::all()
+            ->where('company_id', session('company_id'))
+            ->map(
+                function ($branch) {
+                    return
+                        [
+                            'id' => $branch->id,
+                            'name' => $branch->name,
+                            'type' => $branch->type,
+                            'currency' => $branch->currency,
+                            'branches' => $branch->bankBranch->bank->name . " - " . $branch->bankBranch->address,
+                            'delete' => BankBalance::where('account_id', $branch->id)->first() ? true : false,
+                        ];
+                }
+            );
+
+
+
+            $branch_use =  BankAccount::where('company_id', session('company_id'))
+            ->get()->pluck('branch_id')->toArray();
+
+            $branches = BankBranch::whereNotIn('id' , $branch_use)->get()->map(function ($branch) {
+                    return
+                        [
+                            'id' => $branch->id,    
+                            'address' => $branch->bank->name . " - " . $branch->address, 
+                        ];
+                    });
+
+
+
             return Inertia::render('Accounts/Create', [
 
                 //just fetch crete
-                'balances' => BankAccount::all()
-                    ->where('company_id', session('company_id'))
-                    ->map(
-                        function ($branch) {
-                            return
-                                [
-                                    'id' => $branch->id,
-                                    'name' => $branch->name,
-                                    'type' => $branch->type,
-                                    'currency' => $branch->currency,
-                                    'branches' => $branch->bankBranch->bank->name . " - " . $branch->bankBranch->address,
-                                    'delete' => BankBalance::where('account_id', $branch->id)->first() ? false : true,
-                                ];
-                        }
-                    ),
+                'balances' =>$bal,
 
+
+                    
                 // $branches = BankBranch::all()
-                'branches' => BankBranch::all()
-                    ->map(function ($branch) {
-                        return
-                            [
-                                'id' => $branch->id,
-                                'address' => $branch->bank->name . " - " . $branch->address,
 
-                            ];
-                    }),
+                'branches' => $branches
 
                 // dd($branches),
             ]);
@@ -145,12 +170,14 @@ class BankAccountController extends Controller
     public function store(Req $request)
     {
         // dd($request->accounts);
-        // dd($request);
+       
         Request::validate([
 
-            'accounts.*.name' => 'required|unique:App\Models\BankAccount,name',
+            // 'accounts.*.name' => 'required|unique:App\Models\BankAccount,name',
             'accounts.*.type' => ['required'],
             'accounts.*.currency' => ['required'],
+            // 'accounts.*.branch_id' => ['required']
+            'accounts.*.branch_id' => ['required', new UniqueBranchForCompany()],
 
         ]);
 
@@ -159,7 +186,7 @@ class BankAccountController extends Controller
         foreach ($accounts as $acc) {
             // dd($acc);
             BankAccount::create([
-                'name' => $acc['name'],
+                'name' => $acc['name'] ? $acc['name'] : 0,
                 'type' => $acc['type'],
                 'currency' => $acc['currency'],
                 'branch_id' => $acc['branch_id']['id'],
@@ -205,7 +232,9 @@ class BankAccountController extends Controller
     public function update(Req $request, BankAccount $account)
     {
         Request::validate([
-            'balances.*.name' => 'required',
+            // 'balances.*.name' => 'required',
+            'accounts.*.type' => ['required'],
+            'accounts.*.currency' => ['required'],
         ]);
 
 
@@ -214,7 +243,7 @@ class BankAccountController extends Controller
             $acc = BankAccount::find($account['id']);
             $acc->update([
 
-                'name' => $account['name'],
+                'name' => $account['name'] ? $account['name'] : 0 ,
                 'type' => $account['type'],
                 'currency' => $account['currency'],
             ]);

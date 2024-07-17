@@ -5,7 +5,7 @@
         Bank Branches
       </h2>
     </template>
-    <div v-if="$page.props.flash.success" class="bg-green-600 text-white">
+    <div v-if="$page.props.flash.success" class="bg-green-600 text-white text-center">
       {{ $page.props.flash.success }}
     </div>
     <div class="max-w-7xl mx-auto pb-2">
@@ -165,7 +165,7 @@
                     hover:bg-red-600
                   "
                   @click="destroy(item.id)"
-                  v-if="item.delete"
+                  v-if="item.delete && role"
                 >
                   <span>Delete</span>
                 </inertia-link>
@@ -195,12 +195,14 @@ export default {
   },
 
   props: {
+    role : Object,
     balances: Object,
     filters: Object,
   },
 
   data() {
     return {
+      role: this.role,
       params: {
         search: this.filters.search,
         field: "bank_id",

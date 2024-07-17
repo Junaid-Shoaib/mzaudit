@@ -25,9 +25,6 @@ class CompanyController extends Controller
     // Company Index
     public function index()
     {
-
-
-
         request()->validate([
             'direction' => ['in:asc,desc'],
             'field' => ['in:name,address'],
@@ -55,7 +52,7 @@ class CompanyController extends Controller
                 'company' => Company::all(),
                 'filters' => request()->all(['search', 'field', 'direction']),
                 'balances' => $query->with('years')->paginate(10),
-
+                'role' => auth()->user()->role == 2 ? false : true,
                 ]
             );
             }
@@ -75,6 +72,10 @@ class CompanyController extends Controller
     // Company Create
     public function create()
     {
+        
+        if(auth()->user()->role == 2){
+            abort(403, "You haven't permission for access this Page.");
+        }
         return Inertia::render('Companies/Create');
     }
 
@@ -129,17 +130,45 @@ class CompanyController extends Controller
                 'end' => $endDate,
                 'company_id' => $company->id,
             ]);
-            Setting::create([
-                'key' => 'active_company',
-                'value' => $company->id,
-                'user_id' => Auth::user()->id,
-            ]);
 
-            Setting::create([
-                'key' => 'active_year',
-                'value' => $year->id,
-                'user_id' => Auth::user()->id,
-            ]);
+            $settings = [ 
+                [
+                    'key' => 'active_company',
+                    'value' => $company->id,
+                    'user_id' => 1,
+                ],
+                [
+                    'key' => 'active_company',
+                    'value' => $company->id,
+                    'user_id' => 2,
+                ],
+                [
+                    'key' => 'active_company',
+                    'value' => $company->id,
+                    'user_id' => 3,
+                ],
+                [
+                    'key' => 'active_year',
+                    'value' => $year->id,
+                    'user_id' => 1,
+                ],
+                [
+                    'key' => 'active_year',
+                    'value' => $year->id,
+                    'user_id' => 2,
+                ],
+                [
+                    'key' => 'active_year',
+                    'value' => $year->id,
+                    'user_id' => 3,
+                ],
+                
+            ];
+
+            foreach($settings as $key => $setting){
+                Setting::create($setting);    
+            }
+
 
             session(['company_id' => $company->id]);
             session(['year_id' => $year->id]);
@@ -159,6 +188,11 @@ class CompanyController extends Controller
     // Company Edit
     public function edit(Company $company)
     {
+
+        if(auth()->user()->role == 2){
+            abort(403, "You haven't permission for access this Page.");
+        }
+
         return Inertia::render('Companies/Edit', [
             'company' => [
                 'id' => $company->id,
