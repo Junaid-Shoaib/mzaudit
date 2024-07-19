@@ -522,10 +522,11 @@ class CompanyController extends Controller
                     $i++;
                 }
             }
+
+
         } else {
             return Redirect::route('accounts.create')->with('success', 'Create Account First');
         }
-
         $period = Year::where('id', session('year_id'))->first();
         $begin = new Carbon($period->begin);
         $end = new Carbon($period->end);
@@ -562,10 +563,10 @@ class CompanyController extends Controller
             $bankname = str_replace(["&"], "&amp;", $branch->bank->name);
             $section->addText($bankname . ",", 'f1Style', 'p1Style');
             $branchname = str_replace(["&"], "&amp;", $branch->address);
+            
             $branch = explode("\n", $branchname);
-
             foreach ($branch as $branchadd) {
-                $section->addText($branchadd . ",", 'f1Style', 'p1Style');
+                $section->addText($branchadd . "", 'f1Style', 'p1Style');
                 $branchadd++;
             }
 
