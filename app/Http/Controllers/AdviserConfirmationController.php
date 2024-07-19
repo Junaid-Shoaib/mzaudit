@@ -386,7 +386,7 @@ class AdviserConfirmationController extends Controller
 
 
             foreach ($branch as $branchadd) {
-                $section->addText($branchadd . ",", 'f1Style', 'p1Style');
+                $section->addText($branchadd . "", 'f1Style', 'p1Style');
                 $branchadd++;
             }
 
