@@ -414,8 +414,7 @@ class AdviserConfirmationController extends Controller
                     // dd($section);
                     $textrun = $section->addTextRun('p2Style');
                     $textrun->addText(
-                        "We will shortly be required to express our opinion as to the fairness with which the
-                        financial statements present the financial position of the company as ",
+                        "We will shortly be required  to express our opinion  as to the fairness  with which the financial statements present the financial position of the company as ",
                         'f1Style'
                     );
                     $textrun->addText($end->format('F j, Y'), 'f2Style');
@@ -493,44 +492,44 @@ class AdviserConfirmationController extends Controller
                     );
                     
 
-                    $textrun = $section->addTextRun();
-                    $textrun->addText(
-                        "5. Please also indicate, if there are any assessments by the assessing authority in progress for.",
-                        'f1Style',
-                        'p2Style'
-                    );
-                    $textrun = $section->addTextRun();
-                    $textrun->addText(
-                        "    a) the years involved;",
-                        'f1Style',
-                        'p2Style'
-                    );
+                    // $textrun = $section->addTextRun();
+                    // $textrun->addText(
+                    //     "5. Please also indicate, if there are any assessments by the assessing authority in progress for.",
+                    //     'f1Style',
+                    //     'p2Style'
+                    // );
+                    // $textrun = $section->addTextRun();
+                    // $textrun->addText(
+                    //     "    a) the years involved;",
+                    //     'f1Style',
+                    //     'p2Style'
+                    // );
                  
 
-                    $textrun = $section->addTextRun();
-                    $textrun->addText(
-                        "    b) any issue raised by the income tax department.",
-                        'f1Style',
-                        'p2Style'
-                    );
+                    // $textrun = $section->addTextRun();
+                    // $textrun->addText(
+                    //     "    b) any issue raised by the income tax department.",
+                    //     'f1Style',
+                    //     'p2Style'
+                    // );
               
 
-                    $textrun = $section->addTextRun();
-                    $textrun->addText(
-                        "    c) the amounts paid to the taxation authorities on account or of any tax losses which will be  available to offset future taxliabialities; and",
-                        'f1Style',
-                        'p2Style'
-                    );
+                    // $textrun = $section->addTextRun();
+                    // $textrun->addText(
+                    //     "    c) the amounts paid to the taxation authorities on account or of any tax losses which will be  available to offset future taxliabialities; and",
+                    //     'f1Style',
+                    //     'p2Style'
+                    // );
                 
 
-                    $textrun = $section->addTextRun();
-                    $textrun->addText(
-                        "    d) en estimate of any additional taxes, over those already paid on account, which may be payable.",
-                        'f1Style',
-                        'p2Style'
-                    );
-                    $textrun = $section->addTextRun();
-                    $section->addTextBreak(0);
+                    // $textrun = $section->addTextRun();
+                    // $textrun->addText(
+                    //     "    d) en estimate of any additional taxes, over those already paid on account, which may be payable.",
+                    //     'f1Style',
+                    //     'p2Style'
+                    // );
+                    // $textrun = $section->addTextRun();
+                    // $section->addTextBreak(0);
 
 
                     $textrun = $section->addTextRun();
@@ -553,7 +552,7 @@ class AdviserConfirmationController extends Controller
                     );
                     $textrun->addText($companyname, 'f2Style');
                     $textrun->addText(
-                        " for the year ending ",
+                        " for the year ended ",
                         'f1Style'
                     );
                     $textrun->addText($end->format('F j, Y'), 'f2Style');
@@ -572,7 +571,7 @@ class AdviserConfirmationController extends Controller
                     );
                     $textrun = $section->addTextRun();
                     $textrun->addText(
-                        "2. Differences, if any, between income and tax returned and  that assessed for",
+                        "2. Differences, if any, between income and tax returned and   that assessed for",
                         'f1Style',
                         'p2Style'
                     );
@@ -601,7 +600,7 @@ class AdviserConfirmationController extends Controller
 
                     $textrun = $section->addTextRun();
                     $textrun->addText(
-                        "5. Any other matters that may have an effect on the aforementioned financial",
+                        "5. Any  other matters that may have an effect on the aforementioned financial",
                         'f1Style',
                         'p2Style'
                     );
