@@ -6,7 +6,15 @@
 
     <jet-validation-errors class="mb-4" />
 
-    <form @submit.prevent="submit">
+    <h2>ALlowed Only Registered Users this Platform <span>
+      <inertia-link
+          :href="route('login')"
+          class="underline text-sm text-gray-600 hover:text-gray-900"
+        >
+         <strong>Login.</strong>
+        </inertia-link>
+      </span></h2>
+    <!-- <form @submit.prevent="submit">
       <div>
         <jet-label for="name" value="Name" />
         <jet-input
@@ -114,7 +122,7 @@
           Register
         </jet-button>
       </div>
-    </form>
+    </form> -->
   </jet-authentication-card>
 </template>
 
