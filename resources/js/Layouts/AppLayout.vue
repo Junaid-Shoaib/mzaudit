@@ -90,6 +90,14 @@
                     >
                       Years
                     </jet-dropdown-link>
+                    <jet-dropdown-link
+                      v-if="$page.props.user.role == 0"
+                      :href="route('users.create')"
+                      :active="route().current('users.create')"
+                    >
+                      New User
+                    </jet-dropdown-link>
+                
                   </template>
                 </jet-dropdown>
               </div>
@@ -616,6 +624,9 @@
               Dashboard
             </jet-responsive-nav-link>
           </div>
+
+
+
           <div class="pt-2 pb-3 space-y-1">
             <jet-responsive-nav-link
               :href="route('companies')"

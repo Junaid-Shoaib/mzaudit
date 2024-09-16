@@ -15,6 +15,9 @@ use App\Http\Controllers\BankBalanceController;
 use App\Http\Controllers\BankConfirmationController;
 use App\Http\Controllers\AdviserConfirmationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
+
+
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -51,10 +54,20 @@ Route::get('/', function () {
 //     return Inertia::render('Dashboard');
 // })->name('dashboard');
 
+Route::get('users/create', [UserController::class, 'create'])
+    ->name('users.create')
+    ->middleware('auth');
+
+
+Route::post('users', [UserController::class, 'store'])
+    ->name('users.store')
+    ->middleware('auth');
+
 
 Route::get('companies', [CompanyController::class, 'index'])
     ->name('companies')
     ->middleware('auth');
+
 
 Route::get('companies/create', [CompanyController::class, 'create'])
     ->name('companies.create')

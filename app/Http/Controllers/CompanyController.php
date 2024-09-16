@@ -10,6 +10,7 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Bank;
 use App\Models\BankBranch;
+use App\Models\User;
 use Inertia\Inertia;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -97,7 +98,7 @@ class CompanyController extends Controller
             ]);
 
 
-            //Start Month & End Month
+            // Start Month & End Month
             $startMonth = Carbon::parse($company->fiscal)->month + 1;
             $endMonth = Carbon::parse($company->fiscal)->month;
             if ($startMonth == 13) {
@@ -131,43 +132,52 @@ class CompanyController extends Controller
                 'company_id' => $company->id,
             ]);
 
-            $settings = [ 
-                [
-                    'key' => 'active_company',
-                    'value' => $company->id,
-                    'user_id' => 1,
-                ],
-                [
-                    'key' => 'active_company',
-                    'value' => $company->id,
-                    'user_id' => 2,
-                ],
-                [
-                    'key' => 'active_company',
-                    'value' => $company->id,
-                    'user_id' => 3,
-                ],
-                [
-                    'key' => 'active_year',
-                    'value' => $year->id,
-                    'user_id' => 1,
-                ],
-                [
-                    'key' => 'active_year',
-                    'value' => $year->id,
-                    'user_id' => 2,
-                ],
-                [
-                    'key' => 'active_year',
-                    'value' => $year->id,
-                    'user_id' => 3,
-                ],
-                
-            ];
+            
+            $users = User::select('id')->get();
+              foreach($users as $user){
+                $set_comp = Setting::where('user_id', $user->id)->where('key', 'active_company')->first();
+                $set_year = Setting::where('user_id', $user->id)->where('key', 'active_year')->first();
+                if ($set_comp) {
+                    $set_comp->value = $company->id;
+                    $set_comp->save();
+                } else {
+                    Setting::create([
+                        'key' => 'active_company',
+                        'value' => $company->id,
+                        'user_id' => $user->id,
+                    ]);
+                }
+                if ($set_year) {
+                    $set_year->value = $year->id;
+                    $set_year->save();
+                } else {
+                    // Create Active Year Setting
+                    Setting::create([
+                        'key' => 'active_year',
+                        'value' => $year->id,
+                        'user_id' => $user->id,
+                    ]);
+                }
 
-            foreach($settings as $key => $setting){
-                Setting::create($setting);    
-            }
+            };
+            // $settings = [ 
+            //     [
+            //         'key' => 'active_company',
+            //         'value' => $company->id,
+            //         'user_id' => 1,
+            //     ],
+            
+            //     [
+            //         'key' => 'active_year',
+            //         'value' => $year->id,
+            //         'user_id' => 1,
+            //     ],
+               
+            // ];
+
+            // foreach($settings as $key => $setting){
+            //     Setting::create($setting);    
+            // }
 
 
             session(['company_id' => $company->id]);
