@@ -180,12 +180,12 @@ class BankConfirmationController extends Controller
         ]);
     }
 //Update
-
+    //image Updated Function
     public function updated(Req $request,$id){
 
         // dd($id);
        $validated = $request->validate([
-        'file' => 'required|mimes:pdf|max:2048',
+        'file' => 'required|mimes:pdf|max:5120',
         ]);
 
             $confirm = BankConfirmation::find($id);
